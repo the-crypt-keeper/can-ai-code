@@ -1,0 +1,24 @@
+.Checks: &Checks
+    one_argument:
+      assert: "len(f.args)"
+      eq: "1"
+
+PythonApproxSqrt:
+    Request: "Write a python function to quickly approximate the square root of input float n"
+    Checks:
+        <<: *Checks
+
+PythonApproxSqrt5Iter:
+    Request: "Write a python function to quickly approximate the square root of input float n by executing 5 iterations of the newton-ralphson method"
+    Checks:
+        <<: *Checks
+
+PythonApproxEpislon:
+    Request: "Write a python function to quickly approximate the square root of input float n within eps < 0.001"
+    Checks:
+        <<: *Checks
+
+PythonApproxSqrtNIter:
+    Request: "Write a python function to quickly approximate the square root of input float n by executing input integer i iterations of the newton-ralphson method"
+    Checks:
+        <<: *Checks

@@ -1,0 +1,32 @@
+.Checks: &Checks
+    one_argument:
+      assert: "len(f.args)"
+      eq: "1"
+    returns_list:
+      assert: "type(f.call(0))"
+      eq: "list"
+    value_0:
+      assert: "f.call(0)"
+      eq: "[1]"
+    value_5:
+      assert: "f.call(5)"
+      eq: "[1,1,2,3,5]"
+
+PythonFibonacciZeroShot:
+    Request: "Write a python function to compute the fibbonaci sequence of length n."
+    Checks:
+        <<: *Checks
+        input_name:
+            assert: "f.args[0].name"
+            eq: "n"
+
+PythonFibonacciMisnamed:
+    Request: "Write a python function glork(bork: int) to compute the fibbonaci sequence of length bork."
+    Checks: 
+        <<: *Checks
+        input_name:
+            assert: "f.args[0].name"
+            eq: "bork"
+        func_name:
+            assert: "f.name"
+            eq: "glork"
