@@ -1,7 +1,7 @@
 .Checks: &Checks
     one_argument:
       assert: "len(f.args)"
-      eq: "1"
+      eq: 1
     returns_list:
       assert: "type(f.call(0))"
       eq: "list"

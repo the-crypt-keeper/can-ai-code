@@ -1,7 +1,7 @@
 .Checks: &Checks
     one_argument:
       assert: "len(f.args)"
-      eq: "1"
+      eq: 1
 
 PythonApproxSqrt:
     Request: "Write a python function to quickly approximate the square root of input float n"
