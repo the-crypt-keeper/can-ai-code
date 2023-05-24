@@ -24,7 +24,7 @@ done
 # Check if the process is still running
 if ps -p $pid > /dev/null; then
     # Process is still running, kill it
-    echo "PID $pid timeout."
+    echo "### { \"error\": \"timeout!\" }"
     kill $pid
     wait $pid 2>/dev/null # Wait for the process to terminate
 fi

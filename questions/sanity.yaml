@@ -20,6 +20,6 @@ PythonSanityList:
         no_arguments:
           assert: "len(f.args)"
           eq: 0
-        h2g2:
+        returns:
           assert: "f.call()"
           eq: [5, "foobar", "Madrid"]

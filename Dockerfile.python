@@ -1,0 +1,4 @@
+FROM python:3.9
+RUN pip install numpy
+ADD timeout.sh /timeout.sh
+ENTRYPOINT ["/timeout.sh"]

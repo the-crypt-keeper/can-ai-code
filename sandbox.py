@@ -56,6 +56,8 @@ class FunctionSandbox:
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
+        run_shell_command('docker build . -f Dockerfile.python -t sandbox-py -q')
+
     def call(self, *args, **kwargs):
         output = None
         with open('eval.py.tpl') as f:
@@ -71,7 +73,7 @@ class FunctionSandbox:
             answer_file = temp_file.name
             temp_file.write(self.code)
 
-        output, value = run_shell_command('docker run -it -v `pwd`/timeout.sh:/timeout.sh -v '+script_file+':/wrapper.py -v '+answer_file+':/answer.py python:3.9 /bin/bash -c \'/timeout.sh python /wrapper.py\'')
+        output, value = run_shell_command('docker run -it -v '+script_file+':/wrapper.py -v '+answer_file+':/answer.py sandbox-py python /wrapper.py')
         
         start_index = output.find("###")
         if start_index == -1:

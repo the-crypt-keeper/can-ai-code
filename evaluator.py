@@ -37,7 +37,8 @@ for test in load_questions():
         f = FunctionSandbox(code)
         total = 0
         passed = 0
-        print('\n\n'+test['name']+' started\n---\n'+code+'\n---')
+        print('\n\n'+test['name']+' started')
+        #print('---\n'+code+'\n---')
         for check_name in test['Checks'].keys():
             check = test['Checks'][check_name]
             if check.get('assert'):
@@ -52,7 +53,7 @@ for test in load_questions():
                     print('   ',check_name, "passed")
                     passed += 1
                 else:
-                    print('   ',check_name, "failed", check['assert'], 'got', test_value[:20] if type(test_value) == str else test_value, '!=', check['eq'])
+                    print('   ',check_name, "failed", check['assert'], 'got', test_value, '!=', check['eq'])
         print(test['name'],'passed',passed,'of',total)
     else:
         print("No code found")
