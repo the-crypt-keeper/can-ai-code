@@ -1,21 +1,25 @@
-.Checks: &Checks
-    one_argument:
-      assert: "len(f.args)"
-      eq: 1
-    returns_list:
-      assert: "type(f.call(0))"
-      eq: "list"
-    value_0:
-      assert: "f.call(0)"
-      eq: "[1]"
-    value_5:
-      assert: "f.call(5)"
-      eq: "[1,1,2,3,5]"
-
 PythonSanityMeaningOfLife:
     Request: "Write a python function meaning_of_life() that returns a single integer, the answer to life the universe and everything"
     Checks:
-        <<: *Checks
         input_name:
-            assert: "f.args[0].name"
-            eq: "n"
+            assert: "f.name"
+            eq: "meaning_of_life"
+        no_arguments:
+          assert: "len(f.args)"
+          eq: 0
+        h2g2:
+          assert: "f.call()"
+          eq: 42
+
+PythonSanityList:
+    Request: "Write a python function things() that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain."
+    Checks:
+        input_name:
+            assert: "f.name"
+            eq: "things"
+        no_arguments:
+          assert: "len(f.args)"
+          eq: 0
+        h2g2:
+          assert: "f.call()"
+          eq: [5, "foobar", "Madrid"]
