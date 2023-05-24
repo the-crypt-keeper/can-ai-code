@@ -25,30 +25,34 @@ ANSWER_DIR = "result-0.0/"
 
 for test in load_questions():
     answer = None
-    with open(ANSWER_DIR+test['name']+'.txt','r') as f:
-        answer = f.read()
+    try:
+        with open(ANSWER_DIR+test['name']+'.txt','r') as f:
+            answer = f.read()
+    except Exception as e:
+        print(e)
+        continue
 
-    print(test)
     code = extract_code(answer)
     if code:
         f = FunctionSandbox(code)
+        total = 0
+        passed = 0
+        print('\n\n'+test['name']+' started\n---\n'+code+'\n---')
         for check_name in test['Checks'].keys():
             check = test['Checks'][check_name]
             if check.get('assert'):
-                passed = False
+                total += 1
                 test_value = None
-
                 try:
                     test_value = eval(check['assert'])
                 except Exception as e:
                     test_value = str(e)
-                
-                if (test_value == check['eq']):
-                    passed = True
 
-                if passed:
-                    print(check_name, "passed")
+                if (test_value == check['eq']):
+                    print('   ',check_name, "passed")
+                    passed += 1
                 else:
-                    print(check_name, "failed", check['assert'], 'got', test_value, '!=', check['eq'])
+                    print('   ',check_name, "failed", check['assert'], 'got', test_value[:20] if type(test_value) == str else test_value, '!=', check['eq'])
+        print(test['name'],'passed',passed,'of',total)
     else:
         print("No code found")

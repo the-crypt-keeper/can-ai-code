@@ -1,5 +1,9 @@
 import re
 from typing import Any
+import tempfile
+import subprocess
+import json
+from jinja2 import Template
 
 def extract_function_info(input_string):
     function_regex = r"def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(([^)]*)\):"
@@ -11,7 +15,7 @@ def extract_function_info(input_string):
         arguments = match[1].split(',')
 
         # Extract argument names by removing any type annotations
-        argument_names = [arg.strip().split(':')[0] for arg in arguments]
+        argument_names = [arg.strip().split(':')[0] for arg in arguments if arg]
 
         function_info = {
             'name': function_name,
@@ -21,6 +25,25 @@ def extract_function_info(input_string):
 
     return functions
 
+def run_shell_command(command):
+    try:
+        # Run the shell command and capture its output
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+        # Get the captured output
+        output = result.stdout.strip()
+
+        # Get the return value
+        return_value = result.returncode
+
+        # Return the output and return value
+        return output, return_value
+
+    except subprocess.CalledProcessError as e:
+        # Handle any errors that occurred during command execution
+        print("Error:", e)
+        return None, e.returncode
+    
 class FunctionArg:
     def __init__(self, name, type = None) -> None:
         self.name = name
@@ -34,4 +57,25 @@ class FunctionSandbox:
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
     def call(self, *args, **kwargs):
-        return None
+        output = None
+        with open('eval.py.tpl') as f:
+            template = Template(f.read())
+            output = template.render(name=self.name, args=self.args, kwargs=kwargs)
+
+        # Create a temporary file
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
+            script_file = temp_file.name
+            temp_file.write(template.render(call=self.name+'('+','.join([str(x) for x in args])+')'))
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
+            answer_file = temp_file.name
+            temp_file.write(self.code)
+
+        output, value = run_shell_command('docker run -it -v `pwd`/timeout.sh:/timeout.sh -v '+script_file+':/wrapper.py -v '+answer_file+':/answer.py python:3.9 /bin/bash -c \'/timeout.sh python /wrapper.py\'')
+        
+        start_index = output.find("###")
+        if start_index == -1:
+            return output
+        
+        rv_text = output[start_index + 3:].strip()
+        return json.loads(rv_text)

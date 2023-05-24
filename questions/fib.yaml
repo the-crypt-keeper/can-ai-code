@@ -3,14 +3,14 @@
       assert: "len(f.args)"
       eq: 1
     returns_list:
-      assert: "type(f.call(0))"
-      eq: "list"
+      assert: "isinstance(f.call(0),list)"
+      eq: true
     value_0:
       assert: "f.call(0)"
-      eq: "[1]"
+      eq: [1]
     value_5:
       assert: "f.call(5)"
-      eq: "[1,1,2,3,5]"
+      eq: [1, 1, 2, 3, 5]
 
 PythonFibonacciZeroShot:
     Request: "Write a python function to compute the fibbonaci sequence of length n."

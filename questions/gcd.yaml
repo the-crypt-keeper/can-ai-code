@@ -4,10 +4,10 @@
       eq: 2
     gcd_1_1:
       assert: "f.call(1,1)"
-      eq: "1"
+      eq: 1
     gcd_100_10:
       assert: "f.call(100,10)"
-      eq: "10"
+      eq: 10
 
 PythonGCDZeroShot:
     Request: "Write a python function to compute the greatest common demoninator of two input integers n and m."
