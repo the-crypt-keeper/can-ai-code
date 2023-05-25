@@ -7,10 +7,10 @@
       eq: true
     value_0:
       assert: "f.call(0)"
-      eq: [1]
+      eq: [0]
     value_5:
       assert: "f.call(5)"
-      eq: [1, 1, 2, 3, 5]
+      eq: [0, 1, 1, 2, 3]
 
 FibonacciZeroShot:
     Request: "Write a {{language}} function to compute the fibbonaci sequence of length n."
