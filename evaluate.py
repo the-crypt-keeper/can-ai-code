@@ -17,7 +17,7 @@ def extract_code(answer):
     # Find the index of the start token
     start_index = answer.find(start_token)
     if start_index == -1:
-        if answer[0:3] == 'def':
+        if answer.strip()[0:3] == 'def':
             return answer
         else:
             start_token = "```"

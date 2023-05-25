@@ -4,6 +4,7 @@ import pandas as pd
 import argparse
 import os
 import json
+from time import sleep
 from jinja2 import Template
 
 def init_model(provider, **kwargs):
@@ -30,7 +31,8 @@ def init_model(provider, **kwargs):
 def prompt_template(provider):
     TEMPLATES = {
         'openai/chatgpt': 'When asked to write code, please output only a single code-block containing the final function and nothing else. {{prompt}}',
-        'ai21/j2-jumbo-instruct': 'When asked to write code, make sure its enclosed in a ``` delimited code block. {{prompt}}'
+        'ai21/j2-jumbo-instruct': 'When asked to write code, make sure its enclosed in a ``` delimited code block. {{prompt}}',
+        'cohere/command-nightly': 'When asked to write code, return only the requested function enclosed in a ``` delimited code block. {{prompt}}',
     }
 
     return TEMPLATES.get(provider,'{{prompt}}') 
@@ -79,3 +81,6 @@ for idx, test in df.iterrows():
     print(answer)
     with open(out_file, 'w') as f:
         f.write(answer)
+
+    if args.delay:
+        sleep(args.delay)
