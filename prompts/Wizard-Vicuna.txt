@@ -1,0 +1,4 @@
+USER: Hello, ASSISTANT.
+ASSISTANT: Hello. How may I help you today?
+USER: {{prompt}}
+ASSISTANT:
