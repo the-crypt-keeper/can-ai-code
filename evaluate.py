@@ -7,6 +7,7 @@ parser = argparse.ArgumentParser(description='Interview evaluator')
 parser.add_argument('--interview', type=str, default='junior-dev', help='interview to evaluate')
 parser.add_argument('--language', type=str, required=True, help='language to evaluate')
 parser.add_argument('--answers', type=str, required=True, help='path to model answers')
+parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
 args = parser.parse_args()
 
 def extract_code(answer):
@@ -16,7 +17,10 @@ def extract_code(answer):
     # Find the index of the start token
     start_index = answer.find(start_token)
     if start_index == -1:
-        return None
+        if answer[0:3] == 'def':
+            return answer
+        else:
+            return None
 
     # Find the index of the end token, starting from the end of the start token
     end_index = answer.find(end_token, start_index + len(start_token))
@@ -34,11 +38,15 @@ for test in load_questions(args.interview):
     answer = None
     test_name = test['name'] + '-' + args.language
 
+    if args.test and test_name  != args.test:
+        print(test_name, 'Skipped due to command line filter')
+        continue
+
     try:
         with open(args.answers+test_name+'.txt','r') as f:
             answer = f.read()
     except Exception as e:
-        print(test_name,' Skipped', e)
+        print(test_name,'Skipped due to error', e)
         print()
         continue
 
@@ -69,6 +77,6 @@ for test in load_questions(args.interview):
         print(test_name,'passed',passed,'of',total)
         print()
     else:
-        print("No code found")
+        print(test_name+"Skipped because no code found")
 
 print('Passed',test_passed,'of',test_total)
