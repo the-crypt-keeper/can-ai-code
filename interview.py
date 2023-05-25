@@ -4,8 +4,8 @@ import yaml
 import argparse
 from jinja2 import Template
 
-def load_questions():
-    for file_path in glob.glob('questions/*.yaml'):
+def load_questions(interview='junior-dev'):
+    for file_path in glob.glob(interview+'/*.yaml'):
         with open(file_path, 'r') as file:
             tests = yaml.safe_load(file)
             for test in tests.keys():
