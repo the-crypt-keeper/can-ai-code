@@ -11,21 +11,25 @@ parser.add_argument('--test', type=str, help='(optional) specific test to evalua
 args = parser.parse_args()
 
 def extract_code(answer):
-    start_token = "```python"
-    end_token = "```"
+    # Fallback if the model forgot to use block quotes
+    if answer.strip()[0:3] == 'def' or answer.strip()[0:8] == 'function':
+        return answer
+    
+    # Look for start tokens
+    start_tokens = ['```python','```javascript','```']
 
-    # Find the index of the start token
-    start_index = answer.find(start_token)
+    for token in start_tokens:
+        start_token = token
+        start_index = answer.find(start_token)
+        if start_index != -1:
+            break    
+    
+    # If we didn't find a start token, return None
     if start_index == -1:
-        if answer.strip()[0:3] == 'def':
-            return answer
-        else:
-            start_token = "```"
-            start_index = answer.find(start_token)
-            if start_index == -1:
-                return None
+        return None
 
     # Find the index of the end token, starting from the end of the start token
+    end_token = "```"
     end_index = answer.find(end_token, start_index + len(start_token))
     if end_index == -1:
         return None
@@ -55,7 +59,7 @@ for test in load_questions(args.interview):
 
     code = extract_code(answer)
     if code:
-        f = FunctionSandbox(code)
+        f = FunctionSandbox(code, args.language)
         total = 0
         passed = 0
         print(test_name+' started')

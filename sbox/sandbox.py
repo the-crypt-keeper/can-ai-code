@@ -7,8 +7,14 @@ from jinja2 import Template
 
 module_dir = os.path.dirname(os.path.abspath(__file__))
 
-def extract_function_info(input_string):
-    function_regex = r"def\s+(.*)\s*\((.*)\)(.*):"
+def extract_function_info(language, input_string):
+    if language == 'python':
+        function_regex = r"def\s+(.*)\s*\((.*)\)(.*):"
+    elif language == 'javascript':
+        function_regex = r"function\s+(.*)\s*\((.*)\)(.*){"
+    else:
+        raise Exception("extract_function_info: Unsupported language")
+    
     matches = re.findall(function_regex, input_string, re.MULTILINE)
 
     functions = []
@@ -55,18 +61,20 @@ class FunctionArg:
         self.type = type
 
 class FunctionSandbox:
-    def __init__(self, code) -> None:
+    def __init__(self, code, language) -> None:
         self.code = code
+        self.language = language
+
         try:
-           self.functions = extract_function_info(self.code)[0]
+           self.functions = extract_function_info(self.language, self.code)[0]
         except:
            self.functions = { 'name': '', 'args': [] }
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
-        build_out, build_code = run_shell_command('cd '+module_dir+' && docker build . -f Dockerfile.python -t sandbox-py -q')
+        build_out, build_code = run_shell_command(f"cd {module_dir} && docker build . -f Dockerfile.{language} -t sandbox-{language} -q")
         if build_code != 0:
-            raise Exception("Error building docker image:" + build_out)
+            raise Exception("Error building sandbox docker image:" + build_out)
         
     def build_args(self, args):
         return_args = ''
@@ -82,8 +90,7 @@ class FunctionSandbox:
         return return_args
 
     def call(self, *args, **kwargs):
-        output = None
-        with open(module_dir+'/eval.py.tpl') as f:
+        with open(module_dir+'/eval.'+self.language+'.tpl') as f:
             template = Template(f.read())
 
         # Create a temporary file
@@ -96,7 +103,13 @@ class FunctionSandbox:
             answer_file = temp_file.name
             temp_file.write(self.code)
 
-        output, value = run_shell_command('docker run -it -v '+script_file+':/wrapper.py -v '+answer_file+':/answer.py sandbox-py python /wrapper.py')
+        if self.language == "python":
+            output, value = run_shell_command(f"docker run -it -v {script_file}:/wrapper.py -v {answer_file}:/answer.py sandbox-python python /wrapper.py")
+        elif self.language == "javascript":
+            output, value = None, 0
+
+        if value != 0:
+            return { "error": "non-zero result code "+str(value), "output": output }
         
         start_index = output.find("###")
         if start_index == -1:
