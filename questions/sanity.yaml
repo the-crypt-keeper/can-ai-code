@@ -1,5 +1,5 @@
-PythonSanityMeaningOfLife:
-    Request: "Write a python function meaning_of_life() that returns a single integer, the answer to life the universe and everything"
+SanityMeaningOfLife:
+    Request: "Write a {{language}} function meaning_of_life() that returns a single integer, the answer to life the universe and everything"
     Checks:
         input_name:
             assert: "f.name"
@@ -11,8 +11,8 @@ PythonSanityMeaningOfLife:
           assert: "f.call()"
           eq: 42
 
-PythonSanityList:
-    Request: "Write a python function things() that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain."
+SanityList:
+    Request: "Write a {{language}} function things() that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain."
     Checks:
         input_name:
             assert: "f.name"
@@ -23,3 +23,19 @@ PythonSanityList:
         returns:
           assert: "f.call()"
           eq: [5, "foobar", "Madrid"]
+
+SanitySecretIdentityMap:
+    Request: "Write a {{language}} function secretidentities() that returns an object mapping the superheroes Superman, Batman and Spiderman to their real names."
+    Checks:
+        input_name:
+            assert: "f.name"
+            eq: "secretidentities"
+        no_arguments:
+          assert: "len(f.args)"
+          eq: 0
+        superman:
+          assert: "f.call()['Superman']"
+          eq: "Clark Kent"
+        batman:
+          assert: "f.call()['Superman']"
+          eq: "Bruce Wayne"

@@ -9,8 +9,8 @@
       assert: "f.call(100,10)"
       eq: 10
 
-PythonGCDZeroShot:
-    Request: "Write a python function to compute the greatest common demoninator (gcd) of two input integers a and b."
+GCDZeroShot:
+    Request: "Write a {{language}} function to compute the greatest common demoninator (gcd) of two input integers a and b."
     Checks:
         <<: *Checks
         input_name_0:
@@ -20,8 +20,8 @@ PythonGCDZeroShot:
             assert: "f.args[1].name"
             eq: "b"
 
-PythonGCDMisnamed:
-    Request: "Write a python function fofx(x: int, banana: int) to compute the greatest common demoninator of two input integers x and banana."
+GCDMisnamed:
+    Request: "Write a {{language}} function fofx(x: int, banana: int) to compute the greatest common demoninator of two input integers x and banana."
     Checks:
         <<: *Checks
         input_name_0:

@@ -12,24 +12,24 @@
       assert: "f.call(5)"
       eq: [1, 1, 2, 3, 5]
 
-PythonFibonacciZeroShot:
-    Request: "Write a python function to compute the fibbonaci sequence of length n."
+FibonacciZeroShot:
+    Request: "Write a {{language}} function to compute the fibbonaci sequence of length n."
     Checks:
         <<: *Checks
         input_name:
             assert: "f.args[0].name"
             eq: "n"
 
-PythonFibonacciListZeroShot:
-    Request: "Write a python function that returns a list with the first n elements of the fibbonaci sequence."
+FibonacciListZeroShot:
+    Request: "Write a {{language}} function that returns a list with the first n elements of the fibbonaci sequence."
     Checks:
         <<: *Checks
         input_name:
             assert: "f.args[0].name"
             eq: "n"
 
-PythonFibonacciMisnamed:
-    Request: "Write a python function glork(bork: int) to compute the fibbonaci sequence of length bork."
+FibonacciMisnamed:
+    Request: "Write a {{language}} function glork(bork) to compute the fibbonaci sequence of length bork."
     Checks: 
         <<: *Checks
         input_name:
