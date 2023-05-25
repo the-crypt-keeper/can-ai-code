@@ -1,0 +1,29 @@
+.Checks: &Checks
+    one_argument:
+      assert: "len(f.args)"
+      eq: 1
+    returns_list:
+      assert: "isinstance(f.call(1),int)"
+      eq: true
+    value_0:
+      assert: "f.call(1)"
+      eq: 1
+    value_5:
+      assert: "f.call(5)"
+      eq: 120
+
+PythonFibonacciZeroShot:
+    Request: "Write a python function to compute the factorial of input n."
+    Checks:
+        <<: *Checks
+
+PythonFibonacciMisnamed:
+    Request: "Write a python function glork(bork: int) to compute the factorial of input bork."
+    Checks: 
+        <<: *Checks
+        input_name:
+            assert: "f.args[0].name"
+            eq: "bork"
+        func_name:
+            assert: "f.name"
+            eq: "glork"
