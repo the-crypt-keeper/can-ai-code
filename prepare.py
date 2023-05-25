@@ -2,13 +2,8 @@
 import glob
 import yaml
 import argparse
+import sys
 from jinja2 import Template
-import argparse
-
-parser = argparse.ArgumentParser(description='Interview evaluator')
-parser.add_argument('--language', type=str, required=True, help='language to use')
-parser.add_argument('--interview', type=str, default='junior-dev', help='interview to prepare')
-args = parser.parse_args()
 
 def load_questions(interview='junior-dev'):
     for file_path in glob.glob(interview+'/*.yaml'):
@@ -21,11 +16,16 @@ def load_questions(interview='junior-dev'):
                 yield tests[test]
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Interview questions')
-    parser.add_argument('--language', required=True, help='language to use')
-    args = parser.parse_args()
+    parser = argparse.ArgumentParser(description='Interview preparation')
+    parser.add_argument('--language', type=str, required=True, help='language to use')
+    parser.add_argument('--interview', type=str, default='junior-dev', help='interview to prepare')
+    parser.add_argument('--output', type=str, help='output file')
+    args = parser.parse_args() 
 
-    print("name,prompt")
+    # if no output file is provided, output to stdout
+    output_file = open(args.output,'w') if args.output else sys.stdout
+
+    print("name,prompt", file=output_file)
     for test in load_questions():
         test_name = test['name'] + '-' + args.language
 
@@ -37,4 +37,7 @@ if __name__ == "__main__":
         if test_prompt is None:
             continue
         
-        print(test_name + ',\"' + test_prompt + '\"')
+        print(test_name + ',\"' + test_prompt + '\"', file=output_file)
+
+    if args.output:
+        output_file.close()
