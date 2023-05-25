@@ -28,14 +28,18 @@ def init_model(provider, **kwargs):
     raise Exception('Unsupported provider')
 
 
-def prompt_template(provider):
-    TEMPLATES = {
-        'openai/chatgpt': 'When asked to write code, please output only a single code-block containing the final function and nothing else. {{prompt}}',
-        'ai21/j2-jumbo-instruct': 'When asked to write code, make sure its enclosed in a ``` delimited code block. {{prompt}}',
-        'cohere/command-nightly': 'When asked to write code, return only the requested function enclosed in a ``` delimited code block. {{prompt}}',
+def prompt_template(model):
+    FILENAMES = {
+        'openai/chatgpt': 'prompts/openai_chatgpt.txt',
+        'cohere/command-nightly': 'prompts/cohere_command-nightly.txt',
+        'ai21/j2-jumbo-instruct': 'prompts/ai21_j2-jumbo-instruct.txt',
     }
-
-    return TEMPLATES.get(provider,'{{prompt}}') 
+    filename = FILENAMES.get(model)
+    if filename:
+        with open(filename) as f:
+            return f.read()
+    print('WARNING: Failed to load template for provider '+model)
+    return '{{prompt}}' 
 
 parser = argparse.ArgumentParser(description='Interview executor for LangChain')
 parser.add_argument('--questions', type=str, required=True, help='path to questions .csv from prepare stage')
