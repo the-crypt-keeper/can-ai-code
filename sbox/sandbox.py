@@ -8,7 +8,7 @@ from jinja2 import Template
 module_dir = os.path.dirname(os.path.abspath(__file__))
 
 def extract_function_info(input_string):
-    function_regex = r"def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(([^)]*)\):"
+    function_regex = r"def\s+(.*)\s*\((.*)\)(.*):"
     matches = re.findall(function_regex, input_string, re.MULTILINE)
 
     functions = []
@@ -67,17 +67,30 @@ class FunctionSandbox:
         build_out, build_code = run_shell_command('cd '+module_dir+' && docker build . -f Dockerfile.python -t sandbox-py -q')
         if build_code != 0:
             raise Exception("Error building docker image:" + build_out)
+        
+    def build_args(self, args):
+        return_args = ''
+        for i, arg in enumerate(args):
+            if i != 0:
+                return_args += ','
+            if isinstance(arg, int):
+                return_args += str(arg)
+            elif isinstance(arg, str):
+                return_args += '"'+arg+'"'
+            else:
+                return_args += str(arg)
+        return return_args
 
     def call(self, *args, **kwargs):
         output = None
         with open(module_dir+'/eval.py.tpl') as f:
             template = Template(f.read())
-            output = template.render(name=self.name, args=self.args, kwargs=kwargs)
 
         # Create a temporary file
         with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
             script_file = temp_file.name
-            temp_file.write(template.render(call=self.name+'('+','.join([str(x) for x in args])+')'))
+            script = template.render(call=self.name+'('+self.build_args(args)+')')
+            temp_file.write(script)
 
         with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
             answer_file = temp_file.name
