@@ -106,7 +106,7 @@ class FunctionSandbox:
         if self.language == "python":
             output, value = run_shell_command(f"docker run -it -v {script_file}:/wrapper.py -v {answer_file}:/answer.py sandbox-python python /wrapper.py")
         elif self.language == "javascript":
-            output, value = None, 0
+            output, value = run_shell_command(f"docker run -it -v {script_file}:/wrapper.js -v {answer_file}:/answer.js sandbox-javascript node /wrapper.js")
 
         if value != 0:
             return { "error": "non-zero result code "+str(value), "output": output }
