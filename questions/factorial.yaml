@@ -12,12 +12,17 @@
       assert: "f.call(5)"
       eq: 120
 
-PythonFibonacciZeroShot:
+PythonFactorialRecursiveZeroShot:
+    Request: "Write a python function to compute the factorial of input n using recursion."
+    Checks:
+        <<: *Checks
+
+PythonFactorialZeroShot:
     Request: "Write a python function to compute the factorial of input n."
     Checks:
         <<: *Checks
 
-PythonFibonacciMisnamed:
+PythonFactorialMisnamed:
     Request: "Write a python function glork(bork: int) to compute the factorial of input bork."
     Checks: 
         <<: *Checks
