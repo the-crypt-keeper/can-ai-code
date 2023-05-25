@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from interview import load_questions
 from sandbox import FunctionSandbox
-
+import sys
 def extract_code(answer):
     start_token = "```python"
     end_token = "```"
@@ -21,7 +21,11 @@ def extract_code(answer):
 
     return code_text
 
-ANSWER_DIR = "result-0.0/"
+if len(sys.argv) == 1:
+    print("Please provide the directory of the answer files")
+    sys.exit(0)
+
+ANSWER_DIR = sys.argv[1]
 
 for test in load_questions():
     answer = None
