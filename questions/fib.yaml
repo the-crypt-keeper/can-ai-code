@@ -20,6 +20,14 @@ PythonFibonacciZeroShot:
             assert: "f.args[0].name"
             eq: "n"
 
+PythonFibonacciListZeroShot:
+    Request: "Write a python function that returns a list with the first n elements of the fibbonaci sequence."
+    Checks:
+        <<: *Checks
+        input_name:
+            assert: "f.args[0].name"
+            eq: "n"
+
 PythonFibonacciMisnamed:
     Request: "Write a python function glork(bork: int) to compute the fibbonaci sequence of length bork."
     Checks: 
