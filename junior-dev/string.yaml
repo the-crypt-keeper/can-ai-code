@@ -1,21 +1,24 @@
 StringCountTokens:
-    Request: "Write a {{language}} function tokencount(str, token) that counts the number of times `token` occurs in `str` and returns it"
+    Request: "Write a {{language}} function substrcount(str, substr) that counts the number of times the sub-string `substr` occurs in `str` and returns it"
     Checks:
         two_arguments:
             assert: "len(f.args)"
             eq: 2
+        function_name:
+            assert: "f.name"
+            eq: "substrcount"
         input_name_0:
             assert: "f.args[0].name"
             eq: "str"
         input_name_1:
             assert: "f.args[1].name"
-            eq: "token"
+            eq: "substr"
         count_a:
             assert: "f.call('aaa','a')"
             eq: 3
         count_aa:
-            assert: "f.call('aaa','aa')"
+            assert: "f.call(\"aaa\",\"aa\")"
             eq: 1
         count_abc:
-            assert: "f.call('abcabcefgabc','abc')"
+            assert: "f.call(\"abcabcefgabc\",\"abc\")"
             eq: 3

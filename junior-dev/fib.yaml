@@ -5,8 +5,8 @@
     returns_list:
       assert: "isinstance(f.call(0),list)"
       eq: true
-    value_0:
-      assert: "f.call(0)"
+    value_1:
+      assert: "f.call(1)"
       eq: [0]
     value_5:
       assert: "f.call(5)"
