@@ -10,9 +10,14 @@ def init_model(provider, **kwargs):
     if provider == 'cohere/command-nightly':
         from langchain import Cohere
         return Cohere(model='command-nightly',**kwargs)
-    elif provider == 'ai21/ai21':
+    elif provider == 'ai21/j2-jumbo-instruct':
         from langchain.llms import AI21
-        return AI21(**kwargs)
+
+        if 'max_tokens' in kwargs:
+            kwargs['maxTokens'] = kwargs['max_tokens']
+            del kwargs['max_tokens']
+        
+        return AI21(model='j2-jumbo-instruct', **kwargs)
     elif provider == 'openai/chatgpt':
         from langchain.chat_models import ChatOpenAI
         return ChatOpenAI(model='gpt-3.5-turbo', **kwargs)
@@ -21,13 +26,20 @@ def init_model(provider, **kwargs):
         return ChatOpenAI(model='gpt-4', **kwargs)
     raise Exception('Unsupported provider')
 
+
 def prompt_template(provider):
-    return 'When asked to write code, please output only a single code-block containing the final function and nothing else. {{prompt}}'
+    TEMPLATES = {
+        'openai/chatgpt': 'When asked to write code, please output only a single code-block containing the final function and nothing else. {{prompt}}',
+        'ai21/j2-jumbo-instruct': 'When asked to write code, make sure its enclosed in a ``` delimited code block. {{prompt}}'
+    }
+
+    return TEMPLATES.get(provider,'{{prompt}}') 
 
 parser = argparse.ArgumentParser(description='Interview executor for LangChain')
 parser.add_argument('--questions', type=str, required=True, help='path to questions .csv from prepare stage')
 parser.add_argument('--model', type=str, required=True, help='model to use')
 parser.add_argument('--outdir', type=str, required=True, help='output directory')
+parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
 parser.add_argument('--temperature', type=float, default=0.7, help='temperature for generation')
 parser.add_argument('--max_tokens', type=int, default=512, help='max length of generated text')
 args = parser.parse_args()
