@@ -1,9 +1,11 @@
 import re
-from typing import Any
 import tempfile
 import subprocess
 import json
+import os
 from jinja2 import Template
+
+module_dir = os.path.dirname(os.path.abspath(__file__))
 
 def extract_function_info(input_string):
     function_regex = r"def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(([^)]*)\):"
@@ -33,6 +35,9 @@ def run_shell_command(command):
         # Get the captured output
         output = result.stdout.strip()
 
+        if output == '':
+            output = result.stderr.strip()
+
         # Get the return value
         return_value = result.returncode
 
@@ -59,11 +64,13 @@ class FunctionSandbox:
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
-        run_shell_command('docker build . -f Dockerfile.python -t sandbox-py -q')
+        build_out, build_code = run_shell_command('cd '+module_dir+' && docker build . -f Dockerfile.python -t sandbox-py -q')
+        if build_code != 0:
+            raise Exception("Error building docker image:" + build_out)
 
     def call(self, *args, **kwargs):
         output = None
-        with open('eval.py.tpl') as f:
+        with open(module_dir+'/eval.py.tpl') as f:
             template = Template(f.read())
             output = template.render(name=self.name, args=self.args, kwargs=kwargs)
 
