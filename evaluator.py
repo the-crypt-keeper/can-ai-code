@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 from interview import load_questions
 from sandbox import FunctionSandbox
-import sys
+import argparse
+
+parser = argparse.ArgumentParser(description='Interview evaluator')
+parser.add_argument('--language', type=str, required=True, help='language to use')
+parser.add_argument('--answers', type=str, required=True, help='path to model answers')
+args = parser.parse_args()
+
 def extract_code(answer):
     start_token = "```python"
     end_token = "```"
@@ -21,16 +27,12 @@ def extract_code(answer):
 
     return code_text
 
-if len(sys.argv) == 1:
-    print("Please provide the directory of the answer files")
-    sys.exit(0)
-
-ANSWER_DIR = sys.argv[1]
-
 for test in load_questions():
     answer = None
+    test_name = test['name'] + '-' + args.language
+
     try:
-        with open(ANSWER_DIR+test['name']+'.txt','r') as f:
+        with open(args.answers+test_name+'.txt','r') as f:
             answer = f.read()
     except Exception as e:
         print(e)
@@ -41,7 +43,7 @@ for test in load_questions():
         f = FunctionSandbox(code)
         total = 0
         passed = 0
-        print('\n\n'+test['name']+' started')
+        print(test_name+' started')
         #print('---\n'+code+'\n---')
         for check_name in test['Checks'].keys():
             check = test['Checks'][check_name]
@@ -58,6 +60,7 @@ for test in load_questions():
                     passed += 1
                 else:
                     print('   ',check_name, "failed", check['assert'], 'got', test_value, '!=', check['eq'])
-        print(test['name'],'passed',passed,'of',total)
+        print(test_name,'passed',passed,'of',total)
+        print()
     else:
         print("No code found")
