@@ -21,7 +21,9 @@ GCDZeroShot:
             eq: "b"
 
 GCDMisnamed:
-    Request: "Write a {{language}} function fofx(x: int, banana: int) to compute the greatest common demoninator of two input integers x and banana."
+    Request: 
+        python: "Write a python function fofx(x: int, banana: int) to compute the greatest common demoninator of two input integers x and banana."
+        javascript: "Write a javascript function fofx(x, banana) to compute the greatest common demoninator of two input integers x and banana."
     Checks:
         <<: *Checks
         input_name_0:

@@ -3,6 +3,12 @@ import glob
 import yaml
 import argparse
 from jinja2 import Template
+import argparse
+
+parser = argparse.ArgumentParser(description='Interview evaluator')
+parser.add_argument('--language', type=str, required=True, help='language to use')
+parser.add_argument('--interview', type=str, default='junior-dev', help='interview to prepare')
+args = parser.parse_args()
 
 def load_questions(interview='junior-dev'):
     for file_path in glob.glob(interview+'/*.yaml'):
@@ -26,6 +32,9 @@ if __name__ == "__main__":
         if isinstance(test['Request'], str):
             test_prompt = Template(test['Request']).render(language=args.language)
         else:
-            test_prompt = test['Request'][args.language]
+            test_prompt = test['Request'].get(args.language)
+        
+        if test_prompt is None:
+            continue
         
         print(test_name + ',\"' + test_prompt + '\"')
