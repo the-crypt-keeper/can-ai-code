@@ -34,11 +34,11 @@ SanitySecretIdentityMap:
           assert: "len(f.args)"
           eq: 0
         superman:
-          assert: "f.call()['Superman']"
+          assert: "f.call().get('Superman')"
           eq: "Clark Kent"
         batman:
-          assert: "f.call()['Batman']"
+          assert: "f.call().get('Batman')"
           eq: "Bruce Wayne"
         spiderman:
-          assert: "f.call()['Spiderman']"
+          assert: "f.call().get('Spiderman')"
           eq: "Peter Parker"
