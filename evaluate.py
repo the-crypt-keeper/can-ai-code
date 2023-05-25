@@ -20,7 +20,10 @@ def extract_code(answer):
         if answer[0:3] == 'def':
             return answer
         else:
-            return None
+            start_token = "```"
+            start_index = answer.find(start_token)
+            if start_index == -1:
+                return None
 
     # Find the index of the end token, starting from the end of the start token
     end_index = answer.find(end_token, start_index + len(start_token))
