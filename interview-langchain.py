@@ -22,7 +22,7 @@ def init_model(provider, **kwargs):
     raise Exception('Unsupported provider')
 
 def prompt_template(provider):
-    return '{{prompt}}'
+    return 'When asked to write code, please output only a single code-block containing the final function and nothing else. {{prompt}}'
 
 parser = argparse.ArgumentParser(description='Interview executor for LangChain')
 parser.add_argument('--questions', type=str, required=True, help='path to questions .csv from prepare stage')
@@ -57,7 +57,7 @@ for idx, test in df.iterrows():
     if os.path.exists(out_file):
         print('Skipping, already exists')
         continue
-    
+
     full_prompt = Template(info['prompt_template']).render(prompt=test['prompt'])
 
     lc_prompt = PromptTemplate(template='{input}', input_variables=['input'])
