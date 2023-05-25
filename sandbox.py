@@ -52,7 +52,10 @@ class FunctionArg:
 class FunctionSandbox:
     def __init__(self, code) -> None:
         self.code = code
-        self.functions = extract_function_info(self.code)[0]
+        try:
+           self.functions = extract_function_info(self.code)[0]
+        except:
+           self.functions = { 'name': None, 'args': [] }
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
