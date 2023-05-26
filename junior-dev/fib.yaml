@@ -12,7 +12,7 @@
       assert: "f.call(2)"
       eq: [0, 1]      
     value_3:
-      assert: "f.call(2)"
+      assert: "f.call(3)"
       eq: [0, 1, 1]
     value_5:
       assert: "f.call(5)"
