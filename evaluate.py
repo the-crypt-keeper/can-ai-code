@@ -2,6 +2,7 @@
 from prepare import load_questions
 from sbox.sandbox import FunctionSandbox
 import argparse
+import json
 
 parser = argparse.ArgumentParser(description='Interview evaluator')
 parser.add_argument('--interview', type=str, default='junior-dev', help='interview to evaluate')
@@ -41,6 +42,7 @@ def extract_code(answer):
 
 test_total = 0
 test_passed = 0
+results = []
 for test in load_questions(args.interview):
     answer = None
     test_name = test['name'] + '-' + args.language
@@ -55,14 +57,18 @@ for test in load_questions(args.interview):
     except Exception as e:
         print(test_name,'Skipped due to error', e)
         print()
+        row = { 'test': test_name, 'language': args.language, 'status': 'ERROR', 'error': str(e) }
+        results.append(row)
         continue
 
     code = extract_code(answer)
+    total = 0
+    passed = 0
+    checks = []
+
     if code:
         f = FunctionSandbox(code, args.language)
-        total = 0
-        passed = 0
-        print(test_name+' started')
+        print(test_name,'started')
         #print('---\n'+code+'\n---')
         for check_name in test['Checks'].keys():
             check = test['Checks'][check_name]
@@ -75,15 +81,27 @@ for test in load_questions(args.interview):
                 except Exception as e:
                     test_value = str(e)
 
+                check['got'] = test_value
+
                 if (test_value == check['eq']):
                     print('   ',check_name, "passed")
                     passed += 1
                     test_passed += 1
+                    check['status'] = 1
                 else:
+                    check['status'] = 0
                     print('   ',check_name, "failed", check['assert'], 'got', test_value, '!=', check['eq'])
-        print(test_name,'passed',passed,'of',total)
-        print()
+            checks.append(check)
     else:
-        print(test_name+"Skipped because no code found")
+        print(test_name, "No code found")
 
-print('Passed',test_passed,'of',test_total)
+    row = { 'test': test_name, 'language': args.language, 'checks': checks, 'status': 'PASS' if passed==total else 'FAIL', 'error': None, 'answer': answer, 'code': code,  'passed': passed, 'total': total }
+    results.append(row)
+    print(row['test'], row['status'])
+    print()
+
+if not args.test:
+    outfn = f"{args.answers}eval-{args.language}.json"
+    with open(outfn,'w') as f:
+        json.dump(results, f, indent=2)
+    print('Passed',test_passed,'of',test_total,'results written to',outfn)    
