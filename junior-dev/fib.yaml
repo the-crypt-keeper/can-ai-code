@@ -8,6 +8,12 @@
     value_1:
       assert: "f.call(1)"
       eq: [0]
+    value_2:
+      assert: "f.call(2)"
+      eq: [0, 1]      
+    value_3:
+      assert: "f.call(2)"
+      eq: [0, 1, 1]
     value_5:
       assert: "f.call(5)"
       eq: [0, 1, 1, 2, 3]
