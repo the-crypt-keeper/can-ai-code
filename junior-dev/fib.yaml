@@ -20,6 +20,7 @@
 
 FibonacciZeroShot:
     Request: "Write a {{language}} function to compute the fibbonaci sequence of length n."
+    Description: "See if the model can produce a well known sequence"
     Checks:
         <<: *Checks
         input_name:
@@ -28,6 +29,7 @@ FibonacciZeroShot:
 
 FibonacciListZeroShot:
     Request: "Write a {{language}} function that returns a list with the first n elements of the fibbonaci sequence."
+    Description: "See if the model can produce a well known sequence, explicitly asking for a list"
     Checks:
         <<: *Checks
         input_name:
@@ -36,6 +38,7 @@ FibonacciListZeroShot:
 
 FibonacciMisnamed:
     Request: "Write a {{language}} function glork(bork) to compute the fibbonaci sequence of length bork."
+    Description: "See if the model can produce a well known sequence if the name has been changed"
     Checks: 
         <<: *Checks
         input_name:

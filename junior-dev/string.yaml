@@ -1,5 +1,6 @@
 StringCountTokens:
     Request: "Write a {{language}} function substrcount(str, substr) that counts the number of times the sub-string `substr` occurs in `str` and returns it"
+    Description: "Check if the model is capable of performing basic string manipulation."
     Checks:
         two_arguments:
             assert: "len(f.args)"

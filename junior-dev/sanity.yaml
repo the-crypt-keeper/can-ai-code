@@ -1,5 +1,6 @@
 SanityMeaningOfLife:
     Request: "Write a {{language}} function meaning_of_life() that returns a single integer, the answer to life the universe and everything"
+    Description: "Scalar function with no arguments, see if the model can use its internal knowledge to both code and summon a fact from pop culture."
     Checks:
         input_name:
             assert: "f.name"
@@ -13,6 +14,7 @@ SanityMeaningOfLife:
 
 SanityList:
     Request: "Write a {{language}} function things() that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain."
+    Description: "List function, see if the model can combine input facts with internal knowledge."
     Checks:
         input_name:
             assert: "f.name"
@@ -26,6 +28,7 @@ SanityList:
 
 SanitySecretIdentityMap:
     Request: "Write a {{language}} function secretidentities() that returns an object mapping the superheroes Superman, Batman and Spiderman to their real names."
+    Description: "Object function, see if the model can use its internal knowledge to build a map."
     Checks:
         input_name:
             assert: "f.name"

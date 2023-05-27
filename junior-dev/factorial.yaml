@@ -14,18 +14,21 @@
 
 FactorialZeroShot: &FactorialZeroShot
     Request: "Write a {{language}} function to compute the factorial of input n."
+    Description: "See if the model can implement a well known function"
     Checks:
         <<: *Checks
 
 FactorialRecursiveZeroShot: &FactorialRecursiveZeroShot
     Request: "Write a {{language}} function to compute the factorial of input n using recursion."
+    Description: "See if the model can implement a well known function using recursion"
     Checks:
         <<: *Checks
 
 FactorialMisnamed: &FactorialMisnamed
     Request: 
         python: "Write a python function glork(bork: int) to compute the factorial of input bork."
-        javascript: "Write a javascript function glork(bork) to compute the factorial of input bork."    
+        javascript: "Write a javascript function glork(bork) to compute the factorial of input bork."
+    Description: "See if the model can implement a well known function if the name has been changed" 
     Checks: 
         <<: *Checks
         input_name:

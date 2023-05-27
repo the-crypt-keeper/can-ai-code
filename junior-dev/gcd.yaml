@@ -11,6 +11,7 @@
 
 GCDZeroShot:
     Request: "Write a {{language}} function to compute the greatest common demoninator (gcd) of two input integers a and b."
+    Description: "See if the model can output a well-known, simple algorithm."
     Checks:
         <<: *Checks
         input_name_0:
@@ -24,6 +25,7 @@ GCDMisnamed:
     Request: 
         python: "Write a python function fofx(x: int, banana: int) to compute the greatest common demoninator of two input integers x and banana."
         javascript: "Write a javascript function fofx(x, banana) to compute the greatest common demoninator of two input integers x and banana."
+    Description: "See if the model can output a well-known, simple algorithm if the name has been changed."
     Checks:
         <<: *Checks
         input_name_0:
