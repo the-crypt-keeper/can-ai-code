@@ -23,6 +23,10 @@ A self-evaluating interview for AI coding models.
 
 Evaluation of 30B/65B models is in the Roadmap.  Can you help?  Reach out!
 
+## Results (chart)
+
+![Chart](https://quickchart.io/chart?c={%22type%22:%22bar%22,%22data%22:{%22labels%22:[%22openai/gpt-3.5-turbo%22,%22ai21/j2-jumbo-instruct%22,%22cohere/command-nightly%22,%22Wizard-Vicuna-13B-Uncensored%22,%22vicuna-7B-1.1%22,%22Manticore-13B%22,%22Guanaco-13B%22],%22datasets%22:[{%22label%22:%22Python%22,%22data%22:[65,55,48,31,51,47,41]},{%22label%22:%22JavaScript%22,%22data%22:[62,39,45,48,40,37,37]}]}})
+
 ## Repository Structure
 
 * `junior-dev/*.yaml` - Interview questions (multi-language)
@@ -101,6 +105,8 @@ The output of `prepare.py` is a simple csv with two columns: name and prompt
 To create your own interview, simply feed the prompts to your model of choice and saveeach model outputs as name.txt in a results directory.  That's it!  Now you can perform evaluation.
 
 # Roadmap / Future Work
+
+Contributions are welcome!  Especially looking for additional interview sets and improvements to questions - open a PR! 
 
 * Evaluate 30B and 65B open langauge models
 * Evaluate StarCoder (prompt style is very different)
