@@ -21,6 +21,8 @@ A self-evaluating interview for AI coding models.
 |Manticore-13B|Open 13B ggmlv3.q5_0|47/65|37/65|
 |Guanaco-13B|Open 13B GPTQ 4bit|41/65|37/65|
 
+Evaluation of 30B/65B models is in the Roadmap.  Can you help?  Reach out!
+
 ## Repository Structure
 
 * `junior-dev/*.yaml` - Interview questions (multi-language)
@@ -98,7 +100,9 @@ The output of `prepare.py` is a simple csv with two columns: name and prompt
 
 To create your own interview, simply feed the prompts to your model of choice and saveeach model outputs as name.txt in a results directory.  That's it!  Now you can perform evaluation.
 
-## Future Work
+# Roadmap / Future Work
 
+* Evaluate 30B and 65B open langauge models
+* Evaluate StarCoder (prompt style is very different)
 * If the models are offered error messages or failing test results, could they produce better code?
 * Can tweaking prompts improve performance?
