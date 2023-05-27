@@ -35,8 +35,10 @@ Initial performance of Starchat is poor but this requires further investigation;
 ## Repository Structure
 
 * `junior-dev/*.yaml` - Interview questions (multi-language)
+* `prompts/*.txt` - System prompts for the various models
 * `prepare.py` - Specializes question into prompts for a specific language
 * `interview-langchain.py` - Use a LangChain LLM model to write code
+* `interview-starchat.py` - Use a Huggingface Space running Starchat model to write code
 * `intreview-llamacpp.sh` - Use a GGML llama.cpp model to write code
 * `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 * `report.py` - (WIP - not yet complete) Compare results from multiple interviews
