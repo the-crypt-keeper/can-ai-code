@@ -16,6 +16,7 @@ A self-evaluating interview for AI coding models.
 * `interview-langchain.py` - Use a LangChain LLM model to write code
 * `intreview-llamacpp.sh` - Use a GGML llama.cpp model to write code
 * `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
+* `report.py` - (WIP - not yet complete) Compare results from multiple interviews
 
 ## Question Format
 
