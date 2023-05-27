@@ -4,8 +4,10 @@ A self-evaluating interview for AI coding models.
 
 ## Key Ideas
 
-* Interview questions written by humans
+* Interview questions written by humans, test taken by AI
 * Sandbox enviroment (Docker-based) for untrusted Python and NodeJS execution
+* Compare LLM models against each other
+* For a given LLM, compare prompting techniques and hyper-parameters
 
 ## Repository Structure
 
