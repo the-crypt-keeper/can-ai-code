@@ -20,12 +20,17 @@ A self-evaluating interview for AI coding models.
 |vicuna-7B-1.1|Open 7B ggmlv3 q5_0|**51/65** :3rd_place_medal:|40/65|
 |Manticore-13B|Open 13B ggmlv3.q5_0|47/65|37/65|
 |Guanaco-13B|Open 13B GPTQ 4bit|41/65|37/65|
+|Starchat|Open 40B|32/65 :construction:|33/65 :construction:|
 
 Evaluation of 30B/65B models is in the Roadmap.  Can you help?  Reach out!
 
+### Starchat Note
+
+Initial performance of Starchat is poor but this requires further investigation; at least for JavaScript its due to producing arrow functions which the static analysis doesnt yet understand. 
+
 ## Results (chart)
 
-![Chart](https://quickchart.io/chart?c={%22type%22:%22bar%22,%22data%22:{%22labels%22:[%22openai/gpt-3.5-turbo%22,%22ai21/j2-jumbo-instruct%22,%22cohere/command-nightly%22,%22Wizard-Vicuna-13B-Uncensored%22,%22vicuna-7B-1.1%22,%22Manticore-13B%22,%22Guanaco-13B%22],%22datasets%22:[{%22label%22:%22Python%22,%22data%22:[65,55,48,31,51,47,41]},{%22label%22:%22JavaScript%22,%22data%22:[62,39,45,48,40,37,37]}]}})
+![Chart](https://quickchart.io/chart?c={%22type%22:%22bar%22,%22data%22:{%22labels%22:[%22openai/gpt-3.5-turbo%22,%22ai21/j2-jumbo-instruct%22,%22cohere/command-nightly%22,%22Wizard-Vicuna-13B-Uncensored%22,%22vicuna-7B-1.1%22,%22Manticore-13B%22,%22Guanaco-13B%22,%22Starchat%22],%22datasets%22:[{%22label%22:%22Python%22,%22data%22:[65,55,48,31,51,47,41,32]},{%22label%22:%22JavaScript%22,%22data%22:[62,39,45,48,40,37,37,33]}]}})
 
 ## Repository Structure
 
