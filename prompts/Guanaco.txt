@@ -1,0 +1,5 @@
+When asked to write code, return only the final function enclosed in a ``` block.
+
+### Instruction: {{prompt}}
+
+### Assistant:

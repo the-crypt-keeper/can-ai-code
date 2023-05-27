@@ -65,3 +65,13 @@ export OPENAI_API_KEY=...
 ./evaluate.py --language python --answers results/chatgpt/
 ```
 
+## Interview format
+
+The output of `prepare.py` is a simple csv with two columns: name and prompt
+
+To create your own interview, simply feed the prompts to your model of choice and saveeach model outputs as name.txt in a results directory.  That's it!  Now you can perform evaluation.
+
+## Future Work
+
+* If the models are offered error messages or failing test results, could they produce better code?
+* Can tweaking prompts improve performance?
