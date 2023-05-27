@@ -9,6 +9,7 @@ parser.add_argument('--interview', type=str, default='junior-dev', help='intervi
 parser.add_argument('--language', type=str, required=True, help='language to evaluate')
 parser.add_argument('--answers', type=str, required=True, help='path to model answers')
 parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
+parser.add_argument('--noextract', action='store_true', help='(optional) skip code extraction')
 args = parser.parse_args()
 
 def extract_code(answer):
@@ -61,7 +62,7 @@ for test in load_questions(args.interview):
         results.append(row)
         continue
 
-    code = extract_code(answer)
+    code = extract_code(answer) if not args.noextract else answer
     total = 0
     passed = 0
     checks = []
