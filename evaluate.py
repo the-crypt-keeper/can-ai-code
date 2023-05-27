@@ -94,8 +94,9 @@ for test in load_questions(args.interview):
             checks.append(check)
     else:
         print(test_name, "No code found")
+        passed = -1
 
-    row = { 'test': test_name, 'language': args.language, 'checks': checks, 'status': 'PASS' if passed==total else 'FAIL', 'error': None, 'answer': answer, 'code': code,  'passed': passed, 'total': total }
+    row = { 'test': test_name, 'language': args.language, 'checks': checks, 'status': 'PASS' if passed==total else 'NOCODE' if passed == -1 else 'FAIL', 'error': None, 'answer': answer, 'code': code,  'passed': passed, 'total': total }
     results.append(row)
     print(row['test'], row['status'])
     print()
