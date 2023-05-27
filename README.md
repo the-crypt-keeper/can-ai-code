@@ -9,6 +9,18 @@ A self-evaluating interview for AI coding models.
 * Compare LLM models against each other
 * For a given LLM, compare prompting techniques and hyper-parameters
 
+## Results
+
+|Model|Notes|Python|JavaScript|
+|-----|-----|-----|-----|
+|openai/gpt-3.5-turbo|Proprietary 170B|**65/65** :1st_place_medal:|62/65|
+|ai21/j2-jumbo-instruct|Proprietary 178B|55/65|39/65|
+|cohere/command-nightly|Proprietary 52B|48/65|45/65|
+|Wizard-Vicuna-13B-Uncensored|13B ggmlv3.q5_0|31/65|**48/65** :2nd_place_medal:|
+|vicuna-7B-1.1|7B ggmlv3 q5_0|51/65|40/65|
+|Manticore-13B|13B ggmlv3.q5_0|**47/65** :3rd_place_medal:|37/65|
+|Guanaco-13B|13B GPTq 4bit|41/65|37/65|
+
 ## Repository Structure
 
 * `junior-dev/*.yaml` - Interview questions (multi-language)
@@ -52,11 +64,26 @@ The f object represents the sandbox view of the function.  Static analysis is pe
 ./prepare.py --language python --output python.csv
 ```
 
-2. Execute the interview with ChatGPT (gpt-3.5-turbo)
+2. Execute the interview.
+
+With ChatGPT (gpt-3.5-turbo):
 
 ```bash
 export OPENAI_API_KEY=...
 ./interview-langchain.py --model openai/chatgpt --questions python.csv --outdir results/chatgpt/
+```
+
+With Vicuna 1.1 (llama.cpp):
+
+First open `interview-llamacpp.sh` and customize with your hostname and binary paths.  Then:
+
+```bash
+export PROMPT=prompts/Vicuna-1p1.txt
+export MODEL=".../models/v3/ggml-vicuna-7b-1.1-q5_0.bin"
+export OUTPUT="results/vicuna-1.1-7b/"
+export INTERVIEW="python.csv"
+
+./interview-llamacpp.sh
 ```
 
 3. Evaulate the results
