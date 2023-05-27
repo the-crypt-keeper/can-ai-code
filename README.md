@@ -13,13 +13,13 @@ A self-evaluating interview for AI coding models.
 
 |Model|Notes|Python|JavaScript|
 |-----|-----|-----|-----|
-|openai/gpt-3.5-turbo|Proprietary 170B|**65/65** :1st_place_medal:|62/65 :1st_place_medal:|
+|openai/gpt-3.5-turbo|Proprietary 170B|65/65 :1st_place_medal:|62/65 :1st_place_medal:|
 |ai21/j2-jumbo-instruct|Proprietary 178B|55/65 :2nd_place_medal:|39/65|
 |cohere/command-nightly|Proprietary 52B|48/65|45/65 :3rd_place_medal:|
-|Wizard-Vicuna-13B-Uncensored|13B ggmlv3.q5_0|31/65|**48/65** :2nd_place_medal:|
-|vicuna-7B-1.1|7B ggmlv3 q5_0|**51/65** :3rd_place_medal:|40/65|
-|Manticore-13B|13B ggmlv3.q5_0|47/65|37/65|
-|Guanaco-13B|13B GPTq 4bit|41/65|37/65|
+|Wizard-Vicuna-13B-Uncensored|Open 13B ggmlv3.q5_0|31/65|**48/65** :2nd_place_medal:|
+|vicuna-7B-1.1|Open 7B ggmlv3 q5_0|**51/65** :3rd_place_medal:|40/65|
+|Manticore-13B|Open 13B ggmlv3.q5_0|47/65|37/65|
+|Guanaco-13B|Open 13B GPTQ 4bit|41/65|37/65|
 
 ## Repository Structure
 
