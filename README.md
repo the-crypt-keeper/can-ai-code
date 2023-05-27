@@ -17,8 +17,8 @@ A self-evaluating interview for AI coding models.
 |ai21/j2-jumbo-instruct|Proprietary 178B|55/65|39/65|
 |cohere/command-nightly|Proprietary 52B|48/65|45/65|
 |Wizard-Vicuna-13B-Uncensored|13B ggmlv3.q5_0|31/65|**48/65** :2nd_place_medal:|
-|vicuna-7B-1.1|7B ggmlv3 q5_0|51/65|40/65|
-|Manticore-13B|13B ggmlv3.q5_0|**47/65** :3rd_place_medal:|37/65|
+|vicuna-7B-1.1|7B ggmlv3 q5_0|**51/65** :3rd_place_medal:|40/65|
+|Manticore-13B|13B ggmlv3.q5_0|47/65|37/65|
 |Guanaco-13B|13B GPTq 4bit|41/65|37/65|
 
 ## Repository Structure
