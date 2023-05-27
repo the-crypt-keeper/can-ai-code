@@ -20,7 +20,7 @@ A self-evaluating interview for AI coding models.
 |vicuna-7B-1.1|Open 7B ggmlv3 q5_0|**51/65** :3rd_place_medal:|40/65|
 |Manticore-13B|Open 13B ggmlv3.q5_0|47/65|37/65|
 |Guanaco-13B|Open 13B GPTQ 4bit|41/65|37/65|
-|WizardLM-13B-1.0|Open 13B ggmlv3.q5_0|**53/65** :3rd_place_medal:|**52/65** :2rd_place_medal:|
+|WizardLM-13B-1.0|Open 13B ggmlv3.q5_0|**53/65** :3rd_place_medal:|**52/65** :2nd_place_medal:|
 |Starchat|Open 40B|32/65 :construction:|33/65 :construction:|
 
 Evaluation of 30B/65B models is in the Roadmap.  Can you help?  Reach out!
