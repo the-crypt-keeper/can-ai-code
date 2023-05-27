@@ -17,9 +17,9 @@ StringCountTokens:
         count_a:
             assert: "f.call('aaa','a')"
             eq: 3
-        count_aa:
-            assert: "f.call(\"aaa\",\"aa\")"
-            eq: 1
+        count_ab:
+            assert: "f.call(\"babaab\",\"ab\")"
+            eq: 2
         count_abc:
             assert: "f.call(\"abcabcefgabc\",\"abc\")"
             eq: 3
