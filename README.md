@@ -22,7 +22,11 @@ A self-evaluating interview for AI coding models.
 |Guanaco-13B|Open 13B GPTQ 4bit|41/65|37/65|
 |WizardLM-13B-1.0|Open 13B ggmlv3.q5_0|53/65|**52/65** :2nd_place_medal:|
 |WizardLM-7B-Uncensored|Open 7B ggmlv3.q5_1|**54/65** :3rd_place_medal:|37/65|
-|Starchat|Open 40B|32/65 :construction:|33/65 :construction:|
+|bigcode/Starchat|Open 15.5B|32/65 :construction:|33/65 :construction:|
+|bigcode/tiny_starcoder_py|Open 159M|39/65 [1] :construction:|N/A|
+|bigcode/Starcoder|Open 15.5B|45/65 [1] :construction:|:construction:|
+
+[1] Starcoder models are prompted with FIM techniques, see https://github.com/the-crypt-keeper/tiny_starcoder/blob/can-ai-code/interview-tinystarcoder.py
 
 Evaluation of 30B/65B models is in the Roadmap.  Can you help?  Reach out!
 

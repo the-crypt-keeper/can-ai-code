@@ -2,9 +2,21 @@ import json
 import requests
 import os
 import time
+from jinja2 import Template
+import yaml
+import argparse
+
+# WARNING: This script is biased towards StarCoder interview challenges since it uses FIM prompting.
+# tiny-interview.yml example at https://github.com/the-crypt-keeper/tiny_starcoder/blob/can-ai-code/tiny-interview.yml
+
+parser = argparse.ArgumentParser(description='Interview executor for LangChain')
+parser.add_argument('--tinyinterview', type=str, default='../tiny_starcoder/tiny-interview.yml', help='path to tiny-interview.yml from prepare stage')
+parser.add_argument('--model', type=str, default='bigcode/starcoder', help='model to use')
+parser.add_argument('--outdir', type=str, required=True, help='output directory')
+args = parser.parse_args()
 
 headers = {"Authorization": f"Bearer {os.getenv('HF_API_KEY')}"}
-API_URL = "https://api-inference.huggingface.co/models/bigcode/starcoder"
+API_URL = "https://api-inference.huggingface.co/models/"+args.model
 def query(payload):
     tries = 0
     while tries < 5:
@@ -26,19 +38,46 @@ def query(payload):
             continue
     return res
 
-# for parameters, see https://huggingface.github.io/text-generation-inference/ GenerateParameters struct
-data = query(
-    {
-        #"inputs": "# the fib(n) function computes the nth element of the fibonnaci sequence\ndef fib(n):",
-        #"inputs": "# the fib(n) function computes the nth element of the fibonnaci sequence\n",
-        #"inputs": "# the gcd(a, b) function computes the greatest common divisor of a and b\n",
-        #"inputs": "# the substrcount(str, substr) function counts the number of times the sub-string `substr` occurs in `str` and returns it",
-        #"inputs": "/*\n the substrcount(str, substr) function counts the number of times the sub-string `substr` occurs in `str` and returns it\n*/\n",
-        #"inputs": "/*\nA javascript function meaning_of_life() that returns a single integer, the answer to life the universe and everything\n/*\n",
-        #"inputs": "# Write a python function glork(bork: int) to compute the factorial of input bork.",
-        "inputs": "// Write a javascript function glork(bork) to compute the factorial of input bork.\n function glork(bork) {",
-        "parameters": {"temperature": 0.2, "top_k": 50, "top_p": 0.1, "max_new_tokens": 512, "repetition_penalty": 1.17},
-    }
-)
+input_template = Template("""<fim_prefix>def {{Signature}}:
+    '''a function {{Input}} that returns {{Output}}'''
+    <fim_suffix>
 
-print(data[0]['generated_text'])
+# another function
+<fim_middle>""")
+
+input_fact_template = Template("""<fim_prefix>def {{Signature}}:
+    '''a function {{Input}} that returns {{Output}}, given {{Fact}}'''
+    <fim_suffix>
+
+# another function
+<fim_middle>""")
+                                   
+output_template = Template("""def {{Signature}}:
+    '''a function {{Input}} that computes {{Output}}'''
+    {{Answer}}""")
+
+interview = yaml.safe_load(open(args.tinyinterview))
+for name, challenge in interview.items():
+    
+    challenge['name'] = name
+    input = input_template.render(**challenge) if not challenge.get('Fact') else input_fact_template.render(**challenge)
+    
+    # for parameters, see https://huggingface.github.io/text-generation-inference/ GenerateParameters struct
+    data = query(
+        {
+            "inputs": input,
+            "parameters": {"temperature": 0.2, "top_k": 50, "top_p": 0.1, "max_new_tokens": 512, "repetition_penalty": 1.17},
+        }
+    )
+    result = data[0]['generated_text']
+
+    result = result.replace(input, '').replace('<|endoftext|>','')
+    
+    output = output_template.render(**challenge, Answer=result)
+
+    print()
+    print(output)
+    print()
+
+    with open(f"{args.outdir}/{name}.txt", "w") as f:
+        f.write(output)
