@@ -15,7 +15,17 @@ args = parser.parse_args()
 
 if not os.path.exists(args.outdir):
     os.mkdir(args.outdir) 
+
+def remove_indentation(code_block):
+    lines = code_block.split('\n')
+    if not lines:
+        return code_block
     
+    first_line_indent = len(lines[0]) - len(lines[0].lstrip())
+    modified_lines = [line[first_line_indent:] for line in lines]
+    modified_code = '\n'.join(modified_lines)
+    return modified_code
+
 def run_starchat(prompt):
 	# If you dont re-init the client, it starts a chat with history.
 	client = Client("https://HuggingFaceH4-starchat-playground.hf.space/")
@@ -53,7 +63,7 @@ def run_starchat(prompt):
 	for item in soup.find_all('code'):
 		if len(item.get_text()) > len(longest_code):
 			print("Found candidate code: ", item)
-			longest_code = item.get_text()
+			longest_code = remove_indentation(item.get_text())
 
 	return answer[0][1] if longest_code == "" else longest_code
 
