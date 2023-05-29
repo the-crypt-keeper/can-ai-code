@@ -22,7 +22,7 @@ A self-evaluating interview for AI coding models.
 |Guanaco-13B|Open 13B GPTQ 4bit|41/65|37/65|
 |WizardLM-13B-1.0|Open 13B ggmlv3.q5_0|53/65|**52/65** :2nd_place_medal:|
 |WizardLM-7B-Uncensored|Open 7B ggmlv3.q5_1|**54/65** :3rd_place_medal:|37/65|
-|bigcode/Starchat|Open 15.5B|32/65 :construction:|33/65 :construction:|
+|bigcode/Starchat|Open 15.5B|40/65|45/65|
 |bigcode/tiny_starcoder_py|Open 159M|39/65 [1] :construction:|N/A|
 |bigcode/Starcoder|Open 15.5B|45/65 [1] :construction:|:construction:|
 
@@ -30,13 +30,9 @@ A self-evaluating interview for AI coding models.
 
 Evaluation of 30B/65B models is in the Roadmap.  Can you help?  Reach out!
 
-### Starchat Note
-
-Initial performance of Starchat is poor but this requires further investigation; at least for JavaScript its due to producing arrow functions which the static analysis doesnt yet understand. 
-
 ## Results (chart)
 
-![Chart](https://quickchart.io/chart?c={%22type%22:%22bar%22,%22data%22:{%22labels%22:[%22openai/gpt-3.5-turbo%22,%22ai21/j2-jumbo-instruct%22,%22cohere/command-nightly%22,%22Wizard-Vicuna-13B-Uncensored%22,%22vicuna-7B-1.1%22,%22Manticore-13B%22,%22Guanaco-13B%22,%22WizardLM-13B-1.0%22,%22WizardLM-7B-Uncensored%22,%22Starchat%22],%22datasets%22:[{%22label%22:%22Python%22,%22data%22:[65,55,48,31,51,47,41,53,54,32]},{%22label%22:%22JavaScript%22,%22data%22:[8,62,39,45,44,37,37,52,37,33]}]}})
+![Chart](https://quickchart.io/chart?c={%22type%22:%22bar%22,%22data%22:{%22labels%22:[%22openai/gpt-3.5-turbo%22,%22ai21/j2-jumbo-instruct%22,%22cohere/command-nightly%22,%22Wizard-Vicuna-13B-Uncensored%22,%22vicuna-7B-1.1%22,%22Manticore-13B%22,%22Guanaco-13B%22,%22WizardLM-13B-1.0%22,%22WizardLM-7B-Uncensored%22,%22Starchat%22],%22datasets%22:[{%22label%22:%22Python%22,%22data%22:[65,55,48,31,51,47,41,53,54,40]},{%22label%22:%22JavaScript%22,%22data%22:[8,62,39,45,44,37,37,52,37,45]}]}})
 
 ## Repository Structure
 
