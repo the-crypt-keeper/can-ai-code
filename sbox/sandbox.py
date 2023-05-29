@@ -11,11 +11,16 @@ def extract_function_info(language, input_string):
     if language == 'python':
         function_regex = r"def\s+(.*)\s*\((.*)\)(.*):"
     elif language == 'javascript':
-        function_regex = r"function\s+(.*)\s*\((.*)\)(.*){"
+        function_regex = r"function\**\s+(\S*)\s*\((.*)\)(.*){"
+    elif language == 'javascript-arrow':
+        function_regex = r"\s+(\S*)\s*=\s*\((.*)\)(.*)\s*=>\s*{"
     else:
         raise Exception("extract_function_info: Unsupported language")
     
     matches = re.findall(function_regex, input_string, re.MULTILINE)
+    # Javascript has a second style, try that if the normal one doesnt work.
+    if len(matches) == 0 and language == 'javascript':
+        return extract_function_info('javascript-arrow', input_string)
 
     functions = []
     for match in matches:
