@@ -3,21 +3,18 @@ from prepare import load_questions
 from sbox.sandbox import FunctionSandbox
 import argparse
 import json
+import re
 
 def extract_code(answer):
     # Fallback if the model forgot to use block quotes
     if answer.strip()[0:3] == 'def' or answer.strip()[0:8] == 'function':
         return answer
-    
-    # Look for start tokens
-    start_tokens = ['```python','```py','```javascript','```js','```']
 
-    for token in start_tokens:
-        start_token = token
-        start_index = answer.find(start_token)
-        if start_index != -1:
-            break    
-    
+    # Look for start tokens   
+    match = re.search(r'```(\w*)', answer)
+    start_token = match.group(0) if match else None
+    start_index = match.start() if match else -1
+
     # If we didn't find a start token, return None
     if start_index == -1:
         return None
