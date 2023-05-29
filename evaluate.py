@@ -4,21 +4,13 @@ from sbox.sandbox import FunctionSandbox
 import argparse
 import json
 
-parser = argparse.ArgumentParser(description='Interview evaluator')
-parser.add_argument('--interview', type=str, default='junior-dev', help='interview to evaluate')
-parser.add_argument('--language', type=str, required=True, help='language to evaluate')
-parser.add_argument('--answers', type=str, required=True, help='path to model answers')
-parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
-parser.add_argument('--noextract', action='store_true', help='(optional) skip code extraction')
-args = parser.parse_args()
-
 def extract_code(answer):
     # Fallback if the model forgot to use block quotes
     if answer.strip()[0:3] == 'def' or answer.strip()[0:8] == 'function':
         return answer
     
     # Look for start tokens
-    start_tokens = ['```python','```javascript','```']
+    start_tokens = ['```python','```py','```javascript','```js','```']
 
     for token in start_tokens:
         start_token = token
@@ -41,41 +33,19 @@ def extract_code(answer):
 
     return code_text
 
-test_total = 0
-test_passed = 0
-results = []
-for test in load_questions(args.interview):
-    answer = None
-    test_name = test['name'] + '-' + args.language
-
-    if args.test and test_name  != args.test:
-        print(test_name, 'Skipped due to command line filter')
-        continue
-
-    try:
-        with open(args.answers+test_name+'.txt','r') as f:
-            answer = f.read()
-    except Exception as e:
-        print(test_name,'Skipped due to error', e)
-        print()
-        row = { 'test': test_name, 'language': args.language, 'status': 'ERROR', 'error': str(e) }
-        results.append(row)
-        continue
-
-    code = extract_code(answer) if not args.noextract else answer
+def evaluation(test, language, code):
     total = 0
     passed = 0
     checks = []
 
     if code:
-        f = FunctionSandbox(code, args.language)
+        f = FunctionSandbox(code, language)
         print(test_name,'started')
         #print('---\n'+code+'\n---')
         for check_name in test['Checks'].keys():
             check = test['Checks'][check_name]
             if check.get('assert'):
                 total += 1
-                test_total += 1
                 test_value = None
                 try:
                     test_value = eval(check['assert'])
@@ -87,7 +57,6 @@ for test in load_questions(args.interview):
                 if (test_value == check['eq']):
                     print('   ',check_name, "passed")
                     passed += 1
-                    test_passed += 1
                     check['status'] = 1
                 else:
                     check['status'] = 0
@@ -96,14 +65,52 @@ for test in load_questions(args.interview):
     else:
         print(test_name, "No code found")
         passed = -1
+    return total,passed,checks
 
-    row = { 'test': test_name, 'language': args.language, 'checks': checks, 'status': 'PASS' if passed==total else 'NOCODE' if passed == -1 else 'FAIL', 'error': None, 'answer': answer, 'code': code,  'passed': passed, 'total': total }
-    results.append(row)
-    print(row['test'], row['status'])
-    print()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Interview evaluator')
+    parser.add_argument('--interview', type=str, default='junior-dev', help='interview to evaluate')
+    parser.add_argument('--language', type=str, required=True, help='language to evaluate')
+    parser.add_argument('--answers', type=str, required=True, help='path to model answers')
+    parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
+    parser.add_argument('--noextract', action='store_true', help='(optional) skip code extraction')
+    args = parser.parse_args()
 
-if not args.test:
-    outfn = f"{args.answers}eval-{args.language}.json"
-    with open(outfn,'w') as f:
-        json.dump(results, f, indent=2)
-    print('Passed',test_passed,'of',test_total,'results written to',outfn)    
+    all_total = 0
+    all_passed = 0
+    results = []
+
+    for test in load_questions(args.interview):
+        answer = None
+        test_name = test['name'] + '-' + args.language
+
+        if args.test and test_name  != args.test:
+            print(test_name, 'Skipped due to command line filter')
+            continue
+
+        try:
+            with open(args.answers+test_name+'.txt','r') as f:
+                answer = f.read()
+        except Exception as e:
+            print(test_name,'Skipped due to error', e)
+            print()
+            row = { 'test': test_name, 'language': args.language, 'status': 'ERROR', 'error': str(e) }
+            results.append(row)
+            continue
+
+        code = extract_code(answer) if not args.noextract else answer
+        total, passed, checks = evaluation(test, args.language, code)
+
+        all_total += total
+        all_passed += passed
+
+        row = { 'test': test_name, 'language': args.language, 'checks': checks, 'status': 'PASS' if passed==total else 'NOCODE' if passed == -1 else 'FAIL', 'error': None, 'answer': answer, 'code': code,  'passed': passed, 'total': total }
+        results.append(row)
+        print(row['test'], row['status'])
+        print()
+
+    if not args.test:
+        outfn = f"{args.answers}eval-{args.language}.json"
+        with open(outfn,'w') as f:
+            json.dump(results, f, indent=2)
+        print('Passed',all_passed,'of',all_total,'results written to',outfn)    
