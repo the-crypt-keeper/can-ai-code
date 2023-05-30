@@ -58,7 +58,7 @@ def run():
                 prompt=test['prompt'],
                 language=test['language'],
                 comment=comment[test['language']],
-                function_prefix=comment[test['language']]
+                function_prefix=function_prefix[test['language']]
         )
         request, answer = send_request(full_prompt)
         print(answer)
