@@ -48,6 +48,7 @@ Interview results v1: SOON
 * `prepare.py` - Specializes question into prompts for a specific language
 * `interview-langchain.py` - Use a LangChain LLM model to write code
 * `interview-starchat.py` - Use a Huggingface Space running Starchat model to write code
+* `interview-gptq-modal.py` - Use GPTQ on Modal GPU rental platform
 * `intreview-llamacpp.sh` - Use a GGML llama.cpp model to write code
 * `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 * `report.py` - (WIP - not yet complete) Compare results from multiple interviews
@@ -106,6 +107,13 @@ export OUTPUT="results/vicuna-1.1-7b/"
 export INTERVIEW="python.csv"
 
 ./interview-llamacpp.sh
+```
+
+With VicUnlocked-30B-LoRA-GGML (GPTQ on Modal):
+
+```bash
+modal run -q ./interview-gptq-modal.py --outdir results/vicunlocked-30b/ --params model_parameters/precise.json --template prompts/Vicuna-1p1.txt --questions intervi
+python.csv
 ```
 
 3. Evaulate the results

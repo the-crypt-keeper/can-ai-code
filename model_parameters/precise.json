@@ -1,0 +1,7 @@
+{
+    "$note": "precise settings from https://old.reddit.com/r/LocalLLaMA/wiki/index",
+    "temperature": 0.7,
+    "repetition_penalty": 1.176,
+    "top_k": 40,
+    "top_p": 0.1
+}
