@@ -22,7 +22,7 @@ A self-evaluating interview for AI coding models.
 |Guanaco-13B|Open 13B GPTQ 4bit|41/65|37/65|
 |WizardLM-13B-1.0|Open 13B ggmlv3.q5_0|53/65|**52/65** :2nd_place_medal:|
 |WizardLM-7B-Uncensored|Open 7B ggmlv3.q5_1|**54/65** :3rd_place_medal:|37/65|
-|VicUnlocked-30B-LoRA|Open 30B GPTQ 4bit|39/65|39/65|
+|VicUnlocked-30B-LoRA|Open 30B GPTQ 4bit|45/65|41/65|
 |bigcode/Starchat|Open 15.5B|40/65|45/65|
 |bigcode/tiny_starcoder_py|Open 159M|39/65 [1] :construction:|N/A|
 |bigcode/Starcoder|Open 15.5B|45/65 [1] :construction:|:construction:|
