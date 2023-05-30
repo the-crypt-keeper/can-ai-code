@@ -25,7 +25,7 @@ while IFS= read -r line; do
     fi
 
     # Split the line by comma
-    IFS="," read -r col1 col2 <<< "$line"
+    IFS="," read -r col1 lang col2 <<< "$line"
 
     # Skip existing files
     if [[ -e "${OUTPUT}${col1}.txt" ]]; then

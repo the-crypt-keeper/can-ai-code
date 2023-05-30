@@ -73,10 +73,10 @@ The f object represents the sandbox view of the function.  Static analysis is pe
 
 ## Using this Repository
 
-1. Prepare prompts for an interview:
+1. Prepare prompts for a python interview:
 
 ```bash
-./prepare.py --language python --output python.csv
+./prepare.py --language python --questions python.csv
 ```
 
 2. Execute the interview.
@@ -109,7 +109,7 @@ export INTERVIEW="python.csv"
 
 ## Interview format
 
-The output of `prepare.py` is a simple csv with two columns: name and prompt
+The output of `prepare.py` is a simple csv with three columns: name, language and prompt
 
 To create your own interview, simply feed the prompts to your model of choice and saveeach model outputs as name.txt in a results directory.  That's it!  Now you can perform evaluation.
 
@@ -118,6 +118,5 @@ To create your own interview, simply feed the prompts to your model of choice an
 Contributions are welcome!  Especially looking for additional interview sets and improvements to questions - open a PR! 
 
 * Evaluate 30B and 65B open langauge models
-* Evaluate StarCoder (prompt style is very different)
 * If the models are offered error messages or failing test results, could they produce better code?
 * Can tweaking prompts improve performance?
