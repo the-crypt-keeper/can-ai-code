@@ -1,1 +1,1 @@
-When asked to write code, make sure its enclosed in a ``` delimited code block. {{prompt}}
+When asked to write code, make sure its enclosed in a ``` delimited code block. Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}

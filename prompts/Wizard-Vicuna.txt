@@ -1,4 +1,4 @@
 USER: Hello, ASSISTANT.
 ASSISTANT: Hello. How may I help you today?
-USER: {{prompt}}
+USER: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}
 ASSISTANT:

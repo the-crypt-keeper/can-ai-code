@@ -2,5 +2,5 @@ A chat between a curious human ("HUMAN") and an artificial intelligence assistan
 
 HUMAN: Hello, ASSISTANT.
 ASSISTANT: Hello. How may I help you today?
-HUMAN: {{prompt}}
+HUMAN: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}
 ASSISTANT:

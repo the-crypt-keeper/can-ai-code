@@ -1,1 +1,2 @@
-When asked to write code, please output only a single code-block containing the final function and nothing else. {{prompt}}
+When asked to write code, please output only a single code-block containing the final function and nothing else.
+Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}
