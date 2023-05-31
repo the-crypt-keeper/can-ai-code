@@ -1,0 +1,3 @@
+def {{Signature}}:
+    '''a function {{Input}} that computes {{Output}}'''
+    {{Answer}}
