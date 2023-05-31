@@ -231,18 +231,19 @@ class ModalGPTQ:
         self.tokenizer = tokenizer
         print(f"Model loaded in {time.time() - t0:.2f}s")
 
-    def params(self, temperature=0.7, repetition_penalty=1.0, top_k=-1, top_p=1.0, stop='###', **kwargs):
+    def params(self, temperature=0.7, repetition_penalty=1.0, top_k=-1, top_p=1.0, max_new_tokens=512, stop='###', **kwargs):
         return {
             "model": MODEL_NAME,
             "temperature": temperature,
             "repetition_penalty": repetition_penalty,
             "top_k": top_k,
             "top_p": top_p,
-            "stop": stop
+            "stop": stop,
+            "max_new_tokens": max_new_tokens
         }
 
     @method()
-    async def generate(self, input, max_new_tokens = 512, params=None):
+    async def generate(self, input, params=None):
         if input == "":
             raise Exception("Input is empty")
 
@@ -250,7 +251,6 @@ class ModalGPTQ:
             params = self.params()
 
         params['prompt'] = input
-        params['max_new_tokens'] = max_new_tokens
         print(params)
 
         prev = len(input) + 1
