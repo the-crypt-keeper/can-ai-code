@@ -31,13 +31,13 @@ TODO: Update for v2
 * `prompts/*.txt` - System prompts for the various models
 * `prepare.py` - Specializes question into prompts for a specific language
 * `interview-langchain.py` - Run using LangChain model interface
-* `interview-oobabooga.py` - Run using OobbaBooga remote API model interface
-* `interview-starchat.py` - Run Huggingface Space to run Starchat model
+* `interview-oobabooga.py` - Run using OobbaBooga remote API model interface **not updated for v2 yet**
+* `interview-starchat.py` - Run Huggingface Space to run Starchat model **not updated for v2 yet**
 * `interview-starcoder.py` - Run Huggingface Transformers to run Starcoder models on local GPU
-* `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform
-* `intreview-llamacpp.sh` - Run GGML llama.cpp model on local CPU/GPU
-* `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
-* `report.py` - (WIP - not yet complete) Compare results from multiple interviews
+* `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform **not updated for v2 yet**
+* `intreview-llamacpp.sh` - Run GGML llama.cpp model on local CPU/GPU **not updated for v2 yet**
+* `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer **not updated for v2 yet**
+* `report.py` - (WIP - not yet complete) Compare results from multiple interviews **not updated for v2 yet**
 
 ## Question Format
 
