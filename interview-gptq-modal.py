@@ -288,7 +288,10 @@ def main(questions: str, template: str, params: str, outdir: str):
                 print(val, end="", flush=True)
 
             # v2 output
-            result = { 'name': question['name'], 'prompt': prompt, 'answer': answer, 'params': params }
+            result = question.copy()
+            result['answer'] = answer
+            result['params'] = params
+            result['model'] = params['model']
             results.write(json.dumps(result)+'\n')
 
             # v1 output

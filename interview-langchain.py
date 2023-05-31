@@ -2,6 +2,7 @@
 from langchain import LLMChain, PromptTemplate
 import argparse
 import json
+import time
 from time import sleep
 from pathlib import Path
 
@@ -13,11 +14,27 @@ def rekey(x,old,new):
 
 def adjust_params(model, params):
     if model == 'ai21/j2-jumbo-instruct':
+        from langchain.llms.ai21 import AI21PenaltyData
         params = rekey(params, 'max_new_tokens', 'maxTokens')
+        params = rekey(params, 'top_p', 'topP')  
+
+        params['presencePenalty'] = AI21PenaltyData()
+        params['presencePenalty'].scale = params['repetition_penalty'] - 1.0
+        del params['repetition_penalty']
+        
+        del params['top_k'] # not supported by ai21
     elif model == 'openai/chatgpt':
         params = rekey(params, 'max_new_tokens', 'max_tokens')
         params = rekey(params, 'repetition_penalty', 'presence_penalty')
         del params['top_k'] # not supported by ChatGPT
+    elif model == 'cohere/command-nightly':
+        params = rekey(params, 'max_new_tokens', 'max_tokens')
+        params = rekey(params, 'top_k', 'k')
+        params = rekey(params, 'top_p', 'p')
+        
+        params['frequency_penalty'] = params['repetition_penalty'] - 1.0
+        del params['repetition_penalty']
+
     return params
 
 def init_model(provider, **kwargs):
@@ -25,7 +42,7 @@ def init_model(provider, **kwargs):
         from langchain import Cohere
         return Cohere(model='command-nightly',**kwargs)
     elif provider == 'ai21/j2-jumbo-instruct':
-        from langchain.llms import AI21
+        from langchain.llms import AI21        
         return AI21(model='j2-jumbo-instruct', **kwargs)
     elif provider == 'openai/chatgpt':
         from langchain.chat_models import ChatOpenAI
@@ -91,8 +108,9 @@ base_name = Path(args.input).stem.replace('prepare','interview')
 templateout_name = 'none'
 params_name = Path(args.params).stem
 model_name = args.model.replace('/','-')
+ts = str(int(time.time()))
 
-output_filename = 'results/'+'_'.join([base_name, templateout_name, params_name, model_name])+'.ndjson'
+output_filename = 'results/'+'_'.join([base_name, templateout_name, params_name, model_name, ts])+'.ndjson'
 with open(output_filename, 'w') as f:
-    f.write('\n'.join([json.dumps(result) for result in results]))
+    f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
 print('Saved results to', output_filename)
