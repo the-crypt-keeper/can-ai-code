@@ -52,5 +52,5 @@ SanitySecretIdentityMap:
           assert: "f.call().get('Batman')"
           eq: "Bruce Wayne"
         spiderman:
-          assert: "f.call().get('Spiderman')"
+          assert: "f.call().get('Spider-Man')"
           eq: "Peter Parker"
