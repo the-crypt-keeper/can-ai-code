@@ -1,11 +1,24 @@
 #!/usr/bin/env python3
 from langchain import LLMChain, PromptTemplate
-import pandas as pd
 import argparse
-import os
 import json
 from time import sleep
-from jinja2 import Template
+from pathlib import Path
+
+def rekey(x,old,new):
+    if old in x:
+        x[new] = x[old]
+        del x[old]
+    return x
+
+def adjust_params(model, params):
+    if model == 'ai21/j2-jumbo-instruct':
+        params = rekey(params, 'max_new_tokens', 'maxTokens')
+    elif model == 'openai/chatgpt':
+        params = rekey(params, 'max_new_tokens', 'max_tokens')
+        params = rekey(params, 'repetition_penalty', 'presence_penalty')
+        del params['top_k'] # not supported by ChatGPT
+    return params
 
 def init_model(provider, **kwargs):
     if provider == 'cohere/command-nightly':
@@ -13,11 +26,6 @@ def init_model(provider, **kwargs):
         return Cohere(model='command-nightly',**kwargs)
     elif provider == 'ai21/j2-jumbo-instruct':
         from langchain.llms import AI21
-
-        if 'max_new_tokens' in kwargs:
-            kwargs['maxTokens'] = kwargs['max_new_tokens']
-            del kwargs['max_new_tokens']
-        
         return AI21(model='j2-jumbo-instruct', **kwargs)
     elif provider == 'openai/chatgpt':
         from langchain.chat_models import ChatOpenAI
@@ -43,47 +51,48 @@ def prompt_template(model):
 
 parser = argparse.ArgumentParser(description='Interview executor for LangChain')
 parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
-parser.add_argument('--model', type=str, default='bigcode/tiny_starcoder_py', help='model to use')
-parser.add_argument('--templateout', type=str, required=True, help='output template file')
+parser.add_argument('--model', type=str, default='openai/chatgpt', help='model to use')
 parser.add_argument('--params', type=str, required=True, help='parameter file to use')
 parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
 args = parser.parse_args()
 
-model = init_model(args.model, temperature=args.temperature, max_tokens=args.max_tokens)
-if not os.path.exists(args.outdir):
-    os.mkdir(args.outdir) 
+params = json.load(open(args.params))
+for key in list(params.keys()):
+    if key[0] == '$':
+        del params[key]
 
-info = {
-    'interview': 'langchain',
-    'model': args.model,
-    'params': {
-        'temperature': args.temperature,
-        'max_tokens': args.max_tokens
-    },
-    'prompt_template': prompt_template(args.model),
-    'stop_token': None
-}
-with open(args.outdir+'/info.json', 'w') as f:
-    f.write(json.dumps(info))
+params = adjust_params(args.model, params)
+model = init_model(args.model, **params)
 
-df = pd.read_csv(args.questions)
-for idx, test in df.iterrows():
-    print(test['name'])
-    out_file = args.outdir+'/'+test['name']+'.txt'
+# Load interview
+interview = [json.loads(line) for line in open(args.input)]
+results = []
 
-    if os.path.exists(out_file):
-        print('Skipping, already exists')
-        continue
+for challenge in interview:
+    chain = LLMChain(llm=model, prompt=PromptTemplate(template='{input}', input_variables=['input']))
+    answer = chain.run(input=challenge['prompt'])
 
-    full_prompt = Template(info['prompt_template']).render(prompt=test['prompt'])
-
-    lc_prompt = PromptTemplate(template='{input}', input_variables=['input'])
-    chain = LLMChain(llm=model, prompt=lc_prompt)
-
-    answer = chain.run(input=full_prompt)
+    print()
     print(answer)
-    with open(out_file, 'w') as f:
-        f.write(answer)
+    print()
+
+    result = challenge.copy()
+    result['answer'] = answer
+    result['params'] = params
+    result['model'] = args.model
+
+    results.append(result)
 
     if args.delay:
         sleep(args.delay)
+
+# Save results
+base_name = Path(args.input).stem.replace('prepare','interview')
+templateout_name = 'none'
+params_name = Path(args.params).stem
+model_name = args.model.replace('/','-')
+
+output_filename = 'results/'+'_'.join([base_name, templateout_name, params_name, model_name])+'.ndjson'
+with open(output_filename, 'w') as f:
+    f.write('\n'.join([json.dumps(result) for result in results]))
+print('Saved results to', output_filename)
