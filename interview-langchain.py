@@ -14,9 +14,9 @@ def init_model(provider, **kwargs):
     elif provider == 'ai21/j2-jumbo-instruct':
         from langchain.llms import AI21
 
-        if 'max_tokens' in kwargs:
-            kwargs['maxTokens'] = kwargs['max_tokens']
-            del kwargs['max_tokens']
+        if 'max_new_tokens' in kwargs:
+            kwargs['maxTokens'] = kwargs['max_new_tokens']
+            del kwargs['max_new_tokens']
         
         return AI21(model='j2-jumbo-instruct', **kwargs)
     elif provider == 'openai/chatgpt':
@@ -30,9 +30,9 @@ def init_model(provider, **kwargs):
 
 def prompt_template(model):
     FILENAMES = {
-        'openai/chatgpt': 'prompts/openai_chatgpt.txt',
-        'cohere/command-nightly': 'prompts/cohere_command-nightly.txt',
-        'ai21/j2-jumbo-instruct': 'prompts/ai21_j2-jumbo-instruct.txt',
+        'openai/chatgpt': 'prompts/openai-chatgpt.txt',
+        'cohere/command-nightly': 'prompts/cohere-command-nightly.txt',
+        'ai21/j2-jumbo-instruct': 'prompts/ai21-j2-jumbo-instruct.txt',
     }
     filename = FILENAMES.get(model)
     if filename:
@@ -42,12 +42,11 @@ def prompt_template(model):
     return '{{prompt}}' 
 
 parser = argparse.ArgumentParser(description='Interview executor for LangChain')
-parser.add_argument('--questions', type=str, required=True, help='path to questions .csv from prepare stage')
-parser.add_argument('--model', type=str, required=True, help='model to use')
-parser.add_argument('--outdir', type=str, required=True, help='output directory')
+parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
+parser.add_argument('--model', type=str, default='bigcode/tiny_starcoder_py', help='model to use')
+parser.add_argument('--templateout', type=str, required=True, help='output template file')
+parser.add_argument('--params', type=str, required=True, help='parameter file to use')
 parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
-parser.add_argument('--temperature', type=float, default=0.7, help='temperature for generation')
-parser.add_argument('--max_tokens', type=int, default=512, help='max length of generated text')
 args = parser.parse_args()
 
 model = init_model(args.model, temperature=args.temperature, max_tokens=args.max_tokens)
