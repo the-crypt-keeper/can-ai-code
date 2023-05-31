@@ -1,5 +1,8 @@
 SanityMeaningOfLife:
-    Request: "Write a {{language}} function meaning_of_life() that returns a single integer, the answer to life the universe and everything"
+    Signature: "meaning_of_life()"
+    Input: "with no inputs"
+    Output: "a single integer, the answer to life the universe and everything"
+    Fact: "the answer to life the universe and everything is 42"
     Description: "Scalar function with no arguments, see if the model can use its internal knowledge to both code and summon a fact from pop culture."
     Checks:
         input_name:
@@ -13,7 +16,10 @@ SanityMeaningOfLife:
           eq: 42
 
 SanityList:
-    Request: "Write a {{language}} function things() that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain."
+    Signature: "things()"
+    Input: "with no inputs"
+    Output: "a list with three values: the number 5, the string 'foobar', the capital city of Spain"
+    Fact: "the capital city of Spain is Madrid"
     Description: "List function, see if the model can combine input facts with internal knowledge."
     Checks:
         input_name:
@@ -27,7 +33,10 @@ SanityList:
           eq: [5, "foobar", "Madrid"]
 
 SanitySecretIdentityMap:
-    Request: "Write a {{language}} function secretidentities() that returns an object mapping the superheroes Superman, Batman and Spiderman to their real names."
+    Signature: "secretidentities()"
+    Input: "with no inputs"
+    Output: "an object mapping the superheroes Superman, Batman and Spider-Man to their real names"
+    Fact: "Superman's real name is Clark Kent. Batman's real name is Bruce Wayne. Spider-Man's real name is Peter Parker."
     Description: "Object function, see if the model can use its internal knowledge to build a map."
     Checks:
         input_name:

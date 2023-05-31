@@ -19,7 +19,10 @@
       eq: [0, 1, 1, 2, 3]
 
 FibonacciZeroShot:
-    Request: "Write a {{language}} function to compute the fibbonaci sequence of length n."
+    Signature: "fib(n)"
+    Input: "with input element number n (0 based)"
+    Output: "the n-th element of the fibbonaci sequence"
+    Fact: "The fibonnaci sequence is defined by the boundary conditions fib(0) == 0, fib(1) == 1 and the recursive relation fib(n) == fib(n-1) + fib(n-2)"
     Description: "See if the model can produce a well known sequence"
     Checks:
         <<: *Checks
@@ -28,7 +31,10 @@ FibonacciZeroShot:
             eq: "n"
 
 FibonacciListZeroShot:
-    Request: "Write a {{language}} function that returns a list with the first n elements of the fibbonaci sequence."
+    Signature: "fib(n)"
+    Input: "with input length n"
+    Output: "a list with the first n elements of the fibbonaci sequence"
+    Fact: "The fibonnaci sequence is defined by the boundary conditions fib(0) == 0, fib(1) == 1 and the recursive relation fib(n) == fib(n-1) + fib(n-2)"
     Description: "See if the model can produce a well known sequence, explicitly asking for a list"
     Checks:
         <<: *Checks
@@ -37,7 +43,10 @@ FibonacciListZeroShot:
             eq: "n"
 
 FibonacciMisnamed:
-    Request: "Write a {{language}} function glork(bork) to compute the fibbonaci sequence of length bork."
+    Signature: "glork(bork)"
+    Input: "with input length bork"
+    Output: "a list with the first bork elements of the fibbonaci sequence"
+    Fact: "The fibonnaci sequence is defined by the boundary conditions fib(0) == 0, fib(1) == 1 and the recursive relation fib(n) == fib(n-1) + fib(n-2)"
     Description: "See if the model can produce a well known sequence if the name has been changed"
     Checks: 
         <<: *Checks
