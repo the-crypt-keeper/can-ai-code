@@ -2,6 +2,10 @@
 
 A self-evaluating interview for AI coding models.
 
+# VERSION 2 NOTES
+
+This branch is a work in progress refactor of both the test suite and executor.  See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
+
 ## Key Ideas
 
 * Interview questions written by humans, test taken by AI
