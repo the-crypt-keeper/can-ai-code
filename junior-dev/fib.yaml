@@ -25,10 +25,27 @@ FibonacciZeroShot:
     Fact: "The fibonnaci sequence is defined by the boundary conditions fib(0) == 0, fib(1) == 1 and the recursive relation fib(n) == fib(n-1) + fib(n-2)"
     Description: "See if the model can produce a well known sequence"
     Checks:
-        <<: *Checks
+        one_argument:
+          assert: "len(f.args)"
+          eq: 1
         input_name:
-            assert: "f.args[0].name"
-            eq: "n"
+          assert: "f.args[0].name"
+          eq: "n"          
+        value_0:
+          assert: "f.call(0)"
+          eq: 0
+        value_1:
+          assert: "f.call(1)"
+          eq: 1
+        value_2:
+          assert: "f.call(2)"
+          eq: 1
+        value_3:
+          assert: "f.call(3)"
+          eq: 2
+        value_5:
+          assert: "f.call(5)"
+          eq: 5
 
 FibonacciListZeroShot:
     Signature: "fib(n)"
