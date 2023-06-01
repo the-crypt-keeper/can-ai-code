@@ -266,35 +266,39 @@ class ModalGPTQ:
 
 # For local testing, run `modal run -q interview-gptq-modal.py --input questions.csv --params model_parameters/precise.json`
 @stub.local_entrypoint()
-def main(questions: str, template: str, params: str, outdir: str):
+def main(input: str, params: str):
+
     model = ModalGPTQ()
-    questions = pd.read_csv(questions)
+
+    interview = [json.loads(line) for line in open(input)]
     params_json = json.load(open(params,'r'))
-    params = model.params(**params_json)
-    in_template = Template(open(template, 'r').read())
+    params_model = model.params(**params_json)
 
-    if not os.path.exists(outdir):
-        os.mkdir(outdir) 
+    results = []
+    for question in interview:
+        print(question['name'], question['language'])
 
-    results = open(outdir+'/interview-gptq-modal.ndjson','w')
-    for idx, question in questions.iterrows():
-            print("Q["+str(idx)+"]", question['name'])
+        answer = ""
+        for val in model.generate.call(question['prompt'], params=params_model):
+            answer += val
+            print(val, end="", flush=True)
 
-            prompt = in_template.render(**question)
+        print()
 
-            answer = ""
-            for val in model.generate.call(prompt, params=params):
-                answer += val
-                print(val, end="", flush=True)
+        result = question.copy()
+        result['answer'] = answer
+        result['params'] = params_model
+        result['model'] = params_model['model']
+        results.append(result)
 
-            # v2 output
-            result = question.copy()
-            result['answer'] = answer
-            result['params'] = params
-            result['model'] = params['model']
-            results.write(json.dumps(result)+'\n')
+    # Save results
+    base_name = Path(input).stem.replace('prepare','interview')
+    templateout_name = 'none'
+    params_name = Path(params).stem
+    model_name = results[0]['model'].replace('/','-')
+    ts = str(int(time.time()))
 
-            # v1 output
-            with open(outdir+'/'+question['name']+'.txt', 'w') as f:
-                f.write(answer)
-    results.close()
+    output_filename = 'results/'+'_'.join([base_name, templateout_name, params_name, model_name, ts])+'.ndjson'
+    with open(output_filename, 'w') as f:
+        f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
+    print('Saved results to', output_filename)

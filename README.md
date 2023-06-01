@@ -17,16 +17,17 @@ This branch is a work in progress refactor of both the test suite and executor. 
 
 :construction: :construction: V2 - UNDER CONSTRUCTION :construction: :construction: 
 
-| Model | Size | License | Prompt | Parameters | Python | JavaScript |
-|-------|------|---------|--------|------------|--------|------------|
-| OpenAI gpt-3.5-turbo   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
-| ai21/j2-jumbo-instruct | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65                   | 54/65                   |
-| cohere/command-nightly |  52B | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
-| bigcode/tiny_starcoder_py | 159M | Open | starcoder-fim         | precise | 38/65                   | 0/0                     |
+| Model | Quantization | Size | License | Prompt | Parameters | Python | JavaScript |
+|-------|--------------|---------|--------|------------|--------|------------|
+| OpenAI gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
+| ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65                   | 54/65                   |
+| cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
+| bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
+| VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
 
 ## Data Sets
 
-TODO: Update for v2
+Model answers are now included inside this repository!  See `results/`
 
 ## Repository Structure
 
@@ -37,7 +38,7 @@ TODO: Update for v2
 * `interview-oobabooga.py` - Run using OobbaBooga remote API model interface **not updated for v2 yet**
 * `interview-starchat.py` - Run Huggingface Space to run Starchat model **not updated for v2 yet**
 * `interview-starcoder.py` - Run Huggingface Transformers to run Starcoder models on local GPU
-* `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform **not updated for v2 yet**
+* `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform
 * `intreview-llamacpp.sh` - Run GGML llama.cpp model on local CPU/GPU **not updated for v2 yet**
 * `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 * `report.py` - (WIP - not yet complete) Compare results from multiple interviews **not updated for v2 yet**
