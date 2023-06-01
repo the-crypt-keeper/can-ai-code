@@ -2,6 +2,7 @@
 import argparse
 import json
 import tempfile
+import time
 from sys import exit
 from pathlib import Path
 from sbox.sandbox import run_shell_command
@@ -64,7 +65,7 @@ for challenge in interview:
 
     result = challenge.copy()
     result['answer'] = answer
-    result['params'] = params
+    result['params'] = { 'cmdline': cmdline }
     result['model'] = model_name
 
     results.append(result)
