@@ -4,7 +4,9 @@ A self-evaluating interview for AI coding models.
 
 # VERSION 2 NOTES
 
-This branch is a work in progress refactor of both the test suite and executor.  See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
+This branch is a work in progress refactor of both the test suite and executor.
+
+See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 
 ## Key Ideas
 
@@ -19,7 +21,7 @@ This branch is a work in progress refactor of both the test suite and executor. 
 
 | Model | Quant | Size | License | Prompt | Parameters | Python | JavaScript |
 |-------|--------------|------|---------|--------|------------|--------|------------|
-| OpenAI gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
+| openai/gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
 | ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65                   | 54/65                   |
 | cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
 | bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
@@ -27,7 +29,7 @@ This branch is a work in progress refactor of both the test suite and executor. 
 
 ## Data Sets
 
-Model answers are now included inside this repository!  See `results/`
+:new: Model answers are now included inside this repository!  See `results/`
 
 ## Repository Structure
 
@@ -39,7 +41,7 @@ Model answers are now included inside this repository!  See `results/`
 * `interview-starchat.py` - Run Huggingface Space to run Starchat model **not updated for v2 yet**
 * `interview-starcoder.py` - Run Huggingface Transformers to run Starcoder models on local GPU
 * `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform
-* `intreview-llamacpp.sh` - Run GGML llama.cpp model on local CPU/GPU **not updated for v2 yet**
+* `intreview-llamacpp.py` - Run GGML llama.cpp model on local (or remote via ssh) CPU/GPU
 * `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 
 ## Question Format
@@ -93,6 +95,6 @@ TODO update for v2
 
 Contributions are welcome!  Especially looking for additional interview sets and improvements to questions - open a PR! 
 
-* Evaluate 30B and 65B open langauge models
+* Evaluate more 30B and 65B open langauge models
 * If the models are offered error messages or failing test results, could they produce better code?
 * Can tweaking prompts improve performance?
