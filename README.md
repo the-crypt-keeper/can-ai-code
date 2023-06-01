@@ -15,11 +15,13 @@ This branch is a work in progress refactor of both the test suite and executor. 
 
 ## Results
 
-TODO: Update for v2
+:construction: :construction: V2 - UNDER CONSTRUCTION :construction: :construction: 
 
-## Results (chart)
-
-TODO: Update for v2
+| Model | Size | License | Prompt | Parameters | Python | JavaScript |
+|-------|------|---------|--------|------------|--------|------------|
+| OpenAI gpt-3.5-turbo   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st: | 65/65 :1st: |
+| ai21/j2-jumbo-instruct | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65 | 54/65 |
+| cohere/command-nightly |  52B | Closed | cohere-command-nightly | precise | 52/65 | 49/65 |
 
 ## Data Sets
 
@@ -36,7 +38,7 @@ TODO: Update for v2
 * `interview-starcoder.py` - Run Huggingface Transformers to run Starcoder models on local GPU
 * `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform **not updated for v2 yet**
 * `intreview-llamacpp.sh` - Run GGML llama.cpp model on local CPU/GPU **not updated for v2 yet**
-* `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer **not updated for v2 yet**
+* `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 * `report.py` - (WIP - not yet complete) Compare results from multiple interviews **not updated for v2 yet**
 
 ## Question Format
