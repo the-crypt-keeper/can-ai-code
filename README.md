@@ -19,9 +19,10 @@ This branch is a work in progress refactor of both the test suite and executor. 
 
 | Model | Size | License | Prompt | Parameters | Python | JavaScript |
 |-------|------|---------|--------|------------|--------|------------|
-| OpenAI gpt-3.5-turbo   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st: | 65/65 :1st: |
-| ai21/j2-jumbo-instruct | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65 | 54/65 |
-| cohere/command-nightly |  52B | Closed | cohere-command-nightly | precise | 52/65 | 49/65 |
+| OpenAI gpt-3.5-turbo   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
+| ai21/j2-jumbo-instruct | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65                   | 54/65                   |
+| cohere/command-nightly |  52B | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
+| bigcode/tiny_starcoder_py | 159M | Open | starcoder-fim         | precise | 38/65                   | 0/0                     |
 
 ## Data Sets
 
