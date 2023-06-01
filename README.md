@@ -18,7 +18,7 @@ This branch is a work in progress refactor of both the test suite and executor. 
 :construction: :construction: V2 - UNDER CONSTRUCTION :construction: :construction: 
 
 | Model | Quantization | Size | License | Prompt | Parameters | Python | JavaScript |
-|-------|--------------|---------|--------|------------|--------|------------|
+|-------|--------------|------|---------|--------|------------|--------|------------|
 | OpenAI gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
 | ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65                   | 54/65                   |
 | cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
