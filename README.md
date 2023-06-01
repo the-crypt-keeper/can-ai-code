@@ -41,7 +41,6 @@ Model answers are now included inside this repository!  See `results/`
 * `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform
 * `intreview-llamacpp.sh` - Run GGML llama.cpp model on local CPU/GPU **not updated for v2 yet**
 * `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
-* `report.py` - (WIP - not yet complete) Compare results from multiple interviews **not updated for v2 yet**
 
 ## Question Format
 
@@ -64,17 +63,17 @@ In this example `SanityList` is the name of the interview question.
 
 The first four fields are used by `prepare.py` to create the interview:
 
-`Signature` is the desired function signature
-`Input` describes the function inputs
-`Output` describes the function outputs
-`Fact` is optional and provides any context that is required to correctly perform the task
+- `Signature` is the desired function signature
+- `Input` describes the function inputs
+- `Output` describes the function outputs
+- `Fact` is optional and provides any context that is required to correctly perform the task
 
 These 4 variables along with `language` (either `python` or `javascript`) are used to expand templates in `prompts/`.
 
 The last two fields are used by `evaluate.py` to judge the results:
 
-`Description` is a human-readable explanation of why this test is useful
-`Checks` defines the expected behavior of the output.
+- `Description` is a human-readable explanation of why this test is useful
+- `Checks` defines the expected behavior of the output.
 
 ### Checks and the 'f' object
 
