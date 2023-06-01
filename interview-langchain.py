@@ -12,59 +12,49 @@ def rekey(x,old,new):
         del x[old]
     return x
 
-def adjust_params(model, params):
+def init_model(model, params):
+    # LangChain did not bother to standardize the names of any of the parameters,
+    # or even how to interact with them.  This is a hack to make things consistent.
+
     if model == 'ai21/j2-jumbo-instruct':
         from langchain.llms.ai21 import AI21PenaltyData
-        params = rekey(params, 'max_new_tokens', 'maxTokens')
-        params = rekey(params, 'top_p', 'topP')  
+        from langchain.llms import AI21
 
-        params['presencePenalty'] = AI21PenaltyData()
-        params['presencePenalty'].scale = params['repetition_penalty'] - 1.0
-        del params['repetition_penalty']
-        
-        del params['top_k'] # not supported by ai21
-    elif model == 'openai/chatgpt':
-        params = rekey(params, 'max_new_tokens', 'max_tokens')
-        params = rekey(params, 'repetition_penalty', 'presence_penalty')
-        del params['top_k'] # not supported by ChatGPT
+        model_params = {
+            'temperature': params['temperature'],
+            'maxTokens': params['max_new_tokens'],
+            'topP': params['top_p'],
+            'presencePenalty': AI21PenaltyData()
+        }
+        model_params['presencePenalty'].scale = params['repetition_penalty'] - 1.0
+
+        return model_params, AI21(model='j2-jumbo-instruct', **model_params)
+
+    elif model == 'openai/chatgpt' or model == 'openai/gpt4':
+        from langchain.chat_models import ChatOpenAI
+
+        model_params = {
+            'temperature': params['temperature'],
+            'max_tokens': params['max_new_tokens'],
+            'top_p': params['top_p'],
+            'presence_penalty': params['repetition_penalty']
+        }
+
+        return model_params, ChatOpenAI(model_name='gpt-3.5-turbo' if model == 'openai/chatgpt' else 'gpt-4', **model_params)
     elif model == 'cohere/command-nightly':
-        params = rekey(params, 'max_new_tokens', 'max_tokens')
-        params = rekey(params, 'top_k', 'k')
-        params = rekey(params, 'top_p', 'p')
-        
-        params['frequency_penalty'] = params['repetition_penalty'] - 1.0
-        del params['repetition_penalty']
-
-    return params
-
-def init_model(provider, **kwargs):
-    if provider == 'cohere/command-nightly':
         from langchain import Cohere
-        return Cohere(model='command-nightly',**kwargs)
-    elif provider == 'ai21/j2-jumbo-instruct':
-        from langchain.llms import AI21        
-        return AI21(model='j2-jumbo-instruct', **kwargs)
-    elif provider == 'openai/chatgpt':
-        from langchain.chat_models import ChatOpenAI
-        return ChatOpenAI(model='gpt-3.5-turbo', **kwargs)
-    elif provider == 'openai/gpt4':
-        from langchain.chat_models import ChatOpenAI
-        return ChatOpenAI(model='gpt-4', **kwargs)
-    raise Exception('Unsupported provider')
 
+        model_params = {
+            'temperature': params['temperature'],
+            'max_tokens': params['max_new_tokens'],
+            'p': params['top_p'],
+            'k': params['top_k'],
+            'frequency_penalty': params['repetition_penalty'] - 1.0
+        }
 
-def prompt_template(model):
-    FILENAMES = {
-        'openai/chatgpt': 'prompts/openai-chatgpt.txt',
-        'cohere/command-nightly': 'prompts/cohere-command-nightly.txt',
-        'ai21/j2-jumbo-instruct': 'prompts/ai21-j2-jumbo-instruct.txt',
-    }
-    filename = FILENAMES.get(model)
-    if filename:
-        with open(filename) as f:
-            return f.read()
-    print('WARNING: Failed to load template for provider '+model)
-    return '{{prompt}}' 
+        return model_params, Cohere(model='command-nightly', **model_params)
+    
+    raise Exception('Unsupported model/provider')
 
 parser = argparse.ArgumentParser(description='Interview executor for LangChain')
 parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
@@ -73,13 +63,8 @@ parser.add_argument('--params', type=str, required=True, help='parameter file to
 parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
 args = parser.parse_args()
 
-params = json.load(open(args.params))
-for key in list(params.keys()):
-    if key[0] == '$':
-        del params[key]
-
-params = adjust_params(args.model, params)
-model = init_model(args.model, **params)
+# Load params and init model
+params, model = init_model(args.model, json.load(open(args.params)))
 
 # Load interview
 interview = [json.loads(line) for line in open(args.input)]
@@ -104,13 +89,13 @@ for challenge in interview:
         sleep(args.delay)
 
 # Save results
-base_name = Path(args.input).stem.replace('prepare','interview')
+[stage, interview_name, languages, template, *stuff] = Path(args.input).stem.split('_')
 templateout_name = 'none'
 params_name = Path(args.params).stem
 model_name = args.model.replace('/','-')
 ts = str(int(time.time()))
 
-output_filename = 'results/'+'_'.join([base_name, templateout_name, params_name, model_name, ts])+'.ndjson'
+output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
 with open(output_filename, 'w') as f:
     f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
 print('Saved results to', output_filename)

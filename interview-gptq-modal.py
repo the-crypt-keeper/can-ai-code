@@ -292,13 +292,13 @@ def main(input: str, params: str):
         results.append(result)
 
     # Save results
-    base_name = Path(input).stem.replace('prepare','interview')
+    [stage, interview_name, languages, template, *stuff] = Path(args.input).stem.split('_')
     templateout_name = 'none'
     params_name = Path(params).stem
     model_name = results[0]['model'].replace('/','-')
     ts = str(int(time.time()))
 
-    output_filename = 'results/'+'_'.join([base_name, templateout_name, params_name, model_name, ts])+'.ndjson'
+    output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
     with open(output_filename, 'w') as f:
         f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
     print('Saved results to', output_filename)

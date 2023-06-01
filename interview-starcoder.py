@@ -56,13 +56,13 @@ for challenge in interview:
     print()
 
 # Save results
-base_name = Path(args.input).stem.replace('prepare','interview')
+[stage, interview_name, languages, template, *stuff] = Path(args.input).stem.split('_')
 templateout_name = Path(args.templateout).stem
 params_name = Path(args.params).stem
 model_name = args.model.replace('/','-')
 ts = str(int(time.time()))
 
-output_filename = 'results/'+'_'.join([base_name, templateout_name, params_name, model_name, ts])+'.ndjson'
+output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
 with open(output_filename, 'w') as f:
     f.write('\n'.join([json.dumps(result) for result in results]))
 print('Saved results to', output_filename)
