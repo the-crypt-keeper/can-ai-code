@@ -19,11 +19,12 @@ def extract_code(answer):
     if start_index == -1:
         return None
 
-    # Find the index of the end token, starting from the end of the start token
+    # Find the index of the end token, starting from the end of the start token.
+    # if not found, assume we're taking the whole thing.
     end_token = "```"
     end_index = answer.find(end_token, start_index + len(start_token))
     if end_index == -1:
-        return None
+        end_index = len(answer)
 
     # Extract the text between the tokens
     code_text = answer[start_index + len(start_token):end_index].strip()
@@ -59,8 +60,9 @@ def evaluation(test, language, code):
                     print('   ',check_name, "failed", check['assert'], 'got', test_value, '!=', check['eq'])
             checks.append(check)
     else:
-        print(test_name, "No code found")
-        passed = -1
+        print(test['name'], "No code found!")
+        total = len(test['Checks'].keys())
+
     return total,passed,checks
 
 if __name__ == '__main__':
@@ -87,9 +89,13 @@ if __name__ == '__main__':
             continue
 
         code = extract_code(test['answer']) if not args.noextract else test['answer']
+        
+        if code:
+            print(test['name'], test['language'], 'started')
+        else:
+            print(test['name'], test['language'], 'extract_code failed')
+            print(test['answer'])
 
-        print(test['name'], test['language'], 'started')
-        #print('---\n'+code+'\n---')
         total, passed, checks = evaluation(interview[test['name']], test['language'], code)
 
         all_total[test['language']] += total
@@ -98,7 +104,7 @@ if __name__ == '__main__':
         row = test.copy()
         row['code'] = code
         row['checks'] = checks
-        row['status'] = 'PASS' if passed==total else 'NOCODE' if passed == -1 else 'FAIL'
+        row['status'] = 'NOCODE' if (not code) else 'PASS' if passed == total else 'FAIL'
         row['passed'] = passed
         row['total'] = total
         results.append(row)
