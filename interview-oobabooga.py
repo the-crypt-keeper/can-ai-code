@@ -9,7 +9,7 @@ parser.add_argument('--input', type=str, required=True, help='path to prepare*.n
 parser.add_argument('--params', type=str, required=True, help='parameter file to use')
 parser.add_argument('--model', type=str, required=True, help='model name being evaluated')
 parser.add_argument('--host', type=str, default='localhost:5000', help="host to connect to")
-parser.add_argument('--kobold', action='store_true', help='use kobold server instead of the default one')
+parser.add_argument('--kobold', action='store_true', help='use koboldcpp server instead of text-generation-web-ui')
 args = parser.parse_args()
 
 URL_TAIL='/api/v1/generate'
