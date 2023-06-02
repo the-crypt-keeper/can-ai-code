@@ -26,6 +26,8 @@ See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 | cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
 | bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
+| Manticore-13B             | ggmlv3.q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
+| Manticore-13B             | ggmlv3.q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
 
 ## Data Sets
 
