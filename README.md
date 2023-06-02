@@ -18,7 +18,7 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 | Model | Quant | Size | License | Prompt | Parameters | Python | JavaScript |
 |-------|--------------|------|---------|--------|------------|--------|------------|
 | openai/gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
-| ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65                   | 54/65                   |
+| ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65 :3rd_place_medal: | 54/65                   |
 | cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
 | bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
 | bigcode/starcoder         | FP32  | 16B  | Open   | starcoder-fim          | precise | 46/65                   | 45/65                   |
@@ -26,6 +26,10 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 | Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
 | Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
 | Vicuna-1.1-7B             | ggmlv3 q5_0  |  7B | Open | Vicuna-1p1         | precise | 44/65                   | 41/65                   |
+| Vicuna-1.1-13B            | ggmlv3 q5_0  | 13B | Open | Vicuna-1p1         | precise | 57/65 :2nd_place_medal: | 57/65 :2nd_place_medal: |
+| WizardLM-7B-uncensored    | ggmlv3 q5_1  |  7B | Open | Wizard-Vicuna      | precise | 51/65                   | 37/65                   |
+| WizardLM-13B-1.0          | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 51/65                   | 50/65 :3rd_place_medal: |
+| Wizard-Vicuna-13B-Uncensored | ggmlv3 q5_0 | 13B | Open | Wizard-Vicuna      | precise | 31/65 :poop:          | 48/65                   |
 
 ## Data Sets
 
@@ -41,13 +45,13 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 
 ### Interview
 
-* `interview-langchain.py` - Run using LangChain model interface
+* `interview-langchain.py` - Run using LangChain
 * `interview-oobabooga.py` - Run using OoobaBooga (or KoboldCpp) remote API
 * `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform
 * `intreview-llamacpp.py` - Run GGML llama.cpp model on local (or remote via ssh) CPU/GPU
 
-* `interview-hfinference.py` - Run Huggingface Inference API to run various models
-* `interview-starchat.py` - Run Huggingface Space to run Starchat model **not updated for v2 yet**
+* `interview-hfinference.py` - Use Huggingface Inference API to run various models
+* `interview-starchat.py` - Use Huggingface Spaces to run Starchat model **not updated for v2 yet**
 * `interview-starcoder.py` - Use Huggingface Transformers to run Starcoder models on local GPU
 
 ### Evaluate
@@ -139,6 +143,8 @@ Fields:
 
 Contributions are welcome!  Especially looking for additional interview sets and improvements to questions - open a PR! 
 
-* Evaluate more 30B and 65B open langauge models
+* Evaluate Llama and Alpaca 65B open models
+* Evaluate codet5p: https://huggingface.co/Salesforce/codet5p-16b
+* Evaluate CodeAlpaca: https://github.com/sahil280114/codealpaca
 * If the models are offered error messages or failing test results, could they produce better code?
 * Can tweaking prompts improve performance?
