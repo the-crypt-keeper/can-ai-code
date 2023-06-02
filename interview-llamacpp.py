@@ -21,7 +21,23 @@ args = parser.parse_args()
 # Load params and init model
 params = json.load(open(args.params))
 
-llama_command = f"{args.main} {args.args} --threads {args.threads} --n_predict {params['max_new_tokens']} --temp {params['temperature']} --top_k {params['top_k']} --top_p {params['top_p']} --repeat_last_n {params['repeat_last_n']} --repeat_penalty {params['repetition_penalty']} --model {args.model}"
+param_map = {
+    'n_predict': 'max_new_tokens',
+    'temp': 'temperature',
+    'top_k': 'top_k',
+    'top_p': 'top_p',
+    'repeat_last_n': 'repeat_last_n',
+    'repeat_penalty': 'repetition_penalty',
+    'mirostat': 'mirostat',
+    'mirostat-lr': 'mirostat-lr',
+    'mirostat-ent': 'mirostat-ent'
+}
+
+llama_command = f"{args.main} {args.args} --threads {args.threads} --model {args.model}"
+
+for k,v in param_map.items():
+    if v in params:
+        llama_command += f' --{k} {params[v]}'
 
 model_name = Path(args.model).stem
 

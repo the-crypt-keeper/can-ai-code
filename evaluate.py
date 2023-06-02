@@ -6,9 +6,10 @@ import json
 import re
 
 def extract_code(answer):
-    # Fallback if the model forgot to use block quotes
-    if answer.strip()[0:3] == 'def' or answer.strip()[0:8] == 'function':
-        return answer
+    # Fallback if the model forgot to use block quotes or used a single quote instead.
+    simple_answer = answer.replace('`','').strip()
+    if simple_answer[0:3] == 'def' or simple_answer[0:8] == 'function':
+        return simple_answer
 
     # Look for start tokens   
     match = re.search(r'```(\w*)', answer)

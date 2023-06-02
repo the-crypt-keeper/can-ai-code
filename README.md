@@ -26,6 +26,8 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
 | Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
 | Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
+| Manticore-13B-Chat-Pyg-Guanaco | ggmlv3 q5_0  | 13B | Open |  Manticore-YearZero | precise | 43/65             | 50/65                   |
+| Manticore-13B-Chat-Pyg-Guanaco | ggmlv3 q5_0  | 13B | Open |  Manticore-YearZero | mirostat | 43/65            | 50/65                   |
 | Vicuna-1.1-7B             | ggmlv3 q5_0  |  7B | Open | Vicuna-1p1         | precise | 44/65                   | 41/65                   |
 | Vicuna-1.1-13B            | ggmlv3 q5_0  | 13B | Open | Vicuna-1p1         | precise | 57/65 :2nd_place_medal: | 57/65 :2nd_place_medal: |
 | WizardLM-7B-uncensored    | ggmlv3 q5_1  |  7B | Open | Wizard-Vicuna      | precise | 51/65                   | 37/65                   |
@@ -47,6 +49,8 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 * `prepare.py` - Applies templates to question turning them into language- and model-specific prompts suitable for interview
 
 ### Interview
+
+* `model_parameters/*.json` - Sampling hyper-parameter sets
 
 * `interview-langchain.py` - Run using LangChain
 * `interview-oobabooga.py` - Run using OoobaBooga (or KoboldCpp) remote API
@@ -102,7 +106,21 @@ The f object represents the sandbox view of the function.  Static analysis is pe
 
 ## Using this Repository
 
-TODO update for v2
+TODO
+
+### Prompts
+
+`Vicuna-1p1.txt`
+
+`starcoder-fim*.txt`
+
+`Manticore-YearZero.txt` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
+
+### Parameters
+
+`precise.json`
+
+`mirostat.json` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
 
 ## Output formats
 
@@ -144,10 +162,17 @@ Fields:
 
 # Roadmap / Future Work
 
-Contributions are welcome!  Especially looking for additional interview sets and improvements to questions - open a PR! 
+## Interesting Models
 
 * Evaluate Llama and Alpaca 65B open models
 * Evaluate codet5p: https://huggingface.co/Salesforce/codet5p-16b
 * Evaluate CodeAlpaca: https://github.com/sahil280114/codealpaca
+
+## Additional Interviews
+
+* Port HumanEval, a standard LLM code benchmark with 164 tests: https://github.com/openai/human-eval
+
+## Investigations
+
 * If the models are offered error messages or failing test results, could they produce better code?
 * Can tweaking prompts improve performance?
