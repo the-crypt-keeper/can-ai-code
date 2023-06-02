@@ -33,7 +33,7 @@ Evaluation of 65B models is on the Roadmap.  Can you help?  Reach out!
 
 ## Results (chart)
 
-![Chart](https://quickchart.io/chart?c={%22type%22:%22bar%22,%22data%22:{%22labels%22:[%22openai/gpt-3.5-turbo%22,%22ai21/j2-jumbo-instruct%22,%22cohere/command-nightly%22,%22Wizard-Vicuna-13B-Uncensored%22,%22vicuna-7B-1.1%22,%22Manticore-13B%22,%22Guanaco-13B%22,%22WizardLM-13B-1.0%22,%22WizardLM-7B-Uncensored%22,%22Starchat%22],%22datasets%22:[{%22label%22:%22Python%22,%22data%22:[65,55,48,31,51,47,41,53,54,40]},{%22label%22:%22JavaScript%22,%22data%22:[8,62,39,45,44,37,37,52,37,45]}]}})
+![Chart](https://quickchart.io/chart?c={%22type%22:%22bar%22,%22data%22:{%22labels%22:[%22openai/gpt-3.5-turbo%22,%22ai21/j2-jumbo-instruct%22,%22cohere/command-nightly%22,%22Wizard-Vicuna-13B-Uncensored%22,%22vicuna-7B-1.1%22,%22Manticore-13B%22,%22Guanaco-13B%22,%22WizardLM-13B-1.0%22,%22WizardLM-7B-Uncensored%22,%22Starchat%22],%22datasets%22:[{%22label%22:%22Python%22,%22data%22:[65,55,48,31,51,47,41,53,54,40]},{%22label%22:%22JavaScript%22,%22data%22:[62,39,45,48,40,37,37,52,37,45]}]}})
 
 ## Data Sets
 
