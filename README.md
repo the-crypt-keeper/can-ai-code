@@ -2,11 +2,7 @@
 
 A self-evaluating interview for AI coding models.
 
-# VERSION 2 NOTES
-
-This branch is a work in progress refactor of both the test suite and executor.
-
-See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
+NOTE: This branch is a work in progress refactor of both the test suite and executor.  See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 
 ## Key Ideas
 
@@ -37,9 +33,13 @@ See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 
 ## Repository Structure
 
+### Prepare
+
 * `junior-dev/*.yaml` - Interview questions (multi-language)
 * `prompts/*.txt` - System prompts for the various models
-* `prepare.py` - Specializes question into prompts for a specific language
+* `prepare.py` - Applies templates to question turning them into language- and model-specific prompts suitable for interview
+
+### Interview
 
 * `interview-langchain.py` - Run using LangChain model interface
 * `interview-oobabooga.py` - Run using OobbaBooga remote API model interface **not updated for v2 yet**
@@ -49,6 +49,8 @@ See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 * `interview-hfinference.py` - Run Huggingface Inference API to run various models
 * `interview-starchat.py` - Run Huggingface Space to run Starchat model **not updated for v2 yet**
 * `interview-starcoder.py` - Use Huggingface Transformers to run Starcoder models on local GPU
+
+### Evaluate
 
 * `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 
@@ -95,9 +97,43 @@ The f object represents the sandbox view of the function.  Static analysis is pe
 
 TODO update for v2
 
-## Interview format
+## Output formats
 
-TODO update for v2
+All scripts output automatically named .ndjson files to the `results/` directory.
+
+Each stage outputs a super-set of fields from the stage before it, so its possible to feed eval/interview back to interview (to re-run the questions) or back to eval (to re-run the eval).
+
+### prepare
+
+`results/prepare_{interview}_{languages}_{template}.ndjson`
+
+Fields:
+
+- all Question fields (Signature, Input, Output, Fact, Description)
+- name
+- language
+- prompt
+
+### interview
+
+`results/interview_{interview}_{languages}_{template}_{templateout}_{params}_{model}_{timestamp}.ndjson`
+
+Fields:
+- all `prepare` fields
+- model
+- params
+- answer
+
+### eval
+
+`results/eval_{interview}_{languages}_{template}_{templateout}_{params}_{model}_{timestamp}.ndjson`
+
+Fields:
+- all `eval` fields
+- status
+- passed
+- total
+- checks
 
 # Roadmap / Future Work
 
