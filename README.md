@@ -15,7 +15,7 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 
 :construction: :construction: V2 - UNDER CONSTRUCTION :construction: :construction: 
 
-| Model | Quant | Size | License | Prompt | Parameters | Python | JavaScript |
+| Model | Quant | Size | License | Prompt | Params | Python | JavaScript |
 |-------|--------------|------|---------|--------|------------|--------|------------|
 | openai/gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
 | ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65 :3rd_place_medal: | 54/65                   |
@@ -30,6 +30,8 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 | WizardLM-7B-uncensored    | ggmlv3 q5_1  |  7B | Open | Wizard-Vicuna      | precise | 51/65                   | 37/65                   |
 | WizardLM-13B-1.0          | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 51/65                   | 50/65 :3rd_place_medal: |
 | Wizard-Vicuna-13B-Uncensored | ggmlv3 q5_0 | 13B | Open | Wizard-Vicuna      | precise | 31/65 :poop:          | 48/65                   |
+| Guanaco-7B                | ggmlv3 q5_0  |  7B | Open | Guanaco            | precise | 41/65                   | 41/65                   |
+| Guanaco-13B               | ggmlv3 q5_0  | 13B | Open | Guanaco            | precise | 29/65 :poop:            | 39/65                   |
 
 ## Data Sets
 
