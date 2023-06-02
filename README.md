@@ -22,13 +22,14 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 | cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
 | bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
 | bigcode/starcoder         | FP32  | 16B  | Open   | starcoder-fim          | precise | 46/65                   | 45/65                   |
+| bigcode/starchat          | FP32  | 16B  | Open   | starchat               | precise | 48/65                   | 53/65 :3rd_place_medal: |
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
 | Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
 | Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
 | Vicuna-1.1-7B             | ggmlv3 q5_0  |  7B | Open | Vicuna-1p1         | precise | 44/65                   | 41/65                   |
 | Vicuna-1.1-13B            | ggmlv3 q5_0  | 13B | Open | Vicuna-1p1         | precise | 57/65 :2nd_place_medal: | 57/65 :2nd_place_medal: |
 | WizardLM-7B-uncensored    | ggmlv3 q5_1  |  7B | Open | Wizard-Vicuna      | precise | 51/65                   | 37/65                   |
-| WizardLM-13B-1.0          | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 51/65                   | 50/65 :3rd_place_medal: |
+| WizardLM-13B-1.0          | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 51/65                   | 50/65                   |
 | Wizard-Vicuna-13B-Uncensored | ggmlv3 q5_0 | 13B | Open | Wizard-Vicuna      | precise | 31/65 :poop:          | 48/65                   |
 | Guanaco-7B                | ggmlv3 q5_0  |  7B | Open | Guanaco            | precise | 41/65                   | 41/65                   |
 | Guanaco-13B               | ggmlv3 q5_0  | 13B | Open | Guanaco            | precise | 29/65 :poop:            | 39/65                   |
@@ -53,7 +54,7 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 * `intreview-llamacpp.py` - Run GGML llama.cpp model on local (or remote via ssh) CPU/GPU
 
 * `interview-hfinference.py` - Use Huggingface Inference API to run various models
-* `interview-starchat.py` - Use Huggingface Spaces to run Starchat model **not updated for v2 yet**
+* `interview-starchat.py` - Use Huggingface Spaces to run Starchat model
 * `interview-starcoder.py` - Use Huggingface Transformers to run Starcoder models on local GPU
 
 ### Evaluate
