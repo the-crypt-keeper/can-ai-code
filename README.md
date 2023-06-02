@@ -29,6 +29,7 @@ See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
 | Manticore-13B             | ggmlv3.q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
 | Manticore-13B             | ggmlv3.q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
+| Vicuna-1.1-7B             | ggmlv3.q5_0  |  7B | Open | Vicuna-1p1         | precise | 44/65                   | 41/65                   |
 
 ## Data Sets
 
