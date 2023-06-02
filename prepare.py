@@ -19,7 +19,7 @@ def load_questions(interview='junior-dev'):
 
 def save_interview(input, templateout, params, model, results):
     [stage, interview_name, languages, template, *stuff] = Path(input).stem.split('_')
-    templateout_name = templateout
+    templateout_name = Path(templateout).stem
     params_name = Path(params).stem
     model_name = model.replace('/','-')
     ts = str(int(time.time()))

@@ -5,8 +5,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from jinja2 import Template
 import argparse
 import json
-import time
-from pathlib import Path
+from parser import save_interview
 
 parser = argparse.ArgumentParser(description='Interview executor for StarCoder family')
 parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
@@ -55,14 +54,4 @@ for challenge in interview:
     print(answer)
     print()
 
-# Save results
-[stage, interview_name, languages, template, *stuff] = Path(args.input).stem.split('_')
-templateout_name = Path(args.templateout).stem
-params_name = Path(args.params).stem
-model_name = args.model.replace('/','-')
-ts = str(int(time.time()))
-
-output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
-with open(output_filename, 'w') as f:
-    f.write('\n'.join([json.dumps(result) for result in results]))
-print('Saved results to', output_filename)
+save_interview(args.input, args.templateout, args.params, args.model, results)

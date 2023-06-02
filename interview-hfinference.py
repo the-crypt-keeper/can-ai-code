@@ -6,6 +6,7 @@ import time
 from jinja2 import Template
 import argparse
 from pathlib import Path
+from prepare import save_interview
 
 parser = argparse.ArgumentParser(description='Interview executor for HuggingFace Inference API')
 parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
@@ -80,13 +81,4 @@ for challenge in interview:
     results.append(result)
 
 # Save results
-[stage, interview_name, languages, template, *stuff] = Path(args.input).stem.split('_')
-templateout_name = Path(args.templateout).stem
-params_name = Path(args.params).stem
-model_name = args.model.replace('/','-')
-ts = str(int(time.time()))
-
-output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
-with open(output_filename, 'w') as f:
-    f.write('\n'.join([json.dumps(result) for result in results]))
-print('Saved results to', output_filename)
+save_interview(args.input, args.templateout, args.params, args.model, results)

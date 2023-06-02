@@ -2,9 +2,8 @@
 from langchain import LLMChain, PromptTemplate
 import argparse
 import json
-import time
 from time import sleep
-from pathlib import Path
+from prepare import save_interview
 
 def rekey(x,old,new):
     if old in x:
@@ -88,14 +87,4 @@ for challenge in interview:
     if args.delay:
         sleep(args.delay)
 
-# Save results
-[stage, interview_name, languages, template, *stuff] = Path(args.input).stem.split('_')
-templateout_name = 'none'
-params_name = Path(args.params).stem
-model_name = args.model.replace('/','-')
-ts = str(int(time.time()))
-
-output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
-with open(output_filename, 'w') as f:
-    f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
-print('Saved results to', output_filename)
+save_interview(args.input, 'none', args.params, args.model, results)

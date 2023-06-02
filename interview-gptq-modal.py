@@ -1,10 +1,7 @@
 import time
 import json
-import pandas as pd
-import os
 from pathlib import Path
 from modal import Image, Stub, method, create_package_mounts, gpu
-from jinja2 import Template
 
 #### SEE NOTE BELOW! ####
 MODEL_NAME = "TheBloke/VicUnlocked-30B-LoRA-GPTQ"
@@ -267,6 +264,7 @@ class ModalGPTQ:
 # For local testing, run `modal run -q interview-gptq-modal.py --input questions.csv --params model_parameters/precise.json`
 @stub.local_entrypoint()
 def main(input: str, params: str):
+    from prepare import save_interview
 
     model = ModalGPTQ()
 
@@ -291,14 +289,4 @@ def main(input: str, params: str):
         result['model'] = params_model['model']
         results.append(result)
 
-    # Save results
-    [stage, interview_name, languages, template, *stuff] = Path(args.input).stem.split('_')
-    templateout_name = 'none'
-    params_name = Path(params).stem
-    model_name = results[0]['model'].replace('/','-')
-    ts = str(int(time.time()))
-
-    output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
-    with open(output_filename, 'w') as f:
-        f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
-    print('Saved results to', output_filename)
+    save_interview(args.input, 'none', params, results[0]['model'], results)
