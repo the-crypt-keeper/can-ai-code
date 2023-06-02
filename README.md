@@ -25,6 +25,7 @@ See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 | ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65                   | 54/65                   |
 | cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
 | bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
+| bigcode/starcoder         | FP32  | 16B  | Open   | starcoder-fim          | precise | 46/65                   | 45/65                   |
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
 | Manticore-13B             | ggmlv3.q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
 | Manticore-13B             | ggmlv3.q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
@@ -38,12 +39,16 @@ See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 * `junior-dev/*.yaml` - Interview questions (multi-language)
 * `prompts/*.txt` - System prompts for the various models
 * `prepare.py` - Specializes question into prompts for a specific language
+
 * `interview-langchain.py` - Run using LangChain model interface
 * `interview-oobabooga.py` - Run using OobbaBooga remote API model interface **not updated for v2 yet**
-* `interview-starchat.py` - Run Huggingface Space to run Starchat model **not updated for v2 yet**
-* `interview-starcoder.py` - Run Huggingface Transformers to run Starcoder models on local GPU
 * `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform
 * `intreview-llamacpp.py` - Run GGML llama.cpp model on local (or remote via ssh) CPU/GPU
+
+* `interview-hfinference.py` - Run Huggingface Inference API to run various models
+* `interview-starchat.py` - Run Huggingface Space to run Starchat model **not updated for v2 yet**
+* `interview-starcoder.py` - Use Huggingface Transformers to run Starcoder models on local GPU
+
 * `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 
 ## Question Format

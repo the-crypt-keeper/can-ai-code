@@ -1,3 +1,9 @@
+{% if language == "python" %}
 def {{Signature}}:
-    '''a function {{Input}} that computes {{Output}}'''
     {{Answer}}
+{% endif %}
+{% if language == "javascript" %}
+function {{Signature}} {
+    {{Answer}}
+}
+{% endif %}
