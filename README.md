@@ -27,9 +27,9 @@ See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
 | bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
 | bigcode/starcoder         | FP32  | 16B  | Open   | starcoder-fim          | precise | 46/65                   | 45/65                   |
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
-| Manticore-13B             | ggmlv3.q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
-| Manticore-13B             | ggmlv3.q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
-| Vicuna-1.1-7B             | ggmlv3.q5_0  |  7B | Open | Vicuna-1p1         | precise | 44/65                   | 41/65                   |
+| Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
+| Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
+| Vicuna-1.1-7B             | ggmlv3 q5_0  |  7B | Open | Vicuna-1p1         | precise | 44/65                   | 41/65                   |
 
 ## Data Sets
 
