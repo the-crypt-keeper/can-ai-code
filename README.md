@@ -42,7 +42,7 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 ### Interview
 
 * `interview-langchain.py` - Run using LangChain model interface
-* `interview-oobabooga.py` - Run using OobbaBooga remote API model interface **not updated for v2 yet**
+* `interview-oobabooga.py` - Run using OoobaBooga (or KoboldCpp) remote API
 * `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform
 * `intreview-llamacpp.py` - Run GGML llama.cpp model on local (or remote via ssh) CPU/GPU
 

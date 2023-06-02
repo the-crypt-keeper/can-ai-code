@@ -3,6 +3,7 @@ import glob
 import yaml
 import argparse
 import json
+import time
 from jinja2 import Template
 from pathlib import Path
 
@@ -15,6 +16,18 @@ def load_questions(interview='junior-dev'):
                     continue
                 tests[test]['name'] = test
                 yield tests[test]
+
+def save_interview(input, templateout, params, model, results):
+    [stage, interview_name, languages, template, *stuff] = Path(input).stem.split('_')
+    templateout_name = templateout
+    params_name = Path(params).stem
+    model_name = model.replace('/','-')
+    ts = str(int(time.time()))
+
+    output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
+    with open(output_filename, 'w') as f:
+        f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
+    print('Saved results to', output_filename)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Interview preparation')
