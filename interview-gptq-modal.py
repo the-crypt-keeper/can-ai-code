@@ -289,4 +289,4 @@ def main(input: str, params: str):
         result['model'] = params_model['model']
         results.append(result)
 
-    save_interview(args.input, 'none', params, results[0]['model'], results)
+    save_interview(input, 'none', params, results[0]['model'], results)
