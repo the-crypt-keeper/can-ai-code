@@ -2,8 +2,6 @@
 
 A self-evaluating interview for AI coding models.
 
-NOTE: This branch is a work in progress refactor of both the test suite and executor.  See https://github.com/the-crypt-keeper/can-ai-code/pull/9 for discussion.
-
 ## Key Ideas
 
 * Interview questions written by humans, test taken by AI
@@ -11,9 +9,13 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 * Compare LLM models against each other
 * For a given LLM, compare prompting techniques and hyper-parameters
 
-## Results
+## Supported Test Suites
 
-:construction: :construction: V2 - UNDER CONSTRUCTION :construction: :construction: 
+`junior-dev` is a multi-language (Python, JavaScript) suite of 12 tests created for this project to test small LLM coding performance.  This project provides all necessary components to execute this evaluation.
+
+`humaneval` is a Python-only suite of 164 tests created by OpenAI.  This project provides template scripts to prepare and execute the humaneval interview, as well as result extraction scripts to help their evaluator. See https://github.com/openai/human-eval for more information.
+
+## Results junior-dev
 
 | Model | Quant | Size | License | Prompt | Params | Python | JavaScript |
 |-------|--------------|------|---------|--------|------------|--------|------------|
@@ -36,17 +38,27 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 | Guanaco-7B                | ggmlv3 q5_0  |  7B | Open | Guanaco            | precise | 41/65                   | 41/65                   |
 | Guanaco-13B               | ggmlv3 q5_0  | 13B | Open | Guanaco            | precise | 29/65 :poop:            | 39/65                   |
 
-## Data Sets
-
 :new: Model answers are now included inside this repository!  See `results/`
+
+## Results HumanEval
+
+:construction: HumanEval work is under active development.
+
+| Model |     Quant    | Size | License | Prompt |    Params  | Python |
+|-------|--------------|------|---------|--------|------------|--------|
+| VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 20/164 |
 
 ## Repository Structure
 
-### Prepare
+### Prepare: junior-dev
 
 * `junior-dev/*.yaml` - Interview questions (multi-language)
 * `prompts/*.txt` - System prompts for the various models
 * `prepare.py` - Applies templates to question turning them into language- and model-specific prompts suitable for interview
+
+### Prepare: humaneval
+
+* `humaneval.py` - Applies templates to humaneval interview suite turning them into prompts suitable for interview
 
 ### Interview: Common
 
@@ -78,9 +90,13 @@ To add a new model, look at `init_model`.
 * `interview-starchat.py` - Use Huggingface Spaces to run Starchat model
 * `interview-starcoder.py` - Use Huggingface Transformers to run Starcoder models on local GPU
 
-### Evaluate
+### Evaluate: junior-dev
 
 `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
+
+## Evaluate: humaneval
+
+Use `humaneval.py --answers` to convert any interview output into .jsonl format and use the upsteam evaluator: https://github.com/openai/human-eval
 
 ## Question Format
 

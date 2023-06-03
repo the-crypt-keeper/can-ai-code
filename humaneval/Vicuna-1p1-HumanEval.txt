@@ -1,0 +1,9 @@
+A chat between a curious human ("HUMAN") and an artificial intelligence assistant ("ASSISTANT"). The assistant gives helpful, detailed, and polite answers to the human's questions.
+
+HUMAN: Hello, ASSISTANT.
+ASSISTANT: Hello. How may I help you today?
+HUMAN: Help me complete the following Python program:
+{{prompt}}
+# Your code here
+
+ASSISTANT:
