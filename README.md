@@ -58,7 +58,9 @@ A self-evaluating interview for AI coding models.
 
 ### Prepare: humaneval
 
-* `humaneval.py` - Applies templates to humaneval interview suite turning them into prompts suitable for interview
+Use `humaneval.py --template` to apply templates to humaneval interview suite turning them into prompts suitable for interview.
+
+See `humaneval/Vicuna-1p1-HumanEval.txt` for an example template, the format is different then internal tests.
 
 ### Interview: Common
 
@@ -94,7 +96,7 @@ To add a new model, look at `init_model`.
 
 `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 
-## Evaluate: humaneval
+### Evaluate: humaneval
 
 Use `humaneval.py --answers` to convert any interview output into .jsonl format and use the upsteam evaluator: https://github.com/openai/human-eval
 
