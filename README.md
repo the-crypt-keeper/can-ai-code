@@ -48,14 +48,31 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 * `prompts/*.txt` - System prompts for the various models
 * `prepare.py` - Applies templates to question turning them into language- and model-specific prompts suitable for interview
 
-### Interview
+### Interview: Common
 
-* `model_parameters/*.json` - Sampling hyper-parameter sets
+`model_parameters/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
 
-* `interview-langchain.py` - Run using LangChain
-* `interview-oobabooga.py` - Run using OoobaBooga (or KoboldCpp) remote API
-* `interview-gptq-modal.py` - Run GPTQ on Modal remote GPU rental platform
-* `intreview-llamacpp.py` - Run GGML llama.cpp model on local (or remote via ssh) CPU/GPU
+### Interview: Langchain 
+
+`interview-langchain.py` provides a LangChain interview executor.
+
+To add a new model, look at `init_model`.
+
+### Interview: OobaBooga/KoboldCpp API
+
+`interview-oobabooga.py` provides a text-generation-ui/koboldcpp API compatible interview executor.
+
+### Interview: GPTQ
+
+`interview-gptq-modal.py` - Run Ooba-Booga fork of GPTQ on Modal
+
+`interview-autogptq-modal.py` - Run latest AutoGPTQ on Modal
+
+### Interview: Llama.cpp (GGML)
+
+`Interview-llamacpp.py` provides an executor to wrap `main` on local (or remote via ssh) CPU/GPU
+
+### Interview: Huggingface APIs
 
 * `interview-hfinference.py` - Use Huggingface Inference API to run various models
 * `interview-starchat.py` - Use Huggingface Spaces to run Starchat model
@@ -63,7 +80,7 @@ NOTE: This branch is a work in progress refactor of both the test suite and exec
 
 ### Evaluate
 
-* `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
+`evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 
 ## Question Format
 
