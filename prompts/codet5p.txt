@@ -1,0 +1,4 @@
+{% if language == "python" %}# a function {{Input}} that returns {{Output}}{% if Fact %} given {{Fact}}{% endif %}
+def {{Signature}}:{% endif %}
+{% if language == "javascript" %}// a function {{Input}} that returns {{Output}}{% if Fact %} given {{Fact}}{% endif %}
+function {{Signature}} {{% endif %}

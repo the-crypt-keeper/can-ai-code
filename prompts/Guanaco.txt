@@ -1,5 +1,1 @@
-When asked to write code, return only the final function enclosed in a ``` block.
-
-### Instruction: {{prompt}}
-
-### Assistant:
+### Human: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}. All code must start with ``` and also end with ```. ### Assistant:

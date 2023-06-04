@@ -1,0 +1,10 @@
+{
+    "$note": "settings from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/",
+    "temperature": 0.4,
+    "repetition_penalty": 1.176,
+    "max_new_tokens": 512,
+    "repeat_last_n": 256,
+    "mirostat": 2,
+    "mirostat-lr": 0.1,
+    "mirostat-ent": 0.1
+}

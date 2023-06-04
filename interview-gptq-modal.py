@@ -1,10 +1,7 @@
 import time
 import json
-import pandas as pd
-import os
 from pathlib import Path
 from modal import Image, Stub, method, create_package_mounts, gpu
-from jinja2 import Template
 
 #### SEE NOTE BELOW! ####
 MODEL_NAME = "TheBloke/VicUnlocked-30B-LoRA-GPTQ"
@@ -231,18 +228,19 @@ class ModalGPTQ:
         self.tokenizer = tokenizer
         print(f"Model loaded in {time.time() - t0:.2f}s")
 
-    def params(self, temperature=0.7, repetition_penalty=1.0, top_k=-1, top_p=1.0, stop='###', **kwargs):
+    def params(self, temperature=0.7, repetition_penalty=1.0, top_k=-1, top_p=1.0, max_new_tokens=512, stop='###', **kwargs):
         return {
             "model": MODEL_NAME,
             "temperature": temperature,
             "repetition_penalty": repetition_penalty,
             "top_k": top_k,
             "top_p": top_p,
-            "stop": stop
+            "stop": stop,
+            "max_new_tokens": max_new_tokens
         }
 
     @method()
-    async def generate(self, input, max_new_tokens = 512, params=None):
+    async def generate(self, input, params=None):
         if input == "":
             raise Exception("Input is empty")
 
@@ -250,7 +248,6 @@ class ModalGPTQ:
             params = self.params()
 
         params['prompt'] = input
-        params['max_new_tokens'] = max_new_tokens
         print(params)
 
         prev = len(input) + 1
@@ -266,32 +263,30 @@ class ModalGPTQ:
 
 # For local testing, run `modal run -q interview-gptq-modal.py --input questions.csv --params model_parameters/precise.json`
 @stub.local_entrypoint()
-def main(questions: str, template: str, params: str, outdir: str):
+def main(input: str, params: str):
+    from prepare import save_interview
+
     model = ModalGPTQ()
-    questions = pd.read_csv(questions)
+
+    interview = [json.loads(line) for line in open(input)]
     params_json = json.load(open(params,'r'))
-    params = model.params(**params_json)
-    in_template = Template(open(template, 'r').read())
+    params_model = model.params(**params_json)
 
-    if not os.path.exists(outdir):
-        os.mkdir(outdir) 
+    results = []
+    for question in interview:
+        print(question['name'], question['language'])
 
-    results = open(outdir+'/interview-gptq-modal.ndjson','w')
-    for idx, question in questions.iterrows():
-            print("Q["+str(idx)+"]", question['name'])
+        answer = ""
+        for val in model.generate.call(question['prompt'], params=params_model):
+            answer += val
+            print(val, end="", flush=True)
 
-            prompt = in_template.render(**question)
+        print()
 
-            answer = ""
-            for val in model.generate.call(prompt, params=params):
-                answer += val
-                print(val, end="", flush=True)
+        result = question.copy()
+        result['answer'] = answer
+        result['params'] = params_model
+        result['model'] = params_model['model']
+        results.append(result)
 
-            # v2 output
-            result = { 'name': question['name'], 'prompt': prompt, 'answer': answer, 'params': params }
-            results.write(json.dumps(result)+'\n')
-
-            # v1 output
-            with open(outdir+'/'+question['name']+'.txt', 'w') as f:
-                f.write(answer)
-    results.close()
+    save_interview(input, 'none', params, results[0]['model'], results)

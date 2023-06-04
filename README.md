@@ -9,49 +9,102 @@ A self-evaluating interview for AI coding models.
 * Compare LLM models against each other
 * For a given LLM, compare prompting techniques and hyper-parameters
 
-## Results
+## Supported Test Suites
 
-|Model|Notes|Python|JavaScript|
-|-----|-----|-----|-----|
-|openai/gpt-3.5-turbo|Proprietary 170B|65/65 :1st_place_medal:|62/65 :1st_place_medal:|
-|ai21/j2-jumbo-instruct|Proprietary 178B|55/65 :2nd_place_medal:|39/65|
-|cohere/command-nightly|Proprietary 52B|48/65|45/65|
-|Wizard-Vicuna-13B-Uncensored|Open 13B ggmlv3.q5_0|31/65|48/65 :3rd_place_medal:|
-|vicuna-7B-1.1|Open 7B ggmlv3 q5_0|51/65|40/65|
-|Manticore-13B|Open 13B ggmlv3.q5_0|47/65|37/65|
-|Guanaco-13B|Open 13B GPTQ 4bit|41/65|37/65|
-|WizardLM-13B-1.0|Open 13B ggmlv3.q5_0|53/65|**52/65** :2nd_place_medal:|
-|WizardLM-7B-Uncensored|Open 7B ggmlv3.q5_1|**54/65** :3rd_place_medal:|37/65|
-|VicUnlocked-30B-LoRA|Open 30B GPTQ 4bit|45/65|41/65|
-|bigcode/Starchat|Open 15.5B|40/65|45/65|
-|bigcode/tiny_starcoder_py|Open 159M|39/65 [1] :construction:|N/A|
-|bigcode/Starcoder|Open 15.5B|45/65 [1] :construction:|:construction:|
+`junior-dev` is a multi-language (Python, JavaScript) suite of 12 tests created for this project to test small LLM coding performance.  This project provides all necessary components to execute this evaluation.
 
-[1] Starcoder models are prompted with FIM techniques, so these results are not directly comparable to the other chat models. See https://github.com/the-crypt-keeper/tiny_starcoder/blob/can-ai-code/interview-tinystarcoder.py
+:construction: `humaneval` is a Python-only suite of 164 tests created by OpenAI.  This project provides template scripts to prepare and execute the humaneval interview, as well as result extraction scripts to help their evaluator. See https://github.com/openai/human-eval for more information.
 
-Evaluation of 65B models is on the Roadmap.  Can you help?  Reach out!
+## Results junior-dev
 
-## Results (chart)
+| Model | Quant | Size | License | Prompt | Params | Python | JavaScript |
+|-------|--------------|------|---------|--------|------------|--------|------------|
+| openai/gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
+| ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65 :3rd_place_medal: | 54/65                   |
+| cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
+| bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
+| bigcode/starcoder         | FP32  | 16B  | Open   | starcoder-fim          | precise | 46/65                   | 45/65                   |
+| bigcode/starchat          | FP32  | 16B  | Open   | starchat               | precise | 48/65                   | 53/65  |
+| VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
+| Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
+| Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
+| Manticore-13B-Chat-Pyg-Guanaco | ggmlv3 q5_0  | 13B | Open |  Manticore-YearZero | precise | 43/65             | 50/65                   |
+| Manticore-13B-Chat-Pyg-Guanaco | ggmlv3 q5_0  | 13B | Open |  Manticore-YearZero | mirostat | 43/65            | 50/65                   |
+| Vicuna-1.1-7B             | ggmlv3 q5_0  |  7B | Open | Vicuna-1p1         | precise | 44/65                   | 41/65                   |
+| Vicuna-1.1-13B            | ggmlv3 q5_0  | 13B | Open | Vicuna-1p1         | precise | 57/65 :2nd_place_medal: | 57/65 :2nd_place_medal: |
+| WizardLM-7B-uncensored    | ggmlv3 q5_1  |  7B | Open | Wizard-Vicuna      | precise | 51/65                   | 37/65                   |
+| WizardLM-13B-1.0          | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 51/65                   | 50/65                   |
+| Wizard-Vicuna-13B-Uncensored | ggmlv3 q5_0 | 13B | Open | Wizard-Vicuna      | precise | 31/65 :poop:          | 48/65                   |
+| Guanaco-7B                | ggmlv3 q5_0  |  7B | Open | Guanaco            | precise | 41/65                   | 41/65                   |
+| Guanaco-13B               | ggmlv3 q5_0  | 13B | Open | Guanaco            | precise | 29/65 :poop:            | 39/65                   |
+| Nous-Hermes-13B           | ggmlv3 q5_0  | 13B | Open | Alpaca             | precise | 49/65                   | 51/65                   |
+| Nous-Hermes-13B           | ggmlv3 q5_0  | 13B | Open | Alpaca-Input       | precise | 48/65                   | 54/65 :3rd_place_medal: |
 
-![Chart](https://quickchart.io/chart?c={%22type%22:%22bar%22,%22data%22:{%22labels%22:[%22openai/gpt-3.5-turbo%22,%22ai21/j2-jumbo-instruct%22,%22cohere/command-nightly%22,%22Wizard-Vicuna-13B-Uncensored%22,%22vicuna-7B-1.1%22,%22Manticore-13B%22,%22Guanaco-13B%22,%22WizardLM-13B-1.0%22,%22WizardLM-7B-Uncensored%22,%22Starchat%22],%22datasets%22:[{%22label%22:%22Python%22,%22data%22:[65,55,48,31,51,47,41,53,54,40]},{%22label%22:%22JavaScript%22,%22data%22:[62,39,45,48,40,37,37,52,37,45]}]}})
+:new: Model answers are now included inside this repository!  See `results/`
 
-## Data Sets
+## Results HumanEval
 
-Interview questions v1: https://huggingface.co/datasets/mike-ravkine/can-ai-code_junior-dev_v1
+:construction: HumanEval work is under active development.
 
-Interview results v1: SOON
+| Model |     Quant    | Size | License | Prompt |    Params  | Python |
+|-------|--------------|------|---------|--------|------------|--------|
+| VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 20/164 |
 
 ## Repository Structure
 
+The repository is logically grouped into three parts: prepare, interview, evaluate.
+
+### Prepare
+
+#### junior-dev
+
 * `junior-dev/*.yaml` - Interview questions (multi-language)
 * `prompts/*.txt` - System prompts for the various models
-* `prepare.py` - Specializes question into prompts for a specific language
-* `interview-langchain.py` - Use a LangChain LLM model to write code
-* `interview-starchat.py` - Use a Huggingface Space running Starchat model to write code
-* `interview-gptq-modal.py` - Use GPTQ on Modal GPU rental platform
-* `intreview-llamacpp.sh` - Use a GGML llama.cpp model to write code
-* `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
-* `report.py` - (WIP - not yet complete) Compare results from multiple interviews
+* `prepare.py` - Applies templates to question turning them into language- and model-specific prompts suitable for interview
+
+#### humaneal
+
+See [humaneval/](humaneval/).
+
+### Interview
+
+`model_parameters/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
+
+#### LangChain 
+
+`interview-langchain.py` provides a LangChain interview executor.
+
+To add a new model, update `init_model` to add parameter mappings and adapter instance.
+
+#### OobaBooga/KoboldCpp API
+
+`interview-oobabooga.py` provides a text-generation-ui/koboldcpp API compatible interview executor.
+
+#### GPTQ
+
+`interview-gptq-modal.py` - Run Ooba-Booga fork of GPTQ on Modal
+
+`interview-autogptq-modal.py` - Run latest AutoGPTQ on Modal
+
+#### Llama.cpp (GGML)
+
+`Interview-llamacpp.py` provides an executor to wrap `main` on local (or remote via ssh) CPU/GPU
+
+#### Huggingface APIs
+
+* `interview-hfinference.py` - Use Huggingface Inference API to run various models
+* `interview-starchat.py` - Use Huggingface Spaces to run Starchat model
+* `interview-starcoder.py` - Use Huggingface Transformers to run Starcoder models on local GPU
+
+### Evaluate
+
+#### junior-dev
+
+`evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
+
+#### humaneval
+
+See [humaneval/](humaneval/).
 
 ## Question Format
 
@@ -59,7 +112,10 @@ A set of interview questions is a folder of .yaml files.  Each Question is a top
 
 ```yaml
 SanityList:
-    Request: "Write a {{language}} function things() that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain."
+    Signature: "things()"
+    Input: "with no inputs"
+    Output: "a list with three values: the number 5, the string 'foobar', the capital city of Spain"
+    Fact: "the capital city of Spain is Madrid"
     Description: "List function, see if the model can combine input facts with internal knowledge."
     Checks:
         input_name:
@@ -69,9 +125,19 @@ SanityList:
 
 In this example `SanityList` is the name of the interview question.
 
-`Request` will be turned into a prompt by replacing {{language}} with "javascript" or "python"
-`Description` is a human-readable explanation of why this test is useful
-`Checks` defines the expected behavior of the output.
+The first four fields are used by `prepare.py` to create the interview:
+
+- `Signature` is the desired function signature
+- `Input` describes the function inputs
+- `Output` describes the function outputs
+- `Fact` is optional and provides any context that is required to correctly perform the task
+
+These 4 variables along with `language` (either `python` or `javascript`) are used to expand templates in `prompts/`.
+
+The last two fields are used by `evaluate.py` to judge the results:
+
+- `Description` is a human-readable explanation of why this test is useful
+- `Checks` defines the expected behavior of the output.
 
 ### Checks and the 'f' object
 
@@ -81,57 +147,73 @@ The f object represents the sandbox view of the function.  Static analysis is pe
 
 ## Using this Repository
 
-1. Prepare prompts for a python interview:
+TODO
 
-```bash
-./prepare.py --language python --questions python.csv
-```
+### Prompts
 
-2. Execute the interview.
+`Vicuna-1p1.txt`
 
-With ChatGPT (gpt-3.5-turbo):
+`starcoder-fim*.txt`
 
-```bash
-export OPENAI_API_KEY=...
-./interview-langchain.py --model openai/chatgpt --questions python.csv --outdir results/chatgpt/
-```
+`Manticore-YearZero.txt` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
 
-With Vicuna 1.1 (llama.cpp):
+### Parameters
 
-First open `interview-llamacpp.sh` and customize with your hostname and binary paths.  Then:
+`precise.json`
 
-```bash
-export PROMPT=prompts/Vicuna-1p1.txt
-export MODEL=".../models/v3/ggml-vicuna-7b-1.1-q5_0.bin"
-export OUTPUT="results/vicuna-1.1-7b/"
-export INTERVIEW="python.csv"
+`mirostat.json` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
 
-./interview-llamacpp.sh
-```
+## Output formats
 
-With VicUnlocked-30B-LoRA-GGML (GPTQ on Modal):
+All scripts output automatically named .ndjson files to the `results/` directory.
 
-```bash
-modal run -q ./interview-gptq-modal.py --outdir results/vicunlocked-30b/ --params model_parameters/precise.json --template prompts/Vicuna-1p1.txt --questions intervi
-python.csv
-```
+Each stage outputs a super-set of fields from the stage before it, so its possible to feed eval/interview back to interview (to re-run the questions) or back to eval (to re-run the eval).
 
-3. Evaulate the results
+### prepare
 
-```bash
-./evaluate.py --language python --answers results/chatgpt/
-```
+`results/prepare_{interview}_{languages}_{template}.ndjson`
 
-## Interview format
+Fields:
 
-The output of `prepare.py` is a simple csv with three columns: name, language and prompt
+- all Question fields (Signature, Input, Output, Fact, Description)
+- name
+- language
+- prompt
 
-To create your own interview, simply feed the prompts to your model of choice and saveeach model outputs as name.txt in a results directory.  That's it!  Now you can perform evaluation.
+### interview
+
+`results/interview_{interview}_{languages}_{template}_{templateout}_{params}_{model}_{timestamp}.ndjson`
+
+Fields:
+- all `prepare` fields
+- model
+- params
+- answer
+
+### eval
+
+`results/eval_{interview}_{languages}_{template}_{templateout}_{params}_{model}_{timestamp}.ndjson`
+
+Fields:
+- all `eval` fields
+- status
+- passed
+- total
+- checks
 
 # Roadmap / Future Work
 
-Contributions are welcome!  Especially looking for additional interview sets and improvements to questions - open a PR! 
+## Interesting Models
 
-* Evaluate 30B and 65B open langauge models
+* Evaluate Llama and Alpaca 65B open models
+* Evaluate codet5p: https://huggingface.co/Salesforce/codet5p-16b
+* Evaluate CodeAlpaca: https://github.com/sahil280114/codealpaca
+
+## Additional Interviews
+
+* Port HumanEval, a standard LLM code benchmark with 164 tests: https://github.com/openai/human-eval
+
+## Investigations
+
 * If the models are offered error messages or failing test results, could they produce better code?
 * Can tweaking prompts improve performance?

@@ -4,17 +4,16 @@ from bs4 import BeautifulSoup
 import time
 import json
 import argparse
-import pandas as pd
 import os
+from urllib.parse import urlparse
+from prepare import save_interview
 
-parser = argparse.ArgumentParser(description='Interview executor for StarChat on a Huggingface Space')
-parser.add_argument('--questions', type=str, required=True, help='path to questions .csv from prepare stage')
-parser.add_argument('--outdir', type=str, required=True, help='output directory')
+parser = argparse.ArgumentParser(description='Interview executor for Huggingface Space (focued on StarChat)')
+parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
+parser.add_argument('--params', type=str, required=True, help='parameter file to use')
+parser.add_argument('--endpoint', type=str, required=False, default='https://HuggingFaceH4-starchat-playground.hf.space/', help='hf space url')
 parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
 args = parser.parse_args()
-
-if not os.path.exists(args.outdir):
-    os.mkdir(args.outdir) 
 
 def remove_indentation(code_block):
     lines = code_block.split('\n')
@@ -26,9 +25,9 @@ def remove_indentation(code_block):
     modified_code = '\n'.join(modified_lines)
     return modified_code
 
-def run_starchat(prompt):
+def call_starchat(prompt, params, endpoint):
 	# If you dont re-init the client, it starts a chat with history.
-	client = Client("https://HuggingFaceH4-starchat-playground.hf.space/")
+	client = Client(endpoint)
 
 	# Introspection API to see what parameters are available
 	#client.view_api()
@@ -37,19 +36,19 @@ def run_starchat(prompt):
 		json.dump([], f)
 
 	job = client.submit(
-			"All code should be contained in ``` blocks.",
+			"",
 			prompt,
 			"/tmp/json_empty",
-			0.2, # temperature
-			50,  # top_k
-			0.95, # top_p
-			512, # max_tokens
-			1.2, # repeat_penalty
+			params['temperature'], # temperature
+			params['top_k'],  # top_k
+			params['top_p'], # top_p
+			params['max_new_tokens'], # max_tokens
+			params['repetition_penalty'], # repeat_penalty
 			False,
 			fn_index=2
 	)
 	while not job.done():
-		time.sleep(0.5)
+		time.sleep(2)
 		print(job.status())
 
 	outputs = job.outputs()
@@ -67,17 +66,25 @@ def run_starchat(prompt):
 
 	return answer[0][1] if longest_code == "" else longest_code
 
-df = pd.read_csv(args.questions)
-for idx, test in df.iterrows():
+model_name = urlparse(args.endpoint).netloc.replace('.','-')
+raw_params = json.load(open(args.params))
+
+interview = [json.loads(line) for line in open(args.input)]
+results = []
+
+for test in interview:
     print(test['name'])
-    out_file = args.outdir+'/'+test['name']+'.txt'
-
-    if os.path.exists(out_file):
-        print('Skipping, already exists')
-        continue
     
-    answer = run_starchat(test['prompt'])
+    answer = call_starchat(test['prompt'], raw_params, args.endpoint)
+    
     print(answer)
+    
+    result = test.copy()
+	
+    result['answer'] = answer
+    result['params'] = raw_params
+    result['model'] = model_name
 
-    with open(out_file, 'w') as f:
-    	f.write(answer)
+    results.append(result)
+
+save_interview(args.input, 'none', args.params, model_name, results)

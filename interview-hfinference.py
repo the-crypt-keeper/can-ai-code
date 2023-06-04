@@ -1,18 +1,18 @@
+#!/usr/bin/env python3
 import json
 import requests
 import os
 import time
 from jinja2 import Template
-import yaml
 import argparse
+from pathlib import Path
+from prepare import save_interview
 
-# WARNING: This script is biased towards StarCoder interview challenges since it uses FIM prompting.
-# tiny-interview.yml example at https://github.com/the-crypt-keeper/tiny_starcoder/blob/can-ai-code/tiny-interview.yml
-
-parser = argparse.ArgumentParser(description='Interview executor for LangChain')
-parser.add_argument('--tinyinterview', type=str, default='../tiny_starcoder/tiny-interview.yml', help='path to tiny-interview.yml from prepare stage')
+parser = argparse.ArgumentParser(description='Interview executor for HuggingFace Inference API')
+parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
 parser.add_argument('--model', type=str, default='bigcode/starcoder', help='model to use')
-parser.add_argument('--outdir', type=str, required=True, help='output directory')
+parser.add_argument('--params', type=str, required=True, help='parameter file to use')
+parser.add_argument('--templateout', type=str, required=True, help='output template file')
 args = parser.parse_args()
 
 headers = {"Authorization": f"Bearer {os.getenv('HF_API_KEY')}"}
@@ -38,40 +38,35 @@ def query(payload):
             continue
     return res
 
-input_template = Template("""<fim_prefix>def {{Signature}}:
-    '''a function {{Input}} that returns {{Output}}'''
-    <fim_suffix>
+# Load params and adapt to model format
+# see https://huggingface.github.io/text-generation-inference/ GenerateParameters struct
+params = json.load(open(args.params))
+model_params = {
+    "temperature": params['temperature'],
+    "top_k": params['top_k'],
+    "top_p": params['top_p'],
+    "max_new_tokens": params['max_new_tokens'],
+    "repetition_penalty": params['repetition_penalty']
+}
 
-# another function
-<fim_middle>""")
+# Output template
+output_template = Template(open(args.templateout).read())
 
-input_fact_template = Template("""<fim_prefix>def {{Signature}}:
-    '''a function {{Input}} that returns {{Output}}, given {{Fact}}'''
-    <fim_suffix>
+# Run Interview
+interview = [json.loads(line) for line in open(args.input)]
+results = []
 
-# another function
-<fim_middle>""")
-                                   
-output_template = Template("""def {{Signature}}:
-    '''a function {{Input}} that computes {{Output}}'''
-    {{Answer}}""")
-
-interview = yaml.safe_load(open(args.tinyinterview))
-for name, challenge in interview.items():
-    
-    challenge['name'] = name
-    input = input_template.render(**challenge) if not challenge.get('Fact') else input_fact_template.render(**challenge)
-    
-    # for parameters, see https://huggingface.github.io/text-generation-inference/ GenerateParameters struct
+for challenge in interview:
     data = query(
         {
-            "inputs": input,
-            "parameters": {"temperature": 0.2, "top_k": 50, "top_p": 0.1, "max_new_tokens": 512, "repetition_penalty": 1.17},
+            "inputs": challenge['prompt'],
+            "parameters": model_params,
         }
     )
+
     result = data[0]['generated_text']
 
-    result = result.replace(input, '').replace('<|endoftext|>','')
+    result = result.replace(challenge['prompt'], '').replace('<|endoftext|>','')
     
     output = output_template.render(**challenge, Answer=result)
 
@@ -79,5 +74,11 @@ for name, challenge in interview.items():
     print(output)
     print()
 
-    with open(f"{args.outdir}/{name}.txt", "w") as f:
-        f.write(output)
+    result = challenge.copy()
+    result['answer'] = output
+    result['params'] = model_params
+    result['model'] = args.model
+    results.append(result)
+
+# Save results
+save_interview(args.input, args.templateout, args.params, args.model, results)

@@ -1,26 +1,35 @@
 #!/usr/bin/env python3
 import json
 import argparse
-import pandas as pd
-import os
 import requests
-from pathlib import Path
-from jinja2 import Template
+from prepare import save_interview
 
-parser = argparse.ArgumentParser(description='Interview executor for Kobold API v1 compatible server')
-parser.add_argument('--questions', type=str, required=True, help='path to questions .csv from prepare stage')
-parser.add_argument('--outdir', type=str, required=True, help='output directory')
-parser.add_argument('--prompt', type=str, required=True, help="prompt template")
+parser = argparse.ArgumentParser(description='Interview executor for text-generation-web-ui or KoboldCpp API v1 compatible server')
+parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
+parser.add_argument('--params', type=str, required=True, help='parameter file to use')
+parser.add_argument('--model', type=str, required=True, help='model name being evaluated')
 parser.add_argument('--host', type=str, default='localhost:5000', help="host to connect to")
-parser.add_argument('--config', type=str,  default='model_parameters/default.json', help=".json file with model parameters")
+parser.add_argument('--kobold', action='store_true', help='use koboldcpp server instead of text-generation-web-ui')
 args = parser.parse_args()
 
 URL_TAIL='/api/v1/generate'
 URI = f'{args.host}{URL_TAIL}' if '://' in args.host else f'http://{args.host}{URL_TAIL}'
 
+def kobold_params(params):
+    # Params list: https://github.com/LostRuins/koboldcpp/blob/concedo/koboldcpp.py#L326
+    return {
+        'max_length': params['max_new_tokens'],
+        'temperature': params['temperature'],
+        'top_k': params['top_k'],
+        'top_p': params['top_p'],
+        'rep_pen': params['repetition_penalty'],
+        'rep_pen_range': params.get('repeat_last_n', 128)
+    }
+raw_params = json.load(open(args.params))
+params = kobold_params(raw_params) if args.kobold else raw_params
+
 def send_request(prompt):
-    with open(args.config) as f:
-        request = json.load(f)
+    request = params.copy()
     request["prompt"] = prompt
     response = requests.post(URI, json=request)    
     assert response.status_code == 200, response.content
@@ -28,26 +37,30 @@ def send_request(prompt):
     return result 
 
 def run():
-    Path(args.outdir).mkdir(exist_ok=True, parents=True)
+    interview = [json.loads(line) for line in open(args.input)]
+    results = []
 
-    with open(args.prompt) as f:
-        prompt_template = Template(f.read())
+    if args.kobold:
+        print('### WARNING ###')
+        print('kobold server must be launched with --unbantokens for code generation to work.')
+        print('### WARNING ###')
+        print()
 
-    df = pd.read_csv(args.questions)
-    for idx, test in df.iterrows():
+    for test in interview:
         print(test['name'])
-        out_file = args.outdir+'/'+test['name']+'.txt'
+        
+        answer = send_request(test['prompt'])
 
-        if os.path.exists(out_file):
-            print('Skipping, already exists')
-            continue
-
-        full_prompt = prompt_template.render(prompt=test['prompt'])
-        answer = send_request(full_prompt)
         print(answer)
 
-        with open(out_file, 'w') as f:
-            f.write(answer)
+        result = test.copy()
+        result['answer'] = answer
+        result['params'] = params
+        result['model'] = args.model
+
+        results.append(result)
+    
+    save_interview(args.input, 'none', args.params, args.model, results)
 
 if __name__ == "__main__":
     run()

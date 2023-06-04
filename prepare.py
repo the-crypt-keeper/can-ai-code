@@ -2,9 +2,10 @@
 import glob
 import yaml
 import argparse
-import sys
+import json
+import time
 from jinja2 import Template
-import pandas as pd
+from pathlib import Path
 
 def load_questions(interview='junior-dev'):
     for file_path in glob.glob(interview+'/*.yaml'):
@@ -16,28 +17,40 @@ def load_questions(interview='junior-dev'):
                 tests[test]['name'] = test
                 yield tests[test]
 
+def save_interview(input, templateout, params, model, results):
+    [stage, interview_name, languages, template, *stuff] = Path(input).stem.split('_')
+    templateout_name = Path(templateout).stem
+    params_name = Path(params).stem
+    model_name = model.replace('/','-')
+    ts = str(int(time.time()))
+
+    output_filename = str(Path(input).parent)+'/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
+    with open(output_filename, 'w') as f:
+        f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
+    print('Saved results to', output_filename)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Interview preparation')
     parser.add_argument('--language', type=str, default='python,javascript', help='languages to prepare, comma seperated')
     parser.add_argument('--interview', type=str, default='junior-dev', help='interview to prepare')
-    parser.add_argument('--questions', type=str, help='output  to .csv file (default console)')
-    args = parser.parse_args() 
+    parser.add_argument('--template', type=str, required=True, help='prompt template file')
+    args = parser.parse_args()
 
-    output = []
+    template = Template(open(args.template).read())
+    template_name = Path(args.template).stem
+
+    output_filename = f"results/prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
+    outputs = []
     for test in load_questions():
         for language in args.language.split(','):
-            test_name = test['name'] + '-' + language
-
-            if isinstance(test['Request'], str):
-                test_prompt = Template(test['Request']).render(language=language)
-            else:
-                test_prompt = test['Request'].get(language)
+            prompt = template.render({'language': language, **test})
             
-            if test_prompt is None:
-                print('WARNING: Skipped ',test['name'],'because no prompt could be found for',language)
-                continue
-            
-            output.append({'name': test_name, 'language': language, 'prompt': test_prompt})
+            output = test.copy()
+            del output['Checks']
+            output['language'] = language
+            output['prompt'] = prompt
+            outputs.append(output)
 
-    df = pd.DataFrame.from_records(output)
-    df.to_csv(args.questions if args.questions else sys.stdout, index=False)
+    with open(output_filename, 'w') as file:
+        file.write('\n'.join([json.dumps(output) for output in outputs]))
+        print(f"Expanded {len(outputs)} {template_name} prompts to {output_filename}")

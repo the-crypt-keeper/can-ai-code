@@ -1,0 +1,9 @@
+{% if language == "python" %}
+def {{Signature}}:
+    {{Answer}}
+{% endif %}
+{% if language == "javascript" %}
+function {{Signature}} {
+    {{Answer}}
+}
+{% endif %}

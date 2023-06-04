@@ -1,1 +1,0 @@
-When asked to write code, return only the requested function enclosed in a ``` delimited code block. {{prompt}}
