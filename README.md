@@ -68,27 +68,27 @@ See [humaneval/](humaneval/).
 
 `model_parameters/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
 
-#### Langchain 
+#### LangChain 
 
 `interview-langchain.py` provides a LangChain interview executor.
 
-To add a new model, look at `init_model`.
+To add a new model, update `init_model` to add parameter mappings and adapter instance.
 
 #### OobaBooga/KoboldCpp API
 
 `interview-oobabooga.py` provides a text-generation-ui/koboldcpp API compatible interview executor.
 
-### Interview: GPTQ
+#### GPTQ
 
 `interview-gptq-modal.py` - Run Ooba-Booga fork of GPTQ on Modal
 
 `interview-autogptq-modal.py` - Run latest AutoGPTQ on Modal
 
-#### Interview: Llama.cpp (GGML)
+#### Llama.cpp (GGML)
 
 `Interview-llamacpp.py` provides an executor to wrap `main` on local (or remote via ssh) CPU/GPU
 
-#### Interview: Huggingface APIs
+#### Huggingface APIs
 
 * `interview-hfinference.py` - Use Huggingface Inference API to run various models
 * `interview-starchat.py` - Use Huggingface Spaces to run Starchat model
