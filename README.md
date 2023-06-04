@@ -17,6 +17,8 @@ A self-evaluating interview for AI coding models.
 
 ## Results junior-dev
 
+:new: Explore the interactive leaderboard: https://huggingface.co/spaces/mike-ravkine/can-ai-code-results :new:
+
 | Model | Quant | Size | License | Prompt | Params | Python | JavaScript |
 |-------|--------------|------|---------|--------|------------|--------|------------|
 | openai/gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
