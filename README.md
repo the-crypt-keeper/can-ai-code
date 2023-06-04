@@ -21,7 +21,9 @@ A self-evaluating interview for AI coding models.
 
 https://huggingface.co/spaces/mike-ravkine/can-ai-code-results
 
-All model answers and evaluation results are now included inside this repository!  See `results/`
+All model answers and evaluation results are now included inside this repository!
+
+Install a recent release of streamlit `pip install streamlit==1.23` then `streamlit run app.py` to run the result browser app locally.
 
 ## Results HumanEval
 
@@ -82,6 +84,8 @@ To add a new model, update `init_model` to add parameter mappings and adapter in
 #### junior-dev
 
 `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
+
+`app.py` - Streamlit webapp to explore results, see https://huggingface.co/spaces/mike-ravkine/can-ai-code-results
 
 #### humaneval
 
