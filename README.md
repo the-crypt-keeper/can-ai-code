@@ -17,32 +17,9 @@ A self-evaluating interview for AI coding models.
 
 ## Results junior-dev
 
-:new: Explore the interactive leaderboard: https://huggingface.co/spaces/mike-ravkine/can-ai-code-results :new:
+:new: The leaderboard table got too difficult to read, explore the interactive leaderboard: https://huggingface.co/spaces/mike-ravkine/can-ai-code-results :new:
 
-| Model | Quant | Size | License | Prompt | Params | Python | JavaScript |
-|-------|--------------|------|---------|--------|------------|--------|------------|
-| openai/gpt-3.5-turbo      | API   | 170B | Closed | openai-chatgpt         | precise | 65/65 :1st_place_medal: | 65/65 :1st_place_medal: |
-| ai21/j2-jumbo-instruct    | API   | 178B | Closed | ai21-j2-jumbo-instruct | precise | 55/65 :3rd_place_medal: | 54/65                   |
-| cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
-| bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
-| bigcode/starcoder         | FP32  | 16B  | Open   | starcoder-fim          | precise | 46/65                   | 45/65                   |
-| bigcode/starchat          | FP32  | 16B  | Open   | starchat               | precise | 48/65                   | 53/65  |
-| VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
-| Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
-| Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
-| Manticore-13B-Chat-Pyg-Guanaco | ggmlv3 q5_0  | 13B | Open |  Manticore-YearZero | precise | 43/65             | 50/65                   |
-| Manticore-13B-Chat-Pyg-Guanaco | ggmlv3 q5_0  | 13B | Open |  Manticore-YearZero | mirostat | 43/65            | 50/65                   |
-| Vicuna-1.1-7B             | ggmlv3 q5_0  |  7B | Open | Vicuna-1p1         | precise | 44/65                   | 41/65                   |
-| Vicuna-1.1-13B            | ggmlv3 q5_0  | 13B | Open | Vicuna-1p1         | precise | 57/65 :2nd_place_medal: | 57/65 :2nd_place_medal: |
-| WizardLM-7B-uncensored    | ggmlv3 q5_1  |  7B | Open | Wizard-Vicuna      | precise | 51/65                   | 37/65                   |
-| WizardLM-13B-1.0          | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 51/65                   | 50/65                   |
-| Wizard-Vicuna-13B-Uncensored | ggmlv3 q5_0 | 13B | Open | Wizard-Vicuna      | precise | 31/65 :poop:          | 48/65                   |
-| Guanaco-7B                | ggmlv3 q5_0  |  7B | Open | Guanaco            | precise | 41/65                   | 41/65                   |
-| Guanaco-13B               | ggmlv3 q5_0  | 13B | Open | Guanaco            | precise | 29/65 :poop:            | 39/65                   |
-| Nous-Hermes-13B           | ggmlv3 q5_0  | 13B | Open | Alpaca             | precise | 49/65                   | 51/65                   |
-| Nous-Hermes-13B           | ggmlv3 q5_0  | 13B | Open | Alpaca-Input       | precise | 48/65                   | 54/65 :3rd_place_medal: |
-
-:new: Model answers are now included inside this repository!  See `results/`
+All model answers and evaluation results are now included inside this repository!  See `results/`
 
 ## Results HumanEval
 
