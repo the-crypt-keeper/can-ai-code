@@ -24,7 +24,7 @@ A self-evaluating interview for AI coding models.
 | cohere/command-nightly    | API   | 52B  | Closed | cohere-command-nightly | precise | 52/65                   | 49/65                   |
 | bigcode/tiny_starcoder_py | FP32  | 159M | Open   | starcoder-fim          | precise | 38/65                   | 0/0                     |
 | bigcode/starcoder         | FP32  | 16B  | Open   | starcoder-fim          | precise | 46/65                   | 45/65                   |
-| bigcode/starchat          | FP32  | 16B  | Open   | starchat               | precise | 48/65                   | 53/65 :3rd_place_medal: |
+| bigcode/starchat          | FP32  | 16B  | Open   | starchat               | precise | 48/65                   | 53/65  |
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 49/65                   | 48/65                   |
 | Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Wizard-Vicuna      | precise | 42/65                   | 40/65                   |
 | Manticore-13B             | ggmlv3 q5_0  | 13B | Open | Manticore          | precise | 36/65                   | 41/65                   |
@@ -37,6 +37,8 @@ A self-evaluating interview for AI coding models.
 | Wizard-Vicuna-13B-Uncensored | ggmlv3 q5_0 | 13B | Open | Wizard-Vicuna      | precise | 31/65 :poop:          | 48/65                   |
 | Guanaco-7B                | ggmlv3 q5_0  |  7B | Open | Guanaco            | precise | 41/65                   | 41/65                   |
 | Guanaco-13B               | ggmlv3 q5_0  | 13B | Open | Guanaco            | precise | 29/65 :poop:            | 39/65                   |
+| Nous-Hermes-13B           | ggmlv3 q5_0  | 13B | Open | Alpaca             | precise | 49/65                   | 51/65                   |
+| Nous-Hermes-13B           | ggmlv3 q5_0  | 13B | Open | Alpaca-Input       | precise | 48/65                   | 54/65 :3rd_place_medal: |
 
 :new: Model answers are now included inside this repository!  See `results/`
 

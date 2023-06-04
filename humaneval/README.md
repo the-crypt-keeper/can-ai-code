@@ -1,12 +1,20 @@
 ## HumanEval Integration
 
-
+:construction: Work in progress.
 
 ### Prepare
 
 Use `humaneval.py --template` to apply templates to humaneval interview suite turning them into prompts suitable for interview.
 
-See `humaneval/Vicuna-1p1-HumanEval.txt` for an example template, the format is different then internal tests.
+#### Templates
+
+Note the format here is different, uses a single {{prompt}} variable as the input.
+
+`Vicuna-1p1-HumanEval.txt`
+
+`Wizard-7B-HumanEval.txt`
+
+`Llama-Humaneval.txt`
 
 ### Evaluate
 
