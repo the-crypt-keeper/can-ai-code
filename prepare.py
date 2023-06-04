@@ -24,7 +24,7 @@ def save_interview(input, templateout, params, model, results):
     model_name = model.replace('/','-')
     ts = str(int(time.time()))
 
-    output_filename = 'results/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
+    output_filename = str(Path(input).parent)+'/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
     with open(output_filename, 'w') as f:
         f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
     print('Saved results to', output_filename)

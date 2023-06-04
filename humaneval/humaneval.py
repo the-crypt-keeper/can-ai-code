@@ -3,6 +3,8 @@ import argparse
 import json
 from pathlib import Path
 from jinja2 import Template
+import sys
+sys.path.append('..')
 from evaluate import extract_code
 
 def prepare_humaneval(args):
@@ -12,9 +14,9 @@ def prepare_humaneval(args):
     args.language = "python"
     args.interview = "humaneval"
 
-    questions = [json.loads(line) for line in open(f"humaneval/human-eval-v2-20210705.jsonl")]
+    questions = [json.loads(line) for line in open(f"./human-eval-v2-20210705.jsonl")]
 
-    output_filename = f"results/prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
+    output_filename = f"prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
     outputs = []
     for test in questions:
             test['name'] = test['task_id']

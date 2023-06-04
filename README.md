@@ -13,7 +13,7 @@ A self-evaluating interview for AI coding models.
 
 `junior-dev` is a multi-language (Python, JavaScript) suite of 12 tests created for this project to test small LLM coding performance.  This project provides all necessary components to execute this evaluation.
 
-`humaneval` is a Python-only suite of 164 tests created by OpenAI.  This project provides template scripts to prepare and execute the humaneval interview, as well as result extraction scripts to help their evaluator. See https://github.com/openai/human-eval for more information.
+:construction: `humaneval` is a Python-only suite of 164 tests created by OpenAI.  This project provides template scripts to prepare and execute the humaneval interview, as well as result extraction scripts to help their evaluator. See https://github.com/openai/human-eval for more information.
 
 ## Results junior-dev
 
@@ -50,29 +50,31 @@ A self-evaluating interview for AI coding models.
 
 ## Repository Structure
 
-### Prepare: junior-dev
+The repository is logically grouped into three parts: prepare, interview, evaluate.
+
+### Prepare
+
+#### junior-dev
 
 * `junior-dev/*.yaml` - Interview questions (multi-language)
 * `prompts/*.txt` - System prompts for the various models
 * `prepare.py` - Applies templates to question turning them into language- and model-specific prompts suitable for interview
 
-### Prepare: humaneval
+#### humaneal
 
-Use `humaneval.py --template` to apply templates to humaneval interview suite turning them into prompts suitable for interview.
+See [humaneval/](humaneval/).
 
-See `humaneval/Vicuna-1p1-HumanEval.txt` for an example template, the format is different then internal tests.
-
-### Interview: Common
+### Interview
 
 `model_parameters/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
 
-### Interview: Langchain 
+#### Langchain 
 
 `interview-langchain.py` provides a LangChain interview executor.
 
 To add a new model, look at `init_model`.
 
-### Interview: OobaBooga/KoboldCpp API
+#### OobaBooga/KoboldCpp API
 
 `interview-oobabooga.py` provides a text-generation-ui/koboldcpp API compatible interview executor.
 
@@ -82,23 +84,25 @@ To add a new model, look at `init_model`.
 
 `interview-autogptq-modal.py` - Run latest AutoGPTQ on Modal
 
-### Interview: Llama.cpp (GGML)
+#### Interview: Llama.cpp (GGML)
 
 `Interview-llamacpp.py` provides an executor to wrap `main` on local (or remote via ssh) CPU/GPU
 
-### Interview: Huggingface APIs
+#### Interview: Huggingface APIs
 
 * `interview-hfinference.py` - Use Huggingface Inference API to run various models
 * `interview-starchat.py` - Use Huggingface Spaces to run Starchat model
 * `interview-starcoder.py` - Use Huggingface Transformers to run Starcoder models on local GPU
 
-### Evaluate: junior-dev
+### Evaluate
+
+#### junior-dev
 
 `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
 
-### Evaluate: humaneval
+#### humaneval
 
-Use `humaneval.py --answers` to convert any interview output into .jsonl format and use the upsteam evaluator: https://github.com/openai/human-eval
+See [humaneval/](humaneval/).
 
 ## Question Format
 
