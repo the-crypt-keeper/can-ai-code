@@ -17,7 +17,9 @@ A self-evaluating interview for AI coding models.
 
 ## Results junior-dev
 
-:new: The leaderboard table got too difficult to read, explore the interactive leaderboard: https://huggingface.co/spaces/mike-ravkine/can-ai-code-results :new:
+:new::new: The leaderboard table got too difficult to read, explore the interactive leaderboard here: :new::new:
+
+https://huggingface.co/spaces/mike-ravkine/can-ai-code-results
 
 All model answers and evaluation results are now included inside this repository!  See `results/`
 
