@@ -1,0 +1,4 @@
+USER: Hello, ASSISTANT.</s>
+ASSISTANT: Hello. How may I help you today?</s>
+USER: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}</s>
+ASSISTANT:

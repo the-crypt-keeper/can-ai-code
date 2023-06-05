@@ -1,0 +1,7 @@
+- name: airoboros-13b-gpt4.ggmlv3.q5_0
+  title: airoboros-13b
+  size: 13B
+  url_model: https://huggingface.co/TheBloke/airoboros-13b-gpt4-GGML
+  url_original_model: https://huggingface.co/jondurbin/airoboros-13b-gpt4
+  url_reddit: https://www.reddit.com/r/LocalLLaMA/comments/1408ued/airoboros_gpt4_instructed_contextobedient/
+- 
