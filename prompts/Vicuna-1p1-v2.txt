@@ -1,0 +1,6 @@
+A chat between a user and an assistant.
+
+USER: Hello, ASSISTANT.
+ASSISTANT: Hello. How may I help you today?</s>
+USER: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}
+ASSISTANT:
