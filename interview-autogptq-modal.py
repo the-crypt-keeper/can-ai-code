@@ -11,7 +11,7 @@ MODEL_SAFETENSORS = True
 MODEL_BITS = 4
 MODEL_GROUP = -1
 MODEL_ACTORDER = True
-MODEL_EOS = '</s>'
+MODEL_EOS = ['<s>', '</s>']
 
 stub = Stub(name=MODEL_NAME.replace('/', '-'))
 
@@ -107,8 +107,10 @@ def main(input: str, params: str):
         # generate the answer
         answer = model.generate.call(question['prompt'], params=params_model)
         
-        # Remove the <eos> token
-        answer = answer.replace(MODEL_EOS,'')
+        # Remove the prompt and all special tokens
+        answer = answer.replace(question['prompt'], '')
+        for special_token in MODEL_EOS:
+            answer = answer.replace(special_token, '')
 
         print()
         print(answer)
