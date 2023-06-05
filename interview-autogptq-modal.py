@@ -11,6 +11,7 @@ MODEL_SAFETENSORS = True
 MODEL_BITS = 4
 MODEL_GROUP = -1
 MODEL_ACTORDER = True
+MODEL_EOS = '</s>'
 
 stub = Stub(name=MODEL_NAME.replace('/', '-'))
 
@@ -103,9 +104,11 @@ def main(input: str, params: str):
     for question in interview:
         print(question['name'], question['language'])
 
+        # generate the answer
         answer = model.generate.call(question['prompt'], params=params_model)
         
-        answer = answer.replace('</s>','')
+        # Remove the <eos> token
+        answer = answer.replace(MODEL_EOS,'')
 
         print()
         print(answer)
