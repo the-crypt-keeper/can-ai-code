@@ -104,6 +104,8 @@ def main(input: str, params: str):
         print(question['name'], question['language'])
 
         answer = model.generate.call(question['prompt'], params=params_model)
+        
+        answer = answer.replace('</s>','')
 
         print()
         print(answer)
