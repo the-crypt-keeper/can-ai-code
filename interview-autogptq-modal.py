@@ -4,17 +4,21 @@ from pathlib import Path
 from modal import Image, Stub, method, create_package_mounts, gpu
 
 #### SEE NOTE BELOW! ####
-MODEL_NAME = "TheBloke/vicuna-13B-1.1-GPTQ-4bit-128g"
-MODEL_BASE = "vicuna-13B-1.1-GPTQ-4bit-128g.compat.no-act-order"
+MODEL_NAME = "tsumeone/llama-30b-supercot-4bit-cuda"
+MODEL_BASE = "4bit"
 MODEL_FILES = ["*.json","*.model",MODEL_BASE+"*"]
-MODEL_SAFETENSORS = False
+MODEL_SAFETENSORS = True
+MODEL_BITS = 4
+MODEL_GROUP = -1
+MODEL_ACTORDER = True
+MODEL_EOS = ['<s>', '</s>']
 
 stub = Stub(name=MODEL_NAME.replace('/', '-'))
 
 #### NOTE: Modal will not rebuild the container unless this function name or it's code contents change.
 ####       It is NOT sufficient to change any of the constants above.
 ####       Suggestion is to rename this function after the model.
-def download_autogptq_model():
+def download_llama30b_nogroup_model():
     from huggingface_hub import snapshot_download
 
     snapshot_download(
@@ -36,7 +40,7 @@ stub.gptq_image = (
         "cd /repositories/AutoGPTQ && pip install . && pip install einops sentencepiece && python setup.py install",
         gpu="any",
     )
-    .run_function(download_autogptq_model)
+    .run_function(download_llama30b_nogroup_model)
 )
 
 if stub.is_inside(stub.gptq_image):
@@ -48,6 +52,7 @@ if stub.is_inside(stub.gptq_image):
     import torch
     from transformers import AutoTokenizer
     from auto_gptq import AutoGPTQForCausalLM
+    from auto_gptq.modeling import BaseQuantizeConfig
 
 #### NOTE: SET GPU TYPE HERE ####
 @stub.cls(image=stub.gptq_image, gpu=gpu.A10G(count=1), concurrency_limit=1, container_idle_timeout=300)
@@ -56,8 +61,15 @@ class ModalGPTQ:
         quantized_model_dir = "/model"
         print('Loading tokenizer...')
         tokenizer = AutoTokenizer.from_pretrained(quantized_model_dir, use_fast=False)
+
+        quantize_config = BaseQuantizeConfig()
+        quantize_config.desc_act = MODEL_ACTORDER
+        quantize_config.bits = MODEL_BITS
+        quantize_config.group = MODEL_GROUP
+
         print('Loading model...')
-        model = AutoGPTQForCausalLM.from_quantized(quantized_model_dir, model_basename=MODEL_BASE, device="cuda:0", use_triton=False, use_safetensors=MODEL_SAFETENSORS, torch_dtype=torch.float32, trust_remote_code=True)
+        model = AutoGPTQForCausalLM.from_quantized(quantized_model_dir, model_basename=MODEL_BASE, device_map="auto", load_in_8bit=True, use_triton=False, use_safetensors=MODEL_SAFETENSORS, torch_dtype=torch.float32, trust_remote_code=True, quantize_config=quantize_config)
+        
         self.model = model
         self.tokenizer = tokenizer
         print(f"Model loaded in {time.time() - t0:.2f}s")
@@ -92,7 +104,13 @@ def main(input: str, params: str):
     for question in interview:
         print(question['name'], question['language'])
 
+        # generate the answer
         answer = model.generate.call(question['prompt'], params=params_model)
+        
+        # Remove the prompt and all special tokens
+        answer = answer.replace(question['prompt'], '')
+        for special_token in MODEL_EOS:
+            answer = answer.replace(special_token, '')
 
         print()
         print(answer)
