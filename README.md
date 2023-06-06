@@ -33,6 +33,8 @@ Install a recent release of streamlit `pip install streamlit==1.23` then `stream
 |-------|--------------|------|---------|--------|------------|--------|
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 20/164 |
 
+See https://github.com/my-other-github-account/llm-humaneval-benchmarks for way more Humaneval LLM benchmarks.
+
 ## Repository Structure
 
 The repository is logically grouped into three parts: prepare, interview, evaluate.
@@ -51,7 +53,7 @@ See [humaneval/](humaneval/).
 
 ### Interview
 
-`model_parameters/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
+`params/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
 
 #### LangChain 
 
@@ -195,10 +197,6 @@ Fields:
 * Evaluate Llama and Alpaca 65B open models
 * Evaluate codet5p: https://huggingface.co/Salesforce/codet5p-16b
 * Evaluate CodeAlpaca: https://github.com/sahil280114/codealpaca
-
-## Additional Interviews
-
-* Port HumanEval, a standard LLM code benchmark with 164 tests: https://github.com/openai/human-eval
 
 ## Investigations
 
