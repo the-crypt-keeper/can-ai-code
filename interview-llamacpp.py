@@ -67,7 +67,7 @@ for challenge in interview:
 
     print('Executing llama.cpp: '+cmdline)
 
-    answer, rv = run_shell_command(cmdline)
+    answer, rv = run_shell_command(cmdline, stdout_only=True)
     if rv != 0:
         print('Failed to execute:', output)
         exit(1)

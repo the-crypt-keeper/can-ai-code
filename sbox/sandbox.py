@@ -38,7 +38,7 @@ def extract_function_info(language, input_string):
 
     return functions
 
-def run_shell_command(command):
+def run_shell_command(command, stdout_only = False):
     try:
         # Run the shell command and capture its output
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
@@ -46,7 +46,7 @@ def run_shell_command(command):
         # Get the captured output
         output = result.stdout.strip()
 
-        if output == '' or result != 0:
+        if not stdout_only and (output == '' or result != 0):
             output += result.stderr.strip()
 
         # Get the return value
