@@ -1,4 +1,4 @@
 FROM python:3.9
 RUN pip install numpy
 ADD timeout.sh /timeout.sh
-ENTRYPOINT ["/timeout.sh"]
+ENTRYPOINT ["/bin/bash","-c","while true; do sleep 1; done"]

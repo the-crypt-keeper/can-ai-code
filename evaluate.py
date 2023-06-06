@@ -113,6 +113,8 @@ if __name__ == '__main__':
         print(row['name'], test['language'], row['status'])
         print()
 
+    FunctionSandbox.stopall()
+
     if not args.test:
         output_filename = args.input.replace('interview','eval')
         with open(output_filename,'w') as f:

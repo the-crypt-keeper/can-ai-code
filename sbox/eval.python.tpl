@@ -1,7 +1,7 @@
 import math
 import types
 try:
-  with open('/answer.py') as f:
+  with open('/answer') as f:
     exec(f.read())
   _rv = {{call}}
 except Exception as e:
