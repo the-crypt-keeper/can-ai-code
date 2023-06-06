@@ -66,6 +66,8 @@ class FunctionArg:
         self.type = type
 
 class FunctionSandbox:
+    sandboxes = {}
+
     def __init__(self, code, language) -> None:
         self.code = code
         self.language = language
@@ -77,16 +79,36 @@ class FunctionSandbox:
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
+        if not FunctionSandbox.sandboxes.get(language):
+            FunctionSandbox.start_sandbox(language)
+
+    @classmethod
+    def start_sandbox(cls, language):
+        cls.stop_sandbox(language)
+
+        print("Building",language,"sandbox")
         build_out, build_code = run_shell_command(f"cd {module_dir} && docker build . -f Dockerfile.{language} -t sandbox-{language} -q")
         if build_code != 0:
             raise Exception("Error "+str(build_code)+" building sandbox docker image:" + build_out)
-        
-        run_shell_command(f"docker rm -f sandbox-{language}")
-        
+
+        print("Launching",language,"sandbox") 
         start_out, start_code = run_shell_command(f"docker run -d --name sandbox-{language} sandbox-{language}")
         if start_code != 0:
             raise Exception("Error "+str(start_code)+" launching sandbox docker image:" + start_out)
         
+        cls.sandboxes[language] = True
+    
+    @classmethod
+    def stop_sandbox(cls, language):
+        print("Stopping",language,"sandbox")
+        run_shell_command(f"docker rm -f sandbox-{language}")
+        cls.sandboxes[language] = False
+
+    @classmethod
+    def stopall(cls):
+        for language in cls.sandboxes:
+            cls.stop_sandbox(language)
+
     def build_args(self, args):
         return_args = ''
         for i, arg in enumerate(args):
