@@ -1,10 +1,4 @@
 FROM python:3.9
-
 RUN pip install numpy
-
-ADD https://github.com/jqlang/jq/releases/download/jq-1.6/jq-linux64 /usr/bin/jq
-RUN chmod +x /usr/bin/jq
-
 ADD timeout.sh /timeout.sh
-
 ENTRYPOINT ["/bin/bash","-c","while true; do sleep 1; done"]

@@ -120,9 +120,8 @@ class FunctionSandbox:
 
         if self.language == "python":
             output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-python /timeout.sh python /wrapper")
-            print(output)
         elif self.language == "javascript":
-            output, value = run_shell_command(f"docker run -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-javascript /timeout.sh node /wrapper")
+            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-javascript /timeout.sh node /wrapper")
        
         start_index = output.find("###")
         if start_index == -1:
