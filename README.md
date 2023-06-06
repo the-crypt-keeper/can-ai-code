@@ -65,9 +65,11 @@ To add a new model, update `init_model` to add parameter mappings and adapter in
 
 #### GPTQ
 
-`interview-gptq-modal.py` - Run Ooba-Booga fork of GPTQ on Modal
+`interview-autogptq-modal.py` - Run latest AutoGPTQ on Modal.
 
-`interview-autogptq-modal.py` - Run latest AutoGPTQ on Modal
+The nature of Modal does not allow command-line selection of LLM model.  In order to select models, you'll have to open the script and uncomment the `.run_function(download...)` line of choice.  Note that only one model can be selected at a time.
+
+To add a new model, implement a new `download...` function.  Quantization parameters are only required if the model does not contain a `quantize_config.json`.
 
 #### Llama.cpp (GGML)
 

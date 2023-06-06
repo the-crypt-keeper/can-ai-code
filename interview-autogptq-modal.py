@@ -1,32 +1,50 @@
 import time
 import json
 from pathlib import Path
-from modal import Image, Stub, method, create_package_mounts, gpu
+from modal import Image, Stub, method, gpu
+from huggingface_hub import snapshot_download
 
-#### SEE NOTE BELOW! ####
-MODEL_NAME = "tsumeone/llama-30b-supercot-4bit-cuda"
-MODEL_BASE = "4bit"
-MODEL_FILES = ["*.json","*.model",MODEL_BASE+"*"]
-MODEL_SAFETENSORS = True
-MODEL_BITS = 4
-MODEL_GROUP = -1
-MODEL_ACTORDER = True
-MODEL_EOS = ['<s>', '</s>']
+def save_meta(name, base, safetensors = True, bits = 4, group = 128, actorder = True, eos = ['<s>', '</s>']):
+    with open("/model/_info.json",'w') as f:
+        json.dump({
+            "model_name": name,
+            "model_base": base,
+            "model_safetensors": safetensors,
+            "model_bits": bits,
+            "model_group": group,
+            "model_actorder": actorder,
+            "model_eos": eos,
+        }, f)
 
-stub = Stub(name=MODEL_NAME.replace('/', '-'))
+def download_wizardlm30b_nogroup_model_v2():   
+    MODEL_NAME = "TheBloke/WizardLM-30B-Uncensored-GPTQ"
+    MODEL_BASE = "WizardLM-30B-Uncensored-GPTQ-4bit.act-order"
 
-#### NOTE: Modal will not rebuild the container unless this function name or it's code contents change.
-####       It is NOT sufficient to change any of the constants above.
-####       Suggestion is to rename this function after the model.
-def download_llama30b_nogroup_model():
-    from huggingface_hub import snapshot_download
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE)
 
-    snapshot_download(
-        local_dir=Path("/model"),
-        repo_id=MODEL_NAME,
-        allow_patterns=MODEL_FILES
-    )
+def download_falcon7b_v2():   
+    MODEL_NAME = "TheBloke/falcon-7b-instruct-GPTQ"
+    MODEL_BASE = "gptq_model-4bit-64g"
 
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.py",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, eos=['<|endoftext|>'])
+
+def download_vicuna_1p1_13b_v2():   
+    MODEL_NAME = "TheBloke/vicuna-13B-1.1-GPTQ-4bit-128g"
+    MODEL_BASE = "vicuna-13B-1.1-GPTQ-4bit-128g.compat.no-act-order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, safetensors=False)
+
+def download_llama_30b_v2():   
+    MODEL_NAME = "tsumeone/llama-30b-supercot-4bit-cuda"
+    MODEL_BASE = "4bit"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, bits=4, group=-1, actorder=True)
+
+stub = Stub(name='autogptq-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.7.1-devel-ubuntu22.04",
@@ -40,9 +58,13 @@ stub.gptq_image = (
         "cd /repositories/AutoGPTQ && pip install . && pip install einops sentencepiece && python setup.py install",
         gpu="any",
     )
-    .run_function(download_llama30b_nogroup_model)
+    .run_function(download_wizardlm30b_nogroup_model_v2)
+    #.run_function(download_falcon7b_v2)
+    #.run_function(download_vicuna_1p1_13b_v2)    
+    #.run_function(download_llama_30b_v2)
 )
 
+# Entrypoint import trick for when inside the remote container
 if stub.is_inside(stub.gptq_image):
     t0 = time.time()
     import warnings
@@ -59,16 +81,24 @@ if stub.is_inside(stub.gptq_image):
 class ModalGPTQ:
     def __enter__(self):
         quantized_model_dir = "/model"
+
+        self.info = json.load(open('/model/_info.json'))
+        print('Remote model info:', self.info)
+
+        if not Path('/model/quantize_config.json').exists():
+            quantize_config = BaseQuantizeConfig()
+            quantize_config.desc_act = self.info['model_actorder']
+            quantize_config.bits = self.info['model_bits']
+            quantize_config.group = self.info['model_group']
+            quantize_config.save_pretrained('/model')
+        else:
+            print('This model contains quantize_config.')
+
         print('Loading tokenizer...')
         tokenizer = AutoTokenizer.from_pretrained(quantized_model_dir, use_fast=False)
 
-        quantize_config = BaseQuantizeConfig()
-        quantize_config.desc_act = MODEL_ACTORDER
-        quantize_config.bits = MODEL_BITS
-        quantize_config.group = MODEL_GROUP
-
         print('Loading model...')
-        model = AutoGPTQForCausalLM.from_quantized(quantized_model_dir, model_basename=MODEL_BASE, device_map="auto", load_in_8bit=True, use_triton=False, use_safetensors=MODEL_SAFETENSORS, torch_dtype=torch.float32, trust_remote_code=True, quantize_config=quantize_config)
+        model = AutoGPTQForCausalLM.from_quantized(quantized_model_dir, model_basename=self.info['model_base'], device_map="auto", load_in_8bit=True, use_triton=False, use_safetensors=self.info['model_safetensors'], torch_dtype=torch.float32, trust_remote_code=True)
         
         self.model = model
         self.tokenizer = tokenizer
@@ -87,7 +117,15 @@ class ModalGPTQ:
     def generate(self, prompt, params):
         tokens = self.tokenizer(prompt, return_tensors="pt").to("cuda:0").input_ids
         output = self.model.generate(input_ids=tokens, do_sample=True, **params)
-        return self.tokenizer.decode(output[0])
+
+        decoded = self.tokenizer.decode(output[0])
+
+        # Remove the prompt and all special tokens
+        answer = decoded.replace(prompt, '')
+        for special_token in self.info['model_eos']:
+            answer = answer.replace(special_token, '')
+
+        return answer, self.info
 
 # For local testing, run `modal run -q interview-gptq-modal.py --input questions.csv --params model_parameters/precise.json`
 @stub.local_entrypoint()
@@ -99,19 +137,20 @@ def main(input: str, params: str):
     interview = [json.loads(line) for line in open(input)]
     params_json = json.load(open(params,'r'))
     params_model = model.params(**params_json)
+    model_info = None
 
     results = []
     for question in interview:
         print(question['name'], question['language'])
 
         # generate the answer
-        answer = model.generate.call(question['prompt'], params=params_model)
-        
-        # Remove the prompt and all special tokens
-        answer = answer.replace(question['prompt'], '')
-        for special_token in MODEL_EOS:
-            answer = answer.replace(special_token, '')
+        answer, info = model.generate.call(question['prompt'], params=params_model)
 
+        # save for later
+        if model_info is None:
+            model_info = info
+            print('Local model info:', model_info)
+        
         print()
         print(answer)
         print()
@@ -119,7 +158,7 @@ def main(input: str, params: str):
         result = question.copy()
         result['answer'] = answer
         result['params'] = params_model
-        result['model'] = MODEL_BASE
+        result['model'] = info['model_name']
         results.append(result)
 
-    save_interview(input, 'none', params, MODEL_NAME, results)
+    save_interview(input, 'none', params, model_info['model_name'], results)
