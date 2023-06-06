@@ -1,7 +1,10 @@
 #!/bin/bash
 
+echo -e "$WRAPPER_SOURCE" > /wrapper
+echo -e "$ANSWER_SOURCE" > /answer
+
 # Launch the process in the background
-$@ &
+time $@ &
 
 # Get the process ID (PID) of the launched process
 pid=$!
