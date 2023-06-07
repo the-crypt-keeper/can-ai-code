@@ -73,6 +73,12 @@ The nature of Modal does not allow command-line selection of LLM model.  In orde
 
 To add a new model, implement a new `download...` function.  Quantization parameters are only required if the model does not contain a `quantize_config.json`.
 
+#### Exllama
+
+`interview-exllama-modal.py` - Run latest Exllama on Modal.
+
+See GPTQ notes above, the executor is very similar with one notable difference: it supports beam search.
+
 #### Llama.cpp (GGML)
 
 `Interview-llamacpp.py` provides an executor to wrap `main` on local (or remote via ssh) CPU/GPU

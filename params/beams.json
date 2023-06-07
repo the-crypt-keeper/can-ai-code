@@ -1,0 +1,11 @@
+{
+    "$note": "precise settings from https://old.reddit.com/r/LocalLLaMA/wiki/index",
+    "temperature": 0.7,
+    "repetition_penalty": 1.176,
+    "top_k": 40,
+    "top_p": 0.1,
+    "max_new_tokens": 512,
+    "repeat_last_n": 256,
+    "beams": 2,
+    "beam_length": 16
+}

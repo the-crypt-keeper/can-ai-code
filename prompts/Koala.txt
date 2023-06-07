@@ -1,0 +1,1 @@
+BEGINNING OF CONVERSATION: USER: Write simple, concise code that does not rely on any library functions.  The code must start with ```{{language}} and end with ```.  Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}} GPT:
