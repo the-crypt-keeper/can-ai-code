@@ -3,11 +3,6 @@ import re
 
 # Useful functions for extracting code from LLM responces
 def extract_code_markdown(answer):
-    # Fallback if the model forgot to use block quotes or used a single quote instead.
-    simple_answer = answer.replace('`','').strip()
-    if simple_answer[0:3] == 'def' or simple_answer[0:8] == 'function':
-        return simple_answer
-
     # Look for start tokens   
     match = re.search(r'```(\w*)', answer)
     start_token = match.group(0) if match else None
@@ -50,11 +45,24 @@ def extract_code_html(answer):
 
     return longest_code
 
-def extract_code(answer):
-    if answer.find('<code>') != -1:
-        return extract_code_html(answer)
-    
-    if answer.find('```') != -1:
-        return extract_code_markdown(answer)
+# Fallback if the model forgot to use any quotes or used a single quote instead.
+def extract_code_fallback(answer):
+    simple_answer = answer.replace('`','').strip()
+    if simple_answer[0:3] == 'def' or simple_answer[0:8] == 'function':
+        return simple_answer
     
     return None
+
+def extract_code(answer):
+    code = None
+
+    if answer.find('<code>') != -1:
+        code = extract_code_html(answer)
+    
+    if code is None and answer.find('```') != -1:
+        code = extract_code_markdown(answer)
+    
+    if code is None:        
+        code = extract_code_fallback(answer)
+    
+    return code
