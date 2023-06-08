@@ -57,6 +57,7 @@ def run():
         result['answer'] = answer
         result['params'] = params
         result['model'] = args.model
+        result['runtime'] = 'api-oobabooga'
 
         results.append(result)
     

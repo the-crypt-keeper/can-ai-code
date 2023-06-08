@@ -23,6 +23,13 @@ def download_wizardlm30b_nogroup_model_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE)
 
+def download_wizardlm_1p0_30b_nogroup_model_v2():   
+    MODEL_NAME = "TheBloke/WizardLM-30B-GPTQ"
+    MODEL_BASE = "wizardlm-30b-GPTQ-4bit--1g.act.order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE)
+
 def download_falcon7b_v2():   
     MODEL_NAME = "TheBloke/falcon-7b-instruct-GPTQ"
     MODEL_BASE = "gptq_model-4bit-64g"
@@ -58,7 +65,8 @@ stub.gptq_image = (
         "cd /repositories/AutoGPTQ && pip install . && pip install einops sentencepiece && python setup.py install",
         gpu="any",
     )
-    .run_function(download_wizardlm30b_nogroup_model_v2)
+    #.run_function(download_wizardlm30b_nogroup_model_v2)
+    .run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
     #.run_function(download_falcon7b_v2)
     #.run_function(download_vicuna_1p1_13b_v2)    
     #.run_function(download_llama_30b_v2)
@@ -159,6 +167,7 @@ def main(input: str, params: str):
         result['answer'] = answer
         result['params'] = params_model
         result['model'] = info['model_name']
+        result['runtime'] = 'autogptq'
         results.append(result)
 
     save_interview(input, 'none', params, model_info['model_name'], results)

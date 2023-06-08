@@ -84,6 +84,7 @@ for test in interview:
     result['answer'] = answer
     result['params'] = raw_params
     result['model'] = model_name
+    result['runtime'] = 'api-spaces'
 
     results.append(result)
 

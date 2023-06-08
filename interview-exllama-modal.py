@@ -30,6 +30,13 @@ def download_koala_13b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+".safetensors"])
     save_meta(MODEL_NAME, MODEL_BASE, bits=4, group=128, actorder=True)
 
+def download_wizardlm_1p0_30b_nogroup_model_v2():   
+    MODEL_NAME = "TheBloke/WizardLM-30B-GPTQ"
+    MODEL_BASE = "wizardlm-30b-GPTQ-4bit--1g.act.order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE)
+
 stub = Stub(name='exllama-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -45,7 +52,7 @@ stub.gptq_image = (
         "cd /repositories/exllama && pip install safetensors sentencepiece ninja huggingface_hub",
         gpu="any",
     )
-    .run_function(download_koala_13b_v2)
+    .run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
 )
 
 # Entrypoint import trick for when inside the remote container
@@ -152,6 +159,7 @@ def main(input: str, params: str):
         result['answer'] = answer
         result['params'] = params_model
         result['model'] = info['model_name']
+        result['runtime'] = 'exllama'
         results.append(result)
 
     save_interview(input, 'none', params, model_info['model_name'], results)

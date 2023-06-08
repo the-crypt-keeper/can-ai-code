@@ -78,6 +78,7 @@ for challenge in interview:
     result['answer'] = output
     result['params'] = model_params
     result['model'] = args.model
+    result['runtime'] = 'api-inference'
     results.append(result)
 
 # Save results

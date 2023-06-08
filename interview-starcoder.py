@@ -47,6 +47,7 @@ for challenge in interview:
     result['answer'] = answer
     result['params'] = params
     result['model'] = args.model
+    result['runtime'] = 'transformers'
 
     results.append(result)
 

@@ -83,6 +83,7 @@ for challenge in interview:
     result['answer'] = answer
     result['params'] = { 'cmdline': cmdline }
     result['model'] = model_name
+    result['runtime'] = 'llamacpp'
 
     results.append(result)
 
