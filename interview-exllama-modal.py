@@ -37,6 +37,20 @@ def download_wizardlm_1p0_30b_nogroup_model_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE)
 
+def download_wizardlm_1p0_13b_v2():   
+    MODEL_NAME = "TheBloke/wizardLM-13B-1.0-GPTQ"
+    MODEL_BASE = "WizardLM-13B-1.0-GPTQ-4bit-128g.no-act-order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
+
+def download_vicuna_1p1_13b_safetensors_v2():   
+    MODEL_NAME = "anon8231489123/vicuna-13b-GPTQ-4bit-128g"
+    MODEL_BASE = "vicuna-13b-4bit-128g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE)
+
 stub = Stub(name='exllama-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -52,7 +66,7 @@ stub.gptq_image = (
         "cd /repositories/exllama && pip install safetensors sentencepiece ninja huggingface_hub",
         gpu="any",
     )
-    .run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
+    .run_function(download_wizardlm_1p0_13b_v2)
 )
 
 # Entrypoint import trick for when inside the remote container
@@ -100,7 +114,7 @@ class ModalExLlama:
         return {
             "temperature": temperature,
             "repetition_penalty": repetition_penalty,
-            "top_k": top_k,
+            "top_k": top_k if top_k > 0 else 1000,
             "top_p": top_p,
             "max_new_tokens": max_new_tokens,
             "beams": beams,
@@ -129,7 +143,7 @@ class ModalExLlama:
 
 # For local testing, run `modal run -q interview-exllama-modal.py --input prepare_junior-dev_python.ndjson --params params/precise.json`
 @stub.local_entrypoint()
-def main(input: str, params: str):
+def main(input: str, params: str, iterations: int = 1):
     from prepare import save_interview
 
     model = ModalExLlama()
@@ -139,27 +153,28 @@ def main(input: str, params: str):
     params_model = model.params(**params_json)
     model_info = None
 
-    results = []
-    for question in interview:
-        print(question['name'], question['language'])
+    for iter in range(iterations):
+        results = []
+        for question in interview:
+            print(question['name'], question['language'])
 
-        # generate the answer
-        answer, info = model.generate.call(question['prompt'], params=params_model)
+            # generate the answer
+            answer, info = model.generate.call(question['prompt'], params=params_model)
 
-        # save for later
-        if model_info is None:
-            model_info = info
-            print('Local model info:', model_info)
-        
-        print()
-        print(answer)
-        print()
+            # save for later
+            if model_info is None:
+                model_info = info
+                print('Local model info:', model_info)
+            
+            print()
+            print(answer)
+            print()
 
-        result = question.copy()
-        result['answer'] = answer
-        result['params'] = params_model
-        result['model'] = info['model_name']
-        result['runtime'] = 'exllama'
-        results.append(result)
+            result = question.copy()
+            result['answer'] = answer
+            result['params'] = params_model
+            result['model'] = info['model_name']
+            result['runtime'] = 'exllama'
+            results.append(result)
 
-    save_interview(input, 'none', params, model_info['model_name'], results)
+        save_interview(input, 'none', params, model_info['model_name'], results)
