@@ -44,6 +44,13 @@ def download_vicuna_1p1_13b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, safetensors=False)
 
+def download_wizardlm_1p0_13b_v2():   
+    MODEL_NAME = "TheBloke/wizardLM-13B-1.0-GPTQ"
+    MODEL_BASE = "WizardLM-13B-1.0-GPTQ-4bit-128g.no-act-order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
+
 def download_llama_30b_v2():   
     MODEL_NAME = "tsumeone/llama-30b-supercot-4bit-cuda"
     MODEL_BASE = "4bit"
@@ -66,9 +73,9 @@ stub.gptq_image = (
         gpu="any",
     )
     #.run_function(download_wizardlm30b_nogroup_model_v2)
-    .run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
+    #.run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
     #.run_function(download_falcon7b_v2)
-    #.run_function(download_vicuna_1p1_13b_v2)    
+    .run_function(download_wizardlm_1p0_13b_v2)    
     #.run_function(download_llama_30b_v2)
 )
 
@@ -137,7 +144,7 @@ class ModalGPTQ:
 
 # For local testing, run `modal run -q interview-gptq-modal.py --input questions.csv --params model_parameters/precise.json`
 @stub.local_entrypoint()
-def main(input: str, params: str):
+def main(input: str, params: str, iterations: int = 1):
     from prepare import save_interview
 
     model = ModalGPTQ()
@@ -147,27 +154,28 @@ def main(input: str, params: str):
     params_model = model.params(**params_json)
     model_info = None
 
-    results = []
-    for question in interview:
-        print(question['name'], question['language'])
+    for iter in range(iterations):
+        results = []
+        for question in interview:
+            print(question['name'], question['language'])
 
-        # generate the answer
-        answer, info = model.generate.call(question['prompt'], params=params_model)
+            # generate the answer
+            answer, info = model.generate.call(question['prompt'], params=params_model)
 
-        # save for later
-        if model_info is None:
-            model_info = info
-            print('Local model info:', model_info)
-        
-        print()
-        print(answer)
-        print()
+            # save for later
+            if model_info is None:
+                model_info = info
+                print('Local model info:', model_info)
+            
+            print()
+            print(answer)
+            print()
 
-        result = question.copy()
-        result['answer'] = answer
-        result['params'] = params_model
-        result['model'] = info['model_name']
-        result['runtime'] = 'autogptq'
-        results.append(result)
+            result = question.copy()
+            result['answer'] = answer
+            result['params'] = params_model
+            result['model'] = info['model_name']
+            result['runtime'] = 'autogptq'
+            results.append(result)
 
-    save_interview(input, 'none', params, model_info['model_name'], results)
+        save_interview(input, 'none', params, model_info['model_name'], results)
