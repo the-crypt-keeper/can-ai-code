@@ -72,4 +72,4 @@ for test in interview:
 
     results.append(result)
 
-save_interview(args.input, 'none', args.params, model_name, results)
+save_interview(args.input, 'none', args.params, model_name+'-'+args.model, results)
