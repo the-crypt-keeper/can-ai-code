@@ -2,3 +2,5 @@
   url: https://github.com/lm-sys/FastChat/blob/main/docs/vicuna_weights_version.md
 - name: oasst
   url: https://github.com/LAION-AI/Open-Assistant/issues/2896
+- name: Koala
+  url: https://github.com/young-geng/EasyLM/blob/main/docs/koala.md
