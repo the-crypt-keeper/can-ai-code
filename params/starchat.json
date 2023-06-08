@@ -1,0 +1,9 @@
+{
+    "$note": "defaults from https://huggingfaceh4-starchat-playground.hf.space/",
+    "temperature": 0.2,
+    "repetition_penalty": 1.2,
+    "top_k": 50,
+    "top_p": 0.95,
+    "max_new_tokens": 512,
+    "repeat_last_n": 256
+}
