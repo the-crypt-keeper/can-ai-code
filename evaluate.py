@@ -15,7 +15,7 @@ def evaluation(test, language, code):
         f = FunctionSandbox(code, language)
 
         for check_name in test['Checks'].keys():
-            check = test['Checks'][check_name]
+            check = test['Checks'][check_name].copy()
             if check.get('assert'):
                 total += 1
                 test_value = None
@@ -27,7 +27,7 @@ def evaluation(test, language, code):
                 check['got'] = test_value
 
                 if (test_value == check['eq']):
-                    print('   ',check_name, "passed")
+                    print('   ',check_name, "passed", test_value,'==',check['eq'])
                     passed += 1
                     check['status'] = 1
                 else:

@@ -141,9 +141,9 @@ class FunctionSandbox:
         answer_json = json.dumps(self.code)
 
         if self.language == "python":
-            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-python /timeout.sh python /wrapper")
+            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-python /timeout.sh python /wrapper", stdout_only=True)
         elif self.language == "javascript":
-            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-javascript /timeout.sh node /wrapper")
+            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-javascript /timeout.sh node /wrapper", stdout_only=True)
        
         start_index = output.find("###")
         if start_index == -1:
