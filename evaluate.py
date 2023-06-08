@@ -4,33 +4,7 @@ from sbox.sandbox import FunctionSandbox
 import argparse
 import json
 import re
-
-def extract_code(answer):
-    # Fallback if the model forgot to use block quotes or used a single quote instead.
-    simple_answer = answer.replace('`','').strip()
-    if simple_answer[0:3] == 'def' or simple_answer[0:8] == 'function':
-        return simple_answer
-
-    # Look for start tokens   
-    match = re.search(r'```(\w*)', answer)
-    start_token = match.group(0) if match else None
-    start_index = match.start() if match else -1
-
-    # If we didn't find a start token, return None
-    if start_index == -1:
-        return None
-
-    # Find the index of the end token, starting from the end of the start token.
-    # if not found, assume we're taking the whole thing.
-    end_token = "```"
-    end_index = answer.find(end_token, start_index + len(start_token))
-    if end_index == -1:
-        end_index = len(answer)
-
-    # Extract the text between the tokens
-    code_text = answer[start_index + len(start_token):end_index].strip()
-
-    return code_text
+from extract import extract_code
 
 def evaluation(test, language, code):
     total = 0
