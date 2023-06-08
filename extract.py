@@ -20,7 +20,7 @@ def extract_code_markdown(answer):
     # Find the index of the end token, starting from the end of the start token.
     # if not found, assume we're taking the whole thing.
     end_token = "```"
-    end_index = answer.find(end_token, start_index + len(start_token))
+    end_index = answer.find(end_token, start_index + len(start_token) + 1)
     if end_index == -1:
         end_index = len(answer)
 
