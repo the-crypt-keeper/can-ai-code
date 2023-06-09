@@ -33,7 +33,8 @@ def load_data():
             new_tags[2] = lang
             data[file+'-'+lang] = {
                 'tags': new_tags,
-                'results': list(filter(lambda x: x.get('language') == lang, results))
+                'results': list(filter(lambda x: x.get('language') == lang, results)),
+                'runtime': results[0].get('runtime')
             }
 
     return data
@@ -44,9 +45,9 @@ def calculate_summary(data):
         res = info['results']
         passed = sum(x['passed'] for x in res)
         total = sum(x['total'] for x in res)
-        summary.append(info['tags'] + [passed, total])
-    sumdf = pd.DataFrame(summary, columns=['Eval', 'Interview', 'Languages', 'Template', 'TemplateOut', 'Params', 'Model', 'Timestamp', 'Passed', 'Total'])
-    sumdf = sumdf[['Languages','Model','Params','Template','Passed','Total']]
+        summary.append(info['tags'] + [passed, total] + [info['runtime']])
+    sumdf = pd.DataFrame(summary, columns=['Eval', 'Interview', 'Languages', 'Template', 'TemplateOut', 'Params', 'Model', 'Timestamp', 'Passed', 'Total', 'Runtime'])
+    sumdf = sumdf[['Languages','Model','Params','Template','Runtime','Passed','Total']]
     sumdf['Score'] = sumdf['Passed'] / sumdf['Total']
     sumdf.drop('Total', axis=1, inplace=True)
     return sumdf.sort_values(by='Passed', ascending=False)
@@ -91,7 +92,8 @@ def main():
                 max_value=1,
             )
         }
-        column_order=("Model", "Params", "Template", "Passed", "Score")
+        column_order=("Model", "Params", "Template", "Score")
+        column_order_detail=("Model", "Params", "Template", "Runtime", "Passed", "Score")
 
         mode = st.radio(label='View',options=['Side by Side','Python','JavaScript'], horizontal=True, label_visibility='hidden')
         if mode == 'Side by Side':
@@ -103,12 +105,12 @@ def main():
         if pyct is not None:
             with pyct:
                 st.subheader('Python')
-                st.dataframe(summary[summary['Languages'] == 'python'], use_container_width=True, column_config=column_config, column_order=column_order, hide_index=True, height=700)
+                st.dataframe(summary[summary['Languages'] == 'python'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
 
         if jsct is not None:
             with jsct:
                 st.subheader('JavaScript')
-                st.dataframe(summary[summary['Languages'] == 'javascript'], use_container_width=True, column_config=column_config, column_order=column_order, hide_index=True, height=700)
+                st.dataframe(summary[summary['Languages'] == 'javascript'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
 
     elif selected_tab == 'Compare':
         st.title('🚧 CanAiCode Compare')
