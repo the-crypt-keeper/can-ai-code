@@ -51,6 +51,13 @@ def download_vicuna_1p1_13b_safetensors_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE)
 
+def download_minotaur_13b_v2():   
+    MODEL_NAME = "TheBloke/minotaur-13B-GPTQ"
+    MODEL_BASE = "minotaur-13B-GPTQ-4bit-128g.no-act.order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
+
 stub = Stub(name='exllama-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -66,7 +73,7 @@ stub.gptq_image = (
         "cd /repositories/exllama && pip install safetensors sentencepiece ninja huggingface_hub",
         gpu="any",
     )
-    .run_function(download_wizardlm_1p0_13b_v2)
+    .run_function(download_minotaur_13b_v2)
 )
 
 # Entrypoint import trick for when inside the remote container

@@ -13,3 +13,8 @@
 - name: cohere-command-nightly
   title: Cohere Command
   size: 52B
+- name: TheBloke-minotaur-13B-GPTQ
+  url: https://huggingface.co/TheBloke/minotaur-13B-GPTQ
+  url_original: https://huggingface.co/openaccess-ai-collective/minotaur-13b
+  size: 13B
+  license: Open
