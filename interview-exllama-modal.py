@@ -23,6 +23,13 @@ def download_llama_30b_128g_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, bits=4, group=128, actorder=True)
 
+def download_llama_65b_128g_v2():   
+    MODEL_NAME = "Neko-Institute-of-Science/LLaMA-65B-4bit-128g"
+    MODEL_BASE = "llama-65b-4bit-128g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, bits=4, group=128, actorder=True)
+
 def download_koala_13b_v2():   
     MODEL_NAME = "TheBloke/koala-13B-GPTQ-4bit-128g"
     MODEL_BASE = "koala-13B-4bit-128g"
@@ -58,6 +65,13 @@ def download_minotaur_13b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
 
+def download_gpt4_alpaca_lora_65b_128g_v2():   
+    MODEL_NAME = "TheBloke/gpt4-alpaca-lora_mlp-65B-GPTQ"
+    MODEL_BASE = "gpt4-alpaca-lora_mlp-65B-GPTQ-4bit"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, bits=4, group=-1, actorder=True)
+
 stub = Stub(name='exllama-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -73,10 +87,15 @@ stub.gptq_image = (
         "cd /repositories/exllama && pip install safetensors sentencepiece ninja huggingface_hub",
         gpu="any",
     )
-    .run_function(download_minotaur_13b_v2)
+    #### SELECT MODEL HERE ####
+    .run_function(download_gpt4_alpaca_lora_65b_128g_v2)
 )
 
-# Entrypoint import trick for when inside the remote container
+### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)
+gpu_request = gpu.A10G(count=1)
+gpu_split = '17,24' if gpu_request.count == 2 else None
+
+## Entrypoint import trick for when inside the remote container
 if stub.is_inside(stub.gptq_image):
     t0 = time.time()
     import warnings
@@ -90,7 +109,7 @@ if stub.is_inside(stub.gptq_image):
     from generator import ExLlamaGenerator
 
 #### NOTE: SET GPU TYPE HERE ####
-@stub.cls(image=stub.gptq_image, gpu=gpu.A10G(count=1), concurrency_limit=1, container_idle_timeout=300)
+@stub.cls(image=stub.gptq_image, gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300)
 class ModalExLlama:
     def __enter__(self):
 
@@ -109,6 +128,8 @@ class ModalExLlama:
         # config.attention_method = ExLlamaConfig.AttentionMethod.PYTORCH_SCALED_DP
         # config.matmul_method = ExLlamaConfig.MatmulMethod.QUANT_ONLY
         self.config.max_seq_len = 2048
+        if gpu_split is not None:
+            self.config.set_auto_map(gpu_split)
 
         print('Loading model...')
         self.model = ExLlama(self.config)
@@ -166,7 +187,9 @@ def main(input: str, params: str, iterations: int = 1):
             print(question['name'], question['language'])
 
             # generate the answer
+            t0 = time.time()
             answer, info = model.generate.call(question['prompt'], params=params_model)
+            elapsed = time.time() - t0
 
             # save for later
             if model_info is None:
@@ -175,7 +198,7 @@ def main(input: str, params: str, iterations: int = 1):
             
             print()
             print(answer)
-            print()
+            print(f"Generated in {elapsed:.2f}s")
 
             result = question.copy()
             result['answer'] = answer
