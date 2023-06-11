@@ -51,9 +51,16 @@ def download_wizardlm_1p0_13b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
 
-def download_vicuna_1p1_13b_safetensors_v2():   
+def download_vicuna_1p0_13b_safetensors_v2():   
     MODEL_NAME = "anon8231489123/vicuna-13b-GPTQ-4bit-128g"
     MODEL_BASE = "vicuna-13b-4bit-128g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE)
+
+def download_vicuna_1p1_13b_safetensors_v2():   
+    MODEL_NAME = "mzedp/vicuna-13b-v1.1-GPTQ-4bit-128g"
+    MODEL_BASE = "vic-v1-13b-4b-128g"
 
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE)
@@ -88,7 +95,7 @@ stub.gptq_image = (
         gpu="any",
     )
     #### SELECT MODEL HERE ####
-    .run_function(download_gpt4_alpaca_lora_65b_128g_v2)
+    .run_function(download_vicuna_1p1_13b_safetensors_v2)
 )
 
 ### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)
@@ -138,10 +145,12 @@ class ModalExLlama:
 
         self.tokenizer = ExLlamaTokenizer(tokenizer_model_path)
 
-    def params(self, temperature=0.7, repetition_penalty=1.0, top_k=-1, top_p=1.0, max_new_tokens=512, beams=1, beam_length=1, **kwargs):
+    def params(self, temperature=0.7, repetition_penalty=1.0, repeat_last_n=256, repetition_decay=128, top_k=-1, top_p=1.0, max_new_tokens=512, beams=1, beam_length=1, **kwargs):
         return {
             "temperature": temperature,
             "repetition_penalty": repetition_penalty,
+            "repeat_last_n": repeat_last_n,
+            "repetition_decay": repetition_decay,
             "top_k": top_k if top_k > 0 else 1000,
             "top_p": top_p,
             "max_new_tokens": max_new_tokens,
@@ -158,14 +167,56 @@ class ModalExLlama:
         generator.settings.top_p = params['top_p']
         generator.settings.min_p = 0
         generator.settings.token_repetition_penalty_max = params['repetition_penalty']
-        generator.settings.token_repetition_penalty_sustain = 256
-        generator.settings.token_repetition_penalty_decay = 128
-        generator.settings.beams = params['beams']
-        generator.settings.beam_length = params['beam_length']
+        generator.settings.token_repetition_penalty_sustain = params['repeat_last_n']
+        generator.settings.token_repetition_penalty_decay = params['repetition_decay']
 
-        answer = generator.generate_simple(prompt, max_new_tokens = params['max_new_tokens'])
+        if params.get('beams',1) == 1:
+            # No beam search, use simple generator.
+            answer = generator.generate_simple(prompt, max_new_tokens = params['max_new_tokens'])
+            answer = answer.replace(prompt, '')
+        else:
+            # Beam Search Parameters
+            generator.settings.beams = params['beams']
+            generator.settings.beam_length = params['beam_length']
 
-        answer = answer.replace(prompt, '')
+            # Encode prompt and init the generator
+            prompt_ids = self.tokenizer.encode(prompt)
+            num_res_tokens = prompt_ids.shape[-1]
+            generator.gen_begin(prompt_ids)
+
+            generator.begin_beam_search()
+            min_response_tokens = 10
+            res_line = ''
+
+            for i in range(params['max_new_tokens']):
+
+                # Disallowing the end condition tokens seems like a clean way to force longer replies.
+                if i < min_response_tokens:
+                    generator.disallow_tokens([self.tokenizer.eos_token_id])
+                else:
+                    generator.disallow_tokens(None)
+
+                # Get a token
+                gen_token = generator.beam_search()
+
+                # If token is EOS, replace it with newline before continuing
+                if gen_token.item() == self.tokenizer.eos_token_id:
+                    generator.replace_last_token(self.tokenizer.newline_token_id)
+
+                # Decode the current line and print any characters added
+                num_res_tokens += 1
+                text = self.tokenizer.decode(generator.sequence_actual[:, -num_res_tokens:][0])
+                new_text = text[len(res_line):]
+                res_line += new_text    
+
+                print(new_text, end="")  # (character streaming output is here)
+                sys.stdout.flush()
+
+                # End conditions
+                if gen_token.item() == self.tokenizer.eos_token_id: break
+
+            generator.end_beam_search()
+            answer = text[len(prompt)+1:]
 
         return answer, self.info
 
