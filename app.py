@@ -3,6 +3,7 @@ import pandas as pd
 import glob
 import json
 import os
+import sys
 
 from prepare import load_questions
 
@@ -12,7 +13,7 @@ def read_ndjson(file):
     return data
 
 def load_data():
-    files = glob.glob('results/eval*.ndjson')
+    files = glob.glob('results/eval*.ndjson' if len(sys.argv) == 1 else sys.argv[1])
     data = {}
     for file in files:
         tags = os.path.basename(file).replace('.ndjson', '').split('_')
