@@ -6,30 +6,34 @@ from jinja2 import Template
 import sys
 sys.path.append('..')
 from evaluate import extract_code
+from evalplus.data import get_human_eval_plus, get_human_eval, write_jsonl
 
 def prepare_humaneval(args):
     template = Template(open(args.template).read())
     template_name = Path(args.template).stem
 
     args.language = "python"
-    args.interview = "humaneval"
-
-    questions = [json.loads(line) for line in open(f"./human-eval-v2-20210705.jsonl")]
+    args.interview = "evalplus" if args.plus else "humaneval" 
+    questions = get_human_eval_plus() if args.plus else get_human_eval()
 
     output_filename = f"prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
     outputs = []
-    for test in questions:
+    for task_id in questions:
+            test = questions[task_id]
             test['name'] = test['task_id']
             prompt = template.render(test)
            
-            output = test.copy()
-            output['language'] = args.language
-            output['prompt'] = prompt
+            output = {
+                'name': test['task_id'],
+                'task_id': test['task_id'],
+                'entry_point': test['entry_point'],
+                'language': args.language,
+                'prompt': prompt,
+            }
             outputs.append(output)
 
-    with open(output_filename, 'w') as file:
-        file.write('\n'.join([json.dumps(output) for output in outputs]))
-        print(f"Expanded {len(outputs)} {template_name} prompts to {output_filename}")
+    write_jsonl(output_filename, outputs)
+    print(f"Expanded {len(outputs)} {template_name} prompts to {output_filename}")
 
 def remove_lines_until_def(input_string):
     lines = input_string.split('\n')  # Split the input string into a list of lines
@@ -60,6 +64,7 @@ def format_humaneval(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Interview preparation')
     parser.add_argument('--template', type=str, help='prepare interview')
+    parser.add_argument('--plus', action='store_true', help='use humanevalplus instead of humaneval')
     parser.add_argument('--answers', type=str, help='post-process results')
     args = parser.parse_args()
 
