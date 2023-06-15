@@ -4,11 +4,13 @@ import yaml
 import argparse
 import json
 import time
+import os
 from jinja2 import Template
 from pathlib import Path
 
 def load_questions(interview='junior-dev'):
-    for file_path in glob.glob(interview+'/*.yaml'):
+    module_dir = os.path.dirname(os.path.abspath(__file__))
+    for file_path in glob.glob(module_dir+'/'+interview+'/*.yaml'):
         with open(file_path, 'r') as file:
             tests = yaml.safe_load(file)
             for test in tests.keys():
