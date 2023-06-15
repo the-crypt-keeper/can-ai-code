@@ -227,15 +227,20 @@ def main(input: str, params: str, iterations: int = 1):
 
     model = ModalExLlama()
 
+    param_list = params.split(',')
+
     interview = [json.loads(line) for line in open(input)]
-    params_json = json.load(open(params,'r'))
-    params_model = model.params(**params_json)
+
     model_info = None
 
-    for iter in range(iterations):
+    for param_file in param_list:
+      params_json = json.load(open(param_file,'r'))
+      params_model = model.params(**params_json)
+
+      for iter in range(iterations):
         results = []
         for question in interview:
-            print(question['name'], question['language'])
+            print(iter, param_file, question['name'], question['language'])
 
             # generate the answer
             t0 = time.time()
@@ -258,4 +263,4 @@ def main(input: str, params: str, iterations: int = 1):
             result['runtime'] = 'exllama'
             results.append(result)
 
-        save_interview(input, 'none', params, model_info['model_name'], results)
+        save_interview(input, 'none', param_file, model_info['model_name'], results)
