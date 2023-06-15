@@ -3,7 +3,7 @@ from prepare import load_questions
 from sbox.sandbox import FunctionSandbox
 import argparse
 import json
-import re
+import os
 from extract import extract_code
 
 def evaluation(test, language, code):
