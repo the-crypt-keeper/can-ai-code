@@ -1,0 +1,8 @@
+{
+    "$note": "defaults from https://huggingface.co/WizardLM/WizardCoder-15B-V1.0 demo at https://375cead61e4db124.gradio.app/",
+    "temperature": 1.0,
+    "beams": 1,
+    "top_k": 40,
+    "top_p": 0.95,
+    "max_new_tokens": 512
+}
