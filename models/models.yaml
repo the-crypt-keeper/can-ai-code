@@ -18,3 +18,12 @@
   url_original: https://huggingface.co/openaccess-ai-collective/minotaur-13b
   size: 13B
   license: Open
+- name: TheBloke-gpt4-alpaca-lora_mlp-65B-GPTQ
+  url: https://huggingface.co/TheBloke/gpt4-alpaca-lora_mlp-65B-GPTQ
+- name: wizardcoder-16b
+  size: 16B
+  url: https://huggingface.co/WizardLM/WizardCoder-15B-V1.0
+- name: TheBloke-alpaca-lora-65B-GPTQ-4bit
+  url: https://huggingface.co/TheBloke/alpaca-lora-65B-GPTQ-4bit
+- name: TheBloke-guanaco-65B-GPTQ
+  url: https://huggingface.co/TheBloke/guanaco-65B-GPTQ
