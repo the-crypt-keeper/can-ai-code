@@ -20,10 +20,19 @@
   license: Open
 - name: TheBloke-gpt4-alpaca-lora_mlp-65B-GPTQ
   url: https://huggingface.co/TheBloke/gpt4-alpaca-lora_mlp-65B-GPTQ
-- name: wizardcoder-16b
+- name: 375cead61e4db124-gradio-app-wizardcoder-16b
   size: 16B
   url: https://huggingface.co/WizardLM/WizardCoder-15B-V1.0
 - name: TheBloke-alpaca-lora-65B-GPTQ-4bit
   url: https://huggingface.co/TheBloke/alpaca-lora-65B-GPTQ-4bit
 - name: TheBloke-guanaco-65B-GPTQ
   url: https://huggingface.co/TheBloke/guanaco-65B-GPTQ
+- name: TheBloke-airoboros-33B-gpt4-1.2-GPTQ
+  url: https://huggingface.co/TheBloke/airoboros-33B-gpt4-1.2-GPTQ
+  url_original: https://huggingface.co/jondurbin/airoboros-33b-gpt4-1.2
+- name: TheBloke-airoboros-13B-gpt4-1.2-GPTQ
+  url: https://huggingface.co/TheBloke/airoboros-13B-gpt4-1.2-GPTQ
+  url_original: https://huggingface.co/jondurbin/airoboros-13b-gpt4-1.2
+- name: TheBloke-robin-13B-v2-GPTQ
+  url: https://huggingface.co/TheBloke/robin-13B-v2-GPTQ
+  url_original: https://huggingface.co/OptimalScale/robin-13b-v2-delta

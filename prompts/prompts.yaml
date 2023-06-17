@@ -4,3 +4,7 @@
   url: https://github.com/LAION-AI/Open-Assistant/issues/2896
 - name: Koala
   url: https://github.com/young-geng/EasyLM/blob/main/docs/koala.md
+- name: airoboros, airboros-plain
+  url: https://huggingface.co/jondurbin/airoboros-33b-gpt4-1.2
+- name: robin
+  url: https://huggingface.co/TheBloke/robin-13B-v2-GPTQ
