@@ -116,7 +116,7 @@ stub.gptq_image = (
         gpu="any",
     )
     #### SELECT MODEL HERE ####
-    .run_function(download_airoboros_1p2_33b_v2)
+    .run_function(download_robin_13b_v2)
 )
 
 ### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)
@@ -176,11 +176,13 @@ class ModalExLlama:
             "top_p": top_p,
             "max_new_tokens": max_new_tokens,
             "beams": beams,
-            "beam_length": beam_length
+            "beam_length": beam_length,
+            "stop_seq": "###"
         }
 
     @method()
     def generate(self, prompt, params):
+        # Init generator
         generator = ExLlamaGenerator(self.model, self.tokenizer, self.cache)
         generator.settings = ExLlamaGenerator.Settings()
         generator.settings.temperature = params['temperature']
@@ -191,50 +193,47 @@ class ModalExLlama:
         generator.settings.token_repetition_penalty_sustain = params['repeat_last_n']
         generator.settings.token_repetition_penalty_decay = params['repetition_decay']
 
-        if params.get('beams',1) == 1:
-            # No beam search, use simple generator.
-            answer = generator.generate_simple(prompt, max_new_tokens = params['max_new_tokens'])
-            answer = answer.replace(prompt, '')
-        else:
-            # Beam Search Parameters
-            generator.settings.beams = params['beams']
-            generator.settings.beam_length = params['beam_length']
+        # Beam Search Parameters
+        generator.settings.beams = params['beams']
+        generator.settings.beam_length = params['beam_length']
 
-            # Encode prompt and init the generator
-            prompt_ids = self.tokenizer.encode(prompt)
-            num_res_tokens = prompt_ids.shape[-1]
-            generator.gen_begin(prompt_ids)
+        # Encode prompt and init the generator
+        prompt_ids = self.tokenizer.encode(prompt)
+        num_res_tokens = prompt_ids.shape[-1]
+        generator.gen_begin(prompt_ids)
 
-            generator.begin_beam_search()
-            min_response_tokens = 10
-            res_line = ''
+        # Begin beam search
+        generator.begin_beam_search()
+        min_response_tokens = 10
+        res_line = ''
 
-            for i in range(params['max_new_tokens']):
+        for i in range(params['max_new_tokens']):
 
-                # Disallowing the end condition tokens seems like a clean way to force longer replies.
-                if i < min_response_tokens:
-                    generator.disallow_tokens([self.tokenizer.eos_token_id])
-                else:
-                    generator.disallow_tokens(None)
+            # Disallowing the end condition tokens seems like a clean way to force longer replies.
+            if i < min_response_tokens:
+                generator.disallow_tokens([self.tokenizer.eos_token_id])
+            else:
+                generator.disallow_tokens(None)
 
-                # Get a token
-                gen_token = generator.beam_search()
+            # Get a token
+            gen_token = generator.beam_search()
 
-                # If token is EOS, replace it with newline before continuing
-                if gen_token.item() == self.tokenizer.eos_token_id:
-                    generator.replace_last_token(self.tokenizer.newline_token_id)
+            # If token is EOS, replace it with newline before continuing
+            if gen_token.item() == self.tokenizer.eos_token_id:
+                generator.replace_last_token(self.tokenizer.newline_token_id)
 
-                # Decode the current line and print any characters added
-                num_res_tokens += 1
-                text = self.tokenizer.decode(generator.sequence_actual[:, -num_res_tokens:][0])
-                new_text = text[len(res_line):]
-                res_line += new_text    
+            # Decode the current line and print any characters added
+            num_res_tokens += 1
+            text = self.tokenizer.decode(generator.sequence_actual[:, -num_res_tokens:][0])
+            new_text = text[len(res_line):]
+            res_line += new_text    
 
-                print(new_text, end="")  # (character streaming output is here)
-                sys.stdout.flush()
+            print(new_text, end="")  # (character streaming output is here)
+            sys.stdout.flush()
 
-                # End conditions
-                if gen_token.item() == self.tokenizer.eos_token_id: break
+            # End conditions
+            if gen_token.item() == self.tokenizer.eos_token_id: break
+            if res_line.endswith(params['stop_seq']): break
 
             generator.end_beam_search()
             answer = text[len(prompt)+1:]
