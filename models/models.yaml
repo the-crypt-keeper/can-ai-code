@@ -166,7 +166,7 @@
   name: VicUnlocked
   size: 30B
   quant: GPTQ-4b
-  url: https://huggingface.co/TheBloke/VicUnlocked-30B-LoRA-
+  url: https://huggingface.co/TheBloke/VicUnlocked-30B-LoRA-GPTQ
 - id: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5
   name: WizardVicuna-Uncensored
   size: 13B
