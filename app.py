@@ -4,6 +4,7 @@ import glob
 import json
 import os
 import sys
+import yaml
 
 from prepare import load_questions
 
@@ -40,6 +41,12 @@ def load_data():
 
     return data
 
+def load_models():
+    with open('models/models.yaml') as f:
+        model_list = yaml.safe_load(f)
+    model_df = pd.DataFrame(model_list)
+    return model_df
+
 def calculate_summary(data):
     summary = []
     for file, info in data.items():
@@ -51,7 +58,12 @@ def calculate_summary(data):
     sumdf = sumdf[['Languages','Model','Params','Template','Runtime','Passed','Total']]
     sumdf['Score'] = sumdf['Passed'] / sumdf['Total']
     sumdf.drop('Total', axis=1, inplace=True)
-    return sumdf.sort_values(by='Passed', ascending=False)
+
+    merged_df = pd.merge(sumdf, load_models(), left_on='Model', right_on='id', how='left')
+    merged_df['name'].fillna(merged_df['Model'], inplace=True)
+    merged_df.drop('Model', axis=1, inplace=True)
+
+    return merged_df.sort_values(by='Passed', ascending=False)
 
 @st.cache_data
 def load_and_prepare_data():
@@ -91,10 +103,22 @@ def main():
                 format="%.3f",
                 min_value=0,
                 max_value=1,
-            )
+            ),
+            "url": st.column_config.LinkColumn(
+                label="URL",
+                width=50
+            ),
+            "quant": st.column_config.TextColumn(
+                label="Quant",
+                width=30
+            ),
+            "size": st.column_config.TextColumn(
+                label="Size",
+                width=30
+            )  
         }
-        column_order=("Model", "Params", "Template", "Score")
-        column_order_detail=("Model", "Params", "Template", "Runtime", "Passed", "Score")
+        column_order=("name", "size", "url", "Params", "Template", "Score")
+        column_order_detail=("name", "size", "quant", "url", "Params", "Template", "Runtime", "Passed", "Score")
 
         mode = st.radio(label='View',options=['Side by Side','Python','JavaScript'], horizontal=True, label_visibility='hidden')
         if mode == 'Side by Side':
@@ -102,6 +126,7 @@ def main():
         else:
             pyct = st.container() if mode == 'Python' else None
             jsct = st.container() if mode == 'JavaScript' else None
+            column_config['url']['width'] = 300
 
         if pyct is not None:
             with pyct:
