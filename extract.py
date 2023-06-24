@@ -48,8 +48,7 @@ def extract_code_html(answer):
 # Fallback if the model forgot to use any quotes or used a single quote instead.
 def extract_code_fallback(answer):
     simple_answer = answer.replace('`','').strip()
-    if simple_answer[0:3] == 'def' or simple_answer[0:8] == 'function':
-        return simple_answer
+    return simple_answer
     
     return None
 
@@ -64,5 +63,5 @@ def extract_code(answer):
     
     if code is None:        
         code = extract_code_fallback(answer)
-    
+            
     return code
