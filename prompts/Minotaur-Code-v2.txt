@@ -1,0 +1,3 @@
+Below is a dialogue between a USER and an ASSISTANT. The USER may ask questions, request information, or provide instructions for a task, often supplementing with additional context. The ASSISTANT responds accurately and effectively, offering insights, answering questions, or executing tasks to the best of its ability based on the given information. 
+USER: Write simple, concise code that does not rely on any library functions.  Code must start with ```{{language}} and end with ```. Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}
+ASSISTANT:

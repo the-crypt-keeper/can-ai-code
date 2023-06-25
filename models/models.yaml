@@ -11,6 +11,7 @@
   size: 52B
   url: https://cohere.ai/
 - id: TheBloke-minotaur-13B-GPTQ
+  name: Minotaur-LlaMa
   url: https://huggingface.co/TheBloke/minotaur-13B-GPTQ
   size: 13B
 - id: TheBloke-gpt4-alpaca-lora
@@ -172,3 +173,8 @@
   size: 13B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML
+- id: TheBloke-minotaur-15B-GPTQ
+  name: Minotaur-StarCoder
+  size: 15B
+  quant: GPTQ
+  url: https://huggingface.co/TheBloke/minotaur-15B-GPTQ

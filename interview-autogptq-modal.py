@@ -16,20 +16,6 @@ def save_meta(name, base, safetensors = True, bits = 4, group = 128, actorder = 
             "model_eos": eos,
         }, f)
 
-def download_wizardlm30b_nogroup_model_v2():   
-    MODEL_NAME = "TheBloke/WizardLM-30B-Uncensored-GPTQ"
-    MODEL_BASE = "WizardLM-30B-Uncensored-GPTQ-4bit.act-order"
-
-    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
-    save_meta(MODEL_NAME, MODEL_BASE)
-
-def download_wizardlm_1p0_30b_nogroup_model_v2():   
-    MODEL_NAME = "TheBloke/WizardLM-30B-GPTQ"
-    MODEL_BASE = "wizardlm-30b-GPTQ-4bit--1g.act.order"
-
-    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
-    save_meta(MODEL_NAME, MODEL_BASE)
-
 def download_falcon7b_v2():   
     MODEL_NAME = "TheBloke/falcon-7b-instruct-GPTQ"
     MODEL_BASE = "gptq_model-4bit-64g"
@@ -37,6 +23,7 @@ def download_falcon7b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.py",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, eos=['<|endoftext|>'])
 
+# NOTE: for llama-based models exllama is much faster then autogptq.
 def download_vicuna_1p1_13b_v2():   
     MODEL_NAME = "TheBloke/vicuna-13B-1.1-GPTQ-4bit-128g"
     MODEL_BASE = "vicuna-13B-1.1-GPTQ-4bit-128g.compat.no-act-order"
@@ -44,19 +31,12 @@ def download_vicuna_1p1_13b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, safetensors=False)
 
-def download_wizardlm_1p0_13b_v2():   
-    MODEL_NAME = "TheBloke/wizardLM-13B-1.0-GPTQ"
-    MODEL_BASE = "WizardLM-13B-1.0-GPTQ-4bit-128g.no-act-order"
+def download_minotaur_15b_v2():   
+    MODEL_NAME = "TheBloke/minotaur-15B-GPTQ"
+    MODEL_BASE = "gptq_model-4bit-128g"
 
-    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
-
-def download_llama_30b_v2():   
-    MODEL_NAME = "tsumeone/llama-30b-supercot-4bit-cuda"
-    MODEL_BASE = "4bit"
-
-    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
-    save_meta(MODEL_NAME, MODEL_BASE, bits=4, group=-1, actorder=True)
 
 stub = Stub(name='autogptq-v2')
 stub.gptq_image = (
@@ -75,7 +55,7 @@ stub.gptq_image = (
     #.run_function(download_wizardlm30b_nogroup_model_v2)
     #.run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
     #.run_function(download_falcon7b_v2)
-    .run_function(download_wizardlm_1p0_13b_v2)    
+    .run_function(download_minotaur_15b_v2)    
     #.run_function(download_llama_30b_v2)
 )
 
