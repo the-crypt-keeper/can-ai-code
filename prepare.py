@@ -23,7 +23,7 @@ def save_interview(input, templateout, params, model, results):
     [stage, interview_name, languages, template, *stuff] = Path(input).stem.split('_')
     templateout_name = Path(templateout).stem
     params_name = Path(params).stem
-    model_name = model.replace('/','-')
+    model_name = model.replace('/','-').replace('_','-')
     ts = str(int(time.time()))
 
     output_filename = str(Path(input).parent)+'/'+'_'.join(['interview', interview_name, languages, template, templateout_name, params_name, model_name, ts])+'.ndjson'
