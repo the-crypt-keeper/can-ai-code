@@ -108,10 +108,10 @@
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/Nous-Hermes-13B-GGML
 - id: TheBloke-vicuna-13b-v1.3-GPTQ
-  name: Vicuna-1.3
+  name: Vicuna-1.3-preview
   size: 13B
   quant: GPTQ-4b
-  url: https://huggingface.co/TheBloke/vicuna-13b-v1.3-GPTQ
+  url: https://huggingface.co/TheBloke/vicuna-13b-v1.3-preview-GPTQ
 - id: TheBloke-airoboros-13B-gpt4-1.4-GPTQ
   name: Airoboros-1.4
   size: 13B
@@ -178,3 +178,13 @@
   size: 15B
   quant: GPTQ
   url: https://huggingface.co/TheBloke/minotaur-15B-GPTQ
+- id: vicuna-7b-v1.3.ggmlv3.q5-0
+  name: Vicuna-1.3
+  size: 7B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/vicuna-7B-v1.3-GGML
+- id: vicuna-13b-v1.3.ggmlv3.q5-0
+  name: Vicuna-1.3-preview
+  size: 13B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/vicuna-13b-v1.3-preview-GGML  
