@@ -5,12 +5,6 @@ import json
 from time import sleep
 from prepare import save_interview
 
-def rekey(x,old,new):
-    if old in x:
-        x[new] = x[old]
-        del x[old]
-    return x
-
 def init_model(model, params):
     # LangChain did not bother to standardize the names of any of the parameters,
     # or even how to interact with them.  This is a hack to make things consistent.
@@ -55,37 +49,38 @@ def init_model(model, params):
     
     raise Exception('Unsupported model/provider')
 
-parser = argparse.ArgumentParser(description='Interview executor for LangChain')
-parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
-parser.add_argument('--model', type=str, default='openai/chatgpt', help='model to use')
-parser.add_argument('--params', type=str, required=True, help='parameter file to use')
-parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
-args = parser.parse_args()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Interview executor for LangChain')
+    parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
+    parser.add_argument('--model', type=str, default='openai/chatgpt', help='model to use')
+    parser.add_argument('--params', type=str, required=True, help='parameter file to use')
+    parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
+    args = parser.parse_args()
 
-# Load params and init model
-params, model = init_model(args.model, json.load(open(args.params)))
+    # Load params and init model
+    params, model = init_model(args.model, json.load(open(args.params)))
 
-# Load interview
-interview = [json.loads(line) for line in open(args.input)]
-results = []
+    # Load interview
+    interview = [json.loads(line) for line in open(args.input)]
+    results = []
 
-for challenge in interview:
-    chain = LLMChain(llm=model, prompt=PromptTemplate(template='{input}', input_variables=['input']))
-    answer = chain.run(input=challenge['prompt'])
+    for challenge in interview:
+        chain = LLMChain(llm=model, prompt=PromptTemplate(template='{input}', input_variables=['input']))
+        answer = chain.run(input=challenge['prompt'])
 
-    print()
-    print(answer)
-    print()
+        print()
+        print(answer)
+        print()
 
-    result = challenge.copy()
-    result['answer'] = answer
-    result['params'] = params
-    result['model'] = args.model
-    result['runtime'] = 'langchain'
+        result = challenge.copy()
+        result['answer'] = answer
+        result['params'] = params
+        result['model'] = args.model
+        result['runtime'] = 'langchain'
 
-    results.append(result)
+        results.append(result)
 
-    if args.delay:
-        sleep(args.delay)
+        if args.delay:
+            sleep(args.delay)
 
-save_interview(args.input, 'none', args.params, args.model, results)
+    save_interview(args.input, 'none', args.params, args.model, results)
