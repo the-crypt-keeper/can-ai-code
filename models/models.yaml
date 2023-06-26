@@ -188,3 +188,8 @@
   size: 13B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/vicuna-13b-v1.3-preview-GGML  
+- id: bigcode-gpt-bigcode-santacoder
+  name: SantaCoder
+  size: 1.1B
+  quant: fp32
+  url: https://huggingface.co/bigcode/gpt_bigcode-santacoder

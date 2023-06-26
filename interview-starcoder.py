@@ -5,18 +5,19 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from jinja2 import Template
 import argparse
 import json
-from parser import save_interview
+from prepare import save_interview
 
 parser = argparse.ArgumentParser(description='Interview executor for StarCoder family')
 parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
 parser.add_argument('--model', type=str, default='bigcode/tiny_starcoder_py', help='model to use')
+parser.add_argument('--device', type=str, default='cuda', help='device to use')
 parser.add_argument('--templateout', type=str, required=True, help='output template file')
 parser.add_argument('--params', type=str, required=True, help='parameter file to use')
 args = parser.parse_args()
 
 # Load model
 checkpoint = args.model
-device = "cuda" # for GPU usage or "cpu" for CPU usage
+device = args.device
 
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 model = AutoModelForCausalLM.from_pretrained(checkpoint).to(device)
