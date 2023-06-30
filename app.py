@@ -81,6 +81,9 @@ def main():
                         padding-left: 3rem;
                         padding-right: 3.5rem;
                     }
+                .row-widget {
+                    padding-top: 0rem;
+                }
             </style>
             """, unsafe_allow_html=True)
     
@@ -95,6 +98,18 @@ def main():
     if selected_tab == 'Summary':
         st.title('CanAiCode Leaderboard 🏆')
         st.markdown('A visual tool to explore the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code)')
+
+        tag_list = sorted(summary['tags'].explode().dropna().unique())
+        tag_cols = st.columns(len(tag_list))
+        tag_checks = []
+        for i, tag in enumerate(tag_list):
+            with tag_cols[i]:
+                tag_checks.append(st.checkbox(tag))
+
+        tags_selected = [tag_list[i] for i, tag in enumerate(tag_list) if tag_checks[i]]
+        if len(tags_selected) == 0:
+            tags_selected = tag_list
+        filtered = summary[summary['tags'].apply(lambda x: x != x or any(elem in x for elem in tags_selected))]
         
         column_config={
             "Score": st.column_config.ProgressColumn(
@@ -120,7 +135,7 @@ def main():
         column_order=("name", "size", "url", "Params", "Template", "Score")
         column_order_detail=("name", "size", "quant", "url", "Params", "Template", "Runtime", "Passed", "Score")
 
-        mode = st.radio(label='View',options=['Side by Side','Python','JavaScript'], horizontal=True, label_visibility='hidden')
+        mode = st.radio(label='View', options=['Side by Side','Python','JavaScript'], horizontal=True, label_visibility='collapsed')
         if mode == 'Side by Side':
             pyct, jsct = st.columns(2)
         else:
@@ -131,12 +146,12 @@ def main():
         if pyct is not None:
             with pyct:
                 st.subheader('Python')
-                st.dataframe(summary[summary['Languages'] == 'python'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
+                st.dataframe(filtered[filtered['Languages'] == 'python'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
 
         if jsct is not None:
             with jsct:
                 st.subheader('JavaScript')
-                st.dataframe(summary[summary['Languages'] == 'javascript'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
+                st.dataframe(filtered[filtered['Languages'] == 'javascript'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
 
     elif selected_tab == 'Compare':
         st.title('🚧 CanAiCode Compare')

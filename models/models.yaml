@@ -2,194 +2,247 @@
   name: OpenAI gpt-3.5-turbo
   size: 170B
   url: https://openai.com/
+  tags: ["commercial"]
 - id: ai21-j2-jumbo-instruct
   name: AI21 J2
   size: 178B
   url: https://www.ai21.com/
+  tags: ["commercial"]  
 - id: cohere-command-nightly
   name: Cohere Command
   size: 52B
   url: https://cohere.ai/
+  tags: ["commercial"]
 - id: TheBloke-minotaur-13B-GPTQ
   name: Minotaur-LlaMa
+  tags: ["llama", "minotaur"]
   url: https://huggingface.co/TheBloke/minotaur-13B-GPTQ
   size: 13B
 - id: TheBloke-gpt4-alpaca-lora
   size: 65B
-  name: Alpaca LoRA MLP
+  name: Alpaca MLP
+  tags: ["llama"]
   url: https://huggingface.co/TheBloke/gpt4-alpaca-lora_mlp-65B-GPTQ
 - id: 375cead61e4db124-gradio-app-wizardcoder-16b
   name: WizardCoder
   size: 16B
+  tags: ["starcoder"]
   url: https://huggingface.co/WizardLM/WizardCoder-15B-V1.0
-- id: TheBloke-alpaca-lora-65B-GPTQ-
+- id: TheBloke-alpaca-lora-65B-GPTQ-4bit
   name: Alpaca
+  tags: ["llama"]
   size: 65B
   quant: GPTQ-4b
   url: https://huggingface.co/TheBloke/alpaca-lora-65B-GPTQ-4bit
 - id: TheBloke-guanaco-65B-GPTQ
   name: Guanaco
+  tags: ["llama"]  
   size: 65B
   quant: GPTQ-4b
   url: https://huggingface.co/TheBloke/guanaco-65B-GPTQ
 - id: airoboros-13b-gpt4.ggmlv3.q5
   name: Airoboros
+  tags: ["airoboros"]  
   size: 13B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/airoboros-13b-gpt4-GGML
 - id: TheBloke-airoboros-33B-gpt4-1.2-GPTQ
   url: https://huggingface.co/TheBloke/airoboros-33B-gpt4-1.2-GPTQ
+  tags: ["airoboros"]    
   name: Airoboros-1.2
   size: 33B
   quant: GPTQ-4b  
 - id: TheBloke-airoboros-13B-gpt4-1.2-GPTQ
   url: https://huggingface.co/TheBloke/airoboros-13B-gpt4-1.2-GPTQ
   name: Airoboros-1.2
+  tags: ["airoboros"]    
   size: 13B
   quant: GPTQ-4b  
 - id: TheBloke-robin-13B-v2-GPTQ
   url: https://huggingface.co/TheBloke/robin-13B-v2-GPTQ
   name: Robin-2
+  tags: ["llama"]
   size: 13B
   quant: GPTQ-4b
 - id: TheBloke-WizardLM-30B-GPTQ
   url: https://huggingface.co/TheBloke/WizardLM-30B-GPTQ
   name: WizardLM-1.0
+  tags: ["wizard"]
   size: 30B
   quant: GPTQ-4b
 - id: TheBloke-WizardLM-30B-Uncensored-GPTQ
   url: https://huggingface.co/TheBloke/WizardLM-30B-Uncensored-GPTQ
   name: WizardLM-Uncensored
+  tags: ["wizard", "uncensored"]
   size: 30B
   quant: GPTQ-4b
 - id: WizardLM-7B-uncensored.ggmlv3.q5
   url: https://huggingface.co/TheBloke/WizardLM-7B-uncensored-GGML
+  tags: ["wizard", "uncensored"]
   size: 7B
   quant: GGML-q5_0
   name: WizardLM-Uncensored
 - id: WizardLM-13B-1.0.ggmlv3.q5
   url: https://huggingface.co/TheBloke/wizardLM-13B-1.0-GGML
+  tags: ["wizard"]
   name: WizardLM-1.0
   size: 13B
   quant: GGML-q5_0
 - id: ggml-vicuna-13B-1.1-q5
   url: https://huggingface.co/CRD716/ggml-vicuna-1.1-quantized
   name: Vicuna-1.1
+  tags: ["vicuna"]
   size: 13B
   quant: GGML-q5_0
 - id: HuggingFaceH4-starchat-playground-hf-space-starchat-beta
   name: StarChat Beta
+  tags: ["starcoder"]
   size: 16B
   quant: fp32
   url: https://huggingface.co/HuggingFaceH4/starchat-beta
 - id: HuggingFaceH4-starchat-playground-hf-space-starchat-alpha
   name: StarChat Alpha
+  tags: ["starcoder"]
   size: 16B
   quant: fp32
   url: https://huggingface.co/HuggingFaceH4/starchat-alpha
 - id: tsumeone-llama-30b-supercot-4bit-cuda
   name: SuperCOT Llama
+  tags: ["llama"]
   size: 30B
   quant: GPTQ-4b
   url: https://huggingface.co/tsumeone/llama-30b-supercot-4bit-cuda
 - id: bigcode-starcoderplus
   name: StarCoderPlus
+  tags: ["starcoder"]
   size: 16B
   quant: fp32
   url: https://huggingface.co/bigcode/starcoderplus
 - id: bigcode-starcoder
   name: StarCoder
+  tags: ["starcoder"]
   size: 16B
   quant: fp32
   url: https://huggingface.co/bigcode/starcoder
 - id: nous-hermes-13b.ggmlv3.q5
+  tags: ["llama"]
   name: Nous Hermes
   size: 13B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/Nous-Hermes-13B-GGML
 - id: TheBloke-vicuna-13b-v1.3-GPTQ
   name: Vicuna-1.3-preview
+  tags: ["vicuna"]
   size: 13B
   quant: GPTQ-4b
   url: https://huggingface.co/TheBloke/vicuna-13b-v1.3-preview-GPTQ
 - id: TheBloke-airoboros-13B-gpt4-1.4-GPTQ
   name: Airoboros-1.4
+  tags: ["airoboros"]
   size: 13B
   quant: GPTQ-4b
   url: https://huggingface.co/TheBloke/airoboros-13B-gpt4-1.4-GPTQ
+- id: TheBloke-airoboros-65B-gpt4-1.4-GPTQ
+  name: Airoboros-1.4
+  tags: ["airoboros"]  
+  size: 65B
+  quant: GPTQ-4b
+  url: https://huggingface.co/TheBloke/airoboros-65B-gpt4-1.4-GPTQ
 - id: Manticore-13B-Chat-Pyg-Guanaco-GGML-q4
-  size: 13b
+  tags: ["llama"]
+  size: 13B
   url: https://huggingface.co/mindrage/Manticore-13B-Chat-Pyg-Guanaco-GGML/tree/main
   quant: GGML-q4_0
 - id: ggml-vicuna-7b-1.1-q5
   size: 7B
   name: Vicuna-1.1
+  tags: ["vicuna"]
   url: https://huggingface.co/CRD716/ggml-vicuna-1.1-quantized
 - id: Manticore-13B.ggmlv3.q5
+  tags: ["llama"]
   url: https://huggingface.co/TheBloke/Manticore-13B-GGML
   size: 13B
-  name: Manticore
+  name: Manticore  
 - id: bigcode-tiny
+  tags: ["starcoder"]
   name: TinyStarCoder-PY
   size: 164M
   url: https://huggingface.co/bigcode/tiny_starcoder_py
 - id: koala-13B.ggmlv3.q5
   name: Koala
   size: 13B
+  tags: ["llama"]  
   url: https://huggingface.co/TheBloke/koala-13B-GGML
   quant: GGML-q5_0
 - id: guanaco-7B.ggmlv3.q5
   name: Guanaco
+  tags: ["llama"]    
   size: 7B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/guanaco-7B-GGML
 - id: guanaco-13B.ggmlv3.q5
   name: Guanaco
+  tags: ["llama"]    
   size: 13B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/guanaco-13B-GGML
 - id: open-llama-7b-open-instruct-hf-16bit
   name: OpenLLaMa Instruct
+  tags: ["openllama"]    
   size: 7B
   url: https://huggingface.co/VMware/open-llama-7b-open-instruct
   quant: fp16
 - id: Neko-Institute-of-Science-LLaMA-65B-4bit-128g
+  tags: ["llama"]  
   name: LLaMa
   size: 65B
   quant: GPTQ-4b
   url: https://huggingface.co/Neko-Institute-of-Science/LLaMA-65B-4bit-128g
 - id: llama-deus-7b-v3.ggmlv3.q5
   name: LLaMa Deus
+  tags: ["llama"]    
   size: 7B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/llama-deus-7b-v3-GGML
 - id: TheBloke-VicUnlocked-30B-LoRA-GPTQ
   name: VicUnlocked
+  tags: ["vicuna"]
   size: 30B
   quant: GPTQ-4b
   url: https://huggingface.co/TheBloke/VicUnlocked-30B-LoRA-GPTQ
 - id: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5
   name: WizardVicuna-Uncensored
+  tags: ["wizard","uncensored"]
   size: 13B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML
 - id: TheBloke-minotaur-15B-GPTQ
   name: Minotaur-StarCoder
-  size: 15B
+  tags: ["starcoder"]
+  size: 16B
   quant: GPTQ
   url: https://huggingface.co/TheBloke/minotaur-15B-GPTQ
 - id: vicuna-7b-v1.3.ggmlv3.q5-0
   name: Vicuna-1.3
+  tags: ["vicuna"]  
   size: 7B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/vicuna-7B-v1.3-GGML
 - id: vicuna-13b-v1.3.ggmlv3.q5-0
   name: Vicuna-1.3-preview
+  tags: ["vicuna"]  
   size: 13B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/vicuna-13b-v1.3-preview-GGML  
 - id: bigcode-gpt-bigcode-santacoder
   name: SantaCoder
+  tags: ["starcoder"]  
   size: 1.1B
   quant: fp32
   url: https://huggingface.co/bigcode/gpt_bigcode-santacoder
+- id: TheBloke-UltraLM-13B-GPTQ
+  name: UltraLM
+  tags: ["llama"]  
+  size: 13B
+  quant: GPTQ-4b
+  url: https://huggingface.co/TheBloke/UltraLM-13B-GPTQ 
