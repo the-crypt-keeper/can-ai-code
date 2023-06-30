@@ -72,9 +72,9 @@ def download_vicuna_1p3_13b_safetensors_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
 
-def download_minotaur_13b_v2():   
-    MODEL_NAME = "TheBloke/minotaur-13B-GPTQ"
-    MODEL_BASE = "minotaur-13B-GPTQ-4bit-128g.no-act.order"
+def download_minotaur_15b_v2():   
+    MODEL_NAME = "TheBloke/minotaur-15B-GPTQ"
+    MODEL_BASE = "gptq_model-4bit-128g"
 
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
@@ -107,9 +107,23 @@ def download_airoboros_1p4_13b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
 
+def download_airoboros_1p4_65b_v2():   
+    MODEL_NAME = "TheBloke/airoboros-65B-gpt4-1.4-GPTQ"
+    MODEL_BASE = "airoboros-65b-gpt4-1.4-GPTQ-4bit--1g.act.order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=True, group=-1)
+    
 def download_robin_13b_v2():   
     MODEL_NAME = "TheBloke/robin-13B-v2-GPTQ"
     MODEL_BASE = "robin-13b-GPTQ-4bit-128g.no-act.order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
+
+def download_ultralm_13b_v2():   
+    MODEL_NAME = "TheBloke/UltraLM-13B-GPTQ"
+    MODEL_BASE = "ultralm-13b-GPTQ-4bit-128g.no-act.order"
 
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
@@ -130,11 +144,11 @@ stub.gptq_image = (
         gpu="any",
     )
     #### SELECT MODEL HERE ####
-    .run_function(download_vicuna_1p3_13b_safetensors_v2)
+    .run_function(download_airoboros_1p4_65b_v2)
 )
 
 ### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A10G(count=2)
 gpu_split = '17,24' if gpu_request.count == 2 else None
 
 ## Entrypoint import trick for when inside the remote container
@@ -260,16 +274,19 @@ def main(input: str, params: str, iterations: int = 1):
     from prepare import save_interview
 
     model = ModalExLlama()
-
-    param_list = params.split(',')
-
-    interview = [json.loads(line) for line in open(input)]
-
     model_info = None
 
-    for param_file in param_list:
+    tasks = []
+    for param_file in params.split(','):
+        for input_file in input.split(','):
+            tasks.append((param_file, input_file))
+
+    for param_file, input_file in tasks:
+      interview = [json.loads(line) for line in open(input_file)]
       params_json = json.load(open(param_file,'r'))
       params_model = model.params(**params_json)
+
+      print('Executing with parameter file',param_file,'and input file',input_file)
 
       for iter in range(iterations):
         results = []
@@ -297,4 +314,4 @@ def main(input: str, params: str, iterations: int = 1):
             result['runtime'] = 'exllama'
             results.append(result)
 
-        save_interview(input, 'none', param_file, model_info['model_name'], results)
+        save_interview(input_file, 'none', param_file, model_info['model_name'], results)

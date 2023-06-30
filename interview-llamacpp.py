@@ -18,73 +18,80 @@ parser.add_argument('--args', type=str, default='--ctx_size 2048 --batch_size 10
 parser.add_argument('--ssh', type=str, help='(optional) ssh hostname for remote execution')
 args = parser.parse_args()
 
-# Load params and init model
-params = json.load(open(args.params))
+def build_llama_command(args, params):
+    param_map = {
+        'n_predict': 'max_new_tokens',
+        'temp': 'temperature',
+        'top_k': 'top_k',
+        'top_p': 'top_p',
+        'repeat_last_n': 'repeat_last_n',
+        'repeat_penalty': 'repetition_penalty',
+        'mirostat': 'mirostat',
+        'mirostat-lr': 'mirostat-lr',
+        'mirostat-ent': 'mirostat-ent'
+    }
+    llama_command = f"{args.main} {args.args} --threads {args.threads} --model {args.model}"
 
-param_map = {
-    'n_predict': 'max_new_tokens',
-    'temp': 'temperature',
-    'top_k': 'top_k',
-    'top_p': 'top_p',
-    'repeat_last_n': 'repeat_last_n',
-    'repeat_penalty': 'repetition_penalty',
-    'mirostat': 'mirostat',
-    'mirostat-lr': 'mirostat-lr',
-    'mirostat-ent': 'mirostat-ent'
-}
+    for k,v in param_map.items():
+        if v in params:
+            llama_command += f' --{k} {params[v]}'
 
-llama_command = f"{args.main} {args.args} --threads {args.threads} --model {args.model}"
-
-for k,v in param_map.items():
-    if v in params:
-        llama_command += f' --{k} {params[v]}'
+    return llama_command
 
 model_name = Path(args.model).stem
 
-# Load interview
-interview = [json.loads(line) for line in open(args.input)]
-results = []
+tasks = []
+for param_file in args.params.split(','):
+    for input_file in args.input.split(','):
+        tasks.append((param_file, input_file))
 
-for challenge in interview:
-    answer = None
+for param_file, input_file in tasks:
+    print('Executing',args.model,'with parameter file',param_file,'and input file',input_file)
+    
+    params_json = json.load(open(param_file))
+    llama_command = build_llama_command(args, params_json)
+    interview = [json.loads(line) for line in open(input_file)]
+    results = []
+    for challenge in interview:
+        answer = None
 
-    prompt_file = tempfile.NamedTemporaryFile(mode='w', delete=False)
-    prompt_file.write(challenge['prompt'])
-    prompt_file.close()
+        prompt_file = tempfile.NamedTemporaryFile(mode='w', delete=False)
+        prompt_file.write(challenge['prompt'])
+        prompt_file.close()
 
-    cmdline = llama_command + f' --file {prompt_file.name}'
+        cmdline = llama_command + f' --file {prompt_file.name}'
 
-    if args.ssh:
-        scp_command = f"scp {prompt_file.name} {args.ssh}:{prompt_file.name}"
-        print('Copying to remote machine:', scp_command)
+        if args.ssh:
+            scp_command = f"scp {prompt_file.name} {args.ssh}:{prompt_file.name}"
+            print('Copying to remote machine:', scp_command)
 
-        output, rv = run_shell_command(scp_command)
+            output, rv = run_shell_command(scp_command)
+            if rv != 0:
+                print('Failed to copy to remote machine:', output)
+                exit(1)
+
+            cmdline = f"ssh {args.ssh} '{cmdline}'"
+
+        print('Executing llama.cpp: '+cmdline)
+
+        answer, rv = run_shell_command(cmdline, stdout_only=True)
         if rv != 0:
-            print('Failed to copy to remote machine:', output)
+            print('Failed to execute:', output)
             exit(1)
 
-        cmdline = f"ssh {args.ssh} '{cmdline}'"
+        # remove prompt from answer
+        answer = answer[len(challenge['prompt']):]
 
-    print('Executing llama.cpp: '+cmdline)
+        print()
+        print(answer)
+        print()
 
-    answer, rv = run_shell_command(cmdline, stdout_only=True)
-    if rv != 0:
-        print('Failed to execute:', output)
-        exit(1)
+        result = challenge.copy()
+        result['answer'] = answer
+        result['params'] = { 'cmdline': cmdline }
+        result['model'] = model_name
+        result['runtime'] = 'llamacpp'
 
-    # remove prompt from answer
-    answer = answer[len(challenge['prompt']):]
+        results.append(result)
 
-    print()
-    print(answer)
-    print()
-
-    result = challenge.copy()
-    result['answer'] = answer
-    result['params'] = { 'cmdline': cmdline }
-    result['model'] = model_name
-    result['runtime'] = 'llamacpp'
-
-    results.append(result)
-
-save_interview(args.input, 'none', args.params, model_name, results)
+    save_interview(input_file, 'none', param_file, model_name, results)
