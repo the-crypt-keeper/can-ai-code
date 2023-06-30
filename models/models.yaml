@@ -18,10 +18,12 @@
   tags: ["llama", "minotaur"]
   url: https://huggingface.co/TheBloke/minotaur-13B-GPTQ
   size: 13B
+  quant: GPTQ-4bit
 - id: TheBloke-gpt4-alpaca-lora
   size: 65B
   name: Alpaca MLP
   tags: ["llama"]
+  quant: GPTQ-4bit
   url: https://huggingface.co/TheBloke/gpt4-alpaca-lora_mlp-65B-GPTQ
 - id: 375cead61e4db124-gradio-app-wizardcoder-16b
   name: WizardCoder
