@@ -79,6 +79,12 @@ To add a new model, implement a new `download...` function.  Quantization parame
 
 See GPTQ notes above, the executor is very similar with one notable difference: it supports beam search.
 
+#### vLLM
+
+`interview-vllm-modal.py` - Run vLLM on Modal.
+
+See GPTQ notes above for structure but note that this executor runs full precision FP16 models so will require more/larger GPUs then the GPTQ-based ones.
+
 #### Llama.cpp (GGML)
 
 `Interview-llamacpp.py` provides an executor to wrap `main` on local (or remote via ssh) CPU/GPU
