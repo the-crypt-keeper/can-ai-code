@@ -72,6 +72,13 @@ def download_vicuna_1p3_13b_safetensors_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
 
+def download_vicuna_1p3_33b_safetensors_v2():   
+    MODEL_NAME = "TheBloke/vicuna-33B-GPTQ"
+    MODEL_BASE = "vicuna-33b-GPTQ-4bit--1g.act.order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=True, group=-1)
+
 def download_minotaur_15b_v2():   
     MODEL_NAME = "TheBloke/minotaur-15B-GPTQ"
     MODEL_BASE = "gptq_model-4bit-128g"
@@ -144,11 +151,11 @@ stub.gptq_image = (
         gpu="any",
     )
     #### SELECT MODEL HERE ####
-    .run_function(download_airoboros_1p4_65b_v2)
+    .run_function(download_vicuna_1p3_33b_safetensors_v2)
 )
 
 ### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=1)
 gpu_split = '17,24' if gpu_request.count == 2 else None
 
 ## Entrypoint import trick for when inside the remote container
