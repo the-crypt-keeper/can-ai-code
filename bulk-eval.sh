@@ -1,7 +1,13 @@
 #!/bin/bash
 
+if [ "$1" == "" ]; then
+    GLOB="results/interview_junior*.ndjson"
+else
+    GLOB="$1/interview_junior*.ndjson"
+fi
+
 # Search for files matching "results/interview_junior-dev*.ndjson"
-for file in results/interview_junior*.ndjson; do
+for file in $GLOB; do
     echo $file
 
     # Extract the corresponding eval file name
