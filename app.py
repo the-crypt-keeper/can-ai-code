@@ -14,7 +14,15 @@ def read_ndjson(file):
     return data
 
 def load_data():
-    files = glob.glob('results/eval*.ndjson' if len(sys.argv) == 1 else sys.argv[1])
+    if len(sys.argv) > 1:
+        paths = [sys.argv[1]]
+    else:
+        paths = ['results/eval*.ndjson','results/orca-mini-v2/eval*.ndjson']
+    files = []
+    for path in paths:
+        files += glob.glob(path)
+
+    print('Loading', len(files), 'files')
     data = {}
     for file in files:
         tags = os.path.basename(file).replace('.ndjson', '').split('_')
@@ -100,17 +108,20 @@ def main():
         st.markdown('A visual tool to explore the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code)')
 
         tag_list = sorted(summary['tags'].explode().dropna().unique())
-        tag_cols = st.columns(len(tag_list))
-        tag_checks = []
-        for i, tag in enumerate(tag_list):
-            with tag_cols[i]:
-                tag_checks.append(st.checkbox(tag))
+        if len(tag_list) > 0:
+            tag_cols = st.columns(len(tag_list))
+            tag_checks = []
+            for i, tag in enumerate(tag_list):
+                with tag_cols[i]:
+                    tag_checks.append(st.checkbox(tag))
 
-        tags_selected = [tag_list[i] for i, tag in enumerate(tag_list) if tag_checks[i]]
-        if len(tags_selected) == 0:
-            tags_selected = tag_list
-        filtered = summary[summary['tags'].apply(lambda x: x != x or any(elem in x for elem in tags_selected))]
-        
+            tags_selected = [tag_list[i] for i, tag in enumerate(tag_list) if tag_checks[i]]
+            if len(tags_selected) == 0:
+                tags_selected = tag_list
+            filtered = summary[summary['tags'].apply(lambda x: x != x or any(elem in x for elem in tags_selected))]
+        else:
+            filtered = summary
+            
         column_config={
             "Score": st.column_config.ProgressColumn(
                 label="Score",
