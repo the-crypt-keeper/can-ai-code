@@ -1,4 +1,4 @@
-from modal import Stub, Image, method
+from modal import Stub, Image, method, gpu
 from huggingface_hub import snapshot_download
 import time
 import json
@@ -22,6 +22,12 @@ def download_vicuna_7b_1p3_model():
 def download_vicuna_13b_1p3_model():
     download_model("lmsys/vicuna-13b-v1.3")
 
+def download_airoboros_7b_1p4_model():
+    download_model("jondurbin/airoboros-7b-gpt4-1.4-fp16")
+
+def download_airoboros_7b_1p4p1_model():
+    download_model("jondurbin/airoboros-7b-gpt4-1.4.1-qlora")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -34,12 +40,13 @@ image = (
     .pip_install(
         "vllm @ git+https://github.com/vllm-project/vllm.git@2b7d3aca2e1dd25fe26424f57c051af3b823cd71"
     )
-    .run_function(download_vicuna_13b_1p3_model)
+    .run_function(download_airoboros_7b_1p4p1_model)
 )
 
 stub = Stub(image=image)
 
-@stub.cls(gpu="A100", concurrency_limit=1, container_idle_timeout=300)
+gpu_request = gpu.A10G(count=1)
+@stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300)
 class ModalVLLM:
     def __enter__(self):
         from vllm import LLM
@@ -63,16 +70,21 @@ class ModalVLLM:
         result = self.llm.generate(prompt, sampling_params)
         self.info['sampling_params'] = str(sampling_params)
 
-        return str(result[0].outputs[0].text), self.info
+        answers = []
+        for i in range(len(prompt)):
+            for r in result:
+                if r.prompt == prompt[i]:
+                    answers.append(r.outputs[0].text.replace('</s>','').replace('<|endoftext|>',''))
+                    break
+
+        return answers, self.info
 
 # For local testing, run `modal run -q interview-vllm-modal.py --input prepare_junior-dev_python.ndjson --params params/precise.json`
 @stub.local_entrypoint()
 def main(input: str, params: str, iterations: int = 1):
     from prepare import save_interview
-    from tqdm import tqdm
 
     model = ModalVLLM()
-    model_info = None
 
     tasks = []
     for param_file in params.split(','):
@@ -84,32 +96,28 @@ def main(input: str, params: str, iterations: int = 1):
       params_json = json.load(open(param_file,'r'))
 
       print('Executing with parameter file',param_file,'and input file',input_file)
-      desc = param_file.split('/')[-1].split('.')[:-1]
 
       for iter in range(iterations):
-        results = []
-        for question in interview:
-            print(iter, param_file, question['name'], question['language'])
+        print(iter, param_file, len(interview))
 
-            # generate the answer
-            t0 = time.time()
-            answer, info = model.generate.call(question['prompt'], params=params_json)
-            elapsed = time.time() - t0
+        # generate the answers
+        t0 = time.time()
+        prompts = [q['prompt'] for q in interview]
+        answers, info = model.generate.call(prompts, params=params_json)
+        elapsed = time.time() - t0
+        print(f"Generated in {elapsed:.2f}s")
 
-            # save for later
-            if model_info is None:
-                model_info = info
-                print('Local model info:', model_info)
-            
-            print()
+        # save results
+        results = [q.copy() for q in interview]
+
+        for i, answer in enumerate(answers):
+            results[i]['answer'] = answer
+            results[i]['params'] = info['sampling_params']
+            results[i]['model'] = info['model_name']
+            results[i]['runtime'] = 'vllm'
+
+            print(prompts[i])
             print(answer)
-            print(f"Generated in {elapsed:.2f}s")
+            print()
 
-            result = question.copy()
-            result['answer'] = answer
-            result['params'] = info['sampling_params']
-            result['model'] = info['model_name']
-            result['runtime'] = 'vllm'
-            results.append(result)
-
-        save_interview(input_file, 'none', param_file, model_info['model_name'], results)
+        save_interview(input_file, 'none', param_file, info['model_name'], results)
