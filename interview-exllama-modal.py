@@ -65,9 +65,9 @@ def download_vicuna_1p1_13b_safetensors_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE)
 
-def download_vicuna_1p3_13b_safetensors_v2():   
-    MODEL_NAME = "TheBloke/vicuna-13b-v1.3-GPTQ"
-    MODEL_BASE = "vicuna-13b-v1.3-GPTQ-4bit-128g.no-act.order"
+def download_vicuna_1p3p0_13b_safetensors_v2():   
+    MODEL_NAME = "TheBloke/vicuna-13b-v1.3.0-GPTQ"
+    MODEL_BASE = "vicuna-13b-v1.3.0-GPTQ-4bit-128g.no-act.order"
 
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
@@ -151,7 +151,7 @@ stub.gptq_image = (
         gpu="any",
     )
     #### SELECT MODEL HERE ####
-    .run_function(download_vicuna_1p3_33b_safetensors_v2)
+    .run_function(download_vicuna_1p3p0_13b_safetensors_v2)
 )
 
 ### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)

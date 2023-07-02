@@ -19,6 +19,9 @@ def download_model(name):
 def download_vicuna_7b_1p3_model():
     download_model("lmsys/vicuna-7b-v1.3")
 
+def download_vicuna_13b_1p3_model():
+    download_model("lmsys/vicuna-13b-v1.3")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -31,22 +34,24 @@ image = (
     .pip_install(
         "vllm @ git+https://github.com/vllm-project/vllm.git@2b7d3aca2e1dd25fe26424f57c051af3b823cd71"
     )
-    .run_function(download_vicuna_7b_1p3_model)
+    .run_function(download_vicuna_13b_1p3_model)
 )
 
 stub = Stub(image=image)
 
-@stub.cls(gpu="A10G", concurrency_limit=1, container_idle_timeout=300)
+@stub.cls(gpu="A100", concurrency_limit=1, container_idle_timeout=300)
 class ModalVLLM:
     def __enter__(self):
         from vllm import LLM
-        t0 = time.time()
-        print('Starting up...')
-        self.llm = LLM(model="lmsys/vicuna-7b-v1.3")  # Load the model
-        print(f"Model loaded in {time.time() - t0:.2f}s")        
-        
+
         self.info = json.load(open('./_info.json'))
         print('Remote model info:', self.info)
+
+        t0 = time.time()
+        print('Starting up...')
+        self.llm = LLM(model=self.info['model_name'])  # Load the model
+        print(f"Model loaded in {time.time() - t0:.2f}s")        
+        
    
     @method()
     def generate(self, prompt, params):
