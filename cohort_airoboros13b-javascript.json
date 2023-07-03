@@ -1,0 +1,324 @@
+{
+  "tests": {
+    "SanityMeaningOfLife-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+          "failing_tests": "",
+          "code": "function meaning_of_life() {\n    return 42;\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+          "failing_tests": "",
+          "code": "function meaning_of_life() {\n    return 42;\n}"
+        },
+        "2": {
+          "check_summary": "FAIL correct 1/3",
+          "passing_tests": "PASS len(f.args) == 0\n",
+          "failing_tests": "FAIL f.name != meaning_of_life got \nFAIL f.call() != 42 got {'error': \"Unexpected token ')'\", 'exc_type': 'SyntaxError'}\n",
+          "code": "Math.random(); // Returns a random integer between 0 and 1 inclusive"
+        }
+      },
+      "task": "Write a javascript function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+      "language": "javascript",
+      "summary": "Both the FP16 and GGML-q5_0 models produced correct solutions for the programming challenge. They both defined a function called `meaning_of_life` with no arguments that returns the integer 42. The automated tests passed for both models, indicating that their solutions are correct.\n\nHowever, the GPTQ-4b model failed to produce a correct solution. It did not define a function called `meaning_of_life`, and instead provided unrelated code that generates a random number using `Math.random()`. The automated tests failed for this model, indicating that its solution is incorrect.\n\nIn summary, the FP16 and GGML-q5_0 models performed well on this challenge, producing correct solutions that passed all the tests. On the other hand, the GPTQ-4b model failed to provide a correct solution and its code did not pass any of the tests."
+    },
+    "SanityList-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+          "failing_tests": "",
+          "code": "function things() {\n    return [5, 'foobar', 'Madrid'];\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+          "failing_tests": "",
+          "code": "function things() {\n  return [5, 'foobar', 'Madrid'];\n}\n\nconsole.log(things()); // Output: [ 5, 'foobar', 'Madrid' ]"
+        },
+        "2": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+          "failing_tests": "",
+          "code": "function things() {\n  return [5, 'foobar', 'Madrid'];\n}\n\nconsole.log(things()); // Output: [ 5, 'foobar', 'Madrid' ]"
+        }
+      },
+      "task": "Write a javascript function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+      "language": "javascript",
+      "summary": "All three models, FP16, GGML-q5_0, and GPTQ-4b, produced the same code for the given programming challenge. The code returned a list with three values: the number 5, the string 'foobar', and the capital city of Spain, which is 'Madrid'. \n\nAll models passed the automated tests, correctly returning the expected output [5, 'foobar', 'Madrid']. Therefore, all models performed well on this challenge and produced correct solutions."
+    },
+    "SanitySecretIdentityMap-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "FAIL correct 3/5",
+          "passing_tests": "PASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\n",
+          "failing_tests": "FAIL f.name != secretidentities got secretIdentities\nFAIL f.call().get('Spider-Man') != Peter Parker got None\n",
+          "code": "function secretIdentities() {\n    return {\n        Superman: \"Clark Kent\",\n        Batman: \"Bruce Wayne\",\n        SpiderMan: \"Peter Parker\"\n    };\n}"
+        },
+        "1": {
+          "check_summary": "FAIL correct 3/5",
+          "passing_tests": "PASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\n",
+          "failing_tests": "FAIL f.name != secretidentities got secretIdentities\nFAIL f.call().get('Spider-Man') != Peter Parker got None\n",
+          "code": "function secretIdentities() {\n    return {\n        Superman: \"Clark Kent\",\n        Batman: \"Bruce Wayne\",\n        SpiderMan: \"Peter Parker\"\n    };\n}"
+        },
+        "2": {
+          "check_summary": "FAIL correct 3/5",
+          "passing_tests": "PASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\n",
+          "failing_tests": "FAIL f.name != secretidentities got secretIdentities\nFAIL f.call().get('Spider-Man') != Peter Parker got None\n",
+          "code": "function secretIdentities() {\n  return {\n    Superman: \"Clark Kent\",\n    Batman: \"Bruce Wayne\",\n    Spider_Man: \"Peter Parker\"\n  };\n}"
+        }
+      },
+      "task": "Write a javascript function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+      "language": "javascript",
+      "summary": "All three models failed the same two tests: checking if the function name is correct and checking if the mapping for Spider-Man is correct. \n\nThe FP16 and GGML-q5_0 models produced identical code, while the GPTQ-4b model had a slight difference in the key for Spider-Man, using an underscore instead of a hyphen.\n\nOverall, none of the models were able to pass all the tests correctly. They all had issues with the function name and the mapping for Spider-Man."
+    },
+    "GCDZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 5/5",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+          "failing_tests": "",
+          "code": "function gcd(a, b) {\n    if (b === 0) {\n        return a;\n    }\n    else {\n        return gcd(b, a % b);\n    }\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 5/5",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+          "failing_tests": "",
+          "code": "function gcd(a, b) {\n  if (!b) return a;\n  else {\n    const result = gcd(b, Math.abs(a % b));\n    return Math.abs(result);\n  }\n}\n\n// Example usage:\nconsole.log(gcd(56, 98)); // Output: 14"
+        },
+        "2": {
+          "check_summary": "PASS correct 5/5",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+          "failing_tests": "",
+          "code": "function gcd(a, b) {\n  if (b === 0) {\n    throw new Error(\"B cannot be zero\");\n  }\n  \n  // Calculate the remainder after dividing a by b\n  const result = a % b;\n\n  // If the remainder is zero, return b as the GCD\n  if (result === 0) {\n    return b;\n  } else {\n    // Otherwise, recursively call gcd with a and the remainder\n    return gcd(b, result);\n  }\n}\n\n// Example usage:\nconsole.log(gcd(24, 16)); // Output: 8"
+        }
+      },
+      "task": "Write a javascript function gcd(a, b) with two inputs a and b that returns the greatest common demoninator (gcd) of a and b",
+      "language": "javascript",
+      "summary": "All three models produced correct solutions for the given programming challenge. The code generated by each model is slightly different, but they all implement the same logic to calculate the greatest common denominator (gcd) of two numbers.\n\nThe FP16 model uses a simple if-else statement to check if b is equal to 0. If it is, it returns a as the gcd. Otherwise, it recursively calls the gcd function with b and the remainder of a divided by b.\n\nThe GGML-q5_0 model also checks if b is falsy (0 or undefined) and returns a if it is. It then recursively calls the gcd function with b and the absolute value of the remainder of a divided by b.\n\nThe GPTQ-4b model adds an additional check to throw an error if b is equal to 0. It then calculates the remainder of a divided by b and checks if it is equal to 0. If it is, it returns b as the gcd. Otherwise, it recursively calls the gcd function with b and the remainder.\n\nIn terms of test results, all three models passed all 5 tests correctly. The tests include checking the number of arguments, the return value for specific inputs, and the names of the arguments.\n\nOverall, all three models performed well on this challenge and produced correct solutions. The differences in their code are minor and do not affect the functionality of the gcd function."
+    },
+    "GCDMisnamed-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "FAIL correct 4/6",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == x\n",
+          "failing_tests": "FAIL f.args[1].name != banana got y\nFAIL f.name != fofx got gcd\n",
+          "code": "function gcd(x, y) {\n    if (!y) return x;\n    return gcd(y, x % y);\n}\n\nfunction fofx(x, banana) {\n    return gcd(x, banana);\n}"
+        },
+        "1": {
+          "check_summary": "FAIL correct 4/6",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == x\n",
+          "failing_tests": "FAIL f.args[1].name != banana got y\nFAIL f.name != fofx got gcf\n",
+          "code": "function gcf(x, y) {\n    if (!y) return x;\n    else return gcf(y, x % y);\n  }\n\nconsole.log(gcf(540, 120)); // Output: 20"
+        },
+        "2": {
+          "check_summary": "FAIL correct 4/6",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == x\n",
+          "failing_tests": "FAIL f.args[1].name != banana got y\nFAIL f.name != fofx got gcf\n",
+          "code": "function gcf(x, y) {\n  if (!y) return x;\n  else return gcf(y, x % y);\n}\n\nconsole.log(gcf(540, 12)); // Output: 24"
+        }
+      },
+      "task": "Write a javascript function fofx(x, banana) with two inputs x and banana that returns the greatest common demoninator (gcd) of x and banana",
+      "language": "javascript",
+      "summary": "The three models, FP16, GGML-q5_0, and GPTQ-4b, all produced similar solutions for the given programming challenge. They all defined a function named \"gcf\" that calculates the greatest common divisor (gcd) using recursive calls. The main difference among the models is the variable names used in the function signature.\n\nIn terms of test results, all three models failed two out of six tests. The failed tests were related to the function argument names and the function name itself. Instead of using the expected names \"x\" and \"banana\", the models used \"y\" as the second argument name. Additionally, instead of using the expected function name \"fofx\", the models used \"gcd\" or \"gcf\".\n\nOverall, the cohort's performance on this challenge was not perfect, with all models failing two tests. However, they did correctly implement the logic to calculate the gcd using recursion. The main area of improvement would be ensuring that the function signature and function name match the requirements specified in the challenge."
+    },
+    "FactorialZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}\n\nconsole.log(factorial(5)); // Output: 120"
+        },
+        "1": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}\n\nconsole.log(factorial(5)); // Output: 120"
+        },
+        "2": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  if (typeof n !== 'number' || isNaN(n)) {\n    throw new Error('Input must be a non-negative integer');\n  }\n  \n  if (n === 0 || n == 1) {\n    return 1;\n  } else {\n    let result = 1;\n    \n    for (let i = 2; i <= n; ++i) {\n      result *= i;\n    }\n    \n    return result;\n  }\n}\n\n// Example usage:\nconsole.log(factorial(5)); // Output: 120"
+        }
+      },
+      "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using iteration",
+      "language": "javascript",
+      "summary": "All three models produced similar solutions for the factorial function. The code structure and logic are the same in all three solutions. They all check if the input is a non-negative integer, handle the base cases of 0 and 1, and then use iteration to calculate the factorial.\n\nThe test results for all three models are also identical. All tests passed, indicating that the solutions correctly calculate the factorial for different inputs.\n\nOverall, the cohort performance on this challenge is good. All models were able to generate correct solutions that passed all the provided tests."
+    },
+    "FactorialRecursiveZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n    if (n === 0 || n === 1) {\n        return 1;\n    } else {\n        return n * factorial(n - 1);\n    }\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}\n\nconsole.log(factorial(5)); // Output: 120"
+        },
+        "2": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}\n\nconsole.log(factorial(5)); // Output: 120"
+        }
+      },
+      "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using recursion",
+      "language": "javascript",
+      "summary": "All three models, FP16, GGML-q5_0, and GPTQ-4b, produced the same code for the factorial function. The code is correct and passes all the provided tests. \n\nThe factorial function checks if the input `n` is either 0 or 1, in which case it returns 1. Otherwise, it recursively calls itself with `n-1` and multiplies the result by `n`. This ensures that the factorial of `n` is calculated correctly.\n\nThe test results for all models are identical, with all tests passing successfully. The tests verify that the function has one argument, returns an integer, and produces the correct factorial values for inputs 1 and 5.\n\nOverall, the cohort performance on this challenge is excellent, with all models producing correct and efficient solutions."
+    },
+    "FactorialMisnamed-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 6/6",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "",
+          "code": "function glork(bork) {\n    let result = 1;\n    for (let i = 2; i <= bork; i++) {\n        result *= i;\n    }\n    return result;\n}"
+        },
+        "1": {
+          "check_summary": "FAIL correct 5/6",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "FAIL f.call(5) != 120 got 1\n",
+          "code": "function glork(bork) {\n  if (typeof bork !== 'number') {\n    throw new Error('Input must be a number');\n  }\n  \n  if (bork === 0 || 1) {\n    return 1;\n  } else {\n    return bork * glork(bork - 1);\n  }\n}\n\nconsole.log(glork(5)); // Output: 120"
+        },
+        "2": {
+          "check_summary": "FAIL correct 3/6",
+          "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': 'Math.factorial is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(5) != 120 got {'error': 'Math.factorial is not a function', 'exc_type': 'TypeError'}\n",
+          "code": "function glork(bork) {\n  return Math.factorial(bork);\n}\n\n// Example usage:\nconsole.log(glork(5)); // Output: 120"
+        }
+      },
+      "task": "Write a javascript function glork(bork) with input bork that returns the factorial of bork",
+      "language": "javascript",
+      "summary": "The FP16 model produced a correct solution that passed all 6 tests. The code uses a for loop to calculate the factorial of the input number.\n\nThe GGML-q5_0 model also produced a correct solution, but it failed one test. The code checks if the input is a number and throws an error if it's not. However, there is a mistake in the condition `if (bork === 0 || 1)`, which always evaluates to true. This causes the function to return 1 instead of calculating the factorial correctly.\n\nThe GPTQ-4b model failed three tests. The code tries to use the `Math.factorial()` function, which does not exist in JavaScript. This results in a TypeError. Additionally, the model did not correctly identify the type of the output and returned an error instead of an integer.\n\nOverall, the FP16 model performed the best on this challenge, producing a correct solution that passed all tests. The GGML-q5_0 model had a minor mistake in the code that caused it to fail one test, while the GPTQ-4b model had multiple errors and failed three tests."
+    },
+    "FibonacciZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 7/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+          "failing_tests": "",
+          "code": "function fib(n) {\n  if (n <= 1) {\n    return n;\n  } else {\n    return fib(n - 1) + fib(n - 2);\n  }\n}\n\nconsole.log(fib(5)); // Output: 8"
+        },
+        "1": {
+          "check_summary": "PASS correct 7/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+          "failing_tests": "",
+          "code": "function fib(n) {\n  if (n <= 1) return n;\n  else return fib(n - 1) + fib(n - 2);\n}\n\nconsole.log(fib(5)); // Output: 34"
+        },
+        "2": {
+          "check_summary": "FAIL correct 2/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\n",
+          "failing_tests": "FAIL f.call(0) != 0 got {'error': 'BigInteger is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(1) != 1 got {'error': 'BigInteger is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(2) != 1 got {'error': 'BigInteger is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(3) != 2 got {'error': 'BigInteger is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(5) != 5 got {'error': 'BigInteger is not defined', 'exc_type': 'ReferenceError'}\n",
+          "code": "function fib(n) {\n  if (typeof n !== 'number' || isNaN(n)) {\n    throw new Error('Input must be a valid number');\n  }\n  \n  if (n <= 1) {\n    return BigInteger.ONE;\n  }\n\n  var num = BigInteger.ZERO;\n  var denom = BigInteger.ONE;\n\n  for (var i = 2; i <= n; ++i) {\n    const tempNum = BigInteger.add(num, BigInteger.multiply(denom, i));\n    num = denom;\n    denom = tempNum;\n  }\n\n  return num;\n}\n\n// Example usage:\nconsole.log(fib(5)); // Output: \"34\""
+        }
+      },
+      "task": "Write a javascript function fib(n) with input element number n (0 based) that returns the n-th element of the fibbonaci sequence",
+      "language": "javascript",
+      "summary": "The FP16 and GGML-q5_0 models both produced correct solutions for the fibonacci sequence problem. They have identical code and passed all 7 tests, producing the expected results for each test case.\n\nOn the other hand, the GPTQ-4b model's solution failed 5 out of 7 tests. The main issue is that it uses the `BigInteger` class, which is not defined in JavaScript by default. This causes errors when running the tests, resulting in incorrect outputs.\n\nIn summary, the FP16 and GGML-q5_0 models performed well on this challenge, producing correct solutions and passing all tests. However, the GPTQ-4b model's solution was flawed due to the use of an undefined class, leading to incorrect outputs."
+    },
+    "FibonacciListZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "FAIL correct 3/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+          "failing_tests": "FAIL f.call(1) != [0] got [1]\nFAIL f.call(2) != [0, 1] got [1, 0]\nFAIL f.call(3) != [0, 1, 1] got [1, 0, 1]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [1, 0, 1, 1, 1]\n",
+          "code": "function fib(n) {\n    if (n <= 1) return [n];\n    const fibs = fib(n - 1).concat(fib(n - 2));\n    return fibs.slice(0, n);\n}\n\nconsole.log(fib(10)); // Output: [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]"
+        },
+        "1": {
+          "check_summary": "FAIL correct 3/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+          "failing_tests": "FAIL f.call(1) != [0] got [0, 1]\nFAIL f.call(2) != [0, 1] got [0, 1, 1]\nFAIL f.call(3) != [0, 1, 1] got [0, 1, 1, 2]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [0, 1, 1, 2, 3, 5]\n",
+          "code": "function fib(n) {\n  const fibSequence = [0, 1];\n\n  for (let i = 2; i < n + 1; i++) {\n    const nextFibTerm = fibSequence[i - 1] + fibSequence[i - 2];\n    fibSequence.push(nextFibTerm);\n  }\n\n  return fibSequence;\n}\n\n// Example usage:\nconsole.log(fib(5)); // Output: [0, 1, 1, 2, 3, 5]"
+        },
+        "2": {
+          "check_summary": "FAIL correct 3/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+          "failing_tests": "FAIL f.call(1) != [0] got [1]\nFAIL f.call(2) != [0, 1] got [1, None]\nFAIL f.call(3) != [0, 1, 1] got [1, None, None]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [1, None, None, None, None]\n",
+          "code": "function fib(n) {\n  if (n === 0 || n === 1) return [n];\n  const fibSeq = fib(n - 1);\n  const nextFib = fibSeq[fibSeq.length - 1] + fibSeq[fibSeq.length - 2];\n  return [...fibSeq, nextFib];\n}\n\n// Example usage:\nconsole.log(fib(5)); // Output: [1, 1, 2, 3, 5]"
+        }
+      },
+      "task": "Write a javascript function fib(n) with input length n that returns a list with the first n elements of the fibbonaci sequence",
+      "language": "javascript",
+      "summary": "The three models, FP16, GGML-q5_0, and GPTQ-4b, all attempted to solve the Fibonacci sequence problem in JavaScript. However, there are differences in their approaches and the results of the tests.\n\nStarting with the FP16 model, it uses a recursive approach to calculate the Fibonacci sequence. It checks if n is less than or equal to 1, and if so, returns [n]. Otherwise, it recursively calls the fib function with n-1 and n-2, concatenates the results, and slices the list to return only the first n elements. This solution failed 4 out of 7 tests. The failures occurred when testing for n=1, n=2, n=3, and n=5. The expected outputs were [0], [0, 1], [0, 1, 1], and [0, 1, 1, 2, 3] respectively, but the actual outputs were [1], [1, 0], [1, 0, 1], and [1, 0, 1, 1, 1].\n\nMoving on to the GGML-q5_0 model, it takes a different approach by using a loop to calculate the Fibonacci sequence. It initializes an array with the first two elements [0, 1], and then iteratively calculates the next Fibonacci term by summing up the previous two terms. The loop runs until it reaches the desired length n. This solution also failed 4 out of 7 tests. The failures occurred when testing for n=1, n=2, n=3, and n=5. The expected outputs were [0], [0, 1], [0, 1, 1], and [0, 1, 1, 2, 3] respectively, but the actual outputs were [0, 1], [0, 1, 1], [0, 1, 1, 2], and [0, 1, 1, 2, 3, 5].\n\nLastly, the GPTQ-4b model also uses a recursive approach similar to the FP16 model. It checks if n is 0 or 1, and if so, returns [n]. Otherwise, it recursively calls the fib function with n-1, retrieves the last two elements of the resulting sequence, sums them up to get the next Fibonacci term, and appends it to the sequence"
+    },
+    "FibonacciMisnamed-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "FAIL correct 4/8",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "FAIL f.call(1) != [0] got []\nFAIL f.call(2) != [0, 1] got []\nFAIL f.call(3) != [0, 1, 1] got [None]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [None, None, None]\n",
+          "code": "function glork(bork) {\n    if (bork <= 0) return [];\n    const fibs = [0, 1];\n    let result = [];\n\n    for (let i = 2; i < bork; i++) {\n        result.push(fibs[i]);\n        fibs.push(fibs[i - 1] + fibs[i - 2]);\n    }\n\n    return result.slice(0, bork);\n}"
+        },
+        "1": {
+          "check_summary": "FAIL correct 4/8",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "FAIL f.call(1) != [0] got [None]\nFAIL f.call(2) != [0, 1] got [None, None]\nFAIL f.call(3) != [0, 1, 1] got [None, None, None]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [None, None, None, None, None]\n",
+          "code": "function glork(bork) {\n  let result = [];\n  if (bork <= 0) return result;\n  \n  while (result.length < bork) {\n    result.push(result[result.length - 1] + result[result.length - 2]);\n  }\n  \n  return result.slice(0, bork);\n}\n\nconsole.log(glork(\"5\")); // Output: [0, 1, 1, 2, 3, 5]\nconsole.log(glork(\"10\")); // Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]"
+        },
+        "2": {
+          "check_summary": "FAIL correct 6/8",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "FAIL f.call(3) != [0, 1, 1] got [0, 1, None]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [0, 1, None, 1, None]\n",
+          "code": "function glork(bork) {\n  let fibSequence = [0, 1];\n  const result = [];\n  \n  for (let i = 0; i < bork; i++) {\n    result.push(fibSequence[i]);\n      fibSequence.push(fibSequence[i] + fibSequence[parseInt(i - 1)]); // Modified from here\n  }\n  \n  return result;\n}\n\nconsole.log(glork(\"5\")); // Output: [0, 1, 1, 2, 3, 5]"
+        }
+      },
+      "task": "Write a javascript function glork(bork) with input length bork that returns a list with the first bork elements of the fibbonaci sequence",
+      "language": "javascript",
+      "summary": "The three models provided different solutions to the JavaScript programming challenge of generating the first bork elements of the Fibonacci sequence. \n\nModel FP16 produced a solution that passed 4 out of 8 tests. It correctly checked if the input bork was less than or equal to 0 and returned an empty list in that case. It then used a for loop to generate the Fibonacci sequence up to the borkth element and stored it in the fibs array. However, it failed to correctly append the elements from the fibs array to the result list. As a result, the generated Fibonacci sequence was not returned correctly.\n\nModel GGML-q5_0 also failed 4 out of 8 tests. It started by initializing an empty result array and checking if bork was less than or equal to 0. It then used a while loop to generate the Fibonacci sequence until the length of the result array reached bork. However, it failed to correctly calculate the next Fibonacci number by adding the last two elements of the result array. This resulted in incorrect values being appended to the result array.\n\nModel GPTQ-4b performed better, passing 6 out of 8 tests. It initialized the fibSequence array with the first two elements of the Fibonacci sequence. It then used a for loop to generate the Fibonacci sequence up to the borkth element. However, it made a mistake in the calculation of the next Fibonacci number by using parseInt(i - 1) instead of (i - 2). This resulted in incorrect values being added to the fibSequence array and subsequently to the result array.\n\nIn summary, all three models failed to produce correct solutions for this programming challenge. Model GPTQ-4b had the highest success rate, passing 6 out of 8 tests, while models FP16 and GGML-q5_0 both passed 4 out of 8 tests. Further improvements are needed to generate the correct Fibonacci sequence."
+    },
+    "StringCountTokens-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "FAIL correct 4/7",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+          "failing_tests": "FAIL f.call('aaa','a') != 3 got 2\nFAIL f.call(\"babaab\",\"ab\") != 2 got 1\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got 2\n",
+          "code": "function substrcount(str, substr) {\n    let count = 0;\n    for (let i = 0; i < str.length - substr.length; i++) {\n        if (str.substr(i, substr.length) === substr) {\n            count++;\n        }\n    }\n    return count;\n}"
+        },
+        "1": {
+          "check_summary": "FAIL correct 4/7",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+          "failing_tests": "FAIL f.call('aaa','a') != 3 got {'error': 'Assignment to constant variable.', 'exc_type': 'TypeError'}\nFAIL f.call(\"babaab\",\"ab\") != 2 got {'error': 'Assignment to constant variable.', 'exc_type': 'TypeError'}\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got {'error': 'Assignment to constant variable.', 'exc_type': 'TypeError'}\n",
+          "code": "function substrcount(str, substr) {\n    const count = 0;\n    let index = -1;\n\n    while ((index = str.indexOf(substr, ++index)) !== -1) {\n        count++;\n    }\n\n    return count;\n}"
+        },
+        "2": {
+          "check_summary": "FAIL correct 6/7",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+          "failing_tests": "FAIL f.call('aaa','a') != 3 got 0\n",
+          "code": "function substrcount(str, substr) {\n  let count = 0;\n  if (typeof str !== 'undefined') {\n    const len = str.length;\n    if (len > 0 && typeof substr !== 'undefined') {\n      for (let i = 0; i < len - 1; ++i) {\n        if (str[i] === substr[0]) {\n          for (let j = 1; j < substr.length; ++j) {\n            if (str[i + j] === substr[j]) {\n              count++;\n              break;\n            }\n          }\n        }\n      }\n    }\n  }\n  return count;\n}\n\n// Example usage:\nconsole.log(substrcount(\"hello\", \"l\")); // Output: 3"
+        }
+      },
+      "task": "Write a javascript function substrcount(str, substr) with inputs str and substr that returns counts the number of times the sub-string substr occurs in str",
+      "language": "javascript",
+      "summary": "The FP16 model produced a solution that failed 3 out of 7 tests. It correctly implemented the function and passed the basic checks for function name and arguments. However, it failed to count the occurrences of the substring correctly in three test cases.\n\nThe GGML-q5_0 model also failed 3 out of 7 tests. It had the same correct implementation as the FP16 model, but it encountered an error related to assigning a value to a constant variable. This error prevented the function from executing correctly and caused it to fail the tests.\n\nThe GPTQ-4b model performed better, failing only 1 out of 7 tests. It had a more complex implementation compared to the other models, but it correctly counted the occurrences of the substring in most cases. However, it failed to count the occurrences correctly in one test case.\n\nOverall, none of the models produced a perfect solution for the substrcount problem. The GPTQ-4b model had the highest success rate, followed by the FP16 model and then the GGML-q5_0 model. These results indicate that further improvements are needed in order to achieve a fully accurate solution."
+    }
+  },
+  "models": [
+    {
+      "prompt": "airoboros",
+      "params": "greedy",
+      "model": "jondurbin-airoboros-13b-gpt4-1.4-fp16",
+      "id": 0
+    },
+    {
+      "prompt": "airoboros",
+      "params": "greedy",
+      "model": "airoboros-13b-gpt4-1.4.ggmlv3.q5-0",
+      "id": 1
+    },
+    {
+      "prompt": "airoboros",
+      "params": "greedy",
+      "model": "TheBloke-airoboros-13B-gpt4-1.4-GPTQ",
+      "id": 2
+    }
+  ]
+}
