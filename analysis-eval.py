@@ -4,14 +4,15 @@ import json
 import sys
 
 header_prompt = """
-You are going to evaluate the results of language models on a {{language}} programming challenge.
-The challenge given to each model is to {{task}}.
-You will be provided the code produced by each model.
-Automated tests have evaluated the performance of each model on the challenge, a list of passing and failing tests will also be provided.
-Compare and constract the solutions each model produced, highlighting any differences in test results and provide a final summary of the results.
+You are going to evaluate the results of language models on a {{language}} programming challenge: {{task}}
+Automated tests have been used to verify corectness each solution produced, a detailed description of the results of each test will be provided.
+For each model, you will be provided the code produced by the model and the result of all tests.
+Compare and constract the solutions each model produced.  Do not repeat the code back to me.  Highlight differences in test results, and provide a final summary of cohort performance on this challenge.
+
 """
 
-model_prompt = """---
+model_prompt = """
+---
 Model: {{id}}
 Test Result: {{check_summary}}
 Test Details:
@@ -22,8 +23,8 @@ Code:
 ```
 """
 
-footer_prompt = """---
-
+footer_prompt = """
+---
 Analysis:"""
 
 import importlib  
@@ -35,13 +36,20 @@ data = json.load(open(sys.argv[1]))
 out = data['tests']
 models = data['models']
 
+aliases = {
+    'jondurbin-airoboros-13b-gpt4-1.4-fp16': 'FP16',
+    'airoboros-13b-gpt4-1.4.ggmlv3.q5-0': 'GGML-q5_0',
+    'TheBloke-airoboros-13B-gpt4-1.4-GPTQ': 'GPTQ-4b'
+}
+
 for testid in out.keys():
 
     print(f"----- {testid} -----")
     prompt = Template(header_prompt).render(**out[testid])
-    for id in out[testid]['models'].keys():
-        print(models[id], "   ", out[testid]['models'][id]['check_summary'])
-        prompt += Template(model_prompt).render(**out[testid]['models'][id])
+    for idx in out[testid]['results'].keys():
+        model_info = models[int(idx)]
+        print(model_info, "   ", out[testid]['results'][idx]['check_summary'])
+        prompt += Template(model_prompt).render(**out[testid]['results'][idx], id=aliases[model_info['model']])
     prompt += Template(footer_prompt).render(**out[testid])
 
     out[testid]['summary'] = chain.run(input=prompt)
@@ -50,4 +58,4 @@ for testid in out.keys():
     print(out[testid]['summary'])
     print()
 
-print(json.dumps(out, indent=2))
+print(json.dumps(data, indent=2), file=sys.stderr)

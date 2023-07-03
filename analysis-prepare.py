@@ -18,7 +18,7 @@ for file in files:
     params = tags[5]
     model = tags[6]
     models.append({'prompt': prompt, 'params': params, 'model': model, 'id': id})
-    print(models[-1])
+    #print(models[-1])
     results = [json.loads(line) for line in open(file)]
   
     for r in results:
