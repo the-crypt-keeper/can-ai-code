@@ -69,9 +69,10 @@ def calculate_summary(data):
 
     merged_df = pd.merge(sumdf, load_models(), left_on='Model', right_on='id', how='left')
     merged_df['name'].fillna(merged_df['Model'], inplace=True)
+    merged_df['size'].fillna('', inplace=True)
     merged_df.drop('Model', axis=1, inplace=True)
 
-    return merged_df.sort_values(by='Passed', ascending=False)
+    return merged_df
 
 @st.cache_data
 def load_and_prepare_data():
@@ -106,7 +107,13 @@ def main():
     if selected_tab == 'Summary':
         st.title('CanAiCode Leaderboard 🏆')
         st.markdown('A visual tool to explore the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code)')
-
+        
+        settings_col, mode_col = st.columns((1,5))
+        with mode_col:
+            mode = st.radio(label='View', options=['Side by Side','Python','JavaScript'], horizontal=True, label_visibility='collapsed')
+        with settings_col:
+            best_of = st.checkbox(label='Show best result from each Model', value=True)
+            
         tag_list = sorted(summary['tags'].explode().dropna().unique())
         if len(tag_list) > 0:
             tag_cols = st.columns(len(tag_list))
@@ -121,6 +128,12 @@ def main():
             filtered = summary[summary['tags'].apply(lambda x: x != x or any(elem in x for elem in tags_selected))]
         else:
             filtered = summary
+
+        if best_of:
+            idx = filtered.groupby(['name','size','Languages'])['Score'].idxmax()
+            filtered = filtered.loc[idx]
+
+        filtered = filtered.sort_values(by='Passed', ascending=False)
             
         column_config={
             "Score": st.column_config.ProgressColumn(
@@ -145,8 +158,7 @@ def main():
         }
         column_order=("name", "size", "url", "Params", "Template", "Score")
         column_order_detail=("name", "size", "quant", "url", "Params", "Template", "Runtime", "Passed", "Score")
-
-        mode = st.radio(label='View', options=['Side by Side','Python','JavaScript'], horizontal=True, label_visibility='collapsed')
+        
         if mode == 'Side by Side':
             pyct, jsct = st.columns(2)
         else:
