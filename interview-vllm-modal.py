@@ -28,6 +28,12 @@ def download_airoboros_7b_1p4_model():
 def download_airoboros_7b_1p4p1_model():
     download_model("jondurbin/airoboros-7b-gpt4-1.4.1-qlora")
 
+def download_airoboros_13b_1p4_model():
+    download_model("jondurbin/airoboros-13b-gpt4-1.4-fp16")
+
+def download_airoboros_13b_1p4p1_model():
+    download_model("jondurbin/airoboros-13b-gpt4-1.4.1-qlora")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -40,12 +46,12 @@ image = (
     .pip_install(
         "vllm @ git+https://github.com/vllm-project/vllm.git@2b7d3aca2e1dd25fe26424f57c051af3b823cd71"
     )
-    .run_function(download_airoboros_7b_1p4p1_model)
+    .run_function(download_airoboros_13b_1p4_model)
 )
 
 stub = Stub(image=image)
 
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1)
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300)
 class ModalVLLM:
     def __enter__(self):
