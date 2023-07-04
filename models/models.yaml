@@ -272,3 +272,21 @@
   size: 7B
   quant: fp16
   url: https://huggingface.co/psmathur/orca_mini_v2_7b
+- id: orca-mini-v2-7b.ggmlv3.q5-0
+  name: Orca-Mini-V2
+  tags: ["llama","orca-mini"]
+  size: 7B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/orca_mini_v2_7B-GGML
+- id: orca-mini-v2-7b.ggmlv3.q8-0
+  name: Orca-Mini-V2
+  tags: ["llama","orca-mini"]
+  size: 7B
+  quant: GGML-q8_0
+  url: https://huggingface.co/TheBloke/orca_mini_v2_7B-GGML
+- id: TheBloke-orca-mini-v2-7B-GPTQ
+  name: Orca-Mini-V2
+  tags: ["llama","orca-mini"]
+  size: 7B
+  quant: GPTQ-4b
+  url: https://huggingface.co/TheBloke/orca_mini_v2_7B-GPTQ  
