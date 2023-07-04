@@ -30,6 +30,13 @@ def build_llama_command(args, params):
         'mirostat-lr': 'mirostat-lr',
         'mirostat-ent': 'mirostat-ent'
     }
+
+    if args.main.find('starcoder') > -1:
+        param_map['repeat-penalty'] = 'repetition_penalty'
+        param_map['repeat-last-n'] = 'repeat_last_n'
+        del param_map['repeat_last_n']
+        del param_map['repeat_penalty']
+
     llama_command = f"{args.main} {args.args} --threads {args.threads} --model {args.model}"
 
     for k,v in param_map.items():
@@ -80,7 +87,15 @@ for param_file, input_file in tasks:
             exit(1)
 
         # remove prompt from answer
-        answer = answer[len(challenge['prompt']):]
+        start_offset = max(answer.rfind(challenge['prompt']), 0)
+        start_offset += len(challenge['prompt'])
+        answer = answer[start_offset:]
+
+        # remote any trailer from answer
+        if answer.rfind('<|end_of_turn|>') > -1:
+            answer = answer[:answer.rfind('<|end_of_turn|>')]
+        if answer.rfind('<|endoftext|>') > -1:
+            answer = answer[:answer.rfind('<|endoftext|>')]
 
         print()
         print(answer)

@@ -1,0 +1,1 @@
+User:Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}<|end_of_turn|>Assistant:
