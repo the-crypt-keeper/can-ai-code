@@ -91,11 +91,14 @@ for param_file, input_file in tasks:
         start_offset += len(challenge['prompt'])
         answer = answer[start_offset:]
 
-        # remote any trailer from answer
-        if answer.rfind('<|end_of_turn|>') > -1:
-            answer = answer[:answer.rfind('<|end_of_turn|>')]
-        if answer.rfind('<|endoftext|>') > -1:
-            answer = answer[:answer.rfind('<|endoftext|>')]
+        # for starcoder remove the trailer
+        end_offset = answer.find('\nmain: mem per token =')
+        if end_offset > -1:
+            answer = answer[:end_offset]
+
+        # remove any eos/eot tokens
+        for eos in ['<|endoftext|>', '<|end|>', '<|end_of_turn|>']:
+            answer = answer.replace(eos, '')
 
         print()
         print(answer)
