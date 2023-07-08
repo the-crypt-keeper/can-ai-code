@@ -22,6 +22,9 @@ def download_codegen_2_1b_multi_model():
 def download_codegen_2_3p7b_multi_model():
     download_model("Salesforce/codegen2-3_7B")
 
+def download_codegen_2_7b_multi_model():
+    download_model("Salesforce/codegen2-7B")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -34,7 +37,7 @@ image = (
         "bitsandbytes==0.39.1",
         "accelerate==0.19.0"
     )
-    .run_function(download_codegen_2p5_7b_mono_model)
+    .run_function(download_codegen_2_7b_multi_model)
 )
 
 stub = Stub(image=image)
