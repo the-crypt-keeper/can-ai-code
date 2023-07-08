@@ -13,6 +13,12 @@ def download_model(name):
 def download_codegen_2p5_7b_mono_model():
     download_model("Salesforce/codegen25-7b-mono")
 
+def download_codegen_2p5_7b_multi_model():
+    download_model("Salesforce/codegen25-7b-multi")
+
+def download_codegen_2_1b_multi_model():
+    download_model("Salesforce/codegen2-1B")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -20,13 +26,12 @@ def download_codegen_2p5_7b_mono_model():
 image = (
     Image.from_dockerhub("nvcr.io/nvidia/pytorch:22.12-py3")
     .pip_install(
-        "torch==2.0.1", index_url="https://download.pytorch.org/whl/cu118"
-    )
-    .pip_install(
         "transformers==4.30.2",
-        "tiktoken==0.4.0"
+        "tiktoken==0.4.0",
+        "bitsandbytes==0.39.1",
+        "accelerate==0.19.0"
     )
-    .run_function(download_codegen_2p5_7b_mono_model)
+    .run_function(download_codegen_2p5_7b_multi_model)
 )
 
 stub = Stub(image=image)
@@ -43,12 +48,14 @@ class ModalTransformers:
         t0 = time.time()
         print('Starting up...')
         self.tokenizer = AutoTokenizer.from_pretrained(self.info['model_name'], trust_remote_code=True)
-        self.model = AutoModelForCausalLM.from_pretrained(self.info['model_name'], trust_remote_code=True)
-        print(f"Model loaded in {time.time() - t0:.2f}s")        
+        self.model = AutoModelForCausalLM.from_pretrained(self.info['model_name'], device_map="auto", trust_remote_code=True)
+        print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
            
     @method()
     def generate(self, prompt, params):
-        input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
+        input = self.tokenizer(prompt, return_tensors="pt")
+        input_ids = input.input_ids.to('cuda')
+        attention_mask = input.attention_mask.to('cuda')
         sampling_params = {
             'temperature': params['temperature'],
             'max_length': params['max_new_tokens'],
@@ -56,9 +63,9 @@ class ModalTransformers:
             'top_p': params['top_p'],
             'repetition_penalty': params['repetition_penalty']
         }
-        sample = self.model.generate(input_ids, max_length=128) #generate(**inputs, do_sample=True, **sampling_params)
+        sample = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, **sampling_params)
         self.info['sampling_params'] = sampling_params
-        answer = self.tokenizer.decode(sample[0])
+        answer = self.tokenizer.decode(sample[0], skip_special_tokens=True)
         return answer, self.info
     
 # For local testing, run `modal run -q interview-transformers-modal.py --input questions.csv --params model_parameters/precise.json`
