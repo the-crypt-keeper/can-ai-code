@@ -56,8 +56,9 @@ class ModalTransformers:
         load_quant = hf_hub_download(self.info['model_name'], self.info['model_bin'])
 
         with init_empty_weights():
-            model = AutoModelForCausalLM.from_pretrained(self.info['base_model'], config=config, 
-                                                        torch_dtype=torch.float16, trust_remote_code=True)
+            #model = AutoModelForCausalLM.from_pretrained(self.info['base_model'], config=config, 
+            #                                            torch_dtype=torch.float16, trust_remote_code=True)
+            model = AutoModelForCausalLM.from_config(config, torch_dtype=torch.float16, trust_remote_code=True)
 
         q_config = { "zero_point": True, "q_group_size": self.info['q_group_size'] }
         real_quantize_model_weight(model, w_bit=self.info['w_bit'], q_config=q_config, init_only=True)
