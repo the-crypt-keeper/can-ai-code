@@ -37,9 +37,9 @@ out = data['tests']
 models = data['models']
 
 aliases = {
-    'jondurbin-airoboros-13b-gpt4-1.4-fp16': 'FP16',
-    'airoboros-13b-gpt4-1.4.ggmlv3.q5-0': 'GGML-q5_0',
-    'TheBloke-airoboros-13B-gpt4-1.4-GPTQ': 'GPTQ-4b'
+    '375cead61e4db124-gradio-app-wizardcoder-16b': 'Wizard-FP16',
+    'WizardCoder-15B-1.0.ggmlv3.q5-0': 'Wizard-GGML',
+    'openchat-opencoderplus-ggml-q5-0': 'OpenCoder-GGML'
 }
 
 for testid in out.keys():

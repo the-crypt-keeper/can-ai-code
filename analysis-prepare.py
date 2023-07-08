@@ -2,7 +2,6 @@ import json
 import sys
 import os
 from jinja2 import Template
-from langchain import LLMChain, PromptTemplate
 
 task_prompt = "Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}"
 
