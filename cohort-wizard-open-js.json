@@ -1,0 +1,312 @@
+{
+  "tests": {
+    "SanityMeaningOfLife-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+          "failing_tests": "",
+          "code": "function meaning_of_life() {\r\n  return 42;\r\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+          "failing_tests": "",
+          "code": "function meaning_of_life() {\n  return 42;\n}\n\nconsole.log(meaning_of_life()); // Output: 42"
+        },
+        "2": {
+          "check_summary": "FAIL correct 2/3",
+          "passing_tests": "PASS len(f.args) == 0\nPASS f.call() == 42\n",
+          "failing_tests": "FAIL f.name != meaning_of_life got meaningOfLife\n",
+          "code": "function meaningOfLife() {\n  return 42;\n}\n\nconsole.log(meaningOfLife()); // Output: 42"
+        }
+      },
+      "task": "Write a javascript function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+      "language": "javascript"
+    },
+    "SanityList-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+          "failing_tests": "",
+          "code": "function things() {\r\n  return [5, 'foobar', 'Madrid'];\r\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+          "failing_tests": "",
+          "code": "function things() {\n  return [5, 'foobar', 'Madrid'];\n}"
+        },
+        "2": {
+          "check_summary": "PASS correct 3/3",
+          "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+          "failing_tests": "",
+          "code": "function things() {\n  return [5, \"foobar\", \"Madrid\"];\n}\nconsole.log(things()); // Output: [5, \"foobar\", \"Madrid\"]"
+        }
+      },
+      "task": "Write a javascript function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+      "language": "javascript"
+    },
+    "SanitySecretIdentityMap-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 5/5",
+          "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+          "failing_tests": "",
+          "code": "function secretidentities() {\r\n  return {\r\n    \"Superman\": \"Clark Kent\",\r\n    \"Batman\": \"Bruce Wayne\",\r\n    \"Spider-Man\": \"Peter Parker\"\r\n  };\r\n}"
+        },
+        "1": {
+          "check_summary": "FAIL correct 4/5",
+          "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+          "failing_tests": "FAIL f.call().get('Batman') != Bruce Wayne got Robin\n",
+          "code": "function secretidentities() {\n  return {\n    Superman: \"Clark Kent\",\n    Batman: \"Robin\",\n    \"Spider-Man\": \"Peter Parker\"\n  };\n}"
+        },
+        "2": {
+          "check_summary": "FAIL correct 4/5",
+          "passing_tests": "PASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+          "failing_tests": "FAIL f.name != secretidentities got secretIdentities\n",
+          "code": "function secretIdentities() {\n  return {\n    \"Superman\": \"Clark Kent\",\n    \"Batman\": \"Bruce Wayne\",\n    \"Spider-Man\": \"Peter Parker\"\n  };\n}\n\nconst identities = secretIdentities();\nconsole.log(identities); // Output: { Superman: 'Clark Kent', Batman: 'Bruce Wayne', Spider-Man: 'Peter Parker' }"
+        }
+      },
+      "task": "Write a javascript function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+      "language": "javascript"
+    },
+    "GCDZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 5/5",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+          "failing_tests": "",
+          "code": "function gcd(a, b) {\r\n  if (b === 0) {\r\n    return a;\r\n  }\r\n  return gcd(b, a % b);\r\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 5/5",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+          "failing_tests": "",
+          "code": "function gcd(a, b) {\n  if (b == 0) {\n    return a;\n  } else {\n    return gcd(b, a % b);\n  }\n}"
+        },
+        "2": {
+          "check_summary": "PASS correct 5/5",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+          "failing_tests": "",
+          "code": "function gcd(a, b) {\n  if (b === 0) return a;\n  else return gcd(b, a % b);\n}\n\nconst a = 24;\nconst b = 36;\nconsole.log(`The GCD of ${a} and ${b} is ${gcd(a, b)}`); // Output: The GCD of 24 and 36 is 12"
+        }
+      },
+      "task": "Write a javascript function gcd(a, b) with two inputs a and b that returns the greatest common demoninator (gcd) of a and b",
+      "language": "javascript"
+    },
+    "GCDMisnamed-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "FAIL correct 5/6",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+          "failing_tests": "FAIL f.name != fofx got gcd\n",
+          "code": "function gcd(x, banana) {\r\n  if (banana === 0) {\r\n    return x;\r\n  }\r\n  return gcd(banana, x % banana);\r\n}\r\n\r\nconsole.log(gcd(12, 8)); // Output: 4\r\nconsole.log(gcd(14, 21)); // Output: 7"
+        },
+        "1": {
+          "check_summary": "PASS correct 6/6",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+          "failing_tests": "",
+          "code": "function fofx(x, banana) {\n  var a = x;\n  var b = banana;\n\n  while (b !== 0) {\n    var r = a % b;\n    a = b;\n    b = r;\n  }\n\n  return a;\n}"
+        },
+        "2": {
+          "check_summary": "FAIL correct 3/6",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\n",
+          "failing_tests": "FAIL f.args[0].name != x got a\nFAIL f.args[1].name != banana got b\nFAIL f.name != fofx got gcd\n",
+          "code": "function gcd(a, b) {\n  if (!b) return a;\n  return gcd(b, a % b);\n}\n\nfunction fofx(x, banana) {\n  // Assuming both x and banana are positive integers\n  let result = 1;\n\n  while (banana !== 0) {\n    const temp = banana;\n    banana = x % banana;\n    x = temp;\n  }\n  \n  return Math.abs(result * x);\n}\n\nconsole.log(fofx(60, 48));   // Output: 12\nconsole.log(fofx(-30, -60));  // Output: 6"
+        }
+      },
+      "task": "Write a javascript function fofx(x, banana) with two inputs x and banana that returns the greatest common demoninator (gcd) of x and banana",
+      "language": "javascript"
+    },
+    "FactorialZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\r\n  let result = 1;\r\n  for (let i = 1; i <= n; i++) {\r\n    result *= i;\r\n  }\r\n  return result;\r\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  let result = 1;\n  for (let i = 1; i <= n; i++) {\n    result *= i;\n  }\n  return result;\n}"
+        },
+        "2": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  if (n === 0 || n === 1) return 1;\n\n  return n * factorial(n - 1);\n}\n\nconsole.log(factorial(5)); // Output: 120"
+        }
+      },
+      "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using iteration",
+      "language": "javascript"
+    },
+    "FactorialRecursiveZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\r\n  if (n === 0) {\r\n    return 1;\r\n  } else {\r\n    return n * factorial(n - 1);\r\n  }\r\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}"
+        },
+        "2": {
+          "check_summary": "PASS correct 4/4",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+          "failing_tests": "",
+          "code": "function factorial(n) {\n  if (n === 0 || n === 1) return 1;\n\n  return n * factorial(n - 1);\n}\n\nconsole.log(factorial(5)); // Output: 120"
+        }
+      },
+      "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using recursion",
+      "language": "javascript"
+    },
+    "FactorialMisnamed-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 6/6",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "",
+          "code": "function glork(bork) {\r\n  let result = 1;\r\n  for (let i = 1; i <= bork; i++) {\r\n    result *= i;\r\n  }\r\n  return result;\r\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 6/6",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "",
+          "code": "function glork(bork) {\n  let result = 1;\n  for (let i = 1; i <= bork; i++) {\n    result *= i;\n  }\n  return result;\n}\n\nconsole.log(glork(5)); // Output: 120"
+        },
+        "2": {
+          "check_summary": "FAIL correct 2/6",
+          "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\n",
+          "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': 'Math.factorial is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(5) != 120 got {'error': 'Math.factorial is not a function', 'exc_type': 'TypeError'}\nFAIL f.name != glork got gork\n",
+          "code": "function gork(bork) {\n  if (bork < 0 || Number.isNaN(bork)) return NaN;\n  return Math.factorial(bork);\n}\n\nconsole.log(gork(5)); // Output: 120\nconsole.log(gork(-3)); // Output: NaN"
+        }
+      },
+      "task": "Write a javascript function glork(bork) with input bork that returns the factorial of bork",
+      "language": "javascript"
+    },
+    "FibonacciZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 7/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+          "failing_tests": "",
+          "code": "function fib(n) {\r\n  if (n === 0) {\r\n    return 0;\r\n  } else if (n === 1) {\r\n    return 1;\r\n  } else {\r\n    return fib(n - 1) + fib(n - 2);\r\n  }\r\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 7/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+          "failing_tests": "",
+          "code": "function fib(n) {\n  if (n <= 0) {\n    return 0;\n  }\n  if (n === 1) {\n    return 1;\n  }\n  return fib(n-1) + fib(n-2);\n}"
+        },
+        "2": {
+          "check_summary": "FAIL correct 4/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\n",
+          "failing_tests": "FAIL f.call(2) != 1 got 2\nFAIL f.call(3) != 2 got 3\nFAIL f.call(5) != 5 got 8\n",
+          "code": "function fib(n) {\n  if (n < 2) return n;\n\n  let prev = 1;\n  let curr = 1;\n  \n  for (let i = 2; i <= n; ++i) {\n    const temp = prev + curr;\n    prev = curr;\n    curr = temp;\n  }\n\n  return curr;\n}\n\nconsole.log(fib(4)); // Output: 3"
+        }
+      },
+      "task": "Write a javascript function fib(n) with input element number n (0 based) that returns the n-th element of the fibbonaci sequence",
+      "language": "javascript"
+    },
+    "FibonacciListZeroShot-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 7/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == n\n",
+          "failing_tests": "",
+          "code": "function fib(n) {\r\n  let fibonacci = [0, 1];\r\n  for (let i = 2; i < n; i++) {\r\n    fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2];\r\n  }\r\n  return fibonacci.slice(0, n);\r\n}"
+        },
+        "1": {
+          "check_summary": "PASS correct 7/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == n\n",
+          "failing_tests": "",
+          "code": "function fib(n) {\n  var result = [];\n  var a = 0, b = 1;\n  for (var i = 0; i < n; i++) {\n    result.push(a);\n    var temp = a;\n    a = b;\n    b += temp;\n  }\n  return result;\n}"
+        },
+        "2": {
+          "check_summary": "FAIL correct 3/7",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+          "failing_tests": "FAIL f.call(1) != [0] got [0, 1]\nFAIL f.call(2) != [0, 1] got [0, 1, 1]\nFAIL f.call(3) != [0, 1, 1] got [0, 1, 1, 1]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [0, 1, 1, 1, 2, 2]\n",
+          "code": "function fib(n) {\n  if (n <= 1) return [0, 1];\n\n  const previous = fib(n - 1);\n  const current = fib(n - 2);\n  \n  return [...previous, current[current.length - 1] + current[current.length - 2]];\n}\n\nconsole.log(fib(5)); // Output: [0, 1, 1, 2, 3]"
+        }
+      },
+      "task": "Write a javascript function fib(n) with input length n that returns a list with the first n elements of the fibbonaci sequence",
+      "language": "javascript"
+    },
+    "FibonacciMisnamed-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 8/8",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+          "failing_tests": "",
+          "code": "function glork(bork) {\r\n  let fib = [0, 1];\r\n  for (let i = 2; i < bork; i++) {\r\n    fib[i] = fib[i - 1] + fib[i - 2];\r\n  }\r\n  return fib.slice(0, bork);\r\n}"
+        },
+        "1": {
+          "check_summary": "FAIL correct 7/8",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\n",
+          "failing_tests": "FAIL f.name != glork got gork\n",
+          "code": "function gork(bork) {\n  let fibonacci = [0, 1];\n  for (let i = 2; i < bork; i++) {\n    fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2];\n  }\n  return fibonacci.slice(0, bork);\n}"
+        },
+        "2": {
+          "check_summary": "FAIL correct 3/8",
+          "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\n",
+          "failing_tests": "FAIL f.call(1) != [0] got [1]\nFAIL f.call(2) != [0, 1] got [2]\nFAIL f.call(3) != [0, 1, 1] got [2, 3]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [2, 3, 5, 8]\nFAIL f.name != glork got gork\n",
+          "code": "function gork(bork) {\n  const result = [];\n\n  // Base case (for when n <= 1):\n  if (bork === 0 || bork === 1) return [1];\n  \n  let prevPrev = 1;\n  let prev = 1;\n  let current;\n\n  for (let i = 2; i < bork + 1; i++) {\n    current = prev + prevPrev;\n    prevPrev = prev;\n    prev = current;\n\n    result.push(current);\n  }\n\n  return result.slice(0, bork);\n}\n\nconsole.log(gork(5)); // Output: [1, 1, 2, 3, 5]"
+        }
+      },
+      "task": "Write a javascript function glork(bork) with input length bork that returns a list with the first bork elements of the fibbonaci sequence",
+      "language": "javascript"
+    },
+    "StringCountTokens-javascript": {
+      "results": {
+        "0": {
+          "check_summary": "PASS correct 7/7",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+          "failing_tests": "",
+          "code": "function substrcount(str, substr) {\r\n  let count = 0;\r\n  let index = str.indexOf(substr);\r\n  while (index!== -1) {\r\n    count++;\r\n    index = str.indexOf(substr, index + 1);\r\n  }\r\n  return count;\r\n}"
+        },
+        "1": {
+          "check_summary": "FAIL correct 6/7",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+          "failing_tests": "FAIL f.name != substrcount got substrCount\n",
+          "code": "function substrCount(str, substr) {\n  let count = 0;\n  let index = str.indexOf(substr);\n\n  while (index != -1) {\n    count++;\n    index = str.indexOf(substr, index + 1);\n  }\n\n  return count;\n}\n\nconsole.log(substrCount('Hello world', 'l')); // Output: 3"
+        },
+        "2": {
+          "check_summary": "FAIL correct 6/7",
+          "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+          "failing_tests": "FAIL f.name != substrcount got substrCount\n",
+          "code": "function substrCount(str, substr) {\n  let count = 0;\n\n  while (true) {\n    const index = str.indexOf(substr);\n\n    if (index === -1) break;\n\n    count++;\n    str = str.substring(index + 1); // Skip the matched substring\n  }\n\n  return count;\n}\n\nconst str = 'Hello world! How are you?';\nconst substr = 'world';\nconsole.log(substrCount(str, substr)); // Output: 1"
+        }
+      },
+      "task": "Write a javascript function substrcount(str, substr) with inputs str and substr that returns counts the number of times the sub-string substr occurs in str",
+      "language": "javascript"
+    }
+  },
+  "models": [
+    {
+      "prompt": "Wizard-Coder",
+      "params": "wizardcoder",
+      "model": "375cead61e4db124-gradio-app-wizardcoder-16b",
+      "id": 0
+    },
+    {
+      "prompt": "Wizard-Coder",
+      "params": "wizardcoder",
+      "model": "WizardCoder-15B-1.0.ggmlv3.q5-0",
+      "id": 1
+    },
+    {
+      "prompt": "opencoder",
+      "params": "precise",
+      "model": "openchat-opencoderplus-ggml-q5-0",
+      "id": 2
+    }
+  ]
+}
