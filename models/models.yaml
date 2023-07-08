@@ -302,3 +302,33 @@
   quant: GGML-q5_0
   tags: ["openllama"]
   url: https://huggingface.co/cooki3monster/openchat_opencoderplus-GGML
+- id: Salesforce-codegen25-7b-multi-fp16
+  name: CodeGen-v2.5-Multi
+  size: 7B
+  quant: FP16
+  tags: ["codegen"]
+  url: https://huggingface.co/Salesforce/codegen25-7b-multi
+- id: Salesforce-codegen25-7b-mono-fp16
+  name: CodeGen-v2.5-Mono
+  size: 7B
+  quant: FP16
+  tags: ["codegen"]
+  url: https://huggingface.co/Salesforce/codegen25-7b-mono
+- id: Salesforce-codegen2-1B-fp16
+  name: CodeGen-v2
+  size: 1B
+  quant: FP16
+  tags: ["codegen"]
+  url: https://huggingface.co/Salesforce/codegen2-1B 
+- id: Salesforce-codegen2-3-7B-fp16
+  name: CodeGen-v2
+  size: 3.7B
+  quant: FP16
+  tags: ["codegen"]
+  url: https://huggingface.co/Salesforce/codegen2-3_7B
+- id: Salesforce-codegen2-7B-fp16
+  name: CodeGen-v2
+  size: 7B
+  quant: FP16
+  tags: ["codegen"]
+  url: https://huggingface.co/Salesforce/codegen2-7B  
