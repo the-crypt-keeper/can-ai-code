@@ -34,7 +34,7 @@ image = (
         "bitsandbytes==0.39.1",
         "accelerate==0.19.0"
     )
-    .run_function(download_codegen_2_3p7b_multi_model)
+    .run_function(download_codegen_2p5_7b_mono_model)
 )
 
 stub = Stub(image=image)
@@ -77,7 +77,7 @@ class ModalTransformers:
         }
         sample = self.model.generate(input_ids, attention_mask=attention_mask, **sampling_params)
         self.info['sampling_params'] = sampling_params
-        answer = self.tokenizer.decode(sample[0], skip_special_tokens=True)
+        answer = self.tokenizer.decode(sample[0], skip_special_tokens=True)[len(prompt):]
         return answer, self.info
     
 # For local testing, run `modal run -q interview-transformers-modal.py --input questions.csv --params model_parameters/precise.json`

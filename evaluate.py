@@ -45,12 +45,13 @@ if __name__ == '__main__':
     parser.add_argument('--interview', type=str, default='junior-dev', help='interview to evaluate')
     parser.add_argument('--input', type=str, required=True, help='path to interview*.ndjson')
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
-    parser.add_argument('--noextract', action='store_true', help='(optional) skip code extraction')
+    parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')
     args = parser.parse_args()
 
     all_total = { 'javascript': 0, 'python': 0 }
     all_passed = { 'javascript': 0, 'python': 0 }
     results = []
+    stop_at_prefix = ['//','#'] if args.stopcomment else []
 
     interview = {}
     for test in load_questions(args.interview):
@@ -60,10 +61,10 @@ if __name__ == '__main__':
     for test in answers:
 
         if args.test and test['name'] != args.test:
-            print(test_name, 'Skipped due to command line filter')
+            print(test['name'], 'Skipped due to command line filter')
             continue
 
-        code = extract_code(test['answer']) if not args.noextract else test['answer']
+        code = extract_code(test['answer'], stop_at_prefix)
         
         if code:
             print(test['name'], test['language'], 'started')

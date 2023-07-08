@@ -52,7 +52,7 @@ def extract_code_fallback(answer):
     
     return None
 
-def extract_code(answer):
+def extract_code(answer, stop_at_prefix=[]):
     code = None
 
     if answer.find('<code>') != -1:
@@ -63,5 +63,13 @@ def extract_code(answer):
     
     if code is None:        
         code = extract_code_fallback(answer)
+
+    if code is not None and len(stop_at_prefix) > 0:
+        lines = code.split('\n')
+        for i, line in enumerate(lines):
+            for prefix in stop_at_prefix:
+                if line.startswith(prefix):
+                    code = '\n'.join(lines[:i])
+                    break
             
     return code
