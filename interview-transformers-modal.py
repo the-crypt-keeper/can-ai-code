@@ -19,6 +19,9 @@ def download_codegen_2p5_7b_multi_model():
 def download_codegen_2_1b_multi_model():
     download_model("Salesforce/codegen2-1B")
 
+def download_codegen_2_3p7b_multi_model():
+    download_model("Salesforce/codegen2-3_7B")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -41,29 +44,38 @@ gpu_request = gpu.A100(count=1)
 class ModalTransformers:
     def __enter__(self):
         from transformers import AutoModelForCausalLM, AutoTokenizer
+        import torch
 
         self.info = json.load(open('./_info.json'))
         print('Remote model info:', self.info)
 
+        # Select FP32 or FP16 here
+        torch_dtype = torch.float32
+
         t0 = time.time()
         print('Starting up...')
         self.tokenizer = AutoTokenizer.from_pretrained(self.info['model_name'], trust_remote_code=True)
-        self.model = AutoModelForCausalLM.from_pretrained(self.info['model_name'], device_map="auto", trust_remote_code=True)
+        self.model = AutoModelForCausalLM.from_pretrained(self.info['model_name'], device_map="auto", torch_dtype=torch_dtype, trust_remote_code=True)
         print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
-           
+
+        if torch_dtype == torch.float16:
+            print('Loaded in fp16.')
+            self.info['model_name'] = self.info['model_name'] + '-fp16'
+
     @method()
     def generate(self, prompt, params):
         input = self.tokenizer(prompt, return_tensors="pt")
         input_ids = input.input_ids.to('cuda')
         attention_mask = input.attention_mask.to('cuda')
         sampling_params = {
+            'do_sample': True,
             'temperature': params['temperature'],
             'max_length': params['max_new_tokens'],
             'top_k': params['top_k'],
             'top_p': params['top_p'],
             'repetition_penalty': params['repetition_penalty']
         }
-        sample = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, **sampling_params)
+        sample = self.model.generate(input_ids, attention_mask=attention_mask, **sampling_params)
         self.info['sampling_params'] = sampling_params
         answer = self.tokenizer.decode(sample[0], skip_special_tokens=True)
         return answer, self.info
@@ -108,4 +120,4 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
             result['runtime'] = 'transformers'
             results.append(result)
 
-        save_interview(input, 'none', params, model_info['model_name'], results)
+        save_interview(input, templateout if templateout else 'none', params, model_info['model_name'], results)
