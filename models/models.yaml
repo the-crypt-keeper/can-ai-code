@@ -289,4 +289,16 @@
   tags: ["llama","orca-mini"]
   size: 7B
   quant: GPTQ-4b
-  url: https://huggingface.co/TheBloke/orca_mini_v2_7B-GPTQ  
+  url: https://huggingface.co/TheBloke/orca_mini_v2_7B-GPTQ
+- id: WizardCoder-15B-1.0.ggmlv3.q5-0
+  name: WizardCoder
+  size: 16B
+  quant: GGML-q5_0
+  tags: ["starcoder"]
+  url: https://huggingface.co/TheBloke/WizardCoder-15B-1.0-GGML
+- id: openchat-opencoderplus-ggml-q5-0
+  name: OpenCoderPlus
+  size: 16B
+  quant: GGML-q5_0
+  tags: ["openllama"]
+  url: https://huggingface.co/cooki3monster/openchat_opencoderplus-GGML
