@@ -34,12 +34,12 @@ image = (
         "bitsandbytes==0.39.1",
         "accelerate==0.19.0"
     )
-    .run_function(download_codegen_2p5_7b_multi_model)
+    .run_function(download_codegen_2_3p7b_multi_model)
 )
 
 stub = Stub(image=image)
 
-gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A10G(count=1)
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300)
 class ModalTransformers:
     def __enter__(self):
@@ -50,10 +50,10 @@ class ModalTransformers:
         print('Remote model info:', self.info)
 
         # Select FP32 or FP16 here
-        torch_dtype = torch.float32
+        torch_dtype = torch.float16
 
         t0 = time.time()
-        print('Starting up...')
+        print('Starting up...', str(torch_dtype))
         self.tokenizer = AutoTokenizer.from_pretrained(self.info['model_name'], trust_remote_code=True)
         self.model = AutoModelForCausalLM.from_pretrained(self.info['model_name'], device_map="auto", torch_dtype=torch_dtype, trust_remote_code=True)
         print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")

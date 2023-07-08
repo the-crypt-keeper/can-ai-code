@@ -27,13 +27,13 @@ Install a recent release of streamlit `pip install streamlit==1.23` then `stream
 
 ## Results HumanEval
 
-:construction: HumanEval work is under active development.
+:construction: HumanEval development work is currently paused, there's other projects that are much further along.
 
 | Model |     Quant    | Size | License | Prompt |    Params  | Python |
 |-------|--------------|------|---------|--------|------------|--------|
 | VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 20/164 |
 
-See https://github.com/my-other-github-account/llm-humaneval-benchmarks for way more Humaneval LLM benchmarks.
+See https://github.com/my-other-github-account/llm-humaneval-benchmarks and https://github.com/abacaj/code-eval for far more Humaneval LLM benchmarks.
 
 ## Repository Structure
 
