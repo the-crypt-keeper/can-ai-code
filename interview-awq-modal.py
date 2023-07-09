@@ -28,7 +28,7 @@ image = (
     .run_commands("git clone https://github.com/mit-han-lab/llm-awq",
                   "cd llm-awq && git checkout 71d8e68df78de6c0c817b029a568c064bf22132d && pip install -e .")
     .run_commands("cd llm-awq/awq/kernels && export TORCH_CUDA_ARCH_LIST='8.0 8.6 8.7 8.9 9.0' && python setup.py install")
-    .run_function(download_awq_codgen2p5_7b_model)
+    .run_function(download_awq_falcon_instruct_7b_model)
 )
 
 stub = Stub(image=image)
@@ -75,11 +75,11 @@ class ModalTransformers:
         attention_mask = input.attention_mask.to('cuda')
         sampling_params = {
             'do_sample': True,
-            'temperature': params['temperature'],
-            'max_length': params['max_new_tokens'],
-            'top_k': params['top_k'],
-            'top_p': params['top_p'],
-            'repetition_penalty': params['repetition_penalty']
+            'temperature': params.get('temperature', 1.0),
+            'max_length': params.get('max_length', 256),
+            'top_k': params.get('top_k', 40),
+            'top_p': params.get('top_p', 1.0),
+            'repetition_penalty': params.get('repetition_penalty', 1.0)
         }
         sample = self.model.generate(input_ids, attention_mask=attention_mask, eos_token_id=self.tokenizer.eos_token_id, **sampling_params)
         self.info['sampling_params'] = sampling_params

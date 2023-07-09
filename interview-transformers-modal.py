@@ -77,11 +77,11 @@ class ModalTransformers:
 
         sampling_params = {
             'do_sample': True,
-            'temperature': params['temperature'],
-            'max_length': params['max_new_tokens'],
-            'top_k': params['top_k'],
-            'top_p': params['top_p'],
-            'repetition_penalty': params['repetition_penalty']
+            'temperature': params.get('temperature', 1.0),
+            'max_length': params.get('max_length', 256),
+            'top_k': params.get('top_k', 40),
+            'top_p': params.get('top_p', 1.0),
+            'repetition_penalty': params.get('repetition_penalty', 1.0)
         }
         sample = self.model.generate(input_ids, attention_mask=attention_mask, **sampling_params)
         self.info['sampling_params'] = sampling_params
