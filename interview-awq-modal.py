@@ -14,6 +14,9 @@ def download_awq_falcon_instruct_7b_model():
     # pre-quantized model required
     download_awq_model("abhinavkulkarni/falcon-7b-instruct-w4-g64-awq", "tiiuae/falcon-7b-instruct")
 
+def download_awq_codgen2p5_7b_model():
+    download_awq_model("abhinavkulkarni/Salesforce-codegen25-7b-multi-w4-g128-awq", "Salesforce/codegen25-7b-multi")
+
 image = (
     Image.from_dockerhub("nvcr.io/nvidia/pytorch:23.06-py3")
     .pip_install(
@@ -25,7 +28,7 @@ image = (
     .run_commands("git clone https://github.com/mit-han-lab/llm-awq",
                   "cd llm-awq && git checkout 71d8e68df78de6c0c817b029a568c064bf22132d && pip install -e .")
     .run_commands("cd llm-awq/awq/kernels && export TORCH_CUDA_ARCH_LIST='8.0 8.6 8.7 8.9 9.0' && python setup.py install")
-    .run_function(download_awq_falcon_instruct_7b_model)
+    .run_function(download_awq_codgen2p5_7b_model)
 )
 
 stub = Stub(image=image)
@@ -56,8 +59,6 @@ class ModalTransformers:
         load_quant = hf_hub_download(self.info['model_name'], self.info['model_bin'])
 
         with init_empty_weights():
-            #model = AutoModelForCausalLM.from_pretrained(self.info['base_model'], config=config, 
-            #                                            torch_dtype=torch.float16, trust_remote_code=True)
             model = AutoModelForCausalLM.from_config(config, torch_dtype=torch.float16, trust_remote_code=True)
 
         q_config = { "zero_point": True, "q_group_size": self.info['q_group_size'] }
