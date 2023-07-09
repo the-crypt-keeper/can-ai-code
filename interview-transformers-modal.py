@@ -4,10 +4,10 @@ import time
 import json
 from jinja2 import Template
 
-def download_model(name):
+def download_model(name, **kwargs):
     with open("./_info.json",'w') as f:
         json.dump({"model_name": name}, f)
-    snapshot_download(name)
+    snapshot_download(name, **kwargs)
     snapshot_download("hf-internal-testing/llama-tokenizer")
 
 def download_codegen_2p5_7b_mono_model():
@@ -25,19 +25,23 @@ def download_codegen_2_3p7b_multi_model():
 def download_codegen_2_7b_multi_model():
     download_model("Salesforce/codegen2-7B")
 
+def download_falcon_instruct_7b_model():
+    download_model("tiiuae/falcon-7b-instruct", allow_patterns=["*.json","*.model","pytorch*.bin"])
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
 # are saved within the container image.
 image = (
-    Image.from_dockerhub("nvcr.io/nvidia/pytorch:22.12-py3")
+    Image.from_dockerhub("nvcr.io/nvidia/pytorch:23.06-py3")
     .pip_install(
         "transformers==4.30.2",
         "tiktoken==0.4.0",
         "bitsandbytes==0.39.1",
         "accelerate==0.19.0"
     )
-    .run_function(download_codegen_2_7b_multi_model)
+    .pip_install("einops==0.6.1")
+    .run_function(download_falcon_instruct_7b_model)
 )
 
 stub = Stub(image=image)
@@ -70,6 +74,7 @@ class ModalTransformers:
         input = self.tokenizer(prompt, return_tensors="pt")
         input_ids = input.input_ids.to('cuda')
         attention_mask = input.attention_mask.to('cuda')
+
         sampling_params = {
             'do_sample': True,
             'temperature': params['temperature'],
