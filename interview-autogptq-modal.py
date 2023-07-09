@@ -38,6 +38,13 @@ def download_minotaur_15b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
 
+def download_wizardcoder_15b_v2():   
+    MODEL_NAME = "TheBloke/WizardCoder-15B-1.0-GPTQ"
+    MODEL_BASE = "gptq_model-4bit-128g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
+
 stub = Stub(name='autogptq-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -55,7 +62,7 @@ stub.gptq_image = (
     #.run_function(download_wizardlm30b_nogroup_model_v2)
     #.run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
     #.run_function(download_falcon7b_v2)
-    .run_function(download_minotaur_15b_v2)    
+    .run_function(download_wizardcoder_15b_v2)    
     #.run_function(download_llama_30b_v2)
 )
 
@@ -136,8 +143,8 @@ def main(input: str, params: str, iterations: int = 1):
 
     for iter in range(iterations):
         results = []
-        for question in interview:
-            print(question['name'], question['language'])
+        for idx, question in enumerate(interview):
+            print(f"[{idx+1}/{len(interview)}] {question['language']} {question['name']}")
 
             # generate the answer
             answer, info = model.generate.call(question['prompt'], params=params_model)

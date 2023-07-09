@@ -296,6 +296,12 @@
   quant: GGML-q5_0
   tags: ["starcoder"]
   url: https://huggingface.co/TheBloke/WizardCoder-15B-1.0-GGML
+- id: TheBloke-WizardCoder-15B-1.0-GPTQ
+  name: WizardCoder
+  size: 16B
+  quant: GPTQ-4bit
+  tags: ["starcoder"]
+  url: https://huggingface.co/TheBloke/WizardCoder-15B-1.0-GPTQ
 - id: openchat-opencoderplus-ggml-q5-0
   name: OpenCoderPlus
   size: 16B
