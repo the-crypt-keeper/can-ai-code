@@ -379,4 +379,4 @@
   size: 7B
   tags: ["falcon"]
   quant: GPTQ-4bit
-  url: https://huggingface.co/TheBloke/falcon-7b-instruct-GGML
+  url: https://huggingface.co/TheBloke/falcon-7b-instruct-GPTQ
