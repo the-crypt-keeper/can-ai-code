@@ -272,6 +272,12 @@
   size: 7B
   quant: fp16
   url: https://huggingface.co/psmathur/orca_mini_v2_7b
+- id: psmathur-orca-mini-v2-13b
+  name: Orca-Mini-V2
+  tags: ["llama","orca-mini"]
+  size: 13B
+  quant: fp16
+  url: https://huggingface.co/psmathur/orca_mini_v2_13b  
 - id: orca-mini-v2-7b.ggmlv3.q5-0
   name: Orca-Mini-V2
   tags: ["llama","orca-mini"]
@@ -290,6 +296,12 @@
   size: 7B
   quant: GPTQ-4b
   url: https://huggingface.co/TheBloke/orca_mini_v2_7B-GPTQ
+- id: orca-mini-v2-13b.ggmlv3.q5-0
+  name: Orca-Mini-V2
+  tags: ["llama","orca-mini"]
+  size: 13B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/orca_mini_v2_13b-GGML
 - id: WizardCoder-15B-1.0.ggmlv3.q5-0
   name: WizardCoder
   size: 16B
@@ -314,6 +326,12 @@
   quant: FP16
   tags: ["codegen"]
   url: https://huggingface.co/Salesforce/codegen25-7b-multi
+- id: abhinavkulkarni-Salesforce-codegen25-7b-multi-w4-g128-awq
+  name: CodeGen-v2.5-Multi
+  size: 7B
+  quant: AWQ-4bit
+  tags: ["codegen"]
+  url: https://huggingface.co/abhinavkulkarni/Salesforce-codegen25-7b-multi-w4-g128-awq
 - id: Salesforce-codegen25-7b-mono-fp16
   name: CodeGen-v2.5-Mono
   size: 7B
@@ -338,3 +356,23 @@
   quant: FP16
   tags: ["codegen"]
   url: https://huggingface.co/Salesforce/codegen2-7B  
+- id: abhinavkulkarni-falcon-7b-instruct-w4-g64-awq
+  name: Falcon-Instruct
+  size: 7B
+  tags: ["falcon"]
+  quant: AWQ-4bit
+- id: falcon-7b-instruct.ggccv1.q5-0
+  name: Falcon-Instruct
+  size: 7B
+  tags: ["falcon"]
+  quant: GGCCV1-q5_0
+- id: tiiuae-falcon-7b-instruct-fp16
+  name: Falcon-Instruct
+  size: 7B
+  tags: ["falcon"]
+  quant: FP16
+- id: TheBloke-falcon-7b-instruct-GPTQ
+  name: Falcon-Instruct
+  size: 7B
+  tags: ["falcon"]
+  quant: GPTQ-4bit

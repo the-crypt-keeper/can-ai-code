@@ -14,6 +14,9 @@ def download_awq_falcon_instruct_7b_model():
     # pre-quantized model required
     download_awq_model("abhinavkulkarni/falcon-7b-instruct-w4-g64-awq", "tiiuae/falcon-7b-instruct")
 
+def download_awq_codgen2p5_7b_model():
+    download_awq_model("abhinavkulkarni/Salesforce-codegen25-7b-multi-w4-g128-awq", "Salesforce/codegen25-7b-multi")
+
 image = (
     Image.from_dockerhub("nvcr.io/nvidia/pytorch:23.06-py3")
     .pip_install(
@@ -56,8 +59,7 @@ class ModalTransformers:
         load_quant = hf_hub_download(self.info['model_name'], self.info['model_bin'])
 
         with init_empty_weights():
-            model = AutoModelForCausalLM.from_pretrained(self.info['base_model'], config=config, 
-                                                        torch_dtype=torch.float16, trust_remote_code=True)
+            model = AutoModelForCausalLM.from_config(config, torch_dtype=torch.float16, trust_remote_code=True)
 
         q_config = { "zero_point": True, "q_group_size": self.info['q_group_size'] }
         real_quantize_model_weight(model, w_bit=self.info['w_bit'], q_config=q_config, init_only=True)
@@ -73,11 +75,11 @@ class ModalTransformers:
         attention_mask = input.attention_mask.to('cuda')
         sampling_params = {
             'do_sample': True,
-            'temperature': params['temperature'],
-            'max_length': params['max_new_tokens'],
-            'top_k': params['top_k'],
-            'top_p': params['top_p'],
-            'repetition_penalty': params['repetition_penalty']
+            'temperature': params.get('temperature', 1.0),
+            'max_length': params.get('max_length', 256),
+            'top_k': params.get('top_k', 40),
+            'top_p': params.get('top_p', 1.0),
+            'repetition_penalty': params.get('repetition_penalty', 1.0)
         }
         sample = self.model.generate(input_ids, attention_mask=attention_mask, eos_token_id=self.tokenizer.eos_token_id, **sampling_params)
         self.info['sampling_params'] = sampling_params

@@ -85,9 +85,15 @@ See GPTQ notes above, the executor is very similar with one notable difference: 
 
 See GPTQ notes above for structure but note that this executor runs full precision FP16 models so will require more/larger GPUs then the GPTQ-based ones.
 
-#### Llama.cpp (GGML)
+#### GGML
 
 `Interview-llamacpp.py` provides an executor to wrap `main` on local (or remote via ssh) CPU/GPU
+
+For llama (https://github.com/ggerganov/llama.cpp): --main main --args=""
+
+For starcoder (https://github.com/ggerganov/ggml): --main starcoder --args=""
+
+For falcon (https://github.com/cmp-nct/ggllm.cpp): --main falcon_main --args="--no-penalize-nl"
 
 #### Huggingface APIs
 

@@ -37,6 +37,9 @@ def download_airoboros_13b_1p4p1_model():
 def download_orca_mini_v2_7b_model():
     download_model("psmathur/orca_mini_v2_7b")
 
+def download_orca_mini_v2_13b_model():
+    download_model("psmathur/orca_mini_v2_13b")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -49,7 +52,7 @@ image = (
     .pip_install(
         "vllm @ git+https://github.com/vllm-project/vllm.git@2b7d3aca2e1dd25fe26424f57c051af3b823cd71"
     )
-    .run_function(download_orca_mini_v2_7b_model)
+    .run_function(download_orca_mini_v2_13b_model)
 )
 
 stub = Stub(image=image)

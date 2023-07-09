@@ -61,8 +61,8 @@ stub.gptq_image = (
     )
     #.run_function(download_wizardlm30b_nogroup_model_v2)
     #.run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
-    #.run_function(download_falcon7b_v2)
-    .run_function(download_wizardcoder_15b_v2)    
+    .run_function(download_falcon7b_v2)
+    #.run_function(download_wizardcoder_15b_v2)    
     #.run_function(download_llama_30b_v2)
 )
 
