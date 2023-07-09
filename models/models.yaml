@@ -361,18 +361,22 @@
   size: 7B
   tags: ["falcon"]
   quant: AWQ-4bit
+  url: https://huggingface.co/abhinavkulkarni/tiiuae-falcon-7b-instruct-w4-g64-awq
 - id: falcon-7b-instruct.ggccv1.q5-0
   name: Falcon-Instruct
   size: 7B
   tags: ["falcon"]
   quant: GGCCV1-q5_0
+  url: https://huggingface.co/TheBloke/falcon-7b-instruct-GGML
 - id: tiiuae-falcon-7b-instruct-fp16
   name: Falcon-Instruct
   size: 7B
   tags: ["falcon"]
   quant: FP16
+  url: https://huggingface.co/tiiuae/falcon-7b-instruct
 - id: TheBloke-falcon-7b-instruct-GPTQ
   name: Falcon-Instruct
   size: 7B
   tags: ["falcon"]
   quant: GPTQ-4bit
+  url: https://huggingface.co/TheBloke/falcon-7b-instruct-GGML
