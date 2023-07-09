@@ -59,11 +59,13 @@ for param_file, input_file in tasks:
     llama_command = build_llama_command(args, params_json)
     interview = [json.loads(line) for line in open(input_file)]
     results = []
-    for challenge in interview:
+    for idx, question in enumerate(interview):
         answer = None
 
+        print(f"[{idx+1}/{len(interview)}] {question['language']} {question['name']}")
+
         prompt_file = tempfile.NamedTemporaryFile(mode='w', delete=False)
-        prompt_file.write(challenge['prompt'])
+        prompt_file.write(question['prompt'])
         prompt_file.close()
 
         cmdline = llama_command + f' --file {prompt_file.name}'
@@ -87,8 +89,8 @@ for param_file, input_file in tasks:
             exit(1)
 
         # remove prompt from answer
-        start_offset = max(answer.rfind(challenge['prompt']), 0)
-        start_offset += len(challenge['prompt'])
+        start_offset = max(answer.rfind(question['prompt']), 0)
+        start_offset += len(question['prompt'])
         answer = answer[start_offset:]
 
         # for starcoder remove the trailer
@@ -104,7 +106,7 @@ for param_file, input_file in tasks:
         print(answer)
         print()
 
-        result = challenge.copy()
+        result = question.copy()
         result['answer'] = answer
         result['params'] = { 'cmdline': cmdline }
         result['model'] = model_name

@@ -143,8 +143,8 @@ def main(input: str, params: str, iterations: int = 1):
 
     for iter in range(iterations):
         results = []
-        for question in interview:
-            print(question['name'], question['language'])
+        for idx, question in enumerate(interview):
+            print(f"[{idx+1}/{len(interview)}] {question['language']} {question['name']}")
 
             # generate the answer
             answer, info = model.generate.call(question['prompt'], params=params_model)
