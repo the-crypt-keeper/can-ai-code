@@ -28,6 +28,9 @@ def download_codegen_2_7b_multi_model():
 def download_falcon_instruct_7b_model():
     download_model("tiiuae/falcon-7b-instruct", allow_patterns=["*.json","*.model","pytorch*.bin"])
 
+def download_falcoder_7b_model():
+    download_model("mrm8488/falcoder-7b")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -41,7 +44,7 @@ image = (
         "accelerate==0.19.0"
     )
     .pip_install("einops==0.6.1")
-    .run_function(download_falcon_instruct_7b_model)
+    .run_function(download_falcoder_7b_model)
 )
 
 stub = Stub(image=image)
@@ -71,19 +74,25 @@ class ModalTransformers:
 
     @method()
     def generate(self, prompt, params):
+        import torch
+        from transformers import GenerationConfig
+
         input = self.tokenizer(prompt, return_tensors="pt")
         input_ids = input.input_ids.to('cuda')
         attention_mask = input.attention_mask.to('cuda')
 
         sampling_params = {
-            'do_sample': True,
+            #'do_sample': True,
+            'num_beams': params.get('num_beams', 1),
             'temperature': params.get('temperature', 1.0),
             'max_length': params.get('max_length', 256),
             'top_k': params.get('top_k', 40),
             'top_p': params.get('top_p', 1.0),
             'repetition_penalty': params.get('repetition_penalty', 1.0)
         }
-        sample = self.model.generate(input_ids, attention_mask=attention_mask, **sampling_params)
+        generation_config = GenerationConfig(**sampling_params)
+        with torch.no_grad():
+            sample = self.model.generate(input_ids=input_ids, attention_mask=attention_mask, generation_config=generation_config, early_stopping=True)
         self.info['sampling_params'] = sampling_params
         answer = self.tokenizer.decode(sample[0], skip_special_tokens=True)[len(prompt):]
         return answer, self.info
