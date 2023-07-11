@@ -28,6 +28,9 @@ def download_codegen_2_7b_multi_model():
 def download_falcon_instruct_7b_model():
     download_model("tiiuae/falcon-7b-instruct", allow_patterns=["*.json","*.model","pytorch*.bin"])
 
+def download_replit_code_instruct_3b_model():
+    download_model("sahil2801/replit-code-instruct-glaive")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -40,8 +43,8 @@ image = (
         "bitsandbytes==0.39.1",
         "accelerate==0.19.0"
     )
-    .pip_install("einops==0.6.1")
-    .run_function(download_falcon_instruct_7b_model)
+    .pip_install("einops==0.6.1", "sentencepiece==0.1.99")
+    .run_function(download_replit_code_instruct_3b_model)
 )
 
 stub = Stub(image=image)
@@ -83,7 +86,7 @@ class ModalTransformers:
             'top_p': params.get('top_p', 1.0),
             'repetition_penalty': params.get('repetition_penalty', 1.0)
         }
-        sample = self.model.generate(input_ids, attention_mask=attention_mask, **sampling_params)
+        sample = self.model.generate(input_ids, attention_mask=attention_mask, eos_token_id=self.tokenizer.eos_token_id, **sampling_params)
         self.info['sampling_params'] = sampling_params
         answer = self.tokenizer.decode(sample[0], skip_special_tokens=True)[len(prompt):]
         return answer, self.info

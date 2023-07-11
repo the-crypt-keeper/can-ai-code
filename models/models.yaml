@@ -380,3 +380,9 @@
   tags: ["falcon"]
   quant: GPTQ-4bit
   url: https://huggingface.co/TheBloke/falcon-7b-instruct-GPTQ
+- id: sahil2801-replit-code-instruct-glaive-fp16
+  name: Replit-Code-Instruct-Glaive
+  size: 3B
+  quant: FP16
+  tags: ["replit"]
+  url: https://huggingface.co/sahil2801/replit-code-instruct-glaive
