@@ -45,6 +45,27 @@ def download_wizardcoder_15b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
 
+def download_ultralm_13b_v2():   
+    MODEL_NAME = "TheBloke/UltraLM-13B-GPTQ"
+    MODEL_BASE = "ultralm-13b-GPTQ-4bit-128g.no-act.order"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
+
+def download_falcon_40b_3bit_v2():   
+    MODEL_NAME = "TheBloke/falcon-40b-instruct-3bit-GPTQ"
+    MODEL_BASE = "gptq_model-3bit--1g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt","*.py",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, group=-1, bits=3, actorder=True, eos=['<|endoftext|>'])
+
+def download_falcon_40b_4bit_v2():   
+    MODEL_NAME = "TheBloke/falcon-40b-instruct-GPTQ"
+    MODEL_BASE = "gptq_model-4bit--1g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt","*.py",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, group=-1, bits=4, actorder=True, eos=['<|endoftext|>'])
+
 stub = Stub(name='autogptq-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -61,7 +82,7 @@ stub.gptq_image = (
     )
     #.run_function(download_wizardlm30b_nogroup_model_v2)
     #.run_function(download_wizardlm_1p0_30b_nogroup_model_v2)
-    .run_function(download_falcon7b_v2)
+    .run_function(download_falcon_40b_4bit_v2)
     #.run_function(download_wizardcoder_15b_v2)    
     #.run_function(download_llama_30b_v2)
 )
@@ -79,7 +100,7 @@ if stub.is_inside(stub.gptq_image):
     from auto_gptq.modeling import BaseQuantizeConfig
 
 #### NOTE: SET GPU TYPE HERE ####
-@stub.cls(image=stub.gptq_image, gpu=gpu.A10G(count=1), concurrency_limit=1, container_idle_timeout=300)
+@stub.cls(image=stub.gptq_image, gpu=gpu.A100(count=1), concurrency_limit=1, container_idle_timeout=300)
 class ModalGPTQ:
     def __enter__(self):
         quantized_model_dir = "/model"

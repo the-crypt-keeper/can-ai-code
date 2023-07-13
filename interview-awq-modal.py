@@ -4,9 +4,9 @@ import time
 import json
 from jinja2 import Template
 
-def download_awq_model(name, base_model, model_bin='pytorch_model.bin', q_group_size=64, w_bit=4):
+def download_awq_model(name, base_model, q_group_size=64, w_bit=4, big_model=False):
     with open("./_info.json",'w') as f:
-        json.dump({"model_name": name, "base_model": base_model, "q_group_size": q_group_size, "w_bit": w_bit, "model_bin": model_bin}, f)
+        json.dump({"model_name": name, "base_model": base_model, "q_group_size": q_group_size, "w_bit": w_bit, "big_model": big_model}, f)
     snapshot_download(name)
     snapshot_download(base_model, allow_patterns=["*.json","*.model"])
 
@@ -15,7 +15,10 @@ def download_awq_falcon_instruct_7b_model():
     download_awq_model("abhinavkulkarni/falcon-7b-instruct-w4-g64-awq", "tiiuae/falcon-7b-instruct")
 
 def download_awq_codgen2p5_7b_model():
-    download_awq_model("abhinavkulkarni/Salesforce-codegen25-7b-multi-w4-g128-awq", "Salesforce/codegen25-7b-multi")
+    download_awq_model("abhinavkulkarni/Salesforce-codegen25-7b-multi-w4-g128-awq", "Salesforce/codegen25-7b-multi", q_group_size=128)
+
+def download_awq_falcon_instruct_40b_model():
+    download_awq_model("abhinavkulkarni/tiiuae-falcon-40b-instruct-w4-g128-awq", "tiiuae/falcon-40b-instruct", q_group_size=128, big_model=True)
 
 image = (
     Image.from_dockerhub("nvcr.io/nvidia/pytorch:23.06-py3")
@@ -28,7 +31,7 @@ image = (
     .run_commands("git clone https://github.com/mit-han-lab/llm-awq",
                   "cd llm-awq && git checkout 71d8e68df78de6c0c817b029a568c064bf22132d && pip install -e .")
     .run_commands("cd llm-awq/awq/kernels && export TORCH_CUDA_ARCH_LIST='8.0 8.6 8.7 8.9 9.0' && python setup.py install")
-    .run_function(download_awq_falcon_instruct_7b_model)
+    .run_function(download_awq_falcon_instruct_40b_model)
 )
 
 stub = Stub(image=image)
@@ -40,8 +43,8 @@ class ModalTransformers:
         import torch
         from awq.quantize.quantizer import real_quantize_model_weight
         from transformers import AutoModelForCausalLM, AutoConfig, AutoTokenizer
-        from accelerate import init_empty_weights, load_checkpoint_and_dispatch
-        from huggingface_hub import hf_hub_download
+        from accelerate import init_empty_weights, load_checkpoint_and_dispatch, infer_auto_device_map
+        from huggingface_hub import snapshot_download
 
         self.info = json.load(open('./_info.json'))
         print('Remote model info:', self.info)
@@ -56,7 +59,7 @@ class ModalTransformers:
         t0 = time.time()
         print('Starting up...')
 
-        load_quant = hf_hub_download(self.info['model_name'], self.info['model_bin'])
+        load_quant = snapshot_download(self.info['model_name'])
 
         with init_empty_weights():
             model = AutoModelForCausalLM.from_config(config, torch_dtype=torch.float16, trust_remote_code=True)
@@ -64,7 +67,18 @@ class ModalTransformers:
         q_config = { "zero_point": True, "q_group_size": self.info['q_group_size'] }
         real_quantize_model_weight(model, w_bit=self.info['w_bit'], q_config=q_config, init_only=True)
 
-        self.model = load_checkpoint_and_dispatch(model, load_quant, device_map="balanced")
+        if self.info['big_model']:
+            print('Loading big model with gpu_count', gpu_request.count)
+            max_memory = {0:"18GiB", "cpu":"99GiB"} if gpu_request.count == 1 else { 0:"18GiB", 1:"22GiB" }
+            device_map = infer_auto_device_map(model,
+                                               no_split_module_classes=["DecoderLayer"],
+                                               max_memory=max_memory)
+            if device_map['lm_head'] == 'cpu': device_map['lm_head'] = 0
+            print(device_map)
+        else:
+            device_map = 'balanced'
+        
+        self.model = load_checkpoint_and_dispatch(model, load_quant, device_map=device_map)
 
         print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
 
@@ -105,7 +119,9 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
             print(f"[{idx+1}/{len(interview)}] {question['language']} {question['name']}")
 
             # generate the answer
+            start_time = time.time()
             result, info = model.generate.call(question['prompt'], params=params_json)
+            print(f"Answer generated in {time.time() - start_time:.2f}s")
 
             # save for later
             if model_info is None:
