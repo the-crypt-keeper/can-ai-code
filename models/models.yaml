@@ -154,6 +154,7 @@
   name: Vicuna-1.1
   tags: ["vicuna"]
   url: https://huggingface.co/CRD716/ggml-vicuna-1.1-quantized
+  quant: GGML-q5_0
 - id: Manticore-13B.ggmlv3.q5
   tags: ["llama"]
   url: https://huggingface.co/TheBloke/Manticore-13B-GGML
