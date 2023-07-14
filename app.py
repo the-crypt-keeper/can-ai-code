@@ -20,7 +20,8 @@ def load_data():
         paths = ['results/eval*.ndjson',
                  'results/orca-mini-v2/eval*.ndjson',
                  'results/salesforce/eval*.ndjson',
-                 'results/falcon/eval*.ndjson']
+                 'results/falcon/eval*.ndjson',
+                 'results/vicuna-1.3/eval*.ndjson']
     files = []
     for path in paths:
         files += glob.glob(path)
