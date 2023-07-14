@@ -386,3 +386,39 @@
   quant: FP16
   tags: ["replit"]
   url: https://huggingface.co/sahil2801/replit-code-instruct-glaive
+- id: TheBloke-falcon-40b-instruct-GPTQ
+  name: Falcon-Instruct
+  size: 40B
+  tags: ["falcon"]
+  quant: GPTQ-4bit
+  url: https://huggingface.co/TheBloke/falcon-40b-instruct-GPTQ
+- id: falcon-40b-instruct.ggccv1.q2-k
+  name: Falcon-Instruct
+  size: 40B
+  tags: ["falcon"]
+  quant: GGML-q2_k
+  url: https://huggingface.co/TheBloke/falcon-40b-instruct-GGML
+- id: falcon-40b-instruct.ggccv1.q3-k
+  name: Falcon-Instruct
+  size: 40B
+  tags: ["falcon"]
+  quant: GGML-q3_k
+  url: https://huggingface.co/TheBloke/falcon-40b-instruct-GGML
+- id: falcon-40b-instruct.ggccv1.q4-k
+  name: Falcon-Instruct
+  size: 40B
+  tags: ["falcon"]
+  quant: GGML-q4_k
+  url: https://huggingface.co/TheBloke/falcon-40b-instruct-GGML
+- id: falcon-40b-instruct.ggccv1.q5-k
+  name: Falcon-Instruct
+  size: 40B
+  tags: ["falcon"]
+  quant: GGML-q5_k
+  url: https://huggingface.co/TheBloke/falcon-40b-instruct-GGML
+- id: abhinavkulkarni-tiiuae-falcon-40b-instruct-w4-g128-awq
+  name: Falcon-Instruct
+  size: 40B
+  tags: ["falcon"]
+  quant: AWQ-4bit
+  url: https://huggingface.co/abhinavkulkarni/tiiuae-falcon-40b-instruct-w4-g128-awq
