@@ -40,7 +40,7 @@ def download_falcon_40b_4bit_v2():
 
 
 class ModalGPTQ:
-    def __enter__(self):
+    def __init__(self):
         quantized_model_dir = "/model"
 
         self.info = json.load(open('/model/_info.json'))
@@ -54,6 +54,8 @@ class ModalGPTQ:
             quantize_config.save_pretrained('/model')
         else:
             print('This model contains quantize_config.')
+
+        t0 = time.time()
 
         print('Loading tokenizer...')
         tokenizer = AutoTokenizer.from_pretrained(quantized_model_dir, use_fast=False)
@@ -75,6 +77,7 @@ class ModalGPTQ:
         }
 
     def generate(self, prompt, params):
+        t0 = time.time()
         tokens = self.tokenizer(prompt, return_tensors="pt").to("cuda:0").input_ids
         output = self.model.generate(input_ids=tokens, do_sample=True, **params)
 
@@ -85,7 +88,7 @@ class ModalGPTQ:
         for special_token in self.info['model_eos']:
             answer = answer.replace(special_token, '')
 
-        return answer, self.info
+        return answer, self.info, time.time() - t0
 
 def main(input: str, params: str, iterations: int = 1):
     from prepare import save_interview
@@ -104,7 +107,7 @@ def main(input: str, params: str, iterations: int = 1):
             print(f"[{idx+1}/{len(interview)}] {question['language']} {question['name']}")
 
             # generate the answer
-            answer, info = model.generate.call(question['prompt'], params=params_model)
+            answer, info, elapsed = model.generate(question['prompt'], params=params_model)
 
             # save for later
             if model_info is None:
@@ -113,10 +116,11 @@ def main(input: str, params: str, iterations: int = 1):
             
             print()
             print(answer)
-            print()
+            print(f"  took {elapsed:.2f}sec")
 
             result = question.copy()
             result['answer'] = answer
+            result['elapsed'] = elapsed
             result['params'] = params_model
             result['model'] = info['model_name']
             result['runtime'] = 'autogptq'
