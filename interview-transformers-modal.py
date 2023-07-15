@@ -31,6 +31,9 @@ def download_falcon_instruct_7b_model():
 def download_replit_code_instruct_3b_model():
     download_model("sahil2801/replit-code-instruct-glaive")
 
+def download_replit_code_v1_3b_model():
+    download_model("replit/replit-code-v1-3b")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -44,7 +47,7 @@ image = (
         "accelerate==0.19.0"
     )
     .pip_install("einops==0.6.1", "sentencepiece==0.1.99")
-    .run_function(download_replit_code_instruct_3b_model)
+    .run_function(download_replit_code_v1_3b_model)
 )
 
 stub = Stub(image=image)
