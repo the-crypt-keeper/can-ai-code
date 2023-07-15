@@ -34,6 +34,9 @@ def download_replit_code_instruct_3b_model():
 def download_replit_code_v1_3b_model():
     download_model("replit/replit-code-v1-3b")
 
+def download_vicuna_1p3_7b_model():
+    download_model("lmsys/vicuna-7b-v1.3")
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -43,11 +46,11 @@ image = (
     .pip_install(
         "transformers==4.30.2",
         "tiktoken==0.4.0",
-        "bitsandbytes==0.39.1",
-        "accelerate==0.19.0"
+        "bitsandbytes==0.40.1.post1",
+        "accelerate==0.21.0"
     )
     .pip_install("einops==0.6.1", "sentencepiece==0.1.99")
-    .run_function(download_replit_code_v1_3b_model)
+    .run_function(download_vicuna_1p3_7b_model)
 )
 
 stub = Stub(image=image)
@@ -56,7 +59,7 @@ gpu_request = gpu.A10G(count=1)
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300)
 class ModalTransformers:
     def __enter__(self):
-        from transformers import AutoModelForCausalLM, AutoTokenizer
+        from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
         import torch
 
         self.info = json.load(open('./_info.json'))
@@ -64,14 +67,25 @@ class ModalTransformers:
 
         # Select FP32 or FP16 here
         torch_dtype = torch.float16
+        # Enable quants here
+        quantization_config = BitsAndBytesConfig(load_in_8bit = False,
+                                                 load_in_4bit = False,
+                                                 bnb_4bit_quant_type = "fp4")
 
         t0 = time.time()
         print('Starting up...', str(torch_dtype))
         self.tokenizer = AutoTokenizer.from_pretrained(self.info['model_name'], trust_remote_code=True)
-        self.model = AutoModelForCausalLM.from_pretrained(self.info['model_name'], device_map="auto", torch_dtype=torch_dtype, trust_remote_code=True)
+        print('Loading model...')
+        self.model = AutoModelForCausalLM.from_pretrained(self.info['model_name'], device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, trust_remote_code=True)
         print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
 
-        if torch_dtype == torch.float16:
+        if quantization_config.load_in_4bit:
+            print('Loaded in fp4.')
+            self.info['model_name'] = self.info['model_name'] + '-' + quantization_config.bnb_4bit_quant_type
+        elif quantization_config.load_in_8bit:
+            print('Loaded in int8.')
+            self.info['model_name'] = self.info['model_name'] + '-int8'
+        elif torch_dtype == torch.float16:
             print('Loaded in fp16.')
             self.info['model_name'] = self.info['model_name'] + '-fp16'
 
@@ -84,7 +98,7 @@ class ModalTransformers:
         sampling_params = {
             'do_sample': True,
             'temperature': params.get('temperature', 1.0),
-            'max_length': params.get('max_length', 256),
+            'max_length': params.get('max_length', 512),
             'top_k': params.get('top_k', 40),
             'top_p': params.get('top_p', 1.0),
             'repetition_penalty': params.get('repetition_penalty', 1.0)
@@ -109,8 +123,8 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
 
     for iter in range(iterations):
         results = []
-        for question in interview:
-            print(question['name'], question['language'])
+        for idx, question in enumerate(interview):
+            print(f"{idx+1}/{len(interview)} {question['name']} {question['language']}")
 
             # generate the answer
             result, info = model.generate.call(question['prompt'], params=params_json)

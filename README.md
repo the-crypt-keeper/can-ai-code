@@ -8,9 +8,21 @@ A self-evaluating interview for AI coding models.
 * Sandbox enviroment (Docker-based) for untrusted Python and NodeJS execution
 * Provide reference coding prompts tuned for each LLM
 * Compare LLM models coding performance against each other
-* Evaluate effects of prompting techniques and sampling parameters and the impact of different quantization methods on LLM performance
+* Evaluate effects of prompting techniques and sampling parameters as well as the impact of quantization methods on LLM coding performance
 
-## Supported Test Suites
+## News
+
+**7/15** bitsandbytes [INT8](https://github.com/TimDettmers/bitsandbytes) and [NF4](https://huggingface.co/blog/4bit-transformers-bitsandbytes) now supported via `interview-transformers-modal.py`
+
+**7/15** fixed the input() bug in the python evaluator and re-scored affected models.
+
+**7/15** New `interview-gradio.py` replaces several older gradio-based interviewers, refactor the interview list in the README.
+
+**7/14** Completed evaluations on Falcon (7B and 40B) and Vicuna-1.3 (7B, 13B, 33B) across a variety of quantizations, see [can-ai-code Leaderboard](https://huggingface.co/spaces/mike-ravkine/can-ai-code-results) for the results: select a language, then unselect "Show Best Result from each model" to see per-quant results.
+
+**7/12** [AWQ](https://github.com/mit-han-lab/llm-awq) now supported via `interview-awq-model.py` but only 4-bit for now as the authors haven't released 3-bit code.
+
+## Test Suites
 
 `junior-dev` is a multi-language (Python, JavaScript) suite of 12 tests created for this project to test small LLM coding performance.  This project provides all necessary components to execute this evaluation.
 
