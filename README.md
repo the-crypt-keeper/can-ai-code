@@ -6,8 +6,9 @@ A self-evaluating interview for AI coding models.
 
 * Interview questions written by humans, test taken by AI
 * Sandbox enviroment (Docker-based) for untrusted Python and NodeJS execution
-* Compare LLM models against each other
-* For a given LLM, compare prompting techniques and hyper-parameters
+* Provide reference coding prompts tuned for each LLM
+* Compare LLM models coding performance against each other
+* Evaluate effects of prompting techniques and sampling parameters and the impact of different quantization methods on LLM performance
 
 ## Supported Test Suites
 
@@ -27,7 +28,7 @@ Install a recent release of streamlit `pip install streamlit==1.23` then `stream
 
 ## Results HumanEval
 
-:construction: HumanEval development work is currently paused, there's other projects that are much further along.
+:construction: [humaneval/](humaneval/) development work is currently paused, there's other projects that are much further along.
 
 | Model |     Quant    | Size | License | Prompt |    Params  | Python |
 |-------|--------------|------|---------|--------|------------|--------|
@@ -37,81 +38,72 @@ See https://github.com/my-other-github-account/llm-humaneval-benchmarks and http
 
 ## Repository Structure
 
-The repository is logically grouped into three parts: prepare, interview, evaluate.
-
 ### Prepare
 
-#### junior-dev
-
 * `junior-dev/*.yaml` - Interview questions (multi-language)
-* `prompts/*.txt` - System prompts for the various models
+* `prompts/*.txt` - LLM prompt templates for the various models
 * `prepare.py` - Applies templates to question turning them into language- and model-specific prompts suitable for interview
 
-#### humaneal
+#### Prompts
 
-See [humaneval/](humaneval/).
+(WIP)
+
+`Vicuna-1p1.txt`
+
+`starcoder-fim*.txt`
+
+`Manticore-YearZero.txt` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
 
 ### Interview
 
-`params/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
+* `params/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
+* `interview-*.py` - Interview scripts
 
-#### LangChain 
+#### Parameters
 
-`interview-langchain.py` provides a LangChain interview executor.
+(WIP)
 
-To add a new model, update `init_model` to add parameter mappings and adapter instance.
+`precise.json`
 
-#### OobaBooga/KoboldCpp API
+`mirostat.json` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
 
-`interview-oobabooga.py` provides a text-generation-ui/koboldcpp API compatible interview executor.
+### Evaluate
 
-#### GPTQ
+* `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
+* `app.py` - Streamlit webapp to explore results, see https://huggingface.co/spaces/mike-ravkine/can-ai-code-results
 
-`interview-autogptq-modal.py` - Run latest AutoGPTQ on Modal.
+### Compare
 
-The nature of Modal does not allow command-line selection of LLM model.  In order to select models, you'll have to open the script and uncomment the `.run_function(download...)` line of choice.  Note that only one model can be selected at a time.
+WIP
 
-To add a new model, implement a new `download...` function.  Quantization parameters are only required if the model does not contain a `quantize_config.json`.
+## Interviewers
 
-#### Exllama
+|        Script            |     Runtime    | Models | Quants | Local/Remote |
+|--------------------------|----------------|--------|--------|--------------|
+| `interview-langchain.py` | langchain      | lots   | n/a    | n/a          |
+| `interview-oobabooga.py` | oobabooga, koboldcpp | lots | yes | remote      |
+| `interview-autogptq.py`  | autogptq       | lots   | gptq   | local + modal via `interview-autogptq-modal.py` |
+| `interview-transformers.py` | transformers | lots | yes | local + modal via `interview-transformers-modal.py` |
+| `interview-exllama-modal.py` | exllama | llama | gptq | remote via modal |
+| `interview-vllm-modal.py` | vllm | llama | n/a | remote via modal |
+| `interview-awq-modal.py` | awq | llama, falcon | awq | remote via modal |
+| `interview-llamacpp.py`  | ggml, ggllm, llamacpp | lots | GGML | local + remote via ssh |
+| `interview-hfinference.py` | hf-inference-api | lots | n/a | remote |
+| `interview-gradio.py`    | gradio | lots | n/a | remote |
 
-`interview-exllama-modal.py` - Run latest Exllama on Modal.
+### Notes on adding new models
 
-See GPTQ notes above, the executor is very similar with one notable difference: it supports beam search.
+* LangChain: To add a new model, update `init_model` to add parameter mappings and adapter instance.
 
-#### vLLM
+* All modal scripts:   The nature of Modal does not allow command-line selection of LLM model.  In order to select models, you'll have to open the script and uncomment the `.run_function(download...)` line of choice.  Note that only one model can be selected at a time.   To add a new model, implement a new `download...` function.  Quantization parameters are only required if the model does not contain a `quantize_config.json`.
 
-`interview-vllm-modal.py` - Run vLLM on Modal.
-
-See GPTQ notes above for structure but note that this executor runs full precision FP16 models so will require more/larger GPUs then the GPTQ-based ones.
-
-#### GGML
-
-`Interview-llamacpp.py` provides an executor to wrap `main` on local (or remote via ssh) CPU/GPU
+### Notes on llamacpp
 
 For llama (https://github.com/ggerganov/llama.cpp): --main main --args=""
 
 For starcoder (https://github.com/ggerganov/ggml): --main starcoder --args=""
 
 For falcon (https://github.com/cmp-nct/ggllm.cpp): --main falcon_main --args="--no-penalize-nl"
-
-#### Huggingface APIs
-
-* `interview-hfinference.py` - Use Huggingface Inference API to run various models
-* `interview-starchat.py` - Use Huggingface Spaces to run Starchat model
-* `interview-starcoder.py` - Use Huggingface Transformers to run Starcoder models on local GPU
-
-### Evaluate
-
-#### junior-dev
-
-`evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
-
-`app.py` - Streamlit webapp to explore results, see https://huggingface.co/spaces/mike-ravkine/can-ai-code-results
-
-#### humaneval
-
-See [humaneval/](humaneval/).
 
 ## Question Format
 
@@ -151,24 +143,6 @@ The last two fields are used by `evaluate.py` to judge the results:
 Each check has a name, some `assert` value (python code) and an expected `eq` value.
 
 The f object represents the sandbox view of the function.  Static analysis is performed on the function signature to extract the `f.name` and `f.args` fields, while `f.call` allows for function evaluation.
-
-## Using this Repository
-
-TODO
-
-### Prompts
-
-`Vicuna-1p1.txt`
-
-`starcoder-fim*.txt`
-
-`Manticore-YearZero.txt` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
-
-### Parameters
-
-`precise.json`
-
-`mirostat.json` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
 
 ## Output formats
 
@@ -211,13 +185,6 @@ Fields:
 
 # Roadmap / Future Work
 
-## Interesting Models
-
-* Evaluate Llama and Alpaca 65B open models
-* Evaluate codet5p: https://huggingface.co/Salesforce/codet5p-16b
-* Evaluate CodeAlpaca: https://github.com/sahil280114/codealpaca
-
-## Investigations
-
+* See all open [Model Request](https://github.com/the-crypt-keeper/can-ai-code/labels/model%20request) issues
 * If the models are offered error messages or failing test results, could they produce better code?
-* Can tweaking prompts improve performance?
+* [Can tweaking prompts improve performance?](https://github.com/the-crypt-keeper/can-ai-code/issues/37)
