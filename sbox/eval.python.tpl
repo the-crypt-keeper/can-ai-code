@@ -1,5 +1,8 @@
 import math
 import types
+def stub(*args, **kwargs):
+  return "0"
+input = stub
 try:
   with open('/answer') as f:
     exec(f.read())
