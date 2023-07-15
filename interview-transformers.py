@@ -7,7 +7,7 @@ import argparse
 import json
 from prepare import save_interview
 
-parser = argparse.ArgumentParser(description='Interview executor for StarCoder family')
+parser = argparse.ArgumentParser(description='Interview executor for AutoModelForCausalLM')
 parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
 parser.add_argument('--model', type=str, default='bigcode/tiny_starcoder_py', help='model to use')
 parser.add_argument('--device', type=str, default='cuda', help='device to use')
@@ -19,8 +19,8 @@ args = parser.parse_args()
 checkpoint = args.model
 device = args.device
 
-tokenizer = AutoTokenizer.from_pretrained(checkpoint)
-model = AutoModelForCausalLM.from_pretrained(checkpoint).to(device)
+tokenizer = AutoTokenizer.from_pretrained(checkpoint, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(checkpoint, trust_remote_code=True, device_map="auto").to(device)
 
 # Load parameters and output template, strip json comments.
 params = json.load(open(args.params))
@@ -40,7 +40,7 @@ for challenge in interview:
     outputs = model.generate(inputs, pad_token_id=tokenizer.eos_token_id, **params)
 
     result = tokenizer.decode(outputs[0])
-    result = result.replace(prompt, '').replace('<|endoftext|>','')
+    result = result.replace(prompt, '').replace('<|endoftext|>','').replace('</s>','')
     
     answer = output_template.render(**challenge, Answer=result)
 
