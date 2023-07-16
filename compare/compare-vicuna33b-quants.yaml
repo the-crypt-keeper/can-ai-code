@@ -1,11 +1,10 @@
-title: Vicuna-1.3-33B Quantization (Python)
-language: python
+title: Vicuna-1.3-33B Quantization
 models:
   - id: GGML-q5
     eval: vicuna-1.3/eval_junior-dev_python-javascript_Vicuna-1p1_none_precise_vicuna-33b.ggmlv3.q5-0_1688233115.ndjson
     short_name: vicuna-33b.ggmlv3
   - id: AWQ-4b
-    eval: vicuna-1.3/eval_junior-dev_python-javascript_Vicuna-1p1_none_precise_abhinavkulkarni-lmsys-vicuna-33b-v1.3-w4-g128-awq_1689367631.ndjson
+    eval: vicuna-1.3/eval_junior-dev_python-javascript_Vicuna-1p1_none_precise_abhinavkulkarni-lmsys-vicuna-33b-v1.3-w4-g128-awq_1689519609.ndjson
     short_name: vicuna-33b-v1.3-w4-g128-awq
   - id: GPTQ-4b
     eval: vicuna-1.3/eval_junior-dev_python-javascript_Vicuna-1p1_none_precise_TheBloke-vicuna-33B-GPTQ_1688289360.ndjson

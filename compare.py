@@ -4,6 +4,7 @@ import os
 from jinja2 import Template
 import fire
 import yaml
+from copy import copy
 
 task_prompt = "Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}"
 
@@ -116,19 +117,23 @@ def analysis(data, analyser):
 
     return data
 
-def main(config: str, path: str = "results/", analyser: str = ""):
+def main(config: str, path: str = "results/", analyser: str = "", language: str = "javascript,python"):
     cfg = yaml.safe_load(open(config))
-    
-    data = prepare(cfg['language'], path, cfg['models'])
-    data['config'] = cfg
-    data['analyser'] = analyser
 
-    if analyser != "":
-        analysis(data, analyser)
+    for lang in language.split(','):
+        cfg['language'] = lang
+        print('Comparing results for', lang)
+        data = prepare(cfg['language'], path, cfg['models'])
+        data['config'] = copy(cfg)
+        data['config']['title'] += f" ({lang})"
+        data['analyser'] = analyser
 
-    outfile = config.replace('.yaml', '.json')
-    with open(outfile, 'w') as f:
-        json.dump(data, f, indent=4)
+        if analyser != "":
+            analysis(data, analyser)
+
+        outfile = config.replace('.yaml', f'-{lang}.json')
+        with open(outfile, 'w') as f:
+            json.dump(data, f, indent=4)
 
 if __name__ == "__main__":
     fire.Fire(main)
