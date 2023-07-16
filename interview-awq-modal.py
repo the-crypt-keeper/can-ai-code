@@ -10,6 +10,11 @@ def download_awq_model(name, base_model, q_group_size=64, w_bit=4, big_model=Fal
     snapshot_download(name)
     snapshot_download(base_model, allow_patterns=["*.json","*.model"])
 
+def download_awq_model_v2(name, q_group_size=64, w_bit=4, big_model=False):
+    with open("./_info.json",'w') as f:
+        json.dump({"model_name": name, "base_model": None, "q_group_size": q_group_size, "w_bit": w_bit, "big_model": big_model}, f)
+    snapshot_download(name)
+
 def download_awq_falcon_instruct_7b_model():
     # pre-quantized model required
     download_awq_model("abhinavkulkarni/falcon-7b-instruct-w4-g64-awq", "tiiuae/falcon-7b-instruct")
@@ -19,6 +24,9 @@ def download_awq_codgen2p5_7b_model():
 
 def download_awq_falcon_instruct_40b_model():
     download_awq_model("abhinavkulkarni/tiiuae-falcon-40b-instruct-w4-g128-awq", "tiiuae/falcon-40b-instruct", q_group_size=128, big_model=True)
+
+def download_awq_vicuna_1p3_33b_model():
+    download_awq_model_v2("abhinavkulkarni/lmsys-vicuna-33b-v1.3-w4-g128-awq", q_group_size=128)  
 
 image = (
     Image.from_dockerhub("nvcr.io/nvidia/pytorch:23.06-py3")
@@ -31,7 +39,7 @@ image = (
     .run_commands("git clone https://github.com/mit-han-lab/llm-awq",
                   "cd llm-awq && git checkout 71d8e68df78de6c0c817b029a568c064bf22132d && pip install -e .")
     .run_commands("cd llm-awq/awq/kernels && export TORCH_CUDA_ARCH_LIST='8.0 8.6 8.7 8.9 9.0' && python setup.py install")
-    .run_function(download_awq_falcon_instruct_40b_model)
+    .run_function(download_awq_vicuna_1p3_33b_model)
 )
 
 stub = Stub(image=image)
@@ -50,10 +58,9 @@ class ModalTransformers:
         print('Remote model info:', self.info)
 
         # Config
-        config = AutoConfig.from_pretrained(self.info['base_model'], trust_remote_code=True)
-
-        # Tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(self.info['base_model'], trust_remote_code=True)
+        base_model = self.info['base_model'] if self.info['base_model'] else self.info['model_name']
+        config = AutoConfig.from_pretrained(base_model, trust_remote_code=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
 
         # Model
         t0 = time.time()
@@ -90,12 +97,12 @@ class ModalTransformers:
         sampling_params = {
             'do_sample': True,
             'temperature': params.get('temperature', 1.0),
-            'max_length': params.get('max_length', 256),
+            'max_length': params.get('max_new_tokens', 512),
             'top_k': params.get('top_k', 40),
             'top_p': params.get('top_p', 1.0),
             'repetition_penalty': params.get('repetition_penalty', 1.0)
         }
-        sample = self.model.generate(input_ids, attention_mask=attention_mask, eos_token_id=self.tokenizer.eos_token_id, **sampling_params)
+        sample = self.model.generate(input_ids, attention_mask=attention_mask, use_cache=True, eos_token_id=self.tokenizer.eos_token_id, **sampling_params)
         self.info['sampling_params'] = sampling_params
         answer = self.tokenizer.decode(sample[0], skip_special_tokens=True)[len(prompt):]
         return answer, self.info
