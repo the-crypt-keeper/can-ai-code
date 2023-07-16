@@ -12,6 +12,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/16** Updated results for Vicuna-1.3 AWQ and merged the `compare` feature!  Browse [Comparisons](https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare) at our new space.
+
 **7/15** bitsandbytes [INT8](https://github.com/TimDettmers/bitsandbytes) and [NF4](https://huggingface.co/blog/4bit-transformers-bitsandbytes) now supported via `interview-transformers-modal.py`
 
 **7/15** fixed the input() bug in the python evaluator and re-scored affected models.
@@ -28,25 +30,19 @@ A self-evaluating interview for AI coding models.
 
 :construction: `humaneval` is a Python-only suite of 164 tests created by OpenAI.  This project provides template scripts to prepare and execute the humaneval interview, as well as result extraction scripts to help their evaluator. See https://github.com/openai/human-eval for more information.
 
-## Results junior-dev
+## [Click to see Leaderboard on HF Spaces](https://huggingface.co/spaces/mike-ravkine/can-ai-code-results)
 
-:new::new: The leaderboard table got too difficult to read, explore the interactive leaderboard here: :new::new:
+## [Click to see Comparisons on HF Spaces](https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare)
 
-https://huggingface.co/spaces/mike-ravkine/can-ai-code-results
+## Results data
 
-All model answers and evaluation results are now included inside this repository!
+All model answers and evaluation results are now included inside this repository!  Install a recent release of streamlit `pip install streamlit==1.23` then `streamlit run app.py` or `streamlit run compare-app.py` to run the above webapps locally.
 
-Install a recent release of streamlit `pip install streamlit==1.23` then `streamlit run app.py` to run the result browser app locally.
-
-## Results HumanEval
+### Results HumanEval
 
 :construction: [humaneval/](humaneval/) development work is currently paused, there's other projects that are much further along.
 
-| Model |     Quant    | Size | License | Prompt |    Params  | Python |
-|-------|--------------|------|---------|--------|------------|--------|
-| VicUnlocked-30B-LoRA      | GPTQ 4b/128g | 30B | Open | Vicuna-1p1         | precise | 20/164 |
-
-See https://github.com/my-other-github-account/llm-humaneval-benchmarks and https://github.com/abacaj/code-eval for far more Humaneval LLM benchmarks.
+See https://github.com/my-other-github-account/llm-humaneval-benchmarks and https://github.com/abacaj/code-eval for large lists of Humaneval LLM benchmark results.
 
 ## Repository Structure
 
@@ -86,7 +82,10 @@ See https://github.com/my-other-github-account/llm-humaneval-benchmarks and http
 
 ### Compare
 
-WIP
+* `compare.py` - Performs comparisons between evaluations, optionally calling out to an LLM for analysis
+* `compare-app.py` - Streamlit webapp to explore comparisons, see https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare
+* `compare/*.yaml` - Compare configurations
+* `compare/*.json` - Compare results
 
 ## Interviewers
 
