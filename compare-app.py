@@ -14,7 +14,6 @@ def display_analysis_data(data):
     models = {}
     for idx, model_info in enumerate(models_list):
         models[model_info['id']] = model_info
-        models[model_info['id']]['idx'] = idx
 
     # summary table
     summary_cols = st.columns(len(models_list))
@@ -34,21 +33,15 @@ def display_analysis_data(data):
             
         for model_id, model_result in test_data['results'].items():
             model_info = models[model_id]
-            print(model_info)
 
             model_result['passing_tests'] = '\n\n'.join([f":blue[{x}]" for x in model_result['passing_tests'].split('\n') if x.strip() != ''])
             model_result['failing_tests'] = '\n\n'.join([f":red[{x}]" for x in model_result['failing_tests'].split('\n') if x.strip() != ''])
 
             with columns[model_info['idx']]:
                 st.subheader(f"{model_info['short_name']}")
-                st.markdown(f"**Summary:** {model_result['check_summary']}\n\n---")
-
-                #st.markdown("""<hr style="height:2px;border:none;color:#333;background-color:#333;" /> """, unsafe_allow_html=True)
-
-                st.write(model_result['answer']+'\n\n---')
-
-                #st.markdown("""<hr style="height:2px;border:none;color:#333;background-color:#333;" /> """, unsafe_allow_html=True)
-                
+                st.markdown(f"**Summary:** {model_result['check_summary']}")
+                st.write(model_result['answer'])
+                st.write('---')
                 passcol,failcol=st.columns(2)
                 passcol.markdown(f"**Passing Tests:**\n\n{model_result['passing_tests']}")
                 failcol.markdown(f"**Failing Tests:**\n\n{model_result['failing_tests']}")
