@@ -1,6 +1,12 @@
+<div style="text-align: center;">
+
 # Can AI Code?
 
+![A cute robot working on a laptop](img/can-ai-code-small.png "A cute robot working on a laptop")
+
 A self-evaluating interview for AI coding models.
+
+</div>
 
 ## Key Ideas
 
@@ -34,7 +40,7 @@ A self-evaluating interview for AI coding models.
 
 ## [Click to see Comparisons on HF Spaces](https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare)
 
-## Results data
+### Results data
 
 All model answers and evaluation results are now included inside this repository!  Install a recent release of streamlit `pip install streamlit==1.23` then `streamlit run app.py` or `streamlit run compare-app.py` to run the above webapps locally.
 
