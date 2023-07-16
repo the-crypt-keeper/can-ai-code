@@ -1,0 +1,14 @@
+title: Airoboros 1.4.x 7B
+models:
+  - id: "1.4-plain"
+    eval: airoboros-1.4/eval_junior-dev_python-javascript_airoboros-plain_none_greedy_jondurbin-airoboros-7b-gpt4-1.4-fp16_1688334074.ndjson
+    short_name: 1.4 Plain
+  - id: "1.4"
+    eval: airoboros-1.4/eval_junior-dev_python-javascript_airoboros_none_greedy_jondurbin-airoboros-7b-gpt4-1.4-fp16_1688334067.ndjson
+    short_name: 1.4 Normal
+  - id: "1.4.1-plain"
+    eval: airoboros-1.4/eval_junior-dev_python-javascript_airoboros-plain_none_greedy_jondurbin-airoboros-7b-gpt4-1.4.1-qlora_1688334949.ndjson
+    short_name: 1.4.1 Plain
+  - id: "1.4.1"
+    eval: airoboros-1.4/eval_junior-dev_python-javascript_airoboros_none_greedy_jondurbin-airoboros-7b-gpt4-1.4.1-qlora_1688334937.ndjson
+    short_name: 1.4.1 Normal

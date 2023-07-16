@@ -132,12 +132,60 @@
   size: 13B
   quant: GGML-q5_0
   url: https://huggingface.co/TheBloke/Nous-Hermes-13B-GGML
+- id: jondurbin-airoboros-7b-gpt4-1.4-fp16
+  name: Airoboros-1.4
+  tags: ["airoboros"]
+  size: 7B
+  quant: FP16
+  url: https://huggingface.co/jondurbin/airoboros-7b-gpt4-1.4
+- id: airoboros-7b-gpt4-1.4.ggmlv3.q5-0
+  name: Airoboros-1.4
+  tags: ["airoboros"]
+  size: 7B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/airoboros-7B-gpt4-1.4-GGML
+- id: jondurbin-airoboros-7b-gpt4-1.4.1-qlora
+  name: Airoboros-1.4.1
+  tags: ["airoboros"]
+  size: 7B
+  quant: FP16
+  url: https://huggingface.co/jondurbin/airoboros-7b-gpt4-1.4
+- id: jondurbin-airoboros-13b-gpt4-1.4-fp16
+  name: Airoboros-1.4
+  tags: ["airoboros"]
+  size: 13B
+  quant: FP16
+  url: https://huggingface.co/jondurbin/airoboros-13b-gpt4-1.4
+- id: airoboros-13b-gpt4-1.4.ggmlv3.q5-0
+  name: Airoboros-1.4
+  tags: ["airoboros"]
+  size: 13B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/airoboros-13B-gpt4-1.4-GGML
+- id: airoboros-13b-gpt4-1.4.ggmlv3.q8-0
+  name: Airoboros-1.4
+  tags: ["airoboros"]
+  size: 13B
+  quant: GGML-q8_0
+  url: https://huggingface.co/TheBloke/airoboros-13B-gpt4-1.4-GGML
+- id: jondurbin-airoboros-13b-gpt4-1.4.1-qlora
+  name: Airoboros-1.4.1
+  tags: ["airoboros"]
+  size: 13B
+  quant: FP16
+  url: https://huggingface.co/jondurbin/airoboros-13b-gpt4-1.4.1-qlora
 - id: TheBloke-airoboros-13B-gpt4-1.4-GPTQ
   name: Airoboros-1.4
   tags: ["airoboros"]
   size: 13B
   quant: GPTQ-4b
   url: https://huggingface.co/TheBloke/airoboros-13B-gpt4-1.4-GPTQ
+- id: TheBloke-airoboros-33B-gpt4-1.4-GPTQ
+  name: Airoboros-1.4
+  tags: ["airoboros"]
+  size: 33B
+  quant: GPTQ-4b
+  url: https://huggingface.co/TheBloke/airoboros-33B-gpt4-1.4-GPTQ
 - id: TheBloke-airoboros-65B-gpt4-1.4-GPTQ
   name: Airoboros-1.4
   tags: ["airoboros"]  

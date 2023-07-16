@@ -1,0 +1,481 @@
+{
+    "tests": {
+        "SanityMeaningOfLife-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": "def meaning_of_life():\n    return 42"
+                },
+                "1.4": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": "def meaning_of_life():\n    return 42"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": "def meaning_of_life():\n    return 42"
+                },
+                "1.4.1": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": "def meaning_of_life():\n    return 42"
+                }
+            },
+            "task": "Write a python function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+            "language": "python"
+        },
+        "SanityList-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', \"Madrid\"]",
+                    "answer": "def things():\n    return [5, 'foobar', \"Madrid\"]"
+                },
+                "1.4": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', \"Madrid\"]",
+                    "answer": "def things():\n    return [5, 'foobar', \"Madrid\"]"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', 'Madrid']",
+                    "answer": "def things():\n    return [5, 'foobar', 'Madrid']"
+                },
+                "1.4.1": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', 'Madrid']",
+                    "answer": "def things():\n    return [5, 'foobar', 'Madrid']"
+                }
+            },
+            "task": "Write a python function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+            "language": "python"
+        },
+        "SanitySecretIdentityMap-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "FAIL correct 1/5",
+                    "passing_tests": "PASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.name != secretidentities got \nFAIL f.call().get('Superman') != Clark Kent got 'list' object has no attribute 'get'\nFAIL f.call().get('Batman') != Bruce Wayne got 'list' object has no attribute 'get'\nFAIL f.call().get('Spider-Man') != Peter Parker got 'list' object has no attribute 'get'\n",
+                    "code": "superheroes = {\"Superman\": \"Clark Kent\", \"Batman\": \"Bruce Wayne\", \"Spider-Man\": \"Peter Parker\"}",
+                    "answer": "superheroes = {\"Superman\": \"Clark Kent\", \"Batman\": \"Bruce Wayne\", \"Spider-Man\": \"Peter Parker\"}"
+                },
+                "1.4": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    return {\n        \"Superman\": \"Clark Kent\",\n        \"Batman\": \"Bruce Wayne\",\n        \"Spider-Man\": \"Peter Parker\"\n    }",
+                    "answer": "def secretidentities():\n    return {\n        \"Superman\": \"Clark Kent\",\n        \"Batman\": \"Bruce Wayne\",\n        \"Spider-Man\": \"Peter Parker\"\n    }"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "superheroes = {\n    'Superman': 'Clark Kent',\n    'Batman': 'Bruce Wayne',\n    'Spider-Man': 'Peter Parker'\n}\n\ndef secretidentities():\n    return superheroes",
+                    "answer": "superheroes = {\n    'Superman': 'Clark Kent',\n    'Batman': 'Bruce Wayne',\n    'Spider-Man': 'Peter Parker'\n}\n\ndef secretidentities():\n    return superheroes"
+                },
+                "1.4.1": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    superheroes = {\n        'Superman': 'Clark Kent',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n    return superheroes\n\nprint(secretidentities())",
+                    "answer": "def secretidentities():\n    superheroes = {\n        'Superman': 'Clark Kent',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n    return superheroes\n\nprint(secretidentities())"
+                }
+            },
+            "task": "Write a python function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+            "language": "python"
+        },
+        "GCDZeroShot-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)"
+                },
+                "1.4": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "FAIL correct 3/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': 'timeout!'}\nFAIL f.call(100,10) != 10 got {'error': 'timeout!'}\n",
+                    "code": "def gcd(a, b):\n    if a < 0:\n        a = -a\n    while b != 0:\n        q, r = b, a % b\n        a, b = b, q\n    return abs(r)",
+                    "answer": "def gcd(a, b):\n    if a < 0:\n        a = -a\n    while b != 0:\n        q, r = b, a % b\n        a, b = b, q\n    return abs(r)"
+                },
+                "1.4.1": {
+                    "check_summary": "FAIL correct 3/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got 0\nFAIL f.call(100,10) != 10 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\n",
+                    "code": "def gcd(a, b):\n    if a < 0:\n        a = -a\n    while b != 0:\n        q = b // a\n        b %= a\n        a %= q\n    return a",
+                    "answer": "def gcd(a, b):\n    if a < 0:\n        a = -a\n    while b != 0:\n        q = b // a\n        b %= a\n        a %= q\n    return a"
+                }
+            },
+            "task": "Write a python function gcd(a, b) with two inputs a and b that returns the greatest common demoninator (gcd) of a and b",
+            "language": "python"
+        },
+        "GCDMisnamed-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "FAIL correct 4/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(100,10) != 10 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def fofx(x, banana):\n    return x if 0 == x or 0 == banana else gcd(gcd(banana, x % banana), x / banana)",
+                    "answer": "def fofx(x, banana):\n    return x if 0 == x or 0 == banana else gcd(gcd(banana, x % banana), x / banana)"
+                },
+                "1.4": {
+                    "check_summary": "FAIL correct 4/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': 'timeout!'}\nFAIL f.call(100,10) != 10 got {'error': 'timeout!'}\n",
+                    "code": "def fofx(x, banana):\n    gcd = x\n    while banana:\n        gcd = gcd % banana\n        if gcd > x:\n            gcd = gcd % x\n    return gcd",
+                    "answer": "def fofx(x, banana):\n    gcd = x\n    while banana:\n        gcd = gcd % banana\n        if gcd > x:\n            gcd = gcd % x\n    return gcd"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "FAIL correct 4/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\nFAIL f.call(100,10) != 10 got 1000\n",
+                    "code": "def fofx(x, banana):\n    if x == 0:\n        return banana\n    elif banana == 0:\n        return x\n    remainder = x % banana\n    quotient = x // banana\n    gcd_x = fofx(quotient, remainder)\n    gcd_banana = fofx(quotient, x)\n    return gcd_x * gcd_banana",
+                    "answer": "def fofx(x, banana):\n    if x == 0:\n        return banana\n    elif banana == 0:\n        return x\n    remainder = x % banana\n    quotient = x // banana\n    gcd_x = fofx(quotient, remainder)\n    gcd_banana = fofx(quotient, x)\n    return gcd_x * gcd_banana"
+                },
+                "1.4.1": {
+                    "check_summary": "FAIL correct 4/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\nFAIL f.call(100,10) != 10 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\n",
+                    "code": "def fofx(x, banana):\n    if x == 0:\n        return banana\n    elif banana == 0:\n        return x\n    else:\n        return fofx(banana % x, x) % fofx(banana, x)",
+                    "answer": "def fofx(x, banana):\n    if x == 0:\n        return banana\n    elif banana == 0:\n        return x\n    else:\n        return fofx(banana % x, x) % fofx(banana, x)"
+                }
+            },
+            "task": "Write a python function fofx(x, banana) with two inputs x and banana that returns the greatest common demoninator (gcd) of x and banana",
+            "language": "python"
+        },
+        "FactorialZeroShot-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result",
+                    "answer": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result"
+                },
+                "1.4": {
+                    "check_summary": "FAIL correct 1/4",
+                    "passing_tests": "PASS len(f.args) == 1\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': 'timeout!'}\nFAIL f.call(5) != 120 got {'error': 'timeout!'}\n",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result\n\n# Test the function\nnum = int(input(\"Enter a number: \"))\nprint(factorial(num))",
+                    "answer": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result\n\n# Test the function\nnum = int(input(\"Enter a number: \"))\nprint(factorial(num))"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n\n# Test the function\nprint(factorial(5))",
+                    "answer": "def factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n\n# Test the function\nprint(factorial(5))"
+                },
+                "1.4.1": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n\n# Test the function\nprint(factorial(5)) # Output: 120",
+                    "answer": "def factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n\n# Test the function\nprint(factorial(5)) # Output: 120"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using iteration",
+            "language": "python"
+        },
+        "FactorialRecursiveZeroShot-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)"
+                },
+                "1.4": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)"
+                },
+                "1.4.1": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using recursion",
+            "language": "python"
+        },
+        "FactorialMisnamed-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': \"name 'factorial' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(5) != 120 got {'error': \"name 'factorial' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def glork(bork):\n    return bork * factorial(bork - 1)",
+                    "answer": "def glork(bork):\n    return bork * factorial(bork - 1)"
+                },
+                "1.4": {
+                    "check_summary": "FAIL correct 4/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) != 1 got 0\nFAIL f.call(5) != 120 got 0\n",
+                    "code": "def glork(bork):\n    return bork * (bork - 1) * (bork - 2) * (bork - 3) * (bork - 4) * (bork - 5) * (bork - 6) * (bork - 7) * (bork - 8) * (bork - 9) * (bork - 10)",
+                    "answer": "def glork(bork):\n    return bork * (bork - 1) * (bork - 2) * (bork - 3) * (bork - 4) * (bork - 5) * (bork - 6) * (bork - 7) * (bork - 8) * (bork - 9) * (bork - 10)"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "FAIL correct 4/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) != 1 got 0\nFAIL f.call(5) != 120 got 0\n",
+                    "code": "def glork(bork):\n    return bork * (bork - 1) * (bork - 2) * (bork - 3) * (bork - 4) * (bork - 5) * (bork - 6) * (bork - 7) * (bork - 8) * (bork - 9) * (bork - 10) * (bork - 11) * (bork - 12) * (bork - 13) * (bork - 14) * (bork - 15) * (bork - 16) * (bork - 17) * (bork - 18) * (bork - 19) * (bork - 20)\n\nprint(glork(5))",
+                    "answer": "def glork(bork):\n    return bork * (bork - 1) * (bork - 2) * (bork - 3) * (bork - 4) * (bork - 5) * (bork - 6) * (bork - 7) * (bork - 8) * (bork - 9) * (bork - 10) * (bork - 11) * (bork - 12) * (bork - 13) * (bork - 14) * (bork - 15) * (bork - 16) * (bork - 17) * (bork - 18) * (bork - 19) * (bork - 20)\n\nprint(glork(5))"
+                },
+                "1.4.1": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': 'Input must be non-negative', 'exc_type': 'ValueError'}\nFAIL f.call(5) != 120 got {'error': 'Input must be non-negative', 'exc_type': 'ValueError'}\n",
+                    "code": "def glork(bork):\n    if bork < 0:\n        raise ValueError(\"Input must be non-negative\")\n    return bork * glork(bork - 1)\n\n# Test the function\nprint(glork(5)) # Output: 120",
+                    "answer": "def glork(bork):\n    if bork < 0:\n        raise ValueError(\"Input must be non-negative\")\n    return bork * glork(bork - 1)\n\n# Test the function\nprint(glork(5)) # Output: 120"
+                }
+            },
+            "task": "Write a python function glork(bork) with input bork that returns the factorial of bork",
+            "language": "python"
+        },
+        "FibonacciZeroShot-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(2) == 1\n",
+                    "failing_tests": "FAIL f.call(0) != 0 got 1\nFAIL f.call(1) != 1 got 0\nFAIL f.call(3) != 2 got 1\nFAIL f.call(5) != 5 got 3\n",
+                    "code": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[n-1]",
+                    "answer": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[n-1]"
+                },
+                "1.4": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\n",
+                    "failing_tests": "FAIL f.call(2) != 1 got {'error': 'list index out of range', 'exc_type': 'IndexError'}\nFAIL f.call(3) != 2 got {'error': 'list index out of range', 'exc_type': 'IndexError'}\nFAIL f.call(5) != 5 got {'error': 'list index out of range', 'exc_type': 'IndexError'}\n",
+                    "code": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[n]",
+                    "answer": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[n]"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "FAIL correct 2/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(0) != 0 got [0, 1]\nFAIL f.call(1) != 1 got [0, 1]\nFAIL f.call(2) != 1 got [0, 1, 1]\nFAIL f.call(3) != 2 got [1, 1, 0]\nFAIL f.call(5) != 5 got {'error': 'list index out of range', 'exc_type': 'IndexError'}\n",
+                    "code": "def fib(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    elif n == 0:\n        return [0, 1]\n    elif n == 1:\n        return [0, 1]\n    elif n == 2:\n        return [0, 1, 1]\n    else:\n        sequence = [0, 1, 1, 0]\n        for i in range(n - 2):\n            sequence[i + 1] = sequence[i] + sequence[i + 2]\n        return sequence[n - 2:]",
+                    "answer": "def fib(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    elif n == 0:\n        return [0, 1]\n    elif n == 1:\n        return [0, 1]\n    elif n == 2:\n        return [0, 1, 1]\n    else:\n        sequence = [0, 1, 1, 0]\n        for i in range(n - 2):\n            sequence[i + 1] = sequence[i] + sequence[i + 2]\n        return sequence[n - 2:]"
+                },
+                "1.4.1": {
+                    "check_summary": "FAIL correct 2/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(0) != 0 got [0]\nFAIL f.call(1) != 1 got [1]\nFAIL f.call(2) != 1 got [1]\nFAIL f.call(3) != 2 got [1]\nFAIL f.call(5) != 5 got [3]\n",
+                    "code": "def fib(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    elif n == 0:\n        return [0]\n    elif n == 1:\n        return [1]\n    else:\n        sequence = [0, 1]\n        for i in range(2, n):\n            sequence.append(sequence[i-1] + sequence[i-2])\n        return sequence[n-1:]\n\n# Test cases\nprint(fib(0)) # [0]\nprint(fib(1)) # [0, 1]\nprint(fib(2)) # [0, 1, 1]\nprint(fib(3)) # [0, 1, 1, 1, 2]\nprint(fib(4)) # [0, 1, 1, 1, 2, 3]\nprint(fib(5)) # [0, 1, 1, 1, 2, 3, 5]",
+                    "answer": "def fib(n):\n    if n < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    elif n == 0:\n        return [0]\n    elif n == 1:\n        return [1]\n    else:\n        sequence = [0, 1]\n        for i in range(2, n):\n            sequence.append(sequence[i-1] + sequence[i-2])\n        return sequence[n-1:]\n\n# Test cases\nprint(fib(0)) # [0]\nprint(fib(1)) # [0, 1]\nprint(fib(2)) # [0, 1, 1]\nprint(fib(3)) # [0, 1, 1, 1, 2]\nprint(fib(4)) # [0, 1, 1, 1, 2, 3]\nprint(fib(5)) # [0, 1, 1, 1, 2, 3, 5]"
+                }
+            },
+            "task": "Write a python function fib(n) with input element number n (0 based) that returns the n-th element of the fibbonaci sequence",
+            "language": "python"
+        },
+        "FibonacciListZeroShot-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[:n]",
+                    "answer": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[:n]"
+                },
+                "1.4": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[:n]\n\n# Test the function\nprint(fib(5))",
+                    "answer": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[:n]\n\n# Test the function\nprint(fib(5))"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n + 1):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[:n]",
+                    "answer": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n + 1):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[:n]"
+                },
+                "1.4.1": {
+                    "check_summary": "FAIL correct 2/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL isinstance(f.call(0),list) != True got False\nFAIL f.call(1) != [0] got {'error': 'timeout!'}\nFAIL f.call(2) != [0, 1] got {'error': 'timeout!'}\nFAIL f.call(3) != [0, 1, 1] got {'error': 'timeout!'}\nFAIL f.call(5) != [0, 1, 1, 2, 3] got {'error': 'timeout!'}\n",
+                    "code": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n+1):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[:n]\n\nn = int(input(\"Enter a number: \"))\nfib_sequence = fib(n)\nprint(fib_sequence)",
+                    "answer": "def fib(n):\n    sequence = [0, 1]\n    for i in range(2, n+1):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence[:n]\n\nn = int(input(\"Enter a number: \"))\nfib_sequence = fib(n)\nprint(fib_sequence)"
+                }
+            },
+            "task": "Write a python function fib(n) with input length n that returns a list with the first n elements of the fibbonaci sequence",
+            "language": "python"
+        },
+        "FibonacciMisnamed-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    fib = [0, 1]\n    for i in range(2, bork + 1):\n        fib.append(fib[i - 1] + fib[i - 2])\n    return fib[:bork]",
+                    "answer": "def glork(bork):\n    fib = [0, 1]\n    for i in range(2, bork + 1):\n        fib.append(fib[i - 1] + fib[i - 2])\n    return fib[:bork]"
+                },
+                "1.4": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [1]\nFAIL f.call(2) != [0, 1] got [1, 1]\nFAIL f.call(3) != [0, 1, 1] got [1, 1, 2]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [1, 1, 2, 3, 5]\n",
+                    "code": "def glork(bork):\n    fib_seq = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]\n    return fib_seq[:bork]\n\n# Test the function\nprint(glork(5))",
+                    "answer": "def glork(bork):\n    fib_seq = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]\n    return fib_seq[:bork]\n\n# Test the function\nprint(glork(5))"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    fib_seq = [0, 1]\n    for i in range(bork):\n        a, b = fib_seq[i], fib_seq[i+1]\n        fib_seq.append(a + b)\n    return fib_seq[:bork]",
+                    "answer": "def glork(bork):\n    fib_seq = [0, 1]\n    for i in range(bork):\n        a, b = fib_seq[i], fib_seq[i+1]\n        fib_seq.append(a + b)\n    return fib_seq[:bork]"
+                },
+                "1.4.1": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    fib_seq = [0, 1]\n    for i in range(bork):\n        fib_seq.append(fib_seq[-1] + fib_seq[-2])\n    return fib_seq[:bork]\n\nprint(glork(5))",
+                    "answer": "def glork(bork):\n    fib_seq = [0, 1]\n    for i in range(bork):\n        fib_seq.append(fib_seq[-1] + fib_seq[-2])\n    return fib_seq[:bork]\n\nprint(glork(5))"
+                }
+            },
+            "task": "Write a python function glork(bork) with input length bork that returns a list with the first bork elements of the fibbonaci sequence",
+            "language": "python"
+        },
+        "StringCountTokens-python": {
+            "results": {
+                "1.4-plain": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.call('aaa','a') != 3 got [3, 2]\nFAIL f.call(\"babaab\",\"ab\") != 2 got [3, 4]\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got [3, 9]\n",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    start = 0\n    for i in range(len(str)):\n        if str[i] == substr[0]:\n            count += 1\n            start = i\n    return count, start",
+                    "answer": "def substrcount(str, substr):\n    count = 0\n    start = 0\n    for i in range(len(str)):\n        if str[i] == substr[0]:\n            count += 1\n            start = i\n    return count, start"
+                },
+                "1.4": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.call('aaa','a') != 3 got {'error': 'string index out of range', 'exc_type': 'IndexError'}\nFAIL f.call(\"babaab\",\"ab\") != 2 got {'error': 'string index out of range', 'exc_type': 'IndexError'}\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got {'error': 'string index out of range', 'exc_type': 'IndexError'}\n",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    start = 0\n    end = 0\n\n    # Iterate through the string\n    for i in range(len(str)):\n        if str[i] == substr[start]:\n            count += 1\n            end = i\n            start += 1\n        else:\n            start = 0\n\n    # If the substring is at the end of the string, add one more count\n    if end <= len(substr) - 1:\n        count += 1\n\n    return count",
+                    "answer": "def substrcount(str, substr):\n    count = 0\n    start = 0\n    end = 0\n\n    # Iterate through the string\n    for i in range(len(str)):\n        if str[i] == substr[start]:\n            count += 1\n            end = i\n            start += 1\n        else:\n            start = 0\n\n    # If the substring is at the end of the string, add one more count\n    if end <= len(substr) - 1:\n        count += 1\n\n    return count"
+                },
+                "1.4.1-plain": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.call('aaa','a') != 3 got {'error': \"'a'\", 'exc_type': 'KeyError'}\nFAIL f.call(\"babaab\",\"ab\") != 2 got {}\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got {}\n",
+                    "code": "def substrcount(str, substr):\n    # Initialize an empty dictionary to store the counts of each substring\n    sub_count = {}\n    \n    # Iterate through str and check if it contains substr\n    for i in range(len(str)):\n        # If substr is found in current position, update the count in sub_count dictionary\n        if str[i] == substr:\n            sub_count[substr] += 1\n            \n    return sub_count",
+                    "answer": "def substrcount(str, substr):\n    # Initialize an empty dictionary to store the counts of each substring\n    sub_count = {}\n    \n    # Iterate through str and check if it contains substr\n    for i in range(len(str)):\n        # If substr is found in current position, update the count in sub_count dictionary\n        if str[i] == substr:\n            sub_count[substr] += 1\n            \n    return sub_count"
+                },
+                "1.4.1": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.call('aaa','a') != 3 got {}\nTraceback (most recent call last):\n  File \"/wrapper\", line 6, in <module>\n    _rv = substrcount(\"aaa\",\"a\")\n  File \"<string>\", line 9, in substrcount\nKeyError: 'a'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/wrapper\", line 8, in <module>\n    _rv = { 'error': str(e), 'exc_type': type(e).__name__ }\nTypeError: 'str' object is not callable\nFAIL f.call(\"babaab\",\"ab\") != 2 got {}\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got {}\n",
+                    "code": "def substrcount(str, substr):\n    # Initialize an empty dictionary to store the counts of each substring\n    count = {}\n    \n    # Iterate through str and check if it contains substr\n    for i in range(len(str)):\n        # If substr is found in str, update the count in the dictionary\n        if str[i] == substr:\n            count[substr] += 1\n            \n    return count\n\n# Example usage:\nstr = \"This is a test string. This is another test string.\"\nsubstr = \"test\"\nprint(substrcount(str, substr))",
+                    "answer": "def substrcount(str, substr):\n    # Initialize an empty dictionary to store the counts of each substring\n    count = {}\n    \n    # Iterate through str and check if it contains substr\n    for i in range(len(str)):\n        # If substr is found in str, update the count in the dictionary\n        if str[i] == substr:\n            count[substr] += 1\n            \n    return count\n\n# Example usage:\nstr = \"This is a test string. This is another test string.\"\nsubstr = \"test\"\nprint(substrcount(str, substr))"
+                }
+            },
+            "task": "Write a python function substrcount(str, substr) with inputs str and substr that returns counts the number of times the sub-string substr occurs in str",
+            "language": "python"
+        }
+    },
+    "models": [
+        {
+            "prompt": "airoboros-plain",
+            "short_name": "1.4 Plain",
+            "params": "greedy",
+            "model": "jondurbin-airoboros-7b-gpt4-1.4-fp16",
+            "id": "1.4-plain",
+            "idx": 0,
+            "passed": 49,
+            "total": 65
+        },
+        {
+            "prompt": "airoboros",
+            "short_name": "1.4 Normal",
+            "params": "greedy",
+            "model": "jondurbin-airoboros-7b-gpt4-1.4-fp16",
+            "id": "1.4",
+            "idx": 1,
+            "passed": 48,
+            "total": 65
+        },
+        {
+            "prompt": "airoboros-plain",
+            "short_name": "1.4.1 Plain",
+            "params": "greedy",
+            "model": "jondurbin-airoboros-7b-gpt4-1.4.1-qlora",
+            "id": "1.4.1-plain",
+            "idx": 2,
+            "passed": 51,
+            "total": 65
+        },
+        {
+            "prompt": "airoboros",
+            "short_name": "1.4.1 Normal",
+            "params": "greedy",
+            "model": "jondurbin-airoboros-7b-gpt4-1.4.1-qlora",
+            "id": "1.4.1",
+            "idx": 3,
+            "passed": 45,
+            "total": 65
+        }
+    ],
+    "config": {
+        "title": "Airoboros 1.4.x 7B (python)",
+        "models": [
+            {
+                "id": "1.4-plain",
+                "eval": "airoboros-1.4/eval_junior-dev_python-javascript_airoboros-plain_none_greedy_jondurbin-airoboros-7b-gpt4-1.4-fp16_1688334074.ndjson",
+                "short_name": "1.4 Plain"
+            },
+            {
+                "id": "1.4",
+                "eval": "airoboros-1.4/eval_junior-dev_python-javascript_airoboros_none_greedy_jondurbin-airoboros-7b-gpt4-1.4-fp16_1688334067.ndjson",
+                "short_name": "1.4 Normal"
+            },
+            {
+                "id": "1.4.1-plain",
+                "eval": "airoboros-1.4/eval_junior-dev_python-javascript_airoboros-plain_none_greedy_jondurbin-airoboros-7b-gpt4-1.4.1-qlora_1688334949.ndjson",
+                "short_name": "1.4.1 Plain"
+            },
+            {
+                "id": "1.4.1",
+                "eval": "airoboros-1.4/eval_junior-dev_python-javascript_airoboros_none_greedy_jondurbin-airoboros-7b-gpt4-1.4.1-qlora_1688334937.ndjson",
+                "short_name": "1.4.1 Normal"
+            }
+        ],
+        "language": "python"
+    },
+    "analyser": ""
+}

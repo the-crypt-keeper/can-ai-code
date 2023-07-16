@@ -40,7 +40,10 @@ def display_analysis_data(data):
             with columns[model_info['idx']]:
                 st.subheader(f"{model_info['short_name']}")
                 st.markdown(f"**Summary:** {model_result['check_summary']}")
-                st.write(model_result['answer'])
+                if not "```" in model_result['answer']:
+                    st.code(model_result['answer'])
+                else:
+                    st.write(model_result['answer'])
                 st.write('---')
                 passcol,failcol=st.columns(2)
                 if model_result['failing_tests'] == '':
