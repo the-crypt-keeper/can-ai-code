@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/16** Airboros-1.4 evaluation and comparison between 1.4 and 1.4.1 has been added.  Note [the code extractor is failing on some of the GPTQ answers](https://github.com/the-crypt-keeper/can-ai-code/issues/43) so the GPTQ quants are scoring lower then they should be.
+
 **7/16** Updated results for Vicuna-1.3 AWQ and merged the `compare` feature!  Browse [Comparisons](https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare) at our new space.
 
 **7/15** bitsandbytes [INT8](https://github.com/TimDettmers/bitsandbytes) and [NF4](https://huggingface.co/blog/4bit-transformers-bitsandbytes) now supported via `interview-transformers-modal.py`
