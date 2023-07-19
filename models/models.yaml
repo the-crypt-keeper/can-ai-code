@@ -531,3 +531,27 @@
   tags: ["falcon"]
   quant: AWQ-4bit
   url: https://huggingface.co/abhinavkulkarni/tiiuae-falcon-40b-instruct-w4-g128-awq
+- id: llama-2-7b.ggmlv3.q5-0
+  name: Llama2
+  tags: ["llama2"]
+  size: 7B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/Llama-2-7B-GGML
+- id: llama-2-13b.ggmlv3.q5-0
+  name: Llama2
+  tags: ["llama2"]
+  size: 13B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/Llama-2-13B-GGML
+- id: TheBloke-Llama-2-13B-GPTQ
+  name: Llama2
+  tags: ["llama2"]
+  size: 13B
+  quant: GPTQ-4b
+  url: https://huggingface.co/TheBloke/Llama-2-13B-GPTQ
+- id: llama-2-7b-chat.ggmlv3.q5-0
+  name: Llama2-Chat
+  tags: ["llama2"]
+  size: 7B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML  

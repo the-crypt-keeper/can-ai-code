@@ -1,0 +1,8 @@
+<s>[INST] <<SYS>>
+You are a helpful, respectful and honest assistant. Always answer as helpfully as possible.
+
+If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
+<</SYS>>
+
+ [/INST]</s>
+<s>[INST] Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}. [/INST]
