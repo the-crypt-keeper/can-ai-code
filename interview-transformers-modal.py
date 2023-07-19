@@ -1,4 +1,4 @@
-from modal import Stub, Image, method, gpu
+from modal import Stub, Image, method, gpu, Secret
 from huggingface_hub import snapshot_download
 import time
 import json
@@ -37,6 +37,12 @@ def download_replit_code_v1_3b_model():
 def download_vicuna_1p3_7b_model():
     download_model("lmsys/vicuna-7b-v1.3")
 
+def download_llama2_7b_model():
+    download_model("meta-llama/Llama-2-7b-hf", ignore_patterns=["*.bin"])
+
+def download_llama2_13b_model():
+    download_model("meta-llama/Llama-2-13b-hf", ignore_patterns=["*.bin"])
+    
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -50,17 +56,18 @@ image = (
         "accelerate==0.21.0"
     )
     .pip_install("einops==0.6.1", "sentencepiece==0.1.99")
-    .run_function(download_vicuna_1p3_7b_model)
+    .run_function(download_llama2_13b_model)
 )
 
 stub = Stub(image=image)
 
 gpu_request = gpu.A10G(count=1)
-@stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300)
+@stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"),)
 class ModalTransformers:
     def __enter__(self):
         from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
         import torch
+        from huggingface_hub import hf_hub_download
 
         self.info = json.load(open('./_info.json'))
         print('Remote model info:', self.info)
@@ -68,10 +75,10 @@ class ModalTransformers:
         # Select FP32 or FP16 here
         torch_dtype = torch.float16
         # Enable quants here
-        quantization_config = BitsAndBytesConfig(load_in_8bit = False,
+        quantization_config = BitsAndBytesConfig(load_in_8bit = True,
                                                  load_in_4bit = False,
                                                  bnb_4bit_quant_type = "fp4")
-
+        
         t0 = time.time()
         print('Starting up...', str(torch_dtype))
         self.tokenizer = AutoTokenizer.from_pretrained(self.info['model_name'], trust_remote_code=True)
