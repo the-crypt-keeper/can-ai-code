@@ -554,4 +554,16 @@
   tags: ["llama2"]
   size: 7B
   quant: GGML-q5_0
-  url: https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML  
+  url: https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML
+- id: llama-2-13b-chat.ggmlv3.q5-0
+  name: Llama2-Chat
+  tags: ["llama2"]
+  size: 13B
+  quant: GGML-q5_0
+  url: https://huggingface.co/TheBloke/Llama-2-13b-Chat-GGML
+- id: meta-llama-Llama-2-7b-hf-fp16
+  name: Llama2
+  tags: ["llama2"]
+  size: 7B
+  quant: FP16
+  url: https://huggingface.co/meta-llama/Llama-2-7b-hf
