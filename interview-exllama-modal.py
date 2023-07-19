@@ -156,6 +156,13 @@ def download_orcamini2_7b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, actorder=False)
 
+def download_llama2_13b_v2():   
+    MODEL_NAME = "TheBloke/Llama-2-13B-GPTQ"
+    MODEL_BASE = "gptq_model-4bit-128g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt","*.py",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE)
+
 stub = Stub(name='exllama-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -172,7 +179,7 @@ stub.gptq_image = (
         gpu="any",
     )
     #### SELECT MODEL HERE ####
-    .run_function(download_orcamini2_7b_v2)
+    .run_function(download_llama2_13b_v2)
 )
 
 ### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)
