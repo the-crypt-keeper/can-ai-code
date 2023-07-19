@@ -102,6 +102,12 @@
   size: 16B
   quant: fp32
   url: https://huggingface.co/HuggingFaceH4/starchat-beta
+- id: starchat-beta-gradio
+  name: StarChat Beta
+  tags: ["starcoder"]
+  size: 16B
+  quant: fp32
+  url: https://huggingface.co/HuggingFaceH4/starchat-beta  
 - id: HuggingFaceH4-starchat-playground-hf-space-starchat-alpha
   name: StarChat Alpha
   tags: ["starcoder"]
@@ -567,3 +573,15 @@
   size: 7B
   quant: FP16
   url: https://huggingface.co/meta-llama/Llama-2-7b-hf
+- id: meta-llama-Llama-2-13b-hf-int8
+  name: Llama2
+  tags: ["llama2"]
+  size: 13B
+  quant: FP16
+  url: https://huggingface.co/meta-llama/Llama-2-13b-hf
+- id: Panchovix-LLaMA-2-70B-GPTQ-transformers4.32.0.dev0  
+  name: Llama2
+  tags: ["llama2"]
+  size: 70B
+  quant: GPTQ-4b
+  url: https://huggingface.co/Panchovix/LLaMA-2-70B-GPTQ-transformers4.32.0.dev0
