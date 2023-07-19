@@ -1,0 +1,11 @@
+title: Llama2-Chat Safety Overfit
+models:
+  - id: Chat-7b-Safe
+    eval: llama2/eval_junior-dev_python-javascript_llama2-chat_none_precise_llama-2-7b-chat.ggmlv3.q5-0_1689718965.ndjson
+    short_name: Chat-7b-Safe
+  - id: Chat-7b-NoGuard
+    eval: llama2/eval_junior-dev_python-javascript_llama2-chat-v2-noguard_none_precise_llama-2-7b-chat.ggmlv3.q5-0_1689724716.ndjson
+    short_name: Chat-7b-NoGuard
+  - id: Chat-13b-NoGuard
+    eval: llama2/eval_junior-dev_python-javascript_llama2-chat-v2-noguard_none_precise_llama-2-13b-chat.ggmlv3.q5-0_1689728104.ndjson
+    short_name: Chat-13b-NoGuard

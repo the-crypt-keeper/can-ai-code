@@ -585,3 +585,9 @@
   size: 70B
   quant: GPTQ-4b
   url: https://huggingface.co/Panchovix/LLaMA-2-70B-GPTQ-transformers4.32.0.dev0
+- id: NousResearch-Redmond-Puffin-13B-fp16
+  name: Redmond-Puffin-Preview
+  tags: ["llama2"]
+  size: 13B
+  quant: FP16
+  url: https://huggingface.co/NousResearch/Redmond-Puffin-13B/tree/main
