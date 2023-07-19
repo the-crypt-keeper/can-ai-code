@@ -4,6 +4,9 @@ from pathlib import Path
 from modal import Image, Stub, method, gpu
 from huggingface_hub import snapshot_download
 
+import os
+os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+
 def save_meta(name, base, safetensors = True, bits = 4, group = 128, actorder = True, eos = ['<s>', '</s>']):
     with open("/model/_info.json",'w') as f:
         json.dump({
@@ -163,6 +166,18 @@ def download_llama2_13b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt","*.py",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE)
 
+
+def download_llama2_70b_v2():   
+    MODEL_NAME = "Panchovix/LLaMA-2-70B-GPTQ-transformers4.32.0.dev0"
+    MODEL_BASE = "llama-2-70b-4bit"
+
+    import os
+    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt","*.py",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, group=-1, actorder=True)
+
+#
 stub = Stub(name='exllama-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -173,13 +188,13 @@ stub.gptq_image = (
         ],
     )
     .run_commands(
-        "git clone https://github.com/turboderp/exllama /repositories/exllama",
+        "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout cade9bc5576292056728cf55c0c9faf4adae62f8",
         "cd /repositories/exllama && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118",
-        "cd /repositories/exllama && pip install safetensors sentencepiece ninja huggingface_hub",
+        "cd /repositories/exllama && pip install safetensors sentencepiece ninja huggingface_hub hf_transfer",
         gpu="any",
     )
     #### SELECT MODEL HERE ####
-    .run_function(download_llama2_13b_v2)
+    .run_function(download_llama2_70b_v2)
 )
 
 ### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)
@@ -270,6 +285,8 @@ class ModalExLlama:
         min_response_tokens = 10
         res_line = ''
 
+        t0 = time.time()
+
         for i in range(params['max_new_tokens']):
 
             # Disallowing the end condition tokens seems like a clean way to force longer replies.
@@ -301,6 +318,7 @@ class ModalExLlama:
             generator.end_beam_search()
             answer = text[len(prompt)+1:]
 
+        print(f"Generated {num_res_tokens-prompt_ids.shape[-1]} tokens in {time.time()-t0:.2f}s")
         return answer, self.info
 
 # For local testing, run `modal run -q interview-exllama-modal.py --input prepare_junior-dev_python.ndjson --params params/precise.json`
