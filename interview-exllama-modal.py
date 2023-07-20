@@ -177,7 +177,13 @@ def download_llama2_70b_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt","*.py",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, group=-1, actorder=True)
 
-#
+def download_upstage_instruct_2048_v2():
+    MODEL_NAME = "TheBloke/upstage-llama-30b-instruct-2048-GPTQ"
+    MODEL_BASE = "gptq_model-4bit--1g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt","*.py",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, group=-1, actorder=True)
+
 stub = Stub(name='exllama-v2')
 stub.gptq_image = (
     Image.from_dockerhub(
@@ -194,11 +200,11 @@ stub.gptq_image = (
         gpu="any",
     )
     #### SELECT MODEL HERE ####
-    .run_function(download_llama2_70b_v2)
+    .run_function(download_upstage_instruct_2048_v2)
 )
 
 ### SELECT count=1 A10G (up to 30B) or count=2 A10G (for 65B)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=1)
 gpu_split = '17,24' if gpu_request.count == 2 else None
 
 ## Entrypoint import trick for when inside the remote container

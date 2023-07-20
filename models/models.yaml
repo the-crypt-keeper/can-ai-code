@@ -591,3 +591,9 @@
   size: 13B
   quant: FP16
   url: https://huggingface.co/NousResearch/Redmond-Puffin-13B/tree/main
+- id: TheBloke-upstage-llama-30b-instruct-2048-GPTQ
+  name: Upstage-Llama-Instruct 2048
+  size: 30B
+  quant: GPTQ-4b
+  tags: ["llama"]
+  url: https://huggingface.co/TheBloke/upstage-llama-30b-instruct-2048-GPTQ

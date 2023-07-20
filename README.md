@@ -18,19 +18,15 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/20** Llama-2 evaluations completed, Upstart Llama 30B as well.
+
 **7/16** Airboros-1.4 evaluation and comparison between 1.4 and 1.4.1 has been added.  Note [the code extractor is failing on some of the GPTQ answers](https://github.com/the-crypt-keeper/can-ai-code/issues/43) so the GPTQ quants are scoring lower then they should be.
 
 **7/16** Updated results for Vicuna-1.3 AWQ and merged the `compare` feature!  Browse [Comparisons](https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare) at our new space.
 
 **7/15** bitsandbytes [INT8](https://github.com/TimDettmers/bitsandbytes) and [NF4](https://huggingface.co/blog/4bit-transformers-bitsandbytes) now supported via `interview-transformers-modal.py`
 
-**7/15** fixed the input() bug in the python evaluator and re-scored affected models.
 
-**7/15** New `interview-gradio.py` replaces several older gradio-based interviewers, refactor the interview list in the README.
-
-**7/14** Completed evaluations on Falcon (7B and 40B) and Vicuna-1.3 (7B, 13B, 33B) across a variety of quantizations, see [can-ai-code Leaderboard](https://huggingface.co/spaces/mike-ravkine/can-ai-code-results) for the results: select a language, then unselect "Show Best Result from each model" to see per-quant results.
-
-**7/12** [AWQ](https://github.com/mit-han-lab/llm-awq) now supported via `interview-awq-model.py` but only 4-bit for now as the authors haven't released 3-bit code.
 
 ## Test Suites
 
