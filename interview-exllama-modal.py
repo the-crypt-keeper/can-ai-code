@@ -257,7 +257,7 @@ class ModalExLlama:
 
         self.tokenizer = ExLlamaTokenizer(tokenizer_model_path)
 
-    def params(self, temperature=0.7, repetition_penalty=1.0, repeat_last_n=256, repetition_decay=128, top_k=-1, top_p=1.0, max_new_tokens=512, beams=1, beam_length=1, **kwargs):
+    def params(self, temperature=1.0, repetition_penalty=1.0, repeat_last_n=256, repetition_decay=128, top_k=-1, top_p=1.0, max_new_tokens=512, beams=1, beam_length=1, **kwargs):
         return {
             "temperature": temperature,
             "repetition_penalty": repetition_penalty,
