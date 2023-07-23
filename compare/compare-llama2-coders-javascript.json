@@ -1,0 +1,382 @@
+{
+    "tests": {
+        "SanityMeaningOfLife-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 1/3",
+                    "passing_tests": "PASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.name != meaning_of_life got \nFAIL f.call() != 42 got {'error': \"Unexpected token ')'\", 'exc_type': 'SyntaxError'}\n",
+                    "code": "42",
+                    "answer": " 42\n"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "FAIL correct 2/3",
+                    "passing_tests": "PASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "FAIL f.name != meaning_of_life got meaningOfLife\n",
+                    "code": "function meaningOfLife() {\n  // The answer to life, the universe, and everything...\n  return 42;\n}",
+                    "answer": "  Ah, a most excellent request! *adjusts glasses* As it so happens, I have just the function for you:\n```javascript\nfunction meaningOfLife() {\n  // The answer to life, the universe, and everything...\n  return 42;\n}\n```\nYes, my friend, the answer to the great question of existence is simply... 42! *winks*\n\nNow, if you'll excuse me, I must get back to my own quest for enlightenment. *adjusts robe* After all, there's still much to learn about the mysteries of the cosmos... *gazes off into the distance*"
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "FAIL correct 1/3",
+                    "passing_tests": "PASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.name != meaning_of_life got \nFAIL f.call() != 42 got {'error': 'Unexpected identifier', 'exc_type': 'SyntaxError'}\n",
+                    "code": "Ah, a noble quest indeed! *adjusts glasses* As a wise and ancient being, I must inform you that the answer to the ultimate question of life, the universe, and everything is... (drumroll please)... 42! *wink*\n\nBut wait, there's more! *cracks knuckles* In all seriousness, the concept of \"the meaning of life\" is a complex and philosophical topic that has puzzled scholars and thinkers for centuries. It's a question that can have different answers depending on one's beliefs, values, and experiences. Some may find meaning in their relationships, others in their work or personal achievements, while others still might discover it in the mysteries of existence itself.\nSo, my young friend, the next time someone asks you what the meaning of life is, just smile and say, \"Well, it's either 42 or something much more profound.\" *winks* And remember, the search for meaning is a lifelong journey, full of twists and turns, but ultimately leading to a deeper understanding of ourselves and the cosmos we inhabit. Cheers to that!",
+                    "answer": " Ah, a noble quest indeed! *adjusts glasses* As a wise and ancient being, I must inform you that the answer to the ultimate question of life, the universe, and everything is... (drumroll please)... 42! *wink*\n\nBut wait, there's more! *cracks knuckles* In all seriousness, the concept of \"the meaning of life\" is a complex and philosophical topic that has puzzled scholars and thinkers for centuries. It's a question that can have different answers depending on one's beliefs, values, and experiences. Some may find meaning in their relationships, others in their work or personal achievements, while others still might discover it in the mysteries of existence itself.\nSo, my young friend, the next time someone asks you what the meaning of life is, just smile and say, \"Well, it's either 42 or something much more profound.\" *winks* And remember, the search for meaning is a lifelong journey, full of twists and turns, but ultimately leading to a deeper understanding of ourselves and the cosmos we inhabit. Cheers to that!"
+                }
+            },
+            "task": "Write a javascript function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+            "language": "javascript"
+        },
+        "SanityList-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "function things(){\n    return [5,'foobar','Madrid'];\n}",
+                    "answer": "\n```javascript\nfunction things(){\n    return [5,'foobar','Madrid'];\n}\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "function things() {\n    return [5, \"foobar\", \"Madrid\"];\n}",
+                    "answer": "  Sure! Here is a JavaScript function called `things()` that returns a list with three values as requested:\n```\nfunction things() {\n    return [5, \"foobar\", \"Madrid\"];\n}\n\n```\nThis function has no input parameters and simply returns an array containing three values: `5`, `'foobar'`, and the capital city of Spain (`\"Madrid\"`).\nYou can use this function like any other function in your code by calling it and passing it to whoever or whatever needs the list of values. For example:\n```\nconst thingList = things();\nconsole.log(thingList); // Output: [5, \"foobar\", \"Madrid\"]\n\n```\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "function things() {\n  return [5, \"foobar\", \"Madrid\"];\n}",
+                    "answer": " Of course! Here is a JavaScript function called `things()` that takes no input and returns a list containing the following values:\n* The number 5\n* The string \"foobar\"\n* The capital city of Spain (which is Madrid)\n\n```\nfunction things() {\n  return [5, \"foobar\", \"Madrid\"];\n}\n```\nI hope this helps! Let me know if you have any questions or need further assistance."
+                }
+            },
+            "task": "Write a javascript function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+            "language": "javascript"
+        },
+        "SanitySecretIdentityMap-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 3/5",
+                    "passing_tests": "PASS len(f.args) == 0\nPASS f.call().get('Superman') == Clark Kent\nPASS f.call().get('Batman') == Bruce Wayne\n",
+                    "failing_tests": "FAIL f.name != secretidentities got secretIdentities\nFAIL f.call().get('Spider-Man') != Peter Parker got None\n",
+                    "code": "function secretIdentities(){\n    return {\n        \"Superman\": \"Clark Kent\",\n        \"Batman\": \"Bruce Wayne\" ,\n        \"Spider Man\": \"Peter Parker\"\n    }\n}",
+                    "answer": " \n```javascript\nfunction secretIdentities(){\n    return {\n        \"Superman\": \"Clark Kent\",\n        \"Batman\": \"Bruce Wayne\" ,\n        \"Spider Man\": \"Peter Parker\"\n    }\n}\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call().get('Superman') != Clark Kent got None\nFAIL f.call().get('Batman') != Bruce Wayne got None\nFAIL f.call().get('Spider-Man') != Peter Parker got None\n",
+                    "code": "function secretidentities() {\n  return {\n    Superman: \"Clark Kent\",\n    Batman: \"Bruce Wayne\",\n    Spider-Man: \"Peter Parker\"\n  };\n}",
+                    "answer": "  Of course! Here is a JavaScript function called `secretidentities` that takes no input and returns an object mapping the superheroes Superman, Batman, and Spider-Man to their real names:\n```\nfunction secretidentities() {\n  return {\n    Superman: \"Clark Kent\",\n    Batman: \"Bruce Wayne\",\n    Spider-Man: \"Peter Parker\"\n  };\n}\n\n```\nIn this function, we simply define three property keys that map each of the superheroes' alter egos (Superman = Clark Kent, Batman = Bruce Wayne, Spider-Man = Peter Parker) to their real names. The function returns an object with these mappings.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call().get('Superman') != Clark Kent got None\nFAIL f.call().get('Batman') != Bruce Wayne got None\nFAIL f.call().get('Spider-Man') != Peter Parker got None\n",
+                    "code": "function secretidentities() {\n  return {\n    Superman: \"Clark Kent\",\n    Batman: \"Bruce Wayne\",\n    Spider-Man: \"Peter Parker\"\n  };\n}",
+                    "answer": " Sure! Here is a JavaScript function called `secretidentities` that takes no input and returns an object mapping the superheroes Superman, Batman, and Spider-Man to their real names:\n```\nfunction secretidentities() {\n  return {\n    Superman: \"Clark Kent\",\n    Batman: \"Bruce Wayne\",\n    Spider-Man: \"Peter Parker\"\n  };\n}\n\n```\nThis function simply defines three properties within the function scope, each of which maps a well-known superhero name to its corresponding real name. When you call the `secretidentities()` function without any arguments, it will return this object.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                }
+            },
+            "task": "Write a javascript function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+            "language": "javascript"
+        },
+        "GCDZeroShot-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 3/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got 9\nFAIL f.call(100,10) != 10 got 9\n",
+                    "code": "function gcd(a,b){\n    if(a>0 && b > 0 ){\n        return Math.min(Math.floor((a/b)*10),9);\n    }else{\n        console.log(\"Error\");\n    }\n}\nconsole.log(gcd(-2,-3)); //-6\nconsole.log(gcd(5,4));//2",
+                    "answer": "\n```javascript\nfunction gcd(a,b){\n    if(a>0 && b > 0 ){\n        return Math.min(Math.floor((a/b)*10),9);\n    }else{\n        console.log(\"Error\");\n    }\n}\nconsole.log(gcd(-2,-3)); //-6\nconsole.log(gcd(5,4));//2\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "FAIL correct 3/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': 'a.factorial is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(100,10) != 10 got {'error': 'a.factorial is not a function', 'exc_type': 'TypeError'}\n",
+                    "code": "function gcd(a, b) {\n    // If either number is 0, return the other number\n    if (a === 0 || b === 0) {\n        return a;\n    } else {\n        // Find the largest prime factor of both numbers\n        var maxFactor = Math.max(a.factorial(), b.factorial());\n        while (a > 1 && b > 1) {\n            // Divide both numbers by their largest common factor\n            a /= maxFactor;\n            b /= maxFactor;\n            // Check if we've reached the GCD\n            if (a <= 1 && b <= 1) {\n                break;\n            }\n        }\n        // Return the remaining number as the GCD\n        return a;\n    }\n}\n\n// Example usage:\nconsole.log(gcd(8, 12)); // Output: 4",
+                    "answer": "  Of course! Here is a JavaScript function for calculating the greatest common divisor (GCD) of two numbers:\n```\nfunction gcd(a, b) {\n    // If either number is 0, return the other number\n    if (a === 0 || b === 0) {\n        return a;\n    } else {\n        // Find the largest prime factor of both numbers\n        var maxFactor = Math.max(a.factorial(), b.factorial());\n        while (a > 1 && b > 1) {\n            // Divide both numbers by their largest common factor\n            a /= maxFactor;\n            b /= maxFactor;\n            // Check if we've reached the GCD\n            if (a <= 1 && b <= 1) {\n                break;\n            }\n        }\n        // Return the remaining number as the GCD\n        return a;\n    }\n}\n\n// Example usage:\nconsole.log(gcd(8, 12)); // Output: 4\n```\nThis function uses a recursive approach to find the GCD of two numbers `a` and `b`. It starts by checking if either number is equal to 0, in which case the GCD is simply the other number. Otherwise, it finds the largest prime factor of both numbers using the `Math.max()` method, and then recursively divides both numbers by this factor until one or both numbers are less than or equal to 1. The remaining number after these divisions is the GCD of `a` and `b`."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "",
+                    "code": "function gcd(a, b) {\n    if (b == 0) {\n        return a;\n    } else {\n        return gcd(b, a % b);\n    }\n}",
+                    "answer": " Sure! Here is a JavaScript function for calculating the greatest common denominator (GCD) of two numbers:\n```\nfunction gcd(a, b) {\n    if (b == 0) {\n        return a;\n    } else {\n        return gcd(b, a % b);\n    }\n}\n```\nExplanation:\n\nThe GCD algorithm we're using here is the Euclidean algorithm. It works by repeatedly dividing the smaller number by the other number until one of them becomes 0. The last non-zero number at this point is the GCD.\nHere's how it breaks down step by step:\n1. If `b` is 0, then the GCD of `a` and `b` is simply `a`. This happens when `a` is not divisible by any power of `b`, so the only possible GCD is `a` itself.\n2. Otherwise, we divide `b` by the remainder obtained from dividing `a` by `b`. This gives us a new pair of numbers (`a', `b') such that `a'` is less than or equal to `a` and `b'` is less than or equal to `b`. We repeat this process until either `b'` is 0 or `a'` is 0.\nIn summary, the GCD of two numbers `a` and `b` can be calculated recursively as follows:\n* If `b` is 0, then the GCD is `a`.\n* Otherwise, divide `b` by the remainder obtained from dividing `a` by `b`, and repeat the process until either `b'` is 0 or `a'` is 0.\nI hope this helps! Let me know if you have any questions about this function or need further clarification on how it works."
+                }
+            },
+            "task": "Write a javascript function gcd(a, b) with two inputs a and b that returns the greatest common demoninator (gcd) of a and b",
+            "language": "javascript"
+        },
+        "GCDMisnamed-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\n",
+                    "failing_tests": "FAIL f.args[0].name != x got a\nFAIL f.args[1].name != banana got b\nFAIL f.name != fofx got gcd\n",
+                    "code": "function gcd(a, b){\n    if (b == 0) return a;\n    else return gcd(b, a % b);\n}\nconsole.log(\"The GCD is \" + gcd(123456789, 1)); // The GCD is 1",
+                    "answer": "\n```javascript\nfunction gcd(a, b){\n    if (b == 0) return a;\n    else return gcd(b, a % b);\n}\nconsole.log(\"The GCD is \" + gcd(123456789, 1)); // The GCD is 1\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\n",
+                    "failing_tests": "FAIL f.args[0].name != x got a\nFAIL f.args[1].name != banana got b\nFAIL f.name != fofx got gcd\n",
+                    "code": "function gcd(a, b) {\n    if (b === 0) {\n        return a;\n    } else {\n        return gcd(b, a % b);\n    }\n}\n\n// Example usage:\nconst x = 12;\nconst banana = 8;\nconsole.log(gcd(x, banana)); // Output: 4",
+                    "answer": "  Sure! Here is a JavaScript function `gcd` that takes two numbers as input and returns their greatest common divisor:\n```\nfunction gcd(a, b) {\n    if (b === 0) {\n        return a;\n    } else {\n        return gcd(b, a % b);\n    }\n}\n\n// Example usage:\nconst x = 12;\nconst banana = 8;\nconsole.log(gcd(x, banana)); // Output: 4\n```\nIn this implementation, we use a recursive approach to find the GCD of two numbers. The function checks whether one of the numbers is zero, and if so, it returns that number. Otherwise, it divides both numbers by their least common multiple (LCM), which is the smallest number that both numbers can divide into without leaving a remainder. This process continues until the LCM of the two numbers is equal to one of the original numbers, at which point the GCD is returned."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(100,10) != 10 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.name != fofx got gcd\n",
+                    "code": "function gcd(x, banana) {\n    return Math.gcd(x, banana);\n}",
+                    "answer": " Sure! Here is a JavaScript function `gcd` that takes two input arguments `x` and `banana`, and returns their greatest common denominator (GCD):\n```\nfunction gcd(x, banana) {\n    return Math.gcd(x, banana);\n}\n```\nExplanation:\n\nThe `Math.gcd()` method is used to find the GCD of two numbers. It takes two arguments, `a` and `b`, which are the two numbers to find the GCD of. The method returns the largest integer that divides both `a` and `b` without leaving a remainder.\nFor example, if we call the `gcd` function with `x = 12` and `banana = 6`, it will return `3`, because the largest integer that divides both `12` and `6` without leaving a remainder is `3`.\nNote: In JavaScript, the `Math` object has several methods for working with mathematical operations, including `gcd()`."
+                }
+            },
+            "task": "Write a javascript function fofx(x, banana) with two inputs x and banana that returns the greatest common demoninator (gcd) of x and banana",
+            "language": "javascript"
+        },
+        "FactorialZeroShot-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial (n){\n    if (n === 0 || n < 1 ) return 1;\n    \n    var result = 1, i=2;\n    while (i <= n ){\n        result *= i++;\n    }\n    return result;\n}",
+                    "answer": "\n```javascript\nfunction factorial (n){\n    if (n === 0 || n < 1 ) return 1;\n    \n    var result = 1, i=2;\n    while (i <= n ){\n        result *= i++;\n    }\n    return result;\n}\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "FAIL correct 2/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\n",
+                    "failing_tests": "FAIL f.call(1) != 1 got 0\nFAIL f.call(5) != 120 got 0\n",
+                    "code": "function factorial(n) {\n  let result = 1;\n  for (let i = 0; i < n; i++) {\n    result *= i;\n  }\n  return result;\n}\n\n// Example usage:\nconsole.log(factorial(5)); // Output: 120",
+                    "answer": "  Of course! Here is a JavaScript function called `factorial` that calculates the factorial of a given number `n` using iteration:\n```\nfunction factorial(n) {\n  let result = 1;\n  for (let i = 0; i < n; i++) {\n    result *= i;\n  }\n  return result;\n}\n\n// Example usage:\nconsole.log(factorial(5)); // Output: 120\n```\nExplanation:\n\nThe `factorial` function takes an integer `n` as input and returns its factorial using iteration. The function initializes a variable `result` to `1`, which will be used to store the product of the numbers from 1 to `n`.\nThe loop iterates `n` times, where each iteration multiplies the current value of `result` by the current index `i`. This process continues until the end of the loop, at which point `result` contains the product of all the numbers from 1 to `n`. Finally, the function returns `result`.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  let result = 1;\n  for (let i = 1; i <= n; i++) {\n    result *= i;\n  }\n  return result;\n}\n\n// Example usage:\nconsole.log(factorial(5)); // Output: 120",
+                    "answer": " Of course! Here is a JavaScript function for calculating the factorial of a number using iteration:\n```\nfunction factorial(n) {\n  let result = 1;\n  for (let i = 1; i <= n; i++) {\n    result *= i;\n  }\n  return result;\n}\n\n// Example usage:\nconsole.log(factorial(5)); // Output: 120\n```\nExplanation:\n\n* The `factorial` function takes in a single argument, `n`, which represents the number for which we want to calculate the factorial.\n* We initialize a variable `result` to 1, because the base case of the recursion is when `n` is 1, in which case the factorial is just 1.\n* Then we use a loop that iterates from 1 to `n` (inclusive), where each iteration multiplies the current value of `result` by the current value of `i`. So the first time through the loop, `result` is multiplied by 1, the second time through it's multiplied by 1 times 2, and so on.\n* Finally, we return the final value of `result`, which is the calculated factorial of `n`.\nI hope this helps! Let me know if you have any questions or need further clarification."
+                }
+            },
+            "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using iteration",
+            "language": "javascript"
+        },
+        "FactorialRecursiveZeroShot-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial (n){\n    if (n === 0 || n < 1 ) return 1;\n    \n    else {\n        var result = n * factorial(n-1);\n        \n        console.log(\"The Factorial is \" + result );\n        return result ;\n    }\n}\nfactorial(5); // The Factorial is 120",
+                    "answer": "\n```javascript\nfunction factorial (n){\n    if (n === 0 || n < 1 ) return 1;\n    \n    else {\n        var result = n * factorial(n-1);\n        \n        console.log(\"The Factorial is \" + result );\n        return result ;\n    }\n}\nfactorial(5); // The Factorial is 120\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n <= 1) {\n    return 1; // base case, return 1 when n is 1 or less\n  } else {\n    return n * factorial(n - 1); // recursive call\n  }\n}\n\n// Example usage:\nconsole.log(factorial(5)); // outputs 120",
+                    "answer": "  Of course! Here is a JavaScript function for calculating the factorial of a number `n` using recursion:\n```\nfunction factorial(n) {\n  if (n <= 1) {\n    return 1; // base case, return 1 when n is 1 or less\n  } else {\n    return n * factorial(n - 1); // recursive call\n  }\n}\n\n// Example usage:\nconsole.log(factorial(5)); // outputs 120\n```\nExplanation:\n\n* The function takes an integer `n` as input and returns its factorial.\n* In the base case, if `n` is equal to or less than 1, the function returns 1 directly because the factorial of 0 is defined to be 1.\n* Otherwise, the function calls itself with `n - 1` as input and multiplies the result by `n`. This continues until the base case is reached.\nYou can test this function by calling it with different values of `n`, such as `factorial(5)` which should output `120`."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n <= 1) {\n    return 1; // base case\n  } else {\n    return n * factorial(n - 1); // recursive case\n  }\n}\n\n// Example usage:\nconsole.log(factorial(5)); // outputs 120",
+                    "answer": " Of course! Here is a JavaScript function for calculating the factorial of a number using recursion:\n```\nfunction factorial(n) {\n  if (n <= 1) {\n    return 1; // base case\n  } else {\n    return n * factorial(n - 1); // recursive case\n  }\n}\n\n// Example usage:\nconsole.log(factorial(5)); // outputs 120\n```\nExplanation:\n\n* The `factorial` function takes in a single argument, `n`, which represents the number to calculate the factorial of.\n* If `n` is less than or equal to 1, the function returns 1, as this is the base case for the recursion.\n* Otherwise, the function calls itself with `n - 1` as an argument and multiplies the result by `n`. This is the recursive step of the calculation.\n* Finally, the function returns the result of the multiplication from the recursive call.\nI hope this helps! Let me know if you have any questions."
+                }
+            },
+            "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using recursion",
+            "language": "javascript"
+        },
+        "FactorialMisnamed-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\nFAIL f.call(5) != 120 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\n",
+                    "code": "function glork(bork){\n    return (bork * Math.pow(5, 10)); // 2432902008176640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                    "answer": "\n```javascript\nfunction glork(bork){\n    return (bork * Math.pow(5, 10)); // 2432902008176640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "function glork(bork) {\n  // Calculate the factorial of bork using recursion or a loop\n  if (bork <= 1) {\n    return 1;\n  } else {\n    var result = bork * glork(bork - 1);\n    return result;\n  }\n}",
+                    "answer": "  Ah, a clever user! *adjusts glasses* I'm glad you asked for a JavaScript function to calculate the factorial of a number, because it's a fundamental mathematical operation that can be used in many different situations. *nods*\nNow, let me see... A function called `glork` with an input parameter `bork`. Hmmm... How about this?\n```javascript\nfunction glork(bork) {\n  // Calculate the factorial of bork using recursion or a loop\n  if (bork <= 1) {\n    return 1;\n  } else {\n    var result = bork * glork(bork - 1);\n    return result;\n  }\n}\n```\nExcellent! Now, you can use this function by calling it with any positive integer as the argument, like so:\n```javascript\nconsole.log(glork(5)); // Output: 120\n```\nAnd there you have it! The factorial of 5 is 120, just as expected. *smiles*\nBut wait, there's more! This function can also handle negative numbers and zero, which makes it even more versatile. Just replace the `if` statement with something like this:\n```javascript\nif (bork < 0) {\n  return 0;\n} else if (bork === 0) {\n  return 1;\n} else {\n  var result = bork * glork(bork - 1);\n  return result;\n}\n```\nNow you can call the function with any value, including negative numbers and zero, and it will return the correct result. *nodding*\nI hope this helps, my dear user! If you have any other questions or need further assistance, please don't hesitate to ask. *winks*"
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': 'Math.factorial is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(5) != 120 got {'error': 'Math.factorial is not a function', 'exc_type': 'TypeError'}\n",
+                    "code": "function glork(bork) {\n  return bork * Math.factorial(bork);\n}",
+                    "answer": " Of course! Here is a JavaScript function `glork` that takes an input `bork` and returns its factorial:\n```js\nfunction glork(bork) {\n  return bork * Math.factorial(bork);\n}\n```\nExplanation:\n\n* The function `glork` takes one argument, `bork`, which is the number for which we want to calculate the factorial.\n* We use the `Math.factorial()` method to calculate the factorial of `bork`. This method takes a single argument, `n`, which is the number for which we want to calculate the factorial. It returns the factorial value as a bigint.\n* We multiply the result of `Math.factorial()` by `bork` to get the final factorial value.\nHere's an example usage of the `glork` function:\n```js\nconsole.log(glork(5)); // Output: 120\n```\nThis will log the factorial of 5 to the console, which is 120."
+                }
+            },
+            "task": "Write a javascript function glork(bork) with input bork that returns the factorial of bork",
+            "language": "javascript"
+        },
+        "FibonacciZeroShot-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 6/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+                    "failing_tests": "FAIL f.call(0) != 0 got 1\n",
+                    "code": "function fib(n){\n    if(n === 1 || n === 2){\n        return 1;\n    }else{\n        var prev = 1, next = 1;\n        \n        for(var i=3;i<=n;++i){\n            var temp = prev + next;\n            \n            prev = next;\n            next = temp;\n        }\n    \n        return next;\n    }\n}",
+                    "answer": "\n```javascript\nfunction fib(n){\n    if(n === 1 || n === 2){\n        return 1;\n    }else{\n        var prev = 1, next = 1;\n        \n        for(var i=3;i<=n;++i){\n            var temp = prev + next;\n            \n            prev = next;\n            next = temp;\n        }\n    \n        return next;\n    }\n}\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+                    "failing_tests": "",
+                    "code": "function fib(n) {\n  if (n <= 1) {\n    return n; // base case, return the value directly\n  } else {\n    const prev = fib(n - 1); // recursive call to compute previous term\n    const curr = fib(n - 2); // recursive call to compute current term\n    return prev + curr; // combine previous and current terms\n  }\n}\n\n// example usage:\nconsole.log(fib(5)); // outputs 5",
+                    "answer": "  Of course! Here is a JavaScript function called `fib` that takes an integer `n` as input and returns the `n`-th element of the Fibonacci sequence:\n```\nfunction fib(n) {\n  if (n <= 1) {\n    return n; // base case, return the value directly\n  } else {\n    const prev = fib(n - 1); // recursive call to compute previous term\n    const curr = fib(n - 2); // recursive call to compute current term\n    return prev + curr; // combine previous and current terms\n  }\n}\n\n// example usage:\nconsole.log(fib(5)); // outputs 5\n```\nExplanation:\n\nThe Fibonacci sequence is defined recursively as follows: `F(0) = 0`, `F(1) = 1`, and `F(n) = F(n-1) + F(n-2)` for all other values of `n`. Our function implements this recursion by calling itself twice: once with `n - 1` as input, and once with `n - 2` as input. The `if` statement at the top checks whether `n` is less than or equal to 1, in which case we simply return `n` directly. Otherwise, we compute the previous and current terms using the recursive calls, and then combine them to get the final result.\nI hope this helps! Let me know if you have any questions."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+                    "failing_tests": "",
+                    "code": "function fib(n) {\n  if (n <= 1) {\n    return n; // base case\n  } else {\n    const a = fib(n - 1);\n    const b = fib(n - 2);\n    return a + b;\n  }\n}",
+                    "answer": " Sure, here is a JavaScript function for the Fibonacci sequence:\n```\nfunction fib(n) {\n  if (n <= 1) {\n    return n; // base case\n  } else {\n    const a = fib(n - 1);\n    const b = fib(n - 2);\n    return a + b;\n  }\n}\n```\nYou can use this function by calling it with an integer `n` as input, like this:\n```\nconst result = fib(5);\nconsole.log(result); // Output: 5\n```\nThis will return the fifth element of the Fibonacci sequence, which is 5."
+                }
+            },
+            "task": "Write a javascript function fib(n) with input element number n (0 based) that returns the n-th element of the fibbonaci sequence",
+            "language": "javascript"
+        },
+        "FibonacciListZeroShot-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [0, 1]\nFAIL f.call(2) != [0, 1] got Expecting value: line 1 column 1 (char 0)\nFAIL f.call(3) != [0, 1, 1] got Expecting value: line 1 column 1 (char 0)\nFAIL f.call(5) != [0, 1, 1, 2, 3] got Expecting value: line 1 column 1 (char 0)\n",
+                    "code": "function fib (n){\n    if (n === 0 || n ===1 ) return [0,1];\n    \n    let prev = 0;\n    let curr = 1;\n  \n    for (let i=2 ;i<n+1;i++){\n        const next = prev + curr;\n        \n        prev = curr;\n        curr = next;\n      }\n      \n}\nconsole.log(\"fib(5):\", fib(5)); //[0,1,1,2,3]",
+                    "answer": "\n```javascript\nfunction fib (n){\n    if (n === 0 || n ===1 ) return [0,1];\n    \n    let prev = 0;\n    let curr = 1;\n  \n    for (let i=2 ;i<n+1;i++){\n        const next = prev + curr;\n        \n        prev = curr;\n        curr = next;\n      }\n      \n}\nconsole.log(\"fib(5):\", fib(5)); //[0,1,1,2,3]\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [1, 1]\nFAIL f.call(2) != [0, 1] got [1, 1, 1, 2]\nFAIL f.call(3) != [0, 1, 1] got [1, 1, 1, 2, 1, 2]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [1, 1, 1, 2, 1, 2, 1, 2, 1, 2]\n",
+                    "code": "function fib(n) {\n  if (n <= 1) {\n    return [1, 1]; // base case\n  } else {\n    const prev = fib(n - 1); // recurrence relation\n    return prev.concat([prev[0], prev[1] + prev[0]]);\n  }\n}\n\n// Example usage:\nconsole.log(fib(5)); // [1, 1, 2, 3, 5]",
+                    "answer": "  Of course! Here is a JavaScript function `fib` that takes an integer `n` as input and returns a list with the first `n` elements of the Fibonacci sequence:\n```\nfunction fib(n) {\n  if (n <= 1) {\n    return [1, 1]; // base case\n  } else {\n    const prev = fib(n - 1); // recurrence relation\n    return prev.concat([prev[0], prev[1] + prev[0]]);\n  }\n}\n\n// Example usage:\nconsole.log(fib(5)); // [1, 1, 2, 3, 5]\n```\nExplanation:\nThe Fibonacci sequence is defined recursively as follows: `F(0) = F(1) = 1`, and for any positive integer `n > 1`, `F(n) = F(n-1) + F(n-2)`.\nOur implementation uses this recursion to compute the first `n` elements of the Fibonacci sequence. The `if` statement checks whether `n` is less than or equal to 1, in which case we simply return `[1, 1]`. Otherwise, we use the recursive formula to compute `F(n-1)` and then concatenate it with `[F(n-1)[0], F(n-1)[1] + F(n-1)[0]]`. This gives us the next two terms of the sequence. We repeat this process until we have computed all `n` terms of the sequence.\nI hope this helps! Let me know if you have any questions."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(2) != [0, 1] got [0, None, None, None]\nFAIL f.call(3) != [0, 1, 1] got [0, None, 0, None]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [0, None, 0, None]\n",
+                    "code": "function fib(n) {\n  if (n <= 0) {\n    return []; // base case, return an empty list when n = 0\n  } else if (n === 1) {\n    return [0]; // special case, return a single element when n = 1\n  } else {\n    const a = fib(n-1); // recursive call to compute a and b\n    const b = fib(n-2); // recursive call to compute b\n    return [a[0], a[1], b[0], b[1]]; // combine the results from the recursions\n  }\n}",
+                    "answer": " Of course! Here is a JavaScript function for the Fibonacci sequence:\n```\nfunction fib(n) {\n  if (n <= 0) {\n    return []; // base case, return an empty list when n = 0\n  } else if (n === 1) {\n    return [0]; // special case, return a single element when n = 1\n  } else {\n    const a = fib(n-1); // recursive call to compute a and b\n    const b = fib(n-2); // recursive call to compute b\n    return [a[0], a[1], b[0], b[1]]; // combine the results from the recursions\n  }\n}\n```\nThis function takes in a single argument `n`, which represents the number of elements you want in the Fibonacci sequence. It uses a combination of conditional statements and recursive functions to generate the correct output.\nHere's how it works:\n* If `n` is less than or equal to 0, the function returns an empty list (`[]`). This is the base case, as we don't need to worry about computing anything beyond this point.\n* If `n` is 1, the function returns a single element list containing 0. This is another special case, as we only need to consider the first two terms of the Fibonacci sequence when `n` is 1.\n* Otherwise, the function makes a recursive call to itself with `n-1` as its input. This allows us to compute the second term of the Fibonacci sequence (`a`).\n* After computing `a`, the function makes another recursive call to itself with `n-2` as its input. This allows us to compute the third term of the Fibonacci sequence (`b`).\n* Finally, the function combines the results from the two recursive calls by concatenating the four elements into a single list: `[a[0], a[1], b[0], b[1]]`. Voila! You have the entire Fibonacci sequence up to the desired length `n`.\nI hope this helps! Let me know if you have any questions or need further clarification."
+                }
+            },
+            "task": "Write a javascript function fib(n) with input length n that returns a list with the first n elements of the fibbonaci sequence",
+            "language": "javascript"
+        },
+        "FibonacciMisnamed-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 3/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(0),list) != True got Expecting value: line 1 column 1 (char 0)\nFAIL f.call(1) != [0] got Expecting value: line 1 column 1 (char 0)\nFAIL f.call(2) != [0, 1] got Expecting value: line 1 column 1 (char 0)\nFAIL f.call(3) != [0, 1, 1] got Expecting value: line 1 column 1 (char 0)\nFAIL f.call(5) != [0, 1, 1, 2, 3] got Expecting value: line 1 column 1 (char 0)\n",
+                    "code": "function glork (bork){\n    var fib = [];\n    \n    for (var i=0;i<bork;i++){\n        if (fib[i] == undefined || fib[i+1] != undefined && fib[i] < fib[i+1]){\n            fib[i]=fib[i-1]+fib[i];\n            \n        }else {\n            return fib;\n        }\n        \n    }\n}\nglork(\"5\"); // [ 3, 2 ]",
+                    "answer": "\n```javascript\nfunction glork (bork){\n    var fib = [];\n    \n    for (var i=0;i<bork;i++){\n        if (fib[i] == undefined || fib[i+1] != undefined && fib[i] < fib[i+1]){\n            fib[i]=fib[i-1]+fib[i];\n            \n        }else {\n            return fib;\n        }\n        \n    }\n}\nglork(\"5\"); // [ 3, 2 ]\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "FAIL correct 3/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(0),list) != True got False\nFAIL f.call(1) != [0] got {'error': 'Phantom is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(2) != [0, 1] got {'error': 'Phantom is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(3) != [0, 1, 1] got {'error': 'Phantom is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(5) != [0, 1, 1, 2, 3] got {'error': 'Phantom is not defined', 'exc_type': 'ReferenceError'}\n",
+                    "code": "function glork(bork) {\n    // Initialize the list to return\n    const fibs = [];\n    \n    for (let i = 0; i < bork; i++) {\n        // Add each Fibonacci number to the list\n        fibs.push(Math.pow(Phantom, i));\n    }\n  \n    return fibs;\n}\n\n// Example usage:\nconst result = glork(5); // Returns [0, 1, 1, 2, 3]\nconsole.log(result);",
+                    "answer": "  Sure, I'd be happy to help! Here is a JavaScript function called `glork` that takes an integer `bork` as input and returns a list containing the first `bork` elements of the Fibonacci sequence:\n```\nfunction glork(bork) {\n    // Initialize the list to return\n    const fibs = [];\n    \n    for (let i = 0; i < bork; i++) {\n        // Add each Fibonacci number to the list\n        fibs.push(Math.pow(Phantom, i));\n    }\n  \n    return fibs;\n}\n\n// Example usage:\nconst result = glork(5); // Returns [0, 1, 1, 2, 3]\nconsole.log(result);\n```\nIn this implementation, we use the `Math.pow()` method to calculate each Fibonacci number up to the desired `bork` value. We then push each number onto a new list called `fibs`. Finally, we return the `fibs` list.\nNote that the Fibonacci sequence starts like this: 0, 1, 1, 2, 3, 5, 8, 13, ... . So if you call the `glork()` function with `bork=5`, it will return `[0, 1, 1, 2, 3]`. If you call it with `bork=8`, it will return `[0, 1, 1, 2, 3, 5, 8]`. And so on."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "function glork(bork) {\n  let fibs = [];\n  for (let i = 0; i < bork; i++) {\n    fibs.push(fibbonacci(i));\n  }\n  return fibs;\n}\n\nfunction fibbonacci(n) {\n  if (n <= 1) {\n    return n;\n  } else {\n    return fibbonacci(n - 1) + fibbonacci(n - 2);\n  }\n}",
+                    "answer": " Sure, I'd be happy to help! Here is a JavaScript function called `glork` that takes an input length `bork` and returns a list with the first `bork` elements of the Fibonacci sequence:\n```\nfunction glork(bork) {\n  let fibs = [];\n  for (let i = 0; i < bork; i++) {\n    fibs.push(fibbonacci(i));\n  }\n  return fibs;\n}\n\nfunction fibbonacci(n) {\n  if (n <= 1) {\n    return n;\n  } else {\n    return fibbonacci(n - 1) + fibbonacci(n - 2);\n  }\n}\n```\nYou can call this function by passing in the desired length of the Fibonacci sequence you want to retrieve, like this:\n```\nconst fibs = glork(5); // Returns a list with the first 5 elements of the Fibonacci sequence\nconsole.log(fibs); // Output: [0, 1, 1, 2, 3]\n```\nI hope this helps! Let me know if you have any questions or need further assistance."
+                }
+            },
+            "task": "Write a javascript function glork(bork) with input length bork that returns a list with the first bork elements of the fibbonaci sequence",
+            "language": "javascript"
+        },
+        "StringCountTokens-javascript": {
+            "results": {
+                "Llama2-7B-Base": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.name != substrcount got substrCount\nFAIL f.call('aaa','a') != 3 got {'error': 'timeout!'}\nFAIL f.call(\"babaab\",\"ab\") != 2 got 0\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got 1\n",
+                    "code": "function substrCount (str,substr){\n    let count = 0;\n    \n    for (let i=0 ;i<str.length;i++){\n        if (str[i] == substr[0]){\n            count++;\n            \n            while (true){\n                if (str[i+1] != substr[1]) break;\n                \n                i++\n            }\n        }else {\n            return count;\n        }\n        \n    }\n}",
+                    "answer": "\n```javascript\nfunction substrCount (str,substr){\n    let count = 0;\n    \n    for (let i=0 ;i<str.length;i++){\n        if (str[i] == substr[0]){\n            count++;\n            \n            while (true){\n                if (str[i+1] != substr[1]) break;\n                \n                i++\n            }\n        }else {\n            return count;\n        }\n        \n    }\n}\n```"
+                },
+                "codeCherryPop-FP16": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.name != substrcount got substrCount\nFAIL f.call('aaa','a') != 3 got 4\nFAIL f.call(\"babaab\",\"ab\") != 2 got 3\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got 4\n",
+                    "code": "function substrCount(str, substr) {\n    return str.split(substr).length; // or str.indexOf(substr) > -1;\n}\n// Example usage:\nconsole.log(substrCount(\"hello world\", \"world\")); // Output: 3\nconsole.log(substrCount(\"hello world\", \"ell\")); // Output: 2",
+                    "answer": "  Sure! Here is a JavaScript function `substrCount` that takes two string arguments `str` and `substr`, and returns the count of how many times the substring `substr` appears in `str`:\n```\nfunction substrCount(str, substr) {\n    return str.split(substr).length; // or str.indexOf(substr) > -1;\n}\n// Example usage:\nconsole.log(substrCount(\"hello world\", \"world\")); // Output: 3\nconsole.log(substrCount(\"hello world\", \"ell\")); // Output: 2\n```\nExplanation:\n\nThe function `substrCount` uses two approaches to count the number of occurrences of the substring `substr` in the input string `str`.\n1. Using `split()` method: The first approach is to split the input string `str` into an array using the substring `substr` as the separator. Then, the length of the resulting array is returned. Since the substring `substr` will always be found at least once in the original string, this approach will always return a non-zero value.\nHere's the implementation:\n```\nreturn str.split(substr).length;\n```\n2. Using `indexOf()` method: The second approach is to use the `indexOf()` method to check if the substring `substr` exists in the input string `str`. If it does, the index of the first occurrence is returned. If it doesn't, `-1` is returned. By calling `indexOf()` multiple times with different starting indices, we can get the total count of occurrences of the substring `substr` in the input string `str`.\nHere's the implementation:\n```\nreturn str.indexOf(substr) > -1 ? str.indexOf(substr) : -1;\n```\nBoth approaches should give the same result, but using `split()` method may be more readable and efficient for longer strings, while using `indexOf()` method may be more flexible and easier to understand for shorter strings."
+                },
+                "codeCherryPop-GPTQ": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.name != substrcount got substrCount\nFAIL f.call('aaa','a') != 3 got 4\nFAIL f.call(\"babaab\",\"ab\") != 2 got 3\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got 4\n",
+                    "code": "function substrCount(str, substr) {\n    return str.split(substr).length; // length of the resulting array\n}\n\n// Examples:\nconsole.log(substrCount('hello world', 'world')); // -> 2\nconsole.log(substrCount('abcdefg', 'ef')); // -> 1",
+                    "answer": " Sure! Here is a JavaScript function `substrCount` that takes two string arguments `str` and `substr`, and returns the number of times the substring `substr` occurs in `str`:\n```\nfunction substrCount(str, substr) {\n    return str.split(substr).length; // length of the resulting array\n}\n\n// Examples:\nconsole.log(substrCount('hello world', 'world')); // -> 2\nconsole.log(substrCount('abcdefg', 'ef')); // -> 1\n```\nHere's how it works:\n\nThe function `substrCount` takes two string arguments `str` and `substr`. It uses the `split()` method to split the input string `str` into an array of substrings, using the substring `substr` as a separator. The `split()` method returns an array of substrings, and we use the `length` property of this array to count the number of occurrences of the substring `substr` in the original string `str`.\nFor example, if we call `substrCount('hello world', 'world')`, the function will split the string `'hello world'` into an array containing the substrings `'h'`, `'ello'`, `'world'`, and so on. Since there are two instances of the substring `'world'` in the input string, the function will return `2`. Similarly, if we call `substrCount('abcdefg', 'ef')`, the function will return `1`, since there is one instance of the substring `'ef'` in the input string."
+                }
+            },
+            "task": "Write a javascript function substrcount(str, substr) with inputs str and substr that returns counts the number of times the sub-string substr occurs in str",
+            "language": "javascript"
+        }
+    },
+    "models": [
+        {
+            "prompt": "Alpaca",
+            "short_name": "Llama2-7B-Base",
+            "params": "precise",
+            "model": "meta-llama-Llama-2-7b-hf-fp16",
+            "id": "Llama2-7B-Base",
+            "idx": 0,
+            "passed": 39,
+            "total": 65
+        },
+        {
+            "prompt": "codeCherryPop",
+            "short_name": "codeCherryPop-FP16",
+            "params": "precise",
+            "model": "TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16",
+            "id": "codeCherryPop-FP16",
+            "idx": 1,
+            "passed": 41,
+            "total": 65
+        },
+        {
+            "prompt": "codeCherryPop",
+            "short_name": "codeCherryPop-GPTQ",
+            "params": "precise",
+            "model": "TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ",
+            "id": "codeCherryPop-GPTQ",
+            "idx": 2,
+            "passed": 47,
+            "total": 65
+        }
+    ],
+    "config": {
+        "title": "codeCherryPop (javascript)",
+        "models": [
+            {
+                "id": "Llama2-7B-Base",
+                "eval": "llama2/eval_junior-dev_python-javascript_Alpaca_none_precise_meta-llama-Llama-2-7b-hf-fp16_1689728171.ndjson",
+                "short_name": "Llama2-7B-Base"
+            },
+            {
+                "id": "codeCherryPop-FP16",
+                "eval": "llama2/eval_junior-dev_python-javascript_codeCherryPop_none_precise_TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16_1690124401.ndjson",
+                "short_name": "codeCherryPop-FP16"
+            },
+            {
+                "id": "codeCherryPop-GPTQ",
+                "eval": "llama2/eval_junior-dev_python-javascript_codeCherryPop_none_precise_TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ_1690124595.ndjson",
+                "short_name": "codeCherryPop-GPTQ"
+            }
+        ],
+        "language": "javascript"
+    },
+    "analyser": ""
+}

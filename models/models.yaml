@@ -597,3 +597,15 @@
   quant: GPTQ-4b
   tags: ["llama"]
   url: https://huggingface.co/TheBloke/upstage-llama-30b-instruct-2048-GPTQ
+- id: TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16
+  name: codeCherryPop-qLoRA
+  size: 7B
+  quant: FP16
+  tags: ["llama2"]
+  url: https://huggingface.co/TokenBender/llama2-7b-chat-hf-codeCherryPop-qLoRA-merged/tree/main
+- id: TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ
+  name: codeCherryPop-qLoRA 
+  size: 7B
+  quant: GPTQ-4b
+  tags: ["llama2"]
+  url: https://huggingface.co/TheBloke/llama2-7b-chat-codeCherryPop-qLoRA-GPTQ

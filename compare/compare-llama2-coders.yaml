@@ -1,0 +1,11 @@
+title: codeCherryPop
+models:
+  - id: Llama2-7B-Base
+    eval: llama2/eval_junior-dev_python-javascript_Alpaca_none_precise_meta-llama-Llama-2-7b-hf-fp16_1689728171.ndjson
+    short_name: Llama2-7B-Base
+  - id: codeCherryPop-FP16
+    eval: llama2/eval_junior-dev_python-javascript_codeCherryPop_none_precise_TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16_1690124401.ndjson
+    short_name: codeCherryPop-FP16
+  - id: codeCherryPop-GPTQ
+    eval: llama2/eval_junior-dev_python-javascript_codeCherryPop_none_precise_TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ_1690124595.ndjson
+    short_name: codeCherryPop-GPTQ

@@ -46,6 +46,10 @@ def download_llama2_13b_model():
 def download_redmond_puffin_preview_13b_model():
     download_model("NousResearch/Redmond-Puffin-13B")
 
+def download_codeCherryPop_7b_model():
+    download_model("TokenBender/llama2-7b-chat-hf-codeCherryPop-qLoRA-merged")
+
+
 # Now, we define our image. We’ll start from a Dockerhub image recommended by `vLLM`, upgrade the older
 # version of `torch` to a new one specifically built for CUDA 11.8. Next, we install `vLLM` from source to get the latest updates.
 # Finally, we’ll use run_function to run the function defined above to ensure the weights of the model
@@ -59,7 +63,7 @@ image = (
         "accelerate==0.21.0"
     )
     .pip_install("einops==0.6.1", "sentencepiece==0.1.99")
-    .run_function(download_redmond_puffin_preview_13b_model)
+    .run_function(download_codeCherryPop_7b_model)
 )
 
 stub = Stub(image=image)

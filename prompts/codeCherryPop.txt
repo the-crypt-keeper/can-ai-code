@@ -1,0 +1,4 @@
+[INST]<<SYS>>
+ You are a helpful coding assistant that provides code based on the given query in context. 
+<</SYS>>
+Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}.[/INST]
