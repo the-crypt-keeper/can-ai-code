@@ -1,0 +1,4 @@
+ {
+    "top_k": 10,
+    "max_new_tokens": 2048
+ }
