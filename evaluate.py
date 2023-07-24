@@ -28,16 +28,21 @@ def evaluation(test, language, code):
 
                 if ('eq-any' in check):
                     test_result = (test_value in check['eq-any'])
+                    test_operation = 'inside'
                 else:
                     test_result = (test_value == check['eq'])
+                    test_operation = '=='
                 
                 if (test_result):
-                    print('   ',check_name, "passed", test_value,'inside' if 'eq-any' in check else '==',check['eq-any'] if 'eq-any' in check else check['eq'])
                     passed += 1
                     check['status'] = 1
+                    print('   ',check_name, "passed", test_value,
+                          'inside' if 'eq-any' in check else '==', check.get('eq', check.get('eq-any')))
                 else:
                     check['status'] = 0
-                    print('   ',check_name, "failed", check['assert'], 'got', test_value, '!=', check['eq'])
+                    print('   ',check_name, "failed", check['assert'], 'got', test_value,
+                          'not inside' if 'eq-any' in check else '!=', check.get('eq', check.get('eq-any')))
+                    
             checks.append(check)
     else:
         print(test['name'], "No code found!")

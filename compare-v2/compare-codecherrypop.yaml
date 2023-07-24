@@ -1,0 +1,11 @@
+title: codeCherryPop v2
+models:
+  - id: ChatGPT
+    eval: eval_junior-v2_python-javascript_chat-generic_none_precise_openai-chatgpt_1690225795.ndjson
+    short_name: ChatGPT
+  - id: codeCherryPop-FP16
+    eval: eval_junior-v2_python-javascript_codeCherryPop_none_precise_TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16_1690226546.ndjson
+    short_name: codeCherryPop-FP16
+  - id: codeCherryPop-GPTQ
+    eval: eval_junior-v2_python-javascript_codeCherryPop_none_precise_TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ_1690226847.ndjson
+    short_name: codeCherryPop-GPTQ
