@@ -12,7 +12,7 @@ from auto_gptq import AutoGPTQForCausalLM
 from auto_gptq.modeling import BaseQuantizeConfig
 import fire
 
-def save_meta(name, base, safetensors = True, bits = 4, group = 128, actorder = True, eos = ['<s>', '</s>']):
+def save_meta(name, base, safetensors = True, bits = 4, group = 128, actorder = True, eos = ['<s>', '</s>'], **kwargs):
     with open("/model/_info.json",'w') as f:
         json.dump({
             "model_name": name,
@@ -22,6 +22,7 @@ def save_meta(name, base, safetensors = True, bits = 4, group = 128, actorder = 
             "model_group": group,
             "model_actorder": actorder,
             "model_eos": eos,
+            **kwargs
         }, f)
 
 def download_falcon_40b_3bit_v2():   
@@ -38,6 +39,12 @@ def download_falcon_40b_4bit_v2():
     snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model","*.txt","*.py",MODEL_BASE+"*"])
     save_meta(MODEL_NAME, MODEL_BASE, group=-1, bits=4, actorder=True, eos=['<|endoftext|>'])
 
+def download_wizardcoder_guanaco_15b_v2():   
+    MODEL_NAME = "TheBloke/WizardCoder-Guanaco-15B-V1.1-GPTQ"
+    MODEL_BASE = "gptq_model-4bit-128g"
+
+    snapshot_download(local_dir=Path("/model"), repo_id=MODEL_NAME, allow_patterns=["*.json","*.model",MODEL_BASE+"*"])
+    save_meta(MODEL_NAME, MODEL_BASE, actorder=False, use_fast=True)
 
 class ModalGPTQ:
     def __init__(self):
@@ -58,7 +65,7 @@ class ModalGPTQ:
         t0 = time.time()
 
         print('Loading tokenizer...')
-        tokenizer = AutoTokenizer.from_pretrained(quantized_model_dir, use_fast=False)
+        tokenizer = AutoTokenizer.from_pretrained(quantized_model_dir, use_fast=self.info['use_fast'])
 
         print('Loading model...')
         model = AutoGPTQForCausalLM.from_quantized(quantized_model_dir, model_basename=self.info['model_base'], device_map="auto", load_in_8bit=True, use_triton=False, use_safetensors=self.info['model_safetensors'], torch_dtype=torch.float32, trust_remote_code=True)
@@ -93,7 +100,7 @@ class ModalGPTQ:
 def main(input: str, params: str, iterations: int = 1):
     from prepare import save_interview
 
-    download_falcon_40b_4bit_v2()
+    download_wizardcoder_guanaco_15b_v2()
     model = ModalGPTQ()
 
     interview = [json.loads(line) for line in open(input)]
