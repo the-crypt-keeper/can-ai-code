@@ -64,7 +64,8 @@ if __name__ == '__main__':
     interview = [json.loads(line) for line in open(args.input)]
     results = []
 
-    for challenge in interview:
+    for idx, challenge in enumerate(interview):
+        print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
         chain = LLMChain(llm=model, prompt=PromptTemplate(template='{input}', input_variables=['input']))
         answer = chain.run(input=challenge['prompt'])
 

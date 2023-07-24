@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "" ]; then
-    GLOB="results-v2/interview_junior*.ndjson"
+    GLOB="results/interview_junior*.ndjson"
 else
     GLOB="$1/interview_junior*.ndjson"
 fi

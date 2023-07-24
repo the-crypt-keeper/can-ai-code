@@ -41,7 +41,7 @@ if __name__ == "__main__":
     template = Template(open(args.template).read())
     template_name = Path(args.template).stem
 
-    output_filename = f"results-v2/prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
+    output_filename = f"results/prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
     outputs = []
     for test in load_questions(interview=args.interview):
         for language in args.language.split(','):
