@@ -30,6 +30,11 @@
   size: 16B
   tags: ["starcoder"]
   url: https://huggingface.co/WizardLM/WizardCoder-15B-V1.0
+- id: TheBloke-WizardCoder-Guanaco-15B-V1.1-GPTQ
+  name: WizardCoder-Guanaco
+  size: 16B
+  tags: ["starcoder"]
+  url: https://huggingface.co/TheBloke/WizardCoder-Guanaco-15B-V1.1-GPTQ
 - id: TheBloke-alpaca-lora-65B-GPTQ-4bit
   name: Alpaca
   tags: ["llama"]
