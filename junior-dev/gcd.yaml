@@ -8,11 +8,17 @@
     gcd_100_10:
       assert: "f.call(100,10)"
       eq: 10
+    gcd_5_0:
+      assert: "f.call(5,0)"
+      eq: 5
+    gcd_13_7:
+      assert: "f.call(13,7)"
+      eq: 1
 
 GCDZeroShot:
     Signature: "gcd(a, b)"
     Input: "with two inputs a and b"
-    Output: "the greatest common demoninator (gcd) of a and b"
+    Output: "the greatest common denominator of a and b"
     Description: "See if the model can output a well-known, simple algorithm."
     Checks:
         <<: *Checks
@@ -22,11 +28,31 @@ GCDZeroShot:
         input_name_1:
             assert: "f.args[1].name"
             eq: "b"
+        func_name:
+            assert: "f.name"
+            eq: "gcd"
+
+GCDAlternative:
+    Signature: "gcf(a, b)"
+    Input: "with two inputs a and b"
+    Output: "the greatest common factor of a and b"
+    Description: "See if the model can output a well-known, simple algorithm."
+    Checks:
+        <<: *Checks
+        input_name_0:
+            assert: "f.args[0].name"
+            eq: "a"
+        input_name_1:
+            assert: "f.args[1].name"
+            eq: "b"
+        func_name:
+            assert: "f.name"
+            eq: "gcf"
 
 GCDMisnamed:
     Signature: "fofx(x, banana)"
     Input: "with two inputs x and banana"
-    Output: "the greatest common demoninator (gcd) of x and banana"
+    Output: "the greatest common denominator (gcd) of x and banana"
     Description: "See if the model can output a well-known, simple algorithm if the name has been changed."
     Checks:
         <<: *Checks
@@ -38,4 +64,4 @@ GCDMisnamed:
             eq: "banana"
         func_name:
             assert: "f.name"
-            eq: "fofx"            
+            eq: "fofx"
