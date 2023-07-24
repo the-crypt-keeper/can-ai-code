@@ -52,7 +52,7 @@ def evaluation(test, language, code):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview evaluator')
-    parser.add_argument('--interview', type=str, default='junior-dev', help='interview to evaluate')
+    parser.add_argument('--interview', type=str, default='junior-v2', help='interview to evaluate')
     parser.add_argument('--input', type=str, required=True, help='path to interview*.ndjson')
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
     parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')

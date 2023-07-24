@@ -84,22 +84,22 @@
         "GCDZeroShot-javascript": {
             "results": {
                 "ChatGPT": {
-                    "check_summary": "PASS correct 8/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
                     "failing_tests": "",
                     "code": "function gcd(a, b) {\n  // Ensure a is always greater than or equal to b\n  if (a < b) {\n    [a, b] = [b, a];\n  }\n\n  // Find the greatest common divisor using Euclidean algorithm\n  while (b !== 0) {\n    let remainder = a % b;\n    a = b;\n    b = remainder;\n  }\n\n  return a;\n}",
                     "answer": "```javascript\nfunction gcd(a, b) {\n  // Ensure a is always greater than or equal to b\n  if (a < b) {\n    [a, b] = [b, a];\n  }\n\n  // Find the greatest common divisor using Euclidean algorithm\n  while (b !== 0) {\n    let remainder = a % b;\n    a = b;\n    b = remainder;\n  }\n\n  return a;\n}\n```"
                 },
                 "codeCherryPop-FP16": {
-                    "check_summary": "FAIL correct 6/8",
+                    "check_summary": "FAIL correct 6/9",
                     "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(5,0) == 5\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
-                    "failing_tests": "FAIL f.call(100,10) == 10 got 100\nFAIL f.call(13,7) == 1 got 13\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 100\nFAIL f.call(0,3) == 3 got 0\nFAIL f.call(13,7) == 1 got 13\n",
                     "code": "function gcd(a, b) {\n    // Check if b is zero or less than a\n    if (b === 0 || a > b) {\n        return a;\n    } else {\n        // Find the largest prime factor of both numbers\n        var p = Math.min(Math.floor(a / b), Math.floor(b / a));\n        while (p !== 1 && p > 1) {\n            a %= p;\n            b %= p;\n            p--;\n        }\n        return p;\n    }\n}\n\n// Example usage:\nconsole.log(gcd(8, 6)); // Output: 2\nconsole.log(gcd(4, 3)); // Output: 2",
                     "answer": "  Of course! Here is a JavaScript function for finding the greatest common denominator (GCD) of two numbers:\n```\nfunction gcd(a, b) {\n    // Check if b is zero or less than a\n    if (b === 0 || a > b) {\n        return a;\n    } else {\n        // Find the largest prime factor of both numbers\n        var p = Math.min(Math.floor(a / b), Math.floor(b / a));\n        while (p !== 1 && p > 1) {\n            a %= p;\n            b %= p;\n            p--;\n        }\n        return p;\n    }\n}\n\n// Example usage:\nconsole.log(gcd(8, 6)); // Output: 2\nconsole.log(gcd(4, 3)); // Output: 2\n```\nThis function takes two input parameters `a` and `b`, and it returns the GCD of those two numbers. The function works by first checking if one of the input values is zero or less than the other. If that's the case, then the GCD is simply the larger number. Otherwise, the function finds the largest prime factor that both numbers have in common, and uses that as the GCD.\nYou can test this function using the examples provided in the code comments. For example, calling `gcd(8, 6)` will output `2`, because the GCD of 8 and 6 is 2. Similarly, calling `gcd(4, 3)` will output `2`, because the GDC of 4 and 3 is also 2."
                 },
                 "codeCherryPop-GPTQ": {
-                    "check_summary": "PASS correct 8/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
                     "failing_tests": "",
                     "code": "function gcd(a, b) {\n  if (b == 0) {\n    return a;\n  } else {\n    return gcd(b, a % b);\n  }\n}",
                     "answer": " Sure! Here is a JavaScript function for calculating the greatest common denominator (GCD) of two numbers:\n```\nfunction gcd(a, b) {\n  if (b == 0) {\n    return a;\n  } else {\n    return gcd(b, a % b);\n  }\n}\n```\nExplanation:\n\nThe GCD of two numbers `a` and `b` is the largest number that divides both without leaving a remainder. To calculate the GCD, we can use a recursive approach where we divide both numbers by their least common multiple until one or both numbers become 0. When this happens, we return the remaining number as the GCD. If neither number becomes 0, we repeat the process until we reach the base case where one or both numbers are 0. In this case, we return the original number as the GCD.\nYou can call this function like this: `gcd(3, 6)` which will return 3 because 3 and 6 have no common factors other than 1.\nPlease let me know if you have any questions or need further assistance!"
@@ -111,23 +111,23 @@
         "GCDAlternative-javascript": {
             "results": {
                 "ChatGPT": {
-                    "check_summary": "PASS correct 8/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
                     "failing_tests": "",
                     "code": "function gcf(a, b) {\n  // Ensure a is always greater than or equal to b\n  if (b > a) {\n    let temp = a;\n    a = b;\n    b = temp;\n  }\n\n  // Find the greatest common factor\n  while (b !== 0) {\n    let remainder = a % b;\n    a = b;\n    b = remainder;\n  }\n\n  return a;\n}",
                     "answer": "```javascript\nfunction gcf(a, b) {\n  // Ensure a is always greater than or equal to b\n  if (b > a) {\n    let temp = a;\n    a = b;\n    b = temp;\n  }\n\n  // Find the greatest common factor\n  while (b !== 0) {\n    let remainder = a % b;\n    a = b;\n    b = remainder;\n  }\n\n  return a;\n}\n```"
                 },
                 "codeCherryPop-FP16": {
-                    "check_summary": "FAIL correct 6/8",
+                    "check_summary": "FAIL correct 6/9",
                     "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(5,0) == 5\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
-                    "failing_tests": "FAIL f.call(100,10) == 10 got {'error': 'Maximum call stack size exceeded', 'exc_type': 'RangeError'}\nFAIL f.call(13,7) == 1 got {'error': 'Maximum call stack size exceeded', 'exc_type': 'RangeError'}\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got {'error': 'Maximum call stack size exceeded', 'exc_type': 'RangeError'}\nFAIL f.call(0,3) == 3 got {'error': 'Maximum call stack size exceeded', 'exc_type': 'RangeError'}\nFAIL f.call(13,7) == 1 got {'error': 'Maximum call stack size exceeded', 'exc_type': 'RangeError'}\n",
                     "code": "function gcf(a, b) {\n    if (b === 0) return a; // base case - when b = 0, a is the GCF\n    else return Math.min(gcf(b, a % b), gcf(a, b % a)); // recursive cases\n}",
                     "answer": "  Of course! Here is a JavaScript function for finding the greatest common factor (GCF) of two numbers:\n```\nfunction gcf(a, b) {\n    if (b === 0) return a; // base case - when b = 0, a is the GCF\n    else return Math.min(gcf(b, a % b), gcf(a, b % a)); // recursive cases\n}\n```\nExplanation:\n\nThe function takes two integers `a` and `b` as input and returns their GCF. The function uses a recursive approach to find the GCF by dividing both numbers by their smallest divisor (i.e., the least common multiple of `a` and `b`). If `b` is equal to zero, then `a` is the GCF, so we return `a`. Otherwise, we use the minimum of two smaller GCF calculations: one using `b` divided by `a`, and the other using `a` divided by `b`. This ensures that we always find the largest possible GCF.\nYou can test this function with some sample inputs like this:\n```\nconsole.log(gcf(12, 8)); // Output: 4\nconsole.log(gcf(256, 32)); // Output: 8\nconsole.log(gcf(9, 7)); // Output: 3\n```\nI hope this helps! Let me know if you have any questions or need further assistance."
                 },
                 "codeCherryPop-GPTQ": {
-                    "check_summary": "FAIL correct 4/8",
+                    "check_summary": "FAIL correct 4/9",
                     "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
-                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\nFAIL f.call(100,10) == 10 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\nFAIL f.call(5,0) == 5 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\nFAIL f.call(13,7) == 1 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\nFAIL f.call(100,20) == 20 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\nFAIL f.call(5,0) == 5 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\nFAIL f.call(0,3) == 3 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\nFAIL f.call(13,7) == 1 got {'error': 'Unexpected end of input', 'exc_type': 'SyntaxError'}\n",
                     "code": "function gcf(a, b) {\n    // Check if either number is 0\n    if (a === 0 || b === 0) {\n        return 0;\n    } else {\n        // Find the prime factors of each number\n        var af = primeFactors(a);\n        var bf = primeFactors(b);\n        // Find the GCF by iterating through the shared factors\n        var gcf = [];\n        for (var i = 0; i < af.length; i++) {\n            for (var j = 0; j < bf.length; j++) {\n                if (af[i] == bf[j]) {\n                    gcf.push(af[i]);\n                    break;\n                }\n            }\n        }\n        return gcf;\n    }\n}\n\nfunction primeFactors(n) {\n    // Use a recursive algorithm to find the prime factors of n\n    var factors = [];\n    if (n <= 1) {\n        return factors;\n    } else {\n        var sqrt = Math.floor(Math.sqrt(n));\n        while (n % 2 == 0) {\n            factors.unshift(2);\n            n /= 2;\n        }\n        while (n % 3 == 0) {\n            factors.unshift(3);\n            n /= 3;\n        }\n        while (n % 4 == 0) {\n            factors.unshift(4);\n            n /= 4;\n        }\n        while (n % 5 == 0) {\n            factors.unshift(5);\n            n /= 5;\n        }\n        while (n % 6 == 0) {\n            factors.unshift(6);\n            n /= 6;\n        }\n        while (n % 7 == 0) {\n            factors.unshift(7);\n            n /= 7;\n        }\n        while (n % 8 == 0) {\n            factors.unshift(8);\n            n /= 8;",
                     "answer": " Of course! Here is a JavaScript function for finding the greatest common factor (GCF) of two numbers:\n```\nfunction gcf(a, b) {\n    // Check if either number is 0\n    if (a === 0 || b === 0) {\n        return 0;\n    } else {\n        // Find the prime factors of each number\n        var af = primeFactors(a);\n        var bf = primeFactors(b);\n        // Find the GCF by iterating through the shared factors\n        var gcf = [];\n        for (var i = 0; i < af.length; i++) {\n            for (var j = 0; j < bf.length; j++) {\n                if (af[i] == bf[j]) {\n                    gcf.push(af[i]);\n                    break;\n                }\n            }\n        }\n        return gcf;\n    }\n}\n\nfunction primeFactors(n) {\n    // Use a recursive algorithm to find the prime factors of n\n    var factors = [];\n    if (n <= 1) {\n        return factors;\n    } else {\n        var sqrt = Math.floor(Math.sqrt(n));\n        while (n % 2 == 0) {\n            factors.unshift(2);\n            n /= 2;\n        }\n        while (n % 3 == 0) {\n            factors.unshift(3);\n            n /= 3;\n        }\n        while (n % 4 == 0) {\n            factors.unshift(4);\n            n /= 4;\n        }\n        while (n % 5 == 0) {\n            factors.unshift(5);\n            n /= 5;\n        }\n        while (n % 6 == 0) {\n            factors.unshift(6);\n            n /= 6;\n        }\n        while (n % 7 == 0) {\n            factors.unshift(7);\n            n /= 7;\n        }\n        while (n % 8 == 0) {\n            factors.unshift(8);\n            n /= 8;\n       "
                 }
@@ -138,23 +138,23 @@
         "GCDMisnamed-javascript": {
             "results": {
                 "ChatGPT": {
-                    "check_summary": "FAIL correct 7/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+                    "check_summary": "FAIL correct 8/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
                     "failing_tests": "FAIL f.name == fofx got gcd\n",
                     "code": "function gcd(x, banana) {\n  // Ensure positive values for x and banana\n  x = Math.abs(x);\n  banana = Math.abs(banana);\n\n  // Euclidean algorithm to find gcd\n  while (banana !== 0) {\n    let temp = banana;\n    banana = x % banana;\n    x = temp;\n  }\n\n  return x;\n}",
                     "answer": "```javascript\nfunction gcd(x, banana) {\n  // Ensure positive values for x and banana\n  x = Math.abs(x);\n  banana = Math.abs(banana);\n\n  // Euclidean algorithm to find gcd\n  while (banana !== 0) {\n    let temp = banana;\n    banana = x % banana;\n    x = temp;\n  }\n\n  return x;\n}\n```"
                 },
                 "codeCherryPop-FP16": {
-                    "check_summary": "FAIL correct 5/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\n",
+                    "check_summary": "FAIL correct 6/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\n",
                     "failing_tests": "FAIL f.args[0].name == x got a\nFAIL f.args[1].name == banana got b\nFAIL f.name == fofx got gcd\n",
                     "code": "function gcd(a, b) {\n    if (b === 0) {\n        return a;\n    } else {\n        return gcd(b, a % b);\n    }\n}\n\n// Example usage:\nconst x = 12;\nconst banana = 6;\nconsole.log(gcd(x, banana)); // Output: 2",
                     "answer": "  Sure! Here is a JavaScript function `gcd` that takes two numbers as input and returns their greatest common denominator:\n```\nfunction gcd(a, b) {\n    if (b === 0) {\n        return a;\n    } else {\n        return gcd(b, a % b);\n    }\n}\n\n// Example usage:\nconst x = 12;\nconst banana = 6;\nconsole.log(gcd(x, banana)); // Output: 2\n```\nIn this implementation, we use a recursive approach to find the GCD of two numbers. The function checks if one of the numbers is zero, in which case the GCD is simply the other number. Otherwise, it divides both numbers by their least common multiple (LCM), and then recursively calls itself with the remaining numbers until the LCM is found.\nYou can also use the `Math.gcd()` method to calculate the GCD of two numbers:\n```\nconst x = 12;\nconst banana = 6;\nconsole.log(Math.gcd(x, banana)); // Output: 2\n```\nI hope this helps! Let me know if you have any questions or need further assistance."
                 },
                 "codeCherryPop-GPTQ": {
-                    "check_summary": "FAIL correct 3/8",
+                    "check_summary": "FAIL correct 3/9",
                     "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
-                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(100,10) == 10 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(5,0) == 5 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(13,7) == 1 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.name == fofx got gcd\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(100,20) == 20 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(5,0) == 5 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(0,3) == 3 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(13,7) == 1 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.name == fofx got gcd\n",
                     "code": "function gcd(x, banana) {\n    return Math.gcd(x, banana);\n}",
                     "answer": " Sure! Here is a JavaScript function `gcd` that takes two input arguments `x` and `banana`, and returns their greatest common denominator:\n```\nfunction gcd(x, banana) {\n    return Math.gcd(x, banana);\n}\n```\nExplanation:\n\nThe `Math.gcd()` method calculates the greatest common divisor (GCD) of two numbers. It takes two arguments, `a` and `b`, which are the two numbers to find the GCD for. The method returns the largest integer that divides both `a` and `b` without leaving a remainder.\nFor example, if we call the `gcd` function like this: `gcd(3, 6)`, it will return 2, because the largest integer that divides both 3 and 6 without leaving a remainder is 2.\nNote: In JavaScript, the `Math` object has several methods for calculating mathematical operations, including the `gcd` method."
                 }
@@ -289,7 +289,7 @@
                 "codeCherryPop-GPTQ": {
                     "check_summary": "FAIL correct 3/8",
                     "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
-                    "failing_tests": "FAIL f.call(0) == 0 got None\nFAIL f.call(1) == 1 got #\n# Fatal error in , line 0\n# Fatal JavaScript invalid size error 178414678\n#\n#\n#\n#FailureMessage Object: 0x7fff2ad30030\n 1: 0xb72001  [node]\n 2: 0x1bfb174 V8_Fatal(char const*, ...) [node]\n 3: 0xe67af8  [node]\n 4: 0x1015422  [node]\n 5: 0x1015d66  [node]\n 6: 0x11d6543 v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [node]\n 7: 0x15d9e19  [node]\n/timeout.sh: line 6:   516 Trace/breakpoint trap   timeout --foreground 5 $@\nFAIL f.call(2) == 1 got #\n# Fatal error in , line 0\n# Fatal JavaScript invalid size error 178414678\n#\n#\n#\n#FailureMessage Object: 0x7ffdf276fdd0\n 1: 0xb72001  [node]\n 2: 0x1bfb174 V8_Fatal(char const*, ...) [node]\n 3: 0xe67af8  [node]\n 4: 0x1015422  [node]\n 5: 0x1015d66  [node]\n 6: 0x11d6543 v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [node]\n 7: 0x15d9e19  [node]\n/timeout.sh: line 6:   532 Trace/breakpoint trap   timeout --foreground 5 $@\nFAIL f.call(3) == 2 got #\n# Fatal error in , line 0\n# Fatal JavaScript invalid size error 178414678\n#\n#\n#\n#FailureMessage Object: 0x7ffc2bf03a20\n 1: 0xb72001  [node]\n 2: 0x1bfb174 V8_Fatal(char const*, ...) [node]\n 3: 0xe67af8  [node]\n 4: 0x1015422  [node]\n 5: 0x1015d66  [node]\n 6: 0x11d6543 v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [node]\n 7: 0x15d9e19  [node]\n/timeout.sh: line 6:   547 Trace/breakpoint trap   timeout --foreground 5 $@\nFAIL f.call(5) == 5 got #\n# Fatal error in , line 0\n# Fatal JavaScript invalid size error 178414678\n#\n#\n#\n#FailureMessage Object: 0x7ffe68236380\n 1: 0xb72001  [node]\n 2: 0x1bfb174 V8_Fatal(char const*, ...) [node]\n 3: 0xe67af8  [node]\n 4: 0x1015422  [node]\n 5: 0x1015d66  [node]\n 6: 0x11d6543 v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [node]\n 7: 0x15d9e19  [node]\n/timeout.sh: line 6:   564 Trace/breakpoint trap   timeout --foreground 5 $@\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got None\nFAIL f.call(1) == 1 got #\n# Fatal error in , line 0\n# Fatal JavaScript invalid size error 178414678\n#\n#\n#\n#FailureMessage Object: 0x7fffd3331750\n 1: 0xb72001  [node]\n 2: 0x1bfb174 V8_Fatal(char const*, ...) [node]\n 3: 0xe67af8  [node]\n 4: 0x1015422  [node]\n 5: 0x1015d66  [node]\n 6: 0x11d6543 v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [node]\n 7: 0x15d9e19  [node]\n/timeout.sh: line 6:   565 Trace/breakpoint trap   timeout --foreground 5 $@\nFAIL f.call(2) == 1 got #\n# Fatal error in , line 0\n# Fatal JavaScript invalid size error 178414678\n#\n#\n#\n#FailureMessage Object: 0x7ffd18f04540\n 1: 0xb72001  [node]\n 2: 0x1bfb174 V8_Fatal(char const*, ...) [node]\n 3: 0xe67af8  [node]\n 4: 0x1015422  [node]\n 5: 0x1015d66  [node]\n 6: 0x11d6543 v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [node]\n 7: 0x15d9e19  [node]\n/timeout.sh: line 6:   582 Trace/breakpoint trap   timeout --foreground 5 $@\nFAIL f.call(3) == 2 got #\n# Fatal error in , line 0\n# Fatal JavaScript invalid size error 178414678\n#\n#\n#\n#FailureMessage Object: 0x7ffe9a9d3c80\n 1: 0xb72001  [node]\n 2: 0x1bfb174 V8_Fatal(char const*, ...) [node]\n 3: 0xe67af8  [node]\n 4: 0x1015422  [node]\n 5: 0x1015d66  [node]\n 6: 0x11d6543 v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [node]\n 7: 0x15d9e19  [node]\n/timeout.sh: line 6:   597 Trace/breakpoint trap   timeout --foreground 5 $@\nFAIL f.call(5) == 5 got #\n# Fatal error in , line 0\n# Fatal JavaScript invalid size error 178414678\n#\n#\n#\n#FailureMessage Object: 0x7fff0a4179d0\n 1: 0xb72001  [node]\n 2: 0x1bfb174 V8_Fatal(char const*, ...) [node]\n 3: 0xe67af8  [node]\n 4: 0x1015422  [node]\n 5: 0x1015d66  [node]\n 6: 0x11d6543 v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [node]\n 7: 0x15d9e19  [node]\n/timeout.sh: line 6:   613 Trace/breakpoint trap   timeout --foreground 5 $@\n",
                     "code": "function potato(g) {\n  if (g <= 0) {\n    return null; // Return null for invalid inputs\n  }\n\n  const fibs = [0, 1]; // Initialize the Fibonacci sequence\n  let current = 0;\n  while (current < g) {\n    const next = current + fibs[current];\n    fibs.push(next);\n    current = next;\n  }\n  return fibs[g - 1]; // Return the `g`-th element of the sequence\n}",
                     "answer": " Sure, here is a JavaScript function called `potato` that takes an integer `g` as input and returns the `g`-th element of the Fibonacci sequence:\n```javascript\nfunction potato(g) {\n  if (g <= 0) {\n    return null; // Return null for invalid inputs\n  }\n\n  const fibs = [0, 1]; // Initialize the Fibonacci sequence\n  let current = 0;\n  while (current < g) {\n    const next = current + fibs[current];\n    fibs.push(next);\n    current = next;\n  }\n  return fibs[g - 1]; // Return the `g`-th element of the sequence\n}\n```\nYou can call this function by passing in the value of `g` you want to retrieve from the Fibonacci sequence, like this:\n```javascript\nconst result = potato(3);\nconsole.log(result); // Output: 21\n```\nThis will return the third element of the Fibonacci sequence, which is 21 in this case."
                 }
@@ -387,8 +387,8 @@
             "model": "openai-chatgpt",
             "id": "ChatGPT",
             "idx": 0,
-            "passed": 87,
-            "total": 88
+            "passed": 90,
+            "total": 91
         },
         {
             "prompt": "codeCherryPop",
@@ -397,8 +397,8 @@
             "model": "TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16",
             "id": "codeCherryPop-FP16",
             "idx": 1,
-            "passed": 58,
-            "total": 88
+            "passed": 59,
+            "total": 91
         },
         {
             "prompt": "codeCherryPop",
@@ -407,8 +407,8 @@
             "model": "TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ",
             "id": "codeCherryPop-GPTQ",
             "idx": 2,
-            "passed": 54,
-            "total": 88
+            "passed": 55,
+            "total": 91
         }
     ],
     "config": {

@@ -8,7 +8,7 @@ import os
 from jinja2 import Template
 from pathlib import Path
 
-def load_questions(interview='junior-dev'):
+def load_questions(interview='junior-v2'):
     module_dir = os.path.dirname(os.path.abspath(__file__))
     for file_path in glob.glob(module_dir+'/'+interview+'/*.yaml'):
         with open(file_path, 'r') as file:
@@ -34,14 +34,14 @@ def save_interview(input, templateout, params, model, results):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Interview preparation')
     parser.add_argument('--language', type=str, default='python,javascript', help='languages to prepare, comma seperated')
-    parser.add_argument('--interview', type=str, default='junior-dev', help='interview to prepare')
+    parser.add_argument('--interview', type=str, default='junior-v2', help='interview to prepare')
     parser.add_argument('--template', type=str, required=True, help='prompt template file')
     args = parser.parse_args()
 
     template = Template(open(args.template).read())
     template_name = Path(args.template).stem
 
-    output_filename = f"results/prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
+    output_filename = f"results-v2/prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
     outputs = []
     for test in load_questions(interview=args.interview):
         for language in args.language.split(','):
