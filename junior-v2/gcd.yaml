@@ -5,9 +5,9 @@
     gcd_1_1:
       assert: "f.call(1,1)"
       eq: 1
-    gcd_100_10:
-      assert: "f.call(100,10)"
-      eq: 10
+    gcd_100_20:
+      assert: "f.call(100,20)"
+      eq: 20
     gcd_5_0:
       assert: "f.call(5,0)"
       eq: 5
