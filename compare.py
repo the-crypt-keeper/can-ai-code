@@ -119,7 +119,7 @@ def analysis(data, analyser):
 
     return data
 
-def main(config: str, path: str = "results/", analyser: str = "", language: str = "javascript,python"):
+def main(config: str, path: str = "results-v2/", analyser: str = "", language: str = "javascript,python"):
     cfg = yaml.safe_load(open(config))
 
     for lang in language.split(','):

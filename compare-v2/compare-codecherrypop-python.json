@@ -84,23 +84,23 @@
         "GCDZeroShot-python": {
             "results": {
                 "ChatGPT": {
-                    "check_summary": "PASS correct 8/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
                     "failing_tests": "",
                     "code": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a",
                     "answer": "```python\ndef gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a\n```"
                 },
                 "codeCherryPop-FP16": {
-                    "check_summary": "FAIL correct 4/8",
+                    "check_summary": "FAIL correct 4/9",
                     "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
-                    "failing_tests": "FAIL f.call(1,1) == 1 got 0\nFAIL f.call(100,10) == 10 got 1000\nFAIL f.call(5,0) == 5 got {'error': 'Cannot find GCD of zero', 'exc_type': 'ValueError'}\nFAIL f.call(13,7) == 1 got 0\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got 0\nFAIL f.call(100,20) == 20 got 2000\nFAIL f.call(5,0) == 5 got {'error': 'Cannot find GCD of zero', 'exc_type': 'ValueError'}\nFAIL f.call(0,3) == 3 got {'error': 'Cannot find GCD of zero', 'exc_type': 'ValueError'}\nFAIL f.call(13,7) == 1 got 0\n",
                     "code": "def gcd(a, b):\n    # Check if either a or b is 0\n    if a == 0 or b == 0:\n        raise ValueError(\"Cannot find GCD of zero\")\n    # Find the largest prime factor of both numbers\n    while a % 2 == 1 or b % 2 == 1:\n        a //= 2\n        b //= 2\n    return a * b",
                     "answer": "  Sure! Here is a Python function `gcd` that takes two integers `a` and `b` as input and returns their greatest common denominator:\n```\ndef gcd(a, b):\n    # Check if either a or b is 0\n    if a == 0 or b == 0:\n        raise ValueError(\"Cannot find GCD of zero\")\n    # Find the largest prime factor of both numbers\n    while a % 2 == 1 or b % 2 == 1:\n        a //= 2\n        b //= 2\n    return a * b\n```\nHere's how the function works:\n1. First, we check if either `a` or `b` is equal to 0. If so, we raise a `ValueError` because we cannot find the GCD of zero.\n2. Next, we enter a loop where we repeatedly divide both `a` and `b` by their largest prime factor until they are both even (i.e., divisible by 2). This is done using the modulo operator `%`.\n3. Once both `a` and `b` are even, we can simply multiply them together to get their GCD.\n4. Finally, we return the result of this multiplication.\nYou can test the function with some examples like this:\n```\n# Test the gcd function\nprint(gcd(6, 8))  # Output: 4\nprint(gcd(4, 6))  # Output: 2\nprint(gcd(8, 0))  # Output: 0\n```\nI hope this helps! Let me know if you have any questions."
                 },
                 "codeCherryPop-GPTQ": {
-                    "check_summary": "FAIL correct 6/8",
+                    "check_summary": "FAIL correct 6/9",
                     "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(5,0) == 5\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
-                    "failing_tests": "FAIL f.call(100,10) == 10 got {'error': 'timeout!'}\nFAIL f.call(13,7) == 1 got {'error': 'timeout!'}\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got {'error': 'timeout!'}\nFAIL f.call(0,3) == 3 got {'error': 'timeout!'}\nFAIL f.call(13,7) == 1 got {'error': 'timeout!'}\n",
                     "code": "def gcd(a, b):\n    # Check if b = 0\n    if b == 0:\n        return a\n    \n    # Find the largest prime factor of a and b\n    while a != 1 or b != 1:\n        if a % b == 0:\n            a //= b\n        elif b % a == 0:\n            b //= a\n        \n    # Return the GCD of a and b\n    return a if b == 0 else b",
                     "answer": " Sure! Here is a Python function for finding the greatest common denominator (GCD) of two integers `a` and `b`:\n```python\ndef gcd(a, b):\n    # Check if b = 0\n    if b == 0:\n        return a\n    \n    # Find the largest prime factor of a and b\n    while a != 1 or b != 1:\n        if a % b == 0:\n            a //= b\n        elif b % a == 0:\n            b //= a\n        \n    # Return the GCD of a and b\n    return a if b == 0 else b\n```\nThis function works by iteratively dividing both `a` and `b` by their largest prime factors until one of them is equal to 1. The last non-zero divisor of the two numbers is the GCD.\nFor example, if we call the function with `a = 24` and `b = 36`, it will return `6`.\n```\nIn [1]: gcd(24, 36)\nOut[1]: 6\n```\nI hope this helps! Let me know if you have any questions."
                 }
@@ -111,22 +111,22 @@
         "GCDAlternative-python": {
             "results": {
                 "ChatGPT": {
-                    "check_summary": "PASS correct 8/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
                     "failing_tests": "",
                     "code": "def gcf(a, b):\n    # Ensure a is greater than or equal to b\n    if a < b:\n        a, b = b, a\n    \n    while b != 0:\n        # Find the remainder of a divided by b\n        remainder = a % b\n        \n        # Set a as b and b as the remainder\n        a = b\n        b = remainder\n    \n    return a",
                     "answer": "```python\ndef gcf(a, b):\n    # Ensure a is greater than or equal to b\n    if a < b:\n        a, b = b, a\n    \n    while b != 0:\n        # Find the remainder of a divided by b\n        remainder = a % b\n        \n        # Set a as b and b as the remainder\n        a = b\n        b = remainder\n    \n    return a\n```\nNote: The code uses the Euclidean algorithm to find the greatest common factor (GCF) of two numbers. It repeatedly divides the larger number by the smaller number until the remainder becomes zero. The last non-zero remainder is the GCF of the original two numbers."
                 },
                 "codeCherryPop-FP16": {
-                    "check_summary": "PASS correct 8/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
                     "failing_tests": "",
                     "code": "def gcf(a, b):\n    # Use the Euclidean algorithm to find the GCF\n    while b != 0:\n        a, b = b, a % b\n    return a",
                     "answer": "  Of course! Here is a Python function `gcf` that takes two integers `a` and `b` as input and returns their greatest common factor:\n```\ndef gcf(a, b):\n    # Use the Euclidean algorithm to find the GCF\n    while b != 0:\n        a, b = b, a % b\n    return a\n```\nHere's how the function works:\n\n1. We start by dividing both `a` and `b` by their smallest positive divisor (i.e., the highest power of the prime factors that divides both numbers). This is done using the `divmod` function from the built-in `math` module.\n2. We then repeat step 1 until `b` is equal to 0. This means we are repeatedly dividing `a` and `b` by their greatest common divisor (GCD), which is the largest number that divides both `a` and `b`.\n3. Finally, we return the value of `a` after the last division, which is the greatest common factor of `a` and `b`.\nHere's an example usage of the `gcf` function:\n```\n# Test the gcf function\nprint(gcf(8, 12))  # Output: 4\n```\nI hope this helps! Let me know if you have any questions or need further assistance."
                 },
                 "codeCherryPop-GPTQ": {
-                    "check_summary": "PASS correct 8/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
                     "failing_tests": "",
                     "code": "def gcf(a, b):\n    if not b:\n        return a\n    else:\n        return gcf(b, a % b)",
                     "answer": " Of course! Here is a Python function for finding the greatest common factor (GCF) of two numbers:\n```\ndef gcf(a, b):\n    if not b:\n        return a\n    else:\n        return gcf(b, a % b)\n```\nExplanation:\n\nThe function works by recursively dividing the two numbers until they have no common factors left. The base case is when one of the numbers is 0, in which case the GCF is simply the other number. Otherwise, the function divides the larger number by the smaller number and repeats the process until there are no more common factors. Finally, it returns the largest common factor found.\nHere's an example usage of the function:\n```\na = 120\nb = 30\nprint(gcf(a, b)) # Output: 6\n```\nThis will print `6`, because the greatest common factor of `120` and `30` is `6`."
@@ -138,23 +138,23 @@
         "GCDMisnamed-python": {
             "results": {
                 "ChatGPT": {
-                    "check_summary": "PASS correct 8/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(5,0) == 5\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
                     "failing_tests": "",
                     "code": "def fofx(x, banana):\n    # Ensure x is greater than or equal to banana\n    if x < banana:\n        x, banana = banana, x\n    \n    # Find the gcd using Euclidean algorithm\n    while banana != 0:\n        remainder = x % banana\n        x = banana\n        banana = remainder\n    \n    return x",
                     "answer": "```python\ndef fofx(x, banana):\n    # Ensure x is greater than or equal to banana\n    if x < banana:\n        x, banana = banana, x\n    \n    # Find the gcd using Euclidean algorithm\n    while banana != 0:\n        remainder = x % banana\n        x = banana\n        banana = remainder\n    \n    return x\n```\n\nThis code defines a function `fofx` that takes two inputs `x` and `banana`. It first checks if `x` is less than `banana`, and if so, swaps their values. Then, it uses the Euclidean algorithm to find the greatest common denominator (gcd) of `x` and `banana`. The algorithm repeatedly divides `x` by `banana` and updates the values until `banana` becomes zero. Finally, it returns the value of `x`, which represents the gcd."
                 },
                 "codeCherryPop-FP16": {
-                    "check_summary": "FAIL correct 7/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
-                    "failing_tests": "FAIL f.call(5,0) == 5 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\n",
+                    "check_summary": "FAIL correct 6/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 5\nFAIL f.call(5,0) == 5 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\nFAIL f.call(0,3) == 3 got 0\n",
                     "code": "def fofx(x, banana):\n    gcd = x // banana\n    return gcd",
                     "answer": "  Sure! Here is a Python function `fofx` that takes two inputs `x` and `banana`, and returns the greatest common denominator (GCD) of those values:\n```\ndef fofx(x, banana):\n    gcd = x // banana\n    return gcd\n```\nExplanation:\n\nThe function `fofx` takes two input values `x` and `banana`. It then calculates the division of `x` by `banana` (`x // banana`), which gives us the GCD of `x` and `banana`. Finally, it returns the result of this calculation.\nHere's an example usage of the function:\n```\nprint(fofx(5, 3)) # Output: 1\n```\nIn this example, we call the function `fofx` with `x=5` and `banana=3`, and it returns the GCD of `5` and `3`, which is `1`."
                 },
                 "codeCherryPop-GPTQ": {
-                    "check_summary": "FAIL correct 6/8",
-                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
-                    "failing_tests": "FAIL f.call(5,0) == 5 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\nFAIL f.name == fofx got gcd\n",
+                    "check_summary": "FAIL correct 5/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 5\nFAIL f.call(5,0) == 5 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\nFAIL f.call(0,3) == 3 got 0\nFAIL f.name == fofx got gcd\n",
                     "code": "def gcd(x, banana):\n    return x // banana",
                     "answer": " Sure! Here is a Python function `gcd` that takes two arguments `x` and `banana`, and returns their greatest common denominator:\n```\ndef gcd(x, banana):\n    return x // banana\n```\nExplanation:\n\nThe greatest common denominator (GCD) of two numbers is the largest number that divides both numbers without leaving a remainder. In other words, it's the biggest number that both numbers can be divided by without leaving any fractions behind.\nIn this case, we have two input values `x` and `banana`. We divide `x` by `banana` using the `/` operator, which gives us the GCD of `x` and `banana`.\nFor example, if `x = 12` and `banana = 6`, then the output of the function will be `4`, because 12 / 6 = 2 with no remainder.\nI hope this helps! Let me know if you have any questions or need further assistance."
                 }
@@ -387,8 +387,8 @@
             "model": "openai-chatgpt",
             "id": "ChatGPT",
             "idx": 0,
-            "passed": 88,
-            "total": 88
+            "passed": 91,
+            "total": 91
         },
         {
             "prompt": "codeCherryPop",
@@ -398,7 +398,7 @@
             "id": "codeCherryPop-FP16",
             "idx": 1,
             "passed": 68,
-            "total": 88
+            "total": 91
         },
         {
             "prompt": "codeCherryPop",
@@ -408,7 +408,7 @@
             "id": "codeCherryPop-GPTQ",
             "idx": 2,
             "passed": 69,
-            "total": 88
+            "total": 91
         }
     ],
     "config": {

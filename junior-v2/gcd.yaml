@@ -11,6 +11,9 @@
     gcd_5_0:
       assert: "f.call(5,0)"
       eq: 5
+    gcd_0_3:
+      assert: "f.call(0,3)"
+      eq: 3
     gcd_13_7:
       assert: "f.call(13,7)"
       eq: 1
