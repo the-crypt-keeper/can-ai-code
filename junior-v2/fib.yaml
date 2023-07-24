@@ -60,10 +60,10 @@ FibonacciMisnamed:
         <<: *ValueChecks
         input_name:
             assert: "f.args[0].name"
-            eq: "potato"
+            eq: "g"
         func_name:
             assert: "f.name"
-            eq: "g"
+            eq: "potato"
 
 FibonacciListZeroShot:
     Signature: "fib(n)"
