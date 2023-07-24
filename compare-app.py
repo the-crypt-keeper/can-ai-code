@@ -48,6 +48,8 @@ def display_analysis_data(data):
                 passcol,failcol=st.columns(2)
                 if model_result['failing_tests'] == '':
                     model_result['failing_tests'] = 'None'
+                if model_result['passing_tests'] == '':
+                    model_result['passing_tests'] = 'None'                    
                 passcol.markdown(f"**Passing Tests:**\n\n{model_result['passing_tests']}")
                 failcol.markdown(f"**Failing Tests:**\n\n{model_result['failing_tests']}")
                     

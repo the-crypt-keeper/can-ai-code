@@ -1,0 +1,11 @@
+title: Closed Weight Models
+models:
+  - id: ChatGPT
+    eval: eval_junior-v2_python-javascript_chat-generic_none_precise_openai-chatgpt_1690225795.ndjson
+    short_name: ChatGPT
+  - id: Cohere
+    eval: eval_junior-v2_python-javascript_chat-generic_none_precise_cohere-command-nightly_1690234860.ndjson
+    short_name: Cohere
+  - id: AI21
+    eval: eval_junior-v2_python-javascript_chat-generic_none_precise_ai21-j2-jumbo-instruct_1690234190.ndjson
+    short_name: AI21
