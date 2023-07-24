@@ -26,13 +26,13 @@ def evaluation(test, language, code):
 
                 check['got'] = test_value
 
-                if (check['eq-any']):
+                if ('eq-any' in check):
                     test_result = (test_value in check['eq-any'])
                 else:
                     test_result = (test_value == check['eq'])
                 
                 if (test_result):
-                    print('   ',check_name, "passed", test_value,'==',check['eq'])
+                    print('   ',check_name, "passed", test_value,'inside' if 'eq-any' in check else '==',check['eq-any'] if 'eq-any' in check else check['eq'])
                     passed += 1
                     check['status'] = 1
                 else:

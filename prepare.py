@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     output_filename = f"results/prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
     outputs = []
-    for test in load_questions():
+    for test in load_questions(interview=args.interview):
         for language in args.language.split(','):
             prompt = template.render({'language': language, **test})
             
