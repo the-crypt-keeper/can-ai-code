@@ -53,7 +53,7 @@ SanitySecretIdentityMap:
           eq: 0
         superman:
           assert: "f.call().get('Superman')"
-          eq: "Clark Kent"
+          eq-any: ["Clark Kent", "Kal-El"]
         batman:
           assert: "f.call().get('Batman')"
           eq: "Bruce Wayne"

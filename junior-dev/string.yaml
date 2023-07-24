@@ -1,7 +1,7 @@
 StringCountTokens:
     Signature: "substrcount(str, substr)"
-    Input: "with inputs str and substr"
-    Output: "counts the number of times the sub-string substr occurs in str"
+    Input: "with inputs `str` and `substr`"
+    Output: "counts the number of times the sub-string `substr` occurs in `str`"
     Description: "Check if the model is capable of performing basic string manipulation."
     Checks:
         two_arguments:
