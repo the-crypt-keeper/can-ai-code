@@ -1,0 +1,436 @@
+{
+    "tests": {
+        "SanityMeaningOfLife-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": "```python\ndef meaning_of_life():\n    return 42\n```"
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": " ```\ndef meaning_of_life():\n    return 42\n```"
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": "\n```\ndef meaning_of_life():\n    return 42\n\n```"
+                }
+            },
+            "task": "Write a python function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+            "language": "python"
+        },
+        "SanityList-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', 'Madrid']",
+                    "answer": "```python\ndef things():\n    return [5, 'foobar', 'Madrid']\n```"
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', 'Madrid']",
+                    "answer": " Here is a Python function called things() that returns a list with three values: the number 5, the string 'foobar', and the capital city of Spain:\n```python\ndef things():\n    return [5, 'foobar', 'Madrid']\n```\nThe function things() returns a list with three values: the number 5, the string 'foobar', and the capital city of Spain.  The function is written in Python and uses the list function to create a list with the three values.  The function is simple and concise, and does not rely on any library functions.  The function starts with ```python and ends with ```."
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', 'Madrid']",
+                    "answer": "\n```\ndef things():\n    return [5, 'foobar', 'Madrid']\n\n```"
+                }
+            },
+            "task": "Write a python function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+            "language": "python"
+        },
+        "SanitySecretIdentityMap-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') inside ['Clark Kent', 'Kal-El']\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    return {\n        'Superman': 'Clark Kent',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }",
+                    "answer": "```python\ndef secretidentities():\n    return {\n        'Superman': 'Clark Kent',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n```"
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') inside ['Clark Kent', 'Kal-El']\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    return {\n        'Superman': 'Clark Kent',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }",
+                    "answer": " Here is a Python function secretidentities() that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names:\n\n```\ndef secretidentities():\n    return {\n        'Superman': 'Clark Kent',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n```\n\nThe function secretidentities() returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names.  The function is written in Python and uses the dictionary object to store the mapping.  The function has no inputs and returns the object.  The function is written in a simple and concise manner and does not rely on any library functions.  The function starts with ```python and ends with ```."
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') inside ['Clark Kent', 'Kal-El']\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    identities = {\n        \"Superman\": \"Clark Kent\",\n        \"Batman\": \"Bruce Wayne\",\n        \"Spider-Man\": \"Peter Parker\"\n    }\n    return identities",
+                    "answer": "\n```\ndef secretidentities():\n    identities = {\n        \"Superman\": \"Clark Kent\",\n        \"Batman\": \"Bruce Wayne\",\n        \"Spider-Man\": \"Peter Parker\"\n    }\n    return identities\n\n```"
+                }
+            },
+            "task": "Write a python function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+            "language": "python"
+        },
+        "GCDZeroShot-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a",
+                    "answer": "```python\ndef gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a\n```"
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": " ```python\ndef gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n```"
+                },
+                "AI21": {
+                    "check_summary": "FAIL correct 8/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "FAIL f.call(5,0) == 5 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\n",
+                    "code": "def gcd(a, b):\n    while a % b != 0:\n        a, b = b, a % b\n    return b",
+                    "answer": "\n```\ndef gcd(a, b):\n    while a % b != 0:\n        a, b = b, a % b\n    return b\n\n```"
+                }
+            },
+            "task": "Write a python function gcd(a, b) with two inputs a and b that returns the greatest common denominator of a and b",
+            "language": "python"
+        },
+        "GCDAlternative-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "",
+                    "code": "def gcf(a, b):\n    # Ensure a is greater than or equal to b\n    if a < b:\n        a, b = b, a\n    \n    while b != 0:\n        # Find the remainder of a divided by b\n        remainder = a % b\n        \n        # Set a as b and b as the remainder\n        a = b\n        b = remainder\n    \n    return a",
+                    "answer": "```python\ndef gcf(a, b):\n    # Ensure a is greater than or equal to b\n    if a < b:\n        a, b = b, a\n    \n    while b != 0:\n        # Find the remainder of a divided by b\n        remainder = a % b\n        \n        # Set a as b and b as the remainder\n        a = b\n        b = remainder\n    \n    return a\n```\nNote: The code uses the Euclidean algorithm to find the greatest common factor (GCF) of two numbers. It repeatedly divides the larger number by the smaller number until the remainder becomes zero. The last non-zero remainder is the GCF of the original two numbers."
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "",
+                    "code": "def gcf(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcf(b, a % b)",
+                    "answer": " ```python\ndef gcf(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcf(b, a % b)\n```"
+                },
+                "AI21": {
+                    "check_summary": "FAIL correct 5/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 100\nFAIL f.call(5,0) == 5 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\nFAIL f.call(0,3) == 3 got 0\nFAIL f.call(13,7) == 1 got 6\n",
+                    "code": "def gcf(a, b):\n    while a % b != 0:\n        a, b = b, a % b\n    return a",
+                    "answer": "\n```\ndef gcf(a, b):\n    while a % b != 0:\n        a, b = b, a % b\n    return a\n\n```"
+                }
+            },
+            "task": "Write a python function gcf(a, b) with two inputs a and b that returns the greatest common factor of a and b",
+            "language": "python"
+        },
+        "GCDMisnamed-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "",
+                    "code": "def fofx(x, banana):\n    # Ensure x is greater than or equal to banana\n    if x < banana:\n        x, banana = banana, x\n    \n    # Find the gcd using Euclidean algorithm\n    while banana != 0:\n        remainder = x % banana\n        x = banana\n        banana = remainder\n    \n    return x",
+                    "answer": "```python\ndef fofx(x, banana):\n    # Ensure x is greater than or equal to banana\n    if x < banana:\n        x, banana = banana, x\n    \n    # Find the gcd using Euclidean algorithm\n    while banana != 0:\n        remainder = x % banana\n        x = banana\n        banana = remainder\n    \n    return x\n```\n\nThis code defines a function `fofx` that takes two inputs `x` and `banana`. It first checks if `x` is less than `banana`, and if so, swaps their values. Then, it uses the Euclidean algorithm to find the greatest common denominator (gcd) of `x` and `banana`. The algorithm repeatedly divides `x` by `banana` and updates the values until `banana` becomes zero. Finally, it returns the value of `x`, which represents the gcd."
+                },
+                "Cohere": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'expected an indented block (<string>, line 110)', 'exc_type': 'IndentationError'}\nFAIL f.call(100,20) == 20 got {'error': 'expected an indented block (<string>, line 110)', 'exc_type': 'IndentationError'}\nFAIL f.call(5,0) == 5 got {'error': 'expected an indented block (<string>, line 110)', 'exc_type': 'IndentationError'}\nFAIL f.call(0,3) == 3 got {'error': 'expected an indented block (<string>, line 110)', 'exc_type': 'IndentationError'}\nFAIL f.call(13,7) == 1 got {'error': 'expected an indented block (<string>, line 110)', 'exc_type': 'IndentationError'}\n",
+                    "code": "def fofx(x, banana):\n    if x < banana:\n        return fofx(banana, x)\n    if x == banana:\n        return 1\n    if x == 0:\n        return 1\n    if banana == 0:\n        return 1\n    if x == 1:\n        return 1\n    if banana == 1:\n        return 1\n    if x == 2:\n        return 1\n    if banana == 2:\n        return 1\n    if x == 3:\n        return 1\n    if banana == 3:\n        return 1\n    if x == 4:\n        return 2\n    if banana == 4:\n        return 2\n    if x == 5:\n        return 2\n    if banana == 5:\n        return 2\n    if x == 6:\n        return 2\n    if banana == 6:\n        return 2\n    if x == 7:\n        return 2\n    if banana == 7:\n        return 2\n    if x == 8:\n        return 4\n    if banana == 8:\n        return 4\n    if x == 9:\n        return 6\n    if banana == 9:\n        return 6\n    if x == 10:\n        return 2\n    if banana == 10:\n        return 2\n    if x == 11:\n        return 2\n    if banana == 11:\n        return 2\n    if x == 12:\n        return 4\n    if banana == 12:\n        return 4\n    if x == 13:\n        return 2\n    if banana == 13:\n        return 2\n    if x == 14:\n        return 2\n    if banana == 14:\n        return 2\n    if x == 15:\n        return 2\n    if banana == 15:\n        return 2\n    if x == 16:\n        return 4\n    if banana == 16:\n        return 4\n    if x == 17:\n        return 2\n    if banana == 17:\n        return 2\n    if x == 18:\n        return 2\n    if banana == 18:\n        return 2\n    if x == 19:\n        return 2\n    if banana == 19:\n        return 2\n    if x == 20:\n        return 4\n    if banana == 20:\n        return 4\n    if x == 21:\n        return 2\n    if banana == 21:\n        return 2\n    if x == 22:\n        return 2\n    if banana == 22:\n        return 2\n    if x == 23:\n        return 2\n    if banana == 23:\n        return 2\n    if x == 24:\n        return 4\n    if banana == 24:\n        return 4\n    if x == 25:\n        return 2\n    if banana == 25:\n        return 2\n    if x == 26:",
+                    "answer": " ```python\ndef fofx(x, banana):\n    if x < banana:\n        return fofx(banana, x)\n    if x == banana:\n        return 1\n    if x == 0:\n        return 1\n    if banana == 0:\n        return 1\n    if x == 1:\n        return 1\n    if banana == 1:\n        return 1\n    if x == 2:\n        return 1\n    if banana == 2:\n        return 1\n    if x == 3:\n        return 1\n    if banana == 3:\n        return 1\n    if x == 4:\n        return 2\n    if banana == 4:\n        return 2\n    if x == 5:\n        return 2\n    if banana == 5:\n        return 2\n    if x == 6:\n        return 2\n    if banana == 6:\n        return 2\n    if x == 7:\n        return 2\n    if banana == 7:\n        return 2\n    if x == 8:\n        return 4\n    if banana == 8:\n        return 4\n    if x == 9:\n        return 6\n    if banana == 9:\n        return 6\n    if x == 10:\n        return 2\n    if banana == 10:\n        return 2\n    if x == 11:\n        return 2\n    if banana == 11:\n        return 2\n    if x == 12:\n        return 4\n    if banana == 12:\n        return 4\n    if x == 13:\n        return 2\n    if banana == 13:\n        return 2\n    if x == 14:\n        return 2\n    if banana == 14:\n        return 2\n    if x == 15:\n        return 2\n    if banana == 15:\n        return 2\n    if x == 16:\n        return 4\n    if banana == 16:\n        return 4\n    if x == 17:\n        return 2\n    if banana == 17:\n        return 2\n    if x == 18:\n        return 2\n    if banana == 18:\n        return 2\n    if x == 19:\n        return 2\n    if banana == 19:\n        return 2\n    if x == 20:\n        return 4\n    if banana == 20:\n        return 4\n    if x == 21:\n        return 2\n    if banana == 21:\n        return 2\n    if x == 22:\n        return 2\n    if banana == 22:\n        return 2\n    if x == 23:\n        return 2\n    if banana == 23:\n        return 2\n    if x == 24:\n        return 4\n    if banana == 24:\n        return 4\n    if x == 25:\n        return 2\n    if banana == 25:\n        return 2\n    if x == 26:"
+                },
+                "AI21": {
+                    "check_summary": "FAIL correct 5/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 100\nFAIL f.call(5,0) == 5 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\nFAIL f.call(0,3) == 3 got 0\nFAIL f.call(13,7) == 1 got 0\n",
+                    "code": "def fofx(x, banana):\n    while x % banana != 0:\n        x = x // banana\n    return x",
+                    "answer": "\n```\ndef fofx(x, banana):\n    while x % banana != 0:\n        x = x // banana\n    return x\n\n```"
+                }
+            },
+            "task": "Write a python function fofx(x, banana) with two inputs x and banana that returns the greatest common denominator (gcd) of x and banana",
+            "language": "python"
+        },
+        "FactorialZeroShot-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n < 0:\n        raise ValueError(\"Factorial is not defined for negative numbers.\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        result = 1\n        for i in range(2, n+1):\n            result *= i\n        return result",
+                    "answer": "```python\ndef factorial(n):\n    if n < 0:\n        raise ValueError(\"Factorial is not defined for negative numbers.\")\n    elif n == 0 or n == 1:\n        return 1\n    else:\n        result = 1\n        for i in range(2, n+1):\n            result *= i\n        return result\n```\n\nThis code defines a function `factorial` that takes an input `n`. It first checks if `n` is negative and raises a `ValueError` if it is. Then, it checks if `n` is 0 or 1 and returns 1 in those cases since the factorial of 0 and 1 is 1.\n\nFor any other positive integer `n`, it initializes a variable `result` to 1 and uses a loop to multiply `result` by each number from 2 to `n`. Finally, it returns the computed factorial value."
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    \"\"\"\n    Calculates the factorial of a number.\n\n    Args:\n        n (int): Number for which to calculate the factorial.\n\n    Returns:\n        int: The factorial of the given number.\n    \"\"\"\n    if n < 0:\n        return None  # Handle invalid input gracefully\n\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n\n    return result",
+                    "answer": " ```python\ndef factorial(n):\n    \"\"\"\n    Calculates the factorial of a number.\n\n    Args:\n        n (int): Number for which to calculate the factorial.\n\n    Returns:\n        int: The factorial of the given number.\n    \"\"\"\n    if n < 0:\n        return None  # Handle invalid input gracefully\n\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n\n    return result\n```"
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = result * i\n    return result",
+                    "answer": "\n```\ndef factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = result * i\n    return result\n\n```"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using iteration",
+            "language": "python"
+        },
+        "FactorialRecursiveZeroShot-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "```python\ndef factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)\n```\nNote: The base case for recursion is when `n` is equal to 0 or 1, in which case the function returns 1. For any other value of `n`, the function calls itself with `n-1` as the argument and multiplies the result by `n`. This process continues until the base case is reached."
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    \"\"\"\n    Calculates the factorial of a number.\n\n    Args:\n        n (int): Number for which to calculate the factorial.\n\n    Returns:\n        int: Factorial of the given number.\n    \"\"\"\n    if n < 0:\n        return None  # Handle invalid input gracefully\n\n    if n == 0 or n == 1:\n        return 1\n\n    return factorial(n-1) * n",
+                    "answer": " ```\ndef factorial(n):\n    \"\"\"\n    Calculates the factorial of a number.\n\n    Args:\n        n (int): Number for which to calculate the factorial.\n\n    Returns:\n        int: Factorial of the given number.\n    \"\"\"\n    if n < 0:\n        return None  # Handle invalid input gracefully\n\n    if n == 0 or n == 1:\n        return 1\n\n    return factorial(n-1) * n\n```"
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "\n```\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n\n```"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using recursion",
+            "language": "python"
+        },
+        "FactorialMisnamed-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    if bork == 0:\n        return 1\n    else:\n        factorial = 1\n        for i in range(1, bork + 1):\n            factorial *= i\n        return factorial",
+                    "answer": "```python\ndef glork(bork):\n    if bork == 0:\n        return 1\n    else:\n        factorial = 1\n        for i in range(1, bork + 1):\n            factorial *= i\n        return factorial\n```\nNote: The code above calculates the factorial of a given number `bork` using a simple iterative approach. It multiplies all the numbers from 1 to `bork` together to get the factorial value."
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    if bork < 0:\n        return None\n    elif bork == 0 or bork == 1:\n        return 1\n    else:\n        result = 1\n        for i in range(2, bork + 1):\n            result *= i\n        return result",
+                    "answer": " ```\ndef glork(bork):\n    if bork < 0:\n        return None\n    elif bork == 0 or bork == 1:\n        return 1\n    else:\n        result = 1\n        for i in range(2, bork + 1):\n            result *= i\n        return result\n```"
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    fact = 1\n    for i in range(1, bork + 1):\n        fact *= i\n    return fact",
+                    "answer": "\n```\ndef glork(bork):\n    fact = 1\n    for i in range(1, bork + 1):\n        fact *= i\n    return fact\n\n```"
+                }
+            },
+            "task": "Write a python function glork(bork) with input bork that returns the factorial of bork",
+            "language": "python"
+        },
+        "FibonacciZeroShot-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n <= 1:\n        return n\n    else:\n        a, b = 0, 1\n        for _ in range(2, n+1):\n            a, b = b, a + b\n        return b",
+                    "answer": "```python\ndef fib(n):\n    if n <= 1:\n        return n\n    else:\n        a, b = 0, 1\n        for _ in range(2, n+1):\n            a, b = b, a + b\n        return b\n```\n\nThis code defines a function `fib(n)` that takes an input `n` and returns the `n`-th element of the Fibonacci sequence. It uses a loop to calculate the Fibonacci numbers iteratively, starting from the base cases of 0 and 1. The loop runs from 2 to `n`, updating the values of `a` and `b` in each iteration by swapping them and adding them together. Finally, it returns the value of `b`, which represents the `n`-th Fibonacci number."
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n < 0:\n        return None\n    elif n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": " ```\ndef fib(n):\n    if n < 0:\n        return None\n    elif n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n-1) + fib(n-2)\n```"
+                },
+                "AI21": {
+                    "check_summary": "FAIL correct 5/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(2) == 1 got 2\nFAIL f.call(3) == 2 got 3\n",
+                    "code": "def fib(n):\n  a, b = 0, 1\n  while a < n:\n    a, b = b, a + b\n  return a",
+                    "answer": "\n```\ndef fib(n):\n  a, b = 0, 1\n  while a < n:\n    a, b = b, a + b\n  return a\n\n```\n\nThis function uses a simple loop to calculate the nth element of the Fibonacci sequence. The variable`a`is used to store the previous element, and`b`is used to store the next element. The loop continues until`a`is greater than or equal to`n`, at which point the function returns`a`.\n\nNote that this function is not very efficient for large values of`n`, as it uses a loop to calculate the nth element. For large values of`n`, it is better to use a recursive implementation or a lookup table."
+                }
+            },
+            "task": "Write a python function fib(n) with input element number n (0 based) that returns the `n`-th element of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciMisnamed-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "",
+                    "code": "def potato(g):\n    if g == 0:\n        return 0\n    elif g == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, g+1):\n            a, b = b, a + b\n        return b",
+                    "answer": "```python\ndef potato(g):\n    if g == 0:\n        return 0\n    elif g == 1:\n        return 1\n    else:\n        a, b = 0, 1\n        for _ in range(2, g+1):\n            a, b = b, a + b\n        return b\n```\nThe above code defines a function `potato` that takes an input `g` and returns the `g`-th element of the Fibonacci sequence. It uses a loop to calculate the Fibonacci numbers iteratively, starting from the base cases of 0 and 1."
+                },
+                "Cohere": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(1) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got 1\nFAIL f.call(2) == 1 got 2\nFAIL f.call(3) == 2 got 3\nFAIL f.call(5) == 5 got 8\n",
+                    "code": "def potato(g):\n    a, b = 1, 1\n    for _ in range(g):\n        a, b = b, a + b\n    return a",
+                    "answer": " ```python\ndef potato(g):\n    a, b = 1, 1\n    for _ in range(g):\n        a, b = b, a + b\n    return a\n```"
+                },
+                "AI21": {
+                    "check_summary": "FAIL correct 6/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(5) == 5\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(2) == 1 got 2\nFAIL f.call(3) == 2 got 3\n",
+                    "code": "def potato(g):\n  a, b = 0, 1\n  while a < g:\n    a, b = b, a + b\n  return a",
+                    "answer": "\n```\ndef potato(g):\n  a, b = 0, 1\n  while a < g:\n    a, b = b, a + b\n  return a\n\n```\n\nThis function uses the`a`and`b`variables to store the two previous elements of the Fibonacci sequence. The`while`loop continues until`a`is greater than or equal to`g`, at which point it returns the value of`a`.\n\nNote that this function is not very efficient for large values of`g`, as it calculates the entire Fibonacci sequence up to`g`before returning the`g`-th element. For large values of`g`, it would be more efficient to use a recursive implementation or a lookup table."
+                }
+            },
+            "task": "Write a python function potato(g) with input element number g (0 based) that returns the `g`-th element of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciListZeroShot-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    sequence = []\n    if n >= 1:\n        sequence.append(0)\n    if n >= 2:\n        sequence.append(1)\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence",
+                    "answer": "```python\ndef fib(n):\n    sequence = []\n    if n >= 1:\n        sequence.append(0)\n    if n >= 2:\n        sequence.append(1)\n    for i in range(2, n):\n        sequence.append(sequence[i-1] + sequence[i-2])\n    return sequence\n```\nNote: The Fibonacci sequence starts with 0 and 1, so the first two elements are manually added to the list. Then, a loop is used to calculate the remaining elements by summing the previous two elements."
+                },
+                "Cohere": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [1]\nFAIL f.call(2) == [0, 1] got [1, 1]\nFAIL f.call(3) == [0, 1, 1] got [1, 1, 2]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [1, 1, 2, 3, 5]\n",
+                    "code": "def fib(n):\n    a, b = 1, 1\n    sequence = []\n    for _ in range(n):\n        sequence.append(a)\n        a, b = b, a + b\n    return sequence",
+                    "answer": " ```\ndef fib(n):\n    a, b = 1, 1\n    sequence = []\n    for _ in range(n):\n        sequence.append(a)\n        a, b = b, a + b\n    return sequence\n```"
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n  a, b = 0, 1\n  result = []\n  for i in range(n):\n    result.append(a)\n    a, b = b, a + b\n  return result",
+                    "answer": "\n```\ndef fib(n):\n  a, b = 0, 1\n  result = []\n  for i in range(n):\n    result.append(a)\n    a, b = b, a + b\n  return result\n\n```\n\nThis function takes an integer input`n`and returns a list of the first`n`elements of the Fibonacci sequence. The sequence is calculated using the formula`a = b, b = a + b`, where`a`and`b`are the two previous elements of the sequence. The function first initializes`a`and`b`to 0 and 1, respectively. It then iterates over a range of`n`elements and appends the current value of`a`to the result list. Finally, it updates the values of`a`and`b`for the next iteration and returns the result list."
+                }
+            },
+            "task": "Write a python function fib(n) with input length n that returns a list with the first `n` elements of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciListMisnamed-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    if bork <= 0:\n        return []\n    elif bork == 1:\n        return [0]\n    elif bork == 2:\n        return [0, 1]\n    \n    fib_sequence = [0, 1]\n    for i in range(2, bork):\n        fib_sequence.append(fib_sequence[i-1] + fib_sequence[i-2])\n    \n    return fib_sequence[:bork]",
+                    "answer": "```python\ndef glork(bork):\n    if bork <= 0:\n        return []\n    elif bork == 1:\n        return [0]\n    elif bork == 2:\n        return [0, 1]\n    \n    fib_sequence = [0, 1]\n    for i in range(2, bork):\n        fib_sequence.append(fib_sequence[i-1] + fib_sequence[i-2])\n    \n    return fib_sequence[:bork]\n```\n\nThis code defines a function `glork` that takes an input `bork`, which represents the length of the desired Fibonacci sequence. The function returns a list containing the first `bork` elements of the Fibonacci sequence.\n\nThe function first handles special cases where `bork` is less than or equal to 0, 1, or 2, returning an empty list, `[0]`, or `[0, 1]` respectively.\n\nFor `bork` greater than 2, the function initializes a list `fib_sequence` with the first two elements `[0, 1]`. It then iterates from index 2 up to `bork - 1`, calculating each Fibonacci number by summing the previous two numbers and appending it to `fib_sequence`.\n\nFinally, the function returns a slice of `fib_sequence` containing the first `bork` elements."
+                },
+                "Cohere": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [1, 1]\nFAIL f.call(2) == [0, 1] got [1, 1]\nFAIL f.call(3) == [0, 1, 1] got [1, 1, 2]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [1, 1, 2, 2, 2]\n",
+                    "code": "def glork(bork):\n    a, b = 1, 1\n    return [a, b] + [a + b] * (bork - 2)",
+                    "answer": " ```\ndef glork(bork):\n    a, b = 1, 1\n    return [a, b] + [a + b] * (bork - 2)\n```"
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    a, b = 0, 1\n    result = []\n    for i in range(bork):\n        result.append(a)\n        a, b = b, a + b\n    return result",
+                    "answer": "\n```\ndef glork(bork):\n    a, b = 0, 1\n    result = []\n    for i in range(bork):\n        result.append(a)\n        a, b = b, a + b\n    return result\n\n```\n\nThis function takes an integer input`bork`and returns a list with the first`bork`elements of the Fibonacci sequence. The Fibonacci sequence is defined as follows:\n\n```\na, b = 0, 1\na, b = b, a + b\n\n```\n\nThe function first initializes two variables`a`and`b`to`0`and`1`, respectively. It then iterates over a range of`bork`elements and appends the current value of`a`to the result list. Finally, it updates the values of`a`and`b`using the recurrence relation for the Fibonacci sequence."
+                }
+            },
+            "task": "Write a python function glork(bork) with input length bork that returns a list with the first `bork` elements of the fibonacci sequence",
+            "language": "python"
+        },
+        "StringCountTokens-python": {
+            "results": {
+                "ChatGPT": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    substr_len = len(substr)\n    str_len = len(str)\n\n    for i in range(str_len - substr_len + 1):\n        if str[i:i+substr_len] == substr:\n            count += 1\n\n    return count",
+                    "answer": "```python\ndef substrcount(str, substr):\n    count = 0\n    substr_len = len(substr)\n    str_len = len(str)\n\n    for i in range(str_len - substr_len + 1):\n        if str[i:i+substr_len] == substr:\n            count += 1\n\n    return count\n```"
+                },
+                "Cohere": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    for i in range(len(str)):\n        if str[i:i+len(substr)] == substr:\n            count += 1\n    return count",
+                    "answer": " Here's a simple Python function `substrcount(str, substr)` that returns the number of times the sub-string `substr` occurs in `str`:\n```python\ndef substrcount(str, substr):\n    count = 0\n    for i in range(len(str)):\n        if str[i:i+len(substr)] == substr:\n            count += 1\n    return count\n```\n\nThe function `substrcount(str, substr)` takes two parameters: `str` and `substr`.  The function returns the number of times the sub-string `substr` occurs in `str`.  The function is implemented using a simple loop that iterates over the characters in `str`.  If the current character is the first character of the sub-string, the function checks if the remaining characters of the sub-string match the next characters in `str`.  If the sub-string matches, the function increments the count of occurrences of the sub-string.  The function returns the number of times the sub-string occurs in `str`."
+                },
+                "AI21": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    for i in range(len(str)):\n        if substr == str[i:i+len(substr)]:\n            count += 1\n    return count",
+                    "answer": "\n```\ndef substrcount(str, substr):\n    count = 0\n    for i in range(len(str)):\n        if substr == str[i:i+len(substr)]:\n            count += 1\n    return count\n\n```\n\nThis function takes two arguments:`str`, which is the string to be searched, and`substr`, which is the sub-string to be searched for. The function first initializes a variable`count`to 0. It then iterates through each character in`str`, checking if the current character matches the first character of`substr`. If it does, it checks if the next character matches the second character of`substr`, and so on. If all the characters in`substr`are matched, the`count`is incremented by 1. The function returns the final value of`count`."
+                }
+            },
+            "task": "Write a python function substrcount(str, substr) with inputs `str` and `substr` that returns counts the number of times the sub-string `substr` occurs in `str`",
+            "language": "python"
+        }
+    },
+    "models": [
+        {
+            "prompt": "chat-generic",
+            "short_name": "ChatGPT",
+            "params": "precise",
+            "model": "openai-chatgpt",
+            "id": "ChatGPT",
+            "idx": 0,
+            "passed": 91,
+            "total": 91
+        },
+        {
+            "prompt": "chat-generic",
+            "short_name": "Cohere",
+            "params": "precise",
+            "model": "cohere-command-nightly",
+            "id": "Cohere",
+            "idx": 1,
+            "passed": 74,
+            "total": 91
+        },
+        {
+            "prompt": "chat-generic",
+            "short_name": "AI21",
+            "params": "precise",
+            "model": "ai21-j2-jumbo-instruct",
+            "id": "AI21",
+            "idx": 2,
+            "passed": 78,
+            "total": 91
+        }
+    ],
+    "config": {
+        "title": "Closed Weight Models (python)",
+        "models": [
+            {
+                "id": "ChatGPT",
+                "eval": "eval_junior-v2_python-javascript_chat-generic_none_precise_openai-chatgpt_1690225795.ndjson",
+                "short_name": "ChatGPT"
+            },
+            {
+                "id": "Cohere",
+                "eval": "eval_junior-v2_python-javascript_chat-generic_none_precise_cohere-command-nightly_1690234860.ndjson",
+                "short_name": "Cohere"
+            },
+            {
+                "id": "AI21",
+                "eval": "eval_junior-v2_python-javascript_chat-generic_none_precise_ai21-j2-jumbo-instruct_1690234190.ndjson",
+                "short_name": "AI21"
+            }
+        ],
+        "language": "python"
+    },
+    "analyser": ""
+}
