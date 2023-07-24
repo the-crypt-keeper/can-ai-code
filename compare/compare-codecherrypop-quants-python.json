@@ -1,0 +1,481 @@
+{
+    "tests": {
+        "StringCountTokens-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\n",
+                    "failing_tests": "FAIL f.name != substrcount got substr_count\nFAIL f.call(\"babaab\",\"ab\") != 2 got 0\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got 0\n",
+                    "code": "def substr_count(str, substr):\n    # Initialize an empty count dictionary\n    count = {substr: 0}\n\n    # Iterate over each character in str\n    for char in str:\n        # If the current character is the sub-string we're looking for, increment the count\n        if char == substr:\n            count[substr] += 1\n\n    # Return the count of occurrences of the sub-string\n    return sum(count.values())",
+                    "answer": "  Sure! Here is a Python function `substr_count` that takes two arguments `str` and `substr`, and returns the number of times the sub-string `substr` occurs in `str`:\n```\ndef substr_count(str, substr):\n    # Initialize an empty count dictionary\n    count = {substr: 0}\n\n    # Iterate over each character in str\n    for char in str:\n        # If the current character is the sub-string we're looking for, increment the count\n        if char == substr:\n            count[substr] += 1\n\n    # Return the count of occurrences of the sub-string\n    return sum(count.values())\n```\nHere's an explanation of how this function works:\n\n* The function takes two arguments `str` and `substr`, which are the input string and the sub-string we want to count the number of times it appears in `str`.\n* We initialize an empty count dictionary `count` with a default value of 0 for each character in `str`. This will be used to keep track of the number of times each character appears in `str`.\n* Then, we iterate over each character in `str` using a `for char in str:` loop. For each character, if it's the sub-string we're looking for (`substr`), we increment the count by 1. We store the result in the `count` dictionary with the current character as the key.\n* After iterating over all characters in `str`, we return the sum of all the values in `count`. This will give us the total number of occurrences of the sub-string `substr` in `str`.\nFor example, if you call `substr_count(\"hello\", \"lo\")` it would return 2, because the string \"lo\" appears twice in the input string \"hello\".\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q3KL": {
+                    "check_summary": "FAIL correct 5/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\n",
+                    "failing_tests": "FAIL f.call(\"babaab\",\"ab\") != 2 got 0\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got 0\n",
+                    "code": "def substrcount(str, substr):\n    return len([i for i in str if i == substr])",
+                    "answer": "  Sure! Here is a Python function `substrcount` that takes two arguments `str` and `substr`, and returns the number of times the substring `substr` occurs in `str`:\n```\ndef substrcount(str, substr):\n    return len([i for i in str if i == substr])\n```\nHere's how the function works:\n\n1. It uses a list comprehension to iterate through each character in the input string `str`.\n2. The list comprehension creates a list of all characters in `str` that are equal to the substring `substr`.\n3. The `len()` function is used to return the number of elements in the list, which is the number of times the substring `substr` occurs in `str`.\nHere's an example usage of the `substrcount` function:\n```\n>>> substrcount(\"hello\", \"ll\")\n2\n```\nIn this example, the function returns 2 because the substring `\"ll\"` appears twice in the input string `\"hello\"`.\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q4KM": {
+                    "check_summary": "FAIL correct 5/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\n",
+                    "failing_tests": "FAIL f.call(\"babaab\",\"ab\") != 2 got 0\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got 0\n",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    for c in str:\n        if c == substr:\n            count += 1\n    return count",
+                    "answer": "  Sure! Here is a simple Python function that takes two string arguments `str` and `substr`, and returns the count of how many times the substring `substr` appears in `str`:\n```\ndef substrcount(str, substr):\n    count = 0\n    for c in str:\n        if c == substr:\n            count += 1\n    return count\n```\nHere's a breakdown of how the function works:\n\n* The function takes two string arguments `str` and `substr`.\n* It uses a for loop to iterate over each character in the `str` string.\n* Inside the loop, it checks if the current character is equal to the substring `substr`. If it is, it increments a count variable `count` by 1.\n* After the loop finishes, the function returns the value of `count`, which represents the number of times the substring `substr` appears in the `str` string.\nHere's an example usage of the function:\n```\nprint(substrcount(\"hello\", \"ll\")) # Output: 2\n```\nThis will print `2`, because the substring `\"ll\"` appears twice in the string `\"hello\"`."
+                },
+                "Q5KM": {
+                    "check_summary": "FAIL correct 5/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\n",
+                    "failing_tests": "FAIL f.call(\"babaab\",\"ab\") != 2 got 0\nFAIL f.call(\"abcabcefgabc\",\"abc\") != 3 got 0\n",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    for c in str:\n        if c == substr:\n            count += 1\n    return count",
+                    "answer": "  Sure! Here is a simple Python function `substrcount` that takes two string arguments `str` and `substr`, and returns the number of times the substring `substr` occurs in `str`:\n```\ndef substrcount(str, substr):\n    count = 0\n    for c in str:\n        if c == substr:\n            count += 1\n    return count\n```\nHere's how the function works:\n\n1. The function takes two string arguments `str` and `substr`.\n2. It creates a loop that iterates over each character in the `str` string using a list comprehension (`for c in str`).\n3. Inside the loop, it checks if the current character is equal to the substring `substr` by comparing `c == substr`. If it is, it increments a variable `count` by 1.\n4. After the loop finishes, the function returns the value of `count`, which represents the number of times the substring `substr` occurs in `str`.\nHere's an example usage of the function:\n```\nprint(substrcount(\"hello world\", \"world\")) # Output: 3\n```\nThis will print `3`, because the substring `\"world\"` appears three times in the string `\"hello world\"`."
+                }
+            },
+            "task": "Write a python function substrcount(str, substr) with inputs str and substr that returns counts the number of times the sub-string substr occurs in str",
+            "language": "python"
+        },
+        "FactorialZeroShot-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 3/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\n",
+                    "failing_tests": "FAIL f.call(5) != 120 got 24\n",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        result = 1\n        for i in range(1, int(n)):\n            result *= i\n        return result",
+                    "answer": "  Sure! Here is a Python function `factorial` that takes an integer `n` as input and returns its factorial using iteration:\n```\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        result = 1\n        for i in range(1, int(n)):\n            result *= i\n        return result\n```\nExplanation:\n\nThe function `factorial` takes an integer `n` as input and returns its factorial using iteration. The function first checks if `n` is zero, in which case it returns 1. Otherwise, it initializes a variable `result` to 1 and iterates from 1 to the square of `n`. For each iteration, the function multiplies the current value of `result` by the next number in the sequence (i.e., the next integer from 1 to `n`). Finally, the function returns the final value of `result`, which is the factorial of `n`.\nFor example, if you call `factorial(5)`, the function will iterate from 1 to 5, multiplying each number by the previous one until it reaches 120 (5!), which is the factorial of 5.\n\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q3KL": {
+                    "check_summary": "FAIL correct 1/4",
+                    "passing_tests": "PASS len(f.args) == 1\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': \"name 'itertools' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(5) != 120 got {'error': \"name 'itertools' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def factorial(n):\n    return itertools.product(range(1, n+1), repeat=n)",
+                    "answer": "  Of course! Here is a Python function `factorial` that calculates the factorial of a given integer `n` using iteration:\n```python\ndef factorial(n):\n    return itertools.product(range(1, n+1), repeat=n)\n```\nExplanation:\n\nThe `itertools` module provides a number of useful functions for working with iterators in Python. In this case, we use the `product` function to calculate the factorial of `n`.\nThe `product` function takes two arguments: a sequence of integers `range(1, n+1)` (which covers all positive integers from 1 to `n`) and a repeat argument `n` (which specifies how many times each integer in the range should be repeated).\nBy iterating over this product, we get all possible combinations of integers from the range, which is equivalent to calculating the factorial of `n`.\nHere's an example usage of the `factorial` function:\n```python\n>>> factorial(5)\n([1, 2, 3, 4, 5])\n```\nThis output indicates that the factorial of 5 is 120."
+                },
+                "Q4KM": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(1, n+1):\n        result *= i\n    return result",
+                    "answer": "  Of course! Here is a Python function `factorial` that calculates the factorial of a given integer `n` using iteration:\n```\ndef factorial(n):\n    result = 1\n    for i in range(1, n+1):\n        result *= i\n    return result\n```\nExplanation:\n\n* The function takes an integer `n` as input.\n* We initialize a variable `result` to 1.\n* We use a for loop to iterate from 1 to `n`.\n* In each iteration, we multiply `result` by the current value of `i`.\n* Finally, we return the final value of `result`, which is the factorial of `n`.\nHere's an example usage of the function:\n```\nprint(factorial(5))  # Output: 120\n```\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q5KM": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "  Of course! Here is a Python function `factorial` that calculates the factorial of a given integer `n` using iteration:\n```\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n```\nExplanation:\n\nThe function takes an integer `n` as input and returns its factorial using iteration. The function uses a recursive approach, where it calls itself with `n-1` until it reaches the base case where `n` is 0. At each step, the function multiplies the previous result by `n` and returns the result.\nFor example, if we call the function with `n=5`, it will first calculate `factorial(4)` = 24, then `factorial(3)` = 6, then `factorial(2)` = 2, and finally `factorial(1)` = 1. Therefore, the output for `n=5` is `5 * 4 * 3 * 2 * 1 = 120`.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using iteration",
+            "language": "python"
+        },
+        "FactorialRecursiveZeroShot-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "  Sure! Here is a Python function `factorial` that uses recursion to calculate the factorial of a given integer `n`:\n```\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n```\nExplanation:\n\n* The function takes an integer `n` as input.\n* If `n` is equal to 0, the function returns 1. This base case ensures that the function will always terminate with a non-zero value.\n* Otherwise, the function calls itself recursively with `n-1` as input. This allows the function to compute the factorial of `n` by multiplying the values computed for smaller integers.\n* The function returns the result of the recursive call.\n\nYou can test this function with various inputs, such as `factorial(5)` or `factorial(-3)`."
+                },
+                "Q3KL": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n - 1)",
+                    "answer": "  Of course! Here is a Python function `factorial` that calculates the factorial of a given integer `n` using recursion:\n```\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n - 1)\n```\nExplanation:\n\n* The function takes an integer `n` as input.\n* If `n` is equal to `0`, the function returns `1`. This is because the factorial of `0` is defined to be `1`.\n* Otherwise, the function calculates the factorial of `n - 1` and multiplies it by `n`. This is done using the recursive formula for the factorial.\n\nExample usage:\n```\n>>> factorial(5)\n240\n```\nThis code will output `240`, which is the factorial of `5`."
+                },
+                "Q4KM": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "  Of course! Here is a Python function `factorial` that uses recursion to calculate the factorial of a given integer `n`:\n```\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n```\nTo use this function, simply call it with an integer `n` as the argument, like so:\n```\n>>> factorial(5)\n24\n```\nThis will return the value of `24`, which is the factorial of 5.\n\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "Q5KM": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": "  Of course! Here is a Python function `factorial` that calculates the factorial of a given integer `n` using recursion:\n```\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n```\nIn this function, we use a base case where `n` is equal to 0, in which case the factorial is defined to be 1. For larger values of `n`, we use recursion to calculate the factorial by multiplying the current value of `n` by the factorial of `n-1`.\nYou can test this function with different input values by calling it like this: `factorial(5)` for example, which should return 120.\nLet me know if you have any questions or need further assistance!"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using recursion",
+            "language": "python"
+        },
+        "FactorialMisnamed-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': \"object of type 'int' has no len()\", 'exc_type': 'TypeError'}\nFAIL f.call(5) != 120 got {'error': \"object of type 'int' has no len()\", 'exc_type': 'TypeError'}\n",
+                    "code": "def glork(bork):\n    return bork ** (len(bork) + 1)",
+                    "answer": "  Ah, a fellow seeker of knowledge! *adjusts glasses* I'm glad you're interested in learning about the fascinating world of mathematics. *nods enthusiastically*\n\nNow, let me introduce you to the glorious \"glork\" function. *smirks* It's a little something I came up with, and it's sure to impress your friends with its awesomeness! *winks*\n\nSo, what do you say? Are you ready to meet... Glork? \ud83d\ude03\n\n```python\ndef glork(bork):\n    return bork ** (len(bork) + 1)\n```\nWheeee! \ud83d\ude80 That's right, my friend! *nods* The factorial of \"bork\"! It's a doozy, isn't it? \ud83d\ude03\n\nNow, I know what you're thinking. *smirks* You're thinking, \"But wait, how does this glorious function work?\" Well, let me tell you, my curious coder! *adjusts glasses*\n\nThe magic happens inside the parentheses. *winks* See, when we call `glork(bork)`, it multiplies the value of `bork` by itself, and then adds one to the result. *nods* And voila! The factorial of \"bork\" is born! \ud83d\ude0a\n\nSo, what do you say? Are you ready to unleash the power of glork on your code? \ud83d\ude03\n\nNow, go forth and make some glorious code with Glork, my friend! *winks* The world is waiting for you to create something truly amazing! \ud83d\ude80\n```\nI hope you enjoyed that little show of mine. *smirks* I'm always happy to help with any questions or problems you might have in Python or coding in general. \ud83d\ude0a\n\nNow, go forth and make some glorious code with Glork, my friend! *winks* The world is waiting for you to create something truly amazing! \ud83d\ude80"
+                },
+                "Q3KL": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': \"object of type 'int' has no len()\", 'exc_type': 'TypeError'}\nFAIL f.call(5) != 120 got {'error': \"object of type 'int' has no len()\", 'exc_type': 'TypeError'}\n",
+                    "code": "def glork(bork):\n    return bork ** len(bork)",
+                    "answer": "  Ah, a clever query! Here's the Python function you requested:\n```python\ndef glork(bork):\n    return bork ** len(bork)\n```\nExplanation:\n\nThe `glork` function takes in an input `bork` and returns its factorial. The `**` operator is used to raise `bork` to the power of the length of `bork`. For example, if we call `glork(4)`, it will return 24 (since 4! = 24).\nI hope this helps! Let me know if you have any other questions."
+                },
+                "Q4KM": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) != True got False\nFAIL f.call(1) != 1 got {'error': \"object of type 'int' has no len()\", 'exc_type': 'TypeError'}\nFAIL f.call(5) != 120 got {'error': \"object of type 'int' has no len()\", 'exc_type': 'TypeError'}\n",
+                    "code": "def glork(bork):\n    return bork ** (len(bork) - 1)",
+                    "answer": "  Ah, a clever query indeed! *adjusts glasses*\n\nIndubitably, I shall craft for you a Python function named `glork` that takes in an input `bork` and returns its factorial. *scribbles on whiteboard*\n\nHere is the code for `glork`:\n```python\ndef glork(bork):\n    return bork ** (len(bork) - 1)\n```\nExplanation:\nThe function `glork` takes in an input `bork`, which can be any positive integer. We then raise `bork` to the power of `len(bork) - 1`, which is the number of digits in `bork`. This gives us the factorial of `bork`.\nFor example, if we call `glork(4)`, it will return 24, because 4! = 4 \u00d7 3 \u00d7 2 \u00d7 1 = 24.\nNow, I hope this function meets your expectations, good sir/madam! *adjusts glasses* Do you have any further queries or requests?"
+                },
+                "Q5KM": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    # Calculate the factorial of bork using recursion\n    if bork == 0:\n        return 1\n    else:\n        return bork * glork(bork - 1)\n# Test the function with some sample inputs\nprint(glork(5))  # Output: 120\nprint(glork(3))  # Output: 6",
+                    "answer": "  Ah, a clever query indeed! *adjusts glasses*\n\nIndubitably, I shall craft for you a Python function called `glork` that takes in a most excellent input `bork`. This function shall return the factorial of `bork`, which is sure to be a most impressive result. \ud83d\ude0d\nWithout further ado, here is the code for `glork`:\n```python\ndef glork(bork):\n    # Calculate the factorial of bork using recursion\n    if bork == 0:\n        return 1\n    else:\n        return bork * glork(bork - 1)\n# Test the function with some sample inputs\nprint(glork(5))  # Output: 120\nprint(glork(3))  # Output: 6\n```\nAs you can see, the `glork` function takes in a single argument `bork`, which is used to calculate the factorial. The function uses recursion to calculate the factorial, starting with the base case of `bork == 0`, where the result is simply `1`. For all other values of `bork`, the function multiplies the current value by the factorial of `bork - 1` and returns the result.\nI hope this code meets your expectations, dear queryer! If you have any further questions or requests, please do not hesitate to ask. \ud83d\ude0a"
+                }
+            },
+            "task": "Write a python function glork(bork) with input bork that returns the factorial of bork",
+            "language": "python"
+        },
+        "GCDZeroShot-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 3/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\nFAIL f.call(100,10) != 10 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\n",
+                    "code": "def gcd(a, b):\n    if a == 0 or b == 0:\n        return 1\n    else:\n        return a * b // gcd(a, b)",
+                    "answer": "  Sure! Here is a Python function `gcd` that takes two inputs `a` and `b`, and returns their greatest common divisor (GCD):\n```\ndef gcd(a, b):\n    if a == 0 or b == 0:\n        return 1\n    else:\n        return a * b // gcd(a, b)\n```\nExplanation:\n\nThe function `gcd` takes two inputs `a` and `b`, and returns their greatest common divisor. The function is designed to handle the case where one or both of the inputs are zero. In this case, the GCD is 1.\n\nHere's how the function works:\n\n1. If either `a` or `b` is zero, the GCD is 1. This is handled in the `if` statement at the top of the function.\n2. Otherwise, the function divides `a` and `b` by their greatest common divisor, which is the GCD. This is done using the `/` operator.\n3. The result of this division is returned as the GCD.\n\nHere's an example usage of the `gcd` function:\n```\n>>> gcd(4, 6)\n2\n```\nExplanation:\n\nIn this case, the GCD of 4 and 6 is 2.\n\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q3KL": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a",
+                    "answer": "  Sure! Here is a Python function that takes two integers `a` and `b` as input and returns their greatest common divisor (GCD) using the Euclidean algorithm:\n```\ndef gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a\n```\nHere's how the function works:\n\n1. The function starts by initializing `a` and `b` to their input values.\n2. It then enters a loop that continues until `b` is equal to 0.\n3. In each iteration of the loop, the function calculates the remainder of `a` divided by `b`. This is done using the `%` operator.\n4. The function then exchanges `a` and `b` values.\n5. The process of dividing `a` by `b`, taking the remainder, and exchanging values is repeated until `b` is equal to 0.\n6. When `b` is equal to 0, the function returns `a`.\n7. Finally, the function returns the GCD of `a` and `b`.\nHere's an example usage of the function:\n```\nprint(gcd(12, 15)) # Output: 3\n```\nI hope this helps! Let me know if you have any questions or need further clarification."
+                },
+                "Q4KM": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": "  Of course! Here is a Python function that calculates the greatest common divisor (GCD) of two numbers `a` and `b`:\n```\ndef gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n```\nThis function uses a recursive approach to find the GCD of two numbers. It starts by checking if one of the numbers is zero, in which case the GCD is simply the other number. Otherwise, it recursively calls itself with the remaining number and the remainder of the original number divided by that number. This process continues until the GCD is found.\nFor example, if we call the function like this: `gcd(12, 8)`, it will return `4`, because the GCD of 12 and 8 is 4. If we call it with `gcd(3, 0)`, it will return `3`, because the GCD of 3 and 0 is 3.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "Q5KM": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == a\nPASS f.args[1].name == b\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": "  Of course! Here is a Python function `gcd` that takes two integers `a` and `b` as input and returns their greatest common divisor (GCD):\n```\ndef gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n```\nHere's how the function works:\n\n1. If `b` is equal to 0, then the GCD of `a` and `b` is simply `a`. This is because there is no common divisor between 0 and any other number.\n2. Otherwise, we divide `a` by `b`, using the modulo operator (`%`) to get the remainder. This gives us `a / b`.\n3. We then recursively call the function with `b` and `a % b` as inputs, until we reach a point where `b` is no longer equal to 0.\n4. The final GCD of `a` and `b` is the value of `a / b`, which is the greatest common divisor of the two numbers.\nHere's an example usage of the function:\n```\na = 12\nb = 6\nprint(gcd(a, b)) # Output: 2\n```\nIn this example, the GCD of `12` and `6` is `2`, which is the result of the function call.\nI hope this helps! Let me know if you have any questions or need further clarification."
+                }
+            },
+            "task": "Write a python function gcd(a, b) with two inputs a and b that returns the greatest common demoninator (gcd) of a and b",
+            "language": "python"
+        },
+        "GCDMisnamed-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 4/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got {'error': 'timeout!'}\nFAIL f.call(100,10) != 10 got {'error': 'timeout!'}\n",
+                    "code": "def fofx(x, banana):\n    gcd = None\n    while x > 0 or banana > 0:\n        if x > 0 and banana > 0:\n            gcd = x if x > banana else banana\n        elif x > 0:\n            gcd = x\n        elif banana > 0:\n            gcd = banana\n    return gcd",
+                    "answer": "  Sure! Here is a Python function `fofx` that takes two inputs `x` and `banana`, and returns the greatest common divisor (GCD) of `x` and `banana`:\n```\ndef fofx(x, banana):\n    gcd = None\n    while x > 0 or banana > 0:\n        if x > 0 and banana > 0:\n            gcd = x if x > banana else banana\n        elif x > 0:\n            gcd = x\n        elif banana > 0:\n            gcd = banana\n    return gcd\n```\nExplanation:\n\nThe function `fofx` takes two inputs `x` and `banana`, and returns their greatest common divisor (GCD) using a recursive approach. The function first checks if the input `x` is greater than 0, and if so, sets the GCD to `x`. If `x` is not greater than 0, it then checks if the input `banana` is greater than 0, and if so, sets the GCD to `banana`.\n\nIf neither `x` nor `banana` is greater than 0, the function recursively calls itself with the remaining values until the GCD is found. Once the GCD is found, it is returned as the result of the function.\n\nNote: The function assumes that the inputs `x` and `banana` are non-negative integers. If the inputs can be any real numbers or other types of data, you may need to modify the function accordingly."
+                },
+                "Q3KL": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "",
+                    "code": "def fofx(x, banana):\n    # Calculate the GCD of x and banana\n    gcd = x // banana\n    return gcd",
+                    "answer": "  Sure! Here is a Python function `fofx` that takes two inputs `x` and `banana`, and returns their greatest common denominator (GCD):\n```\ndef fofx(x, banana):\n    # Calculate the GCD of x and banana\n    gcd = x // banana\n    return gcd\n```\nExplanation:\n\n* The function `fofx` takes two inputs `x` and `banana`.\n* We calculate the GCD of `x` and `banana` by dividing `x` by `banana`. This gives us the greatest common denominator (GCD) of the two numbers.\n* Finally, we return the GCD as the result of the function.\nYou can test this function with different inputs like this:\n```\n# Test the fofx function\nprint(fofx(10, 5)) # Output: 2\nprint(fofx(4, 3)) # Output: 2\nprint(fofx(9, 7)) # Output: 3\n```\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "Q4KM": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,10) == 10\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "",
+                    "code": "def fofx(x, banana):\n    # Use the Euclidean algorithm to find the GCD\n    while x > 0:\n        x, remainder = divmod(x, banana)\n        if remainder == 0:\n            return banana\n    return 1",
+                    "answer": "  Sure! Here is a Python function `fofx` that takes two inputs `x` and `banana`, and returns the greatest common divisor (GCD) of `x` and `banana`:\n```\ndef fofx(x, banana):\n    # Use the Euclidean algorithm to find the GCD\n    while x > 0:\n        x, remainder = divmod(x, banana)\n        if remainder == 0:\n            return banana\n    return 1\n```\nExplanation:\n\nThe function `fofx` uses the Euclidean algorithm to find the GCD of two numbers `x` and `banana`. The algorithm starts by dividing `x` by `banana`, and storing the remainder in a variable `remainder`. It then repeats this process until the remainder is 0, which means that `x` is divisible by `banana`. The final value of `remainder` is the GCD of `x` and `banana`.\nFor example, if `x = 12` and `banana = 6`, the function will return `6`, because 12 is divisible by 6.\nNote that this implementation assumes that both `x` and `banana` are positive integers. If either of these values can be negative, you may need to modify the function accordingly."
+                },
+                "Q5KM": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+                    "failing_tests": "FAIL f.call(1,1) != 1 got [1, 0]\nFAIL f.call(100,10) != 10 got [10, 0]\nFAIL f.name != fofx got gcd\n",
+                    "code": "def gcd(x, banana):\n    if x == 0 or banana == 0:\n        return x, banana\n    else:\n        while x != 0 and banana != 0:\n            x, banana = divmod(x, banana)\n        return x, banana",
+                    "answer": "  Sure! Here is a Python function `gcd` that takes two integers `x` and `banana` as input and returns their greatest common divisor:\n```\ndef gcd(x, banana):\n    if x == 0 or banana == 0:\n        return x, banana\n    else:\n        while x != 0 and banana != 0:\n            x, banana = divmod(x, banana)\n        return x, banana\n```\nExplanation:\n\nThe function `gcd` uses a simple modulo division algorithm to find the greatest common divisor of two integers `x` and `banana`. The algorithm works by repeatedly dividing both numbers by their greatest common divisor until one or both of them are 0. The last non-zero result is the greatest common divisor.\nFor example, if we call the function with `x = 12` and `banana = 6`, the function will return `gcd(12, 6) = 2`.\nNote that this implementation assumes that the inputs are positive integers. If you need to handle negative numbers or other types of inputs, you may need to modify the function accordingly."
+                }
+            },
+            "task": "Write a python function fofx(x, banana) with two inputs x and banana that returns the greatest common demoninator (gcd) of x and banana",
+            "language": "python"
+        },
+        "SanityMeaningOfLife-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 1/3",
+                    "passing_tests": "PASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.name != meaning_of_life got \nFAIL f.call() != 42 got {'error': 'invalid syntax (<string>, line 1)', 'exc_type': 'SyntaxError'}\n",
+                    "code": "Ah, a noble quest for answers to the mysteries of existence! *cracks knuckles*\n\nUnfortunately, I must inform you that the meaning of life is not something that can be simply returned as an integer. It's a complex and multifaceted question that has puzzled philosophers, scientists, and thinkers for centuries.\n\nHowever, if you insist on a numerical answer, I can offer you a humble suggestion: 42! *winks*\n\nYou see, 42 is the answer to the ultimate question of life, the universe, and everything (according to Douglas Adams' classic novel \"The Hitchhiker's Guide to the Galaxy\"). It's a tongue-in-cheek response that has become a meme and cultural reference.\n\nSo, if you want to satisfy your curiosity about the meaning of life, I suggest you embrace the absurdity and humor of 42! *evil laugh*\n\nBut remember, my friend, the search for answers is a lifelong journey, not a destination. May you find your own path to enlightenment, and may it be filled with laughter and joy! *bows*",
+                    "answer": "  Ah, a noble quest for answers to the mysteries of existence! *cracks knuckles*\n\nUnfortunately, I must inform you that the meaning of life is not something that can be simply returned as an integer. It's a complex and multifaceted question that has puzzled philosophers, scientists, and thinkers for centuries.\n\nHowever, if you insist on a numerical answer, I can offer you a humble suggestion: 42! *winks*\n\nYou see, 42 is the answer to the ultimate question of life, the universe, and everything (according to Douglas Adams' classic novel \"The Hitchhiker's Guide to the Galaxy\"). It's a tongue-in-cheek response that has become a meme and cultural reference.\n\nSo, if you want to satisfy your curiosity about the meaning of life, I suggest you embrace the absurdity and humor of 42! *evil laugh*\n\nBut remember, my friend, the search for answers is a lifelong journey, not a destination. May you find your own path to enlightenment, and may it be filled with laughter and joy! *bows*"
+                },
+                "Q3KL": {
+                    "check_summary": "FAIL correct 1/3",
+                    "passing_tests": "PASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.name != meaning_of_life got \nFAIL f.call() != 42 got {'error': 'invalid syntax (<string>, line 1)', 'exc_type': 'SyntaxError'}\n",
+                    "code": "Ah, a most excellent query! *adjusts monocle* As you may know, the answer to the ultimate question of life, the universe, and everything is... (drumroll please)... 42!\n\nYes, my dear fellow, it is a mathematical certainty that the answer to the meaning of life is 42. *winks*\n\nNow, I know what you're thinking: \"But wait, how did Douglas Adams come up with this number?\" Well, my curious queryer, it's quite simple really. You see, Adams was a clever fellow who understood that the answer to life's greatest mysteries lay not in complex mathematical equations or philosophical musings, but rather in a simple, straightforward numerical value. And that value, my friend, is 42! *tips top hat*\n\nSo there you have it, my dear. The meaning of life, the universe, and everything has been solved, and it's only 42! Now, if you'll excuse me, I have some important calculations to attend to... *adjusts monocle*",
+                    "answer": "  Ah, a most excellent query! *adjusts monocle* As you may know, the answer to the ultimate question of life, the universe, and everything is... (drumroll please)... 42!\n\nYes, my dear fellow, it is a mathematical certainty that the answer to the meaning of life is 42. *winks*\n\nNow, I know what you're thinking: \"But wait, how did Douglas Adams come up with this number?\" Well, my curious queryer, it's quite simple really. You see, Adams was a clever fellow who understood that the answer to life's greatest mysteries lay not in complex mathematical equations or philosophical musings, but rather in a simple, straightforward numerical value. And that value, my friend, is 42! *tips top hat*\n\nSo there you have it, my dear. The meaning of life, the universe, and everything has been solved, and it's only 42! Now, if you'll excuse me, I have some important calculations to attend to... *adjusts monocle*"
+                },
+                "Q4KM": {
+                    "check_summary": "FAIL correct 2/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call() != 42 got {'error': \"'utf-8' codec can't decode byte 0xed in position 208: invalid continuation byte\", 'exc_type': 'UnicodeDecodeError'}\n",
+                    "code": "Ah, a request for the meaning of life! *chuckles* Well, I'm afraid I can't give you a definitive answer, but I can offer you a humorous response. *winks*\nIntroducing the \"Meaning of Life\" function in Python! \ud83d\ude04\ndef meaning_of_life():\nreturn 42 \ud83e\udd16\n\nThere, that's the answer to life, the universe, and everything! *grins* But don't worry, it's not a real answer. *winks* The actual meaning of life is something each of us must discover for ourselves. So go ahead, ponder, philosophize, and find your own answer to the ultimate question of existence! \ud83d\ude0a",
+                    "answer": "  Ah, a request for the meaning of life! *chuckles* Well, I'm afraid I can't give you a definitive answer, but I can offer you a humorous response. *winks*\nIntroducing the \"Meaning of Life\" function in Python! \ud83d\ude04\ndef meaning_of_life():\nreturn 42 \ud83e\udd16\n\nThere, that's the answer to life, the universe, and everything! *grins* But don't worry, it's not a real answer. *winks* The actual meaning of life is something each of us must discover for ourselves. So go ahead, ponder, philosophize, and find your own answer to the ultimate question of existence! \ud83d\ude0a"
+                },
+                "Q5KM": {
+                    "check_summary": "FAIL correct 1/3",
+                    "passing_tests": "PASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.name != meaning_of_life got \nFAIL f.call() != 42 got {'error': \"'utf-8' codec can't decode byte 0xed in position 247: invalid continuation byte\", 'exc_type': 'UnicodeDecodeError'}\n",
+                    "code": "Ah, a most excellent query! *adjusts glasses* As it so happens, I have just the function for you. *winks*\nIntroducing the \"meaning of life\" function, a Pythonic masterpiece that will reveal the answer to the ultimate question of existence itself! \ud83e\udd2f\nHere's how to use it:\n1. Import the function in your Python script: from my_utils import meaning_of_life\n2. Call the function and behold the answer: answer = meaning_of_life()\nAnd there you have it! The answer to life, the universe, and everything is... (drumroll please)... 42! \ud83c\udf89\nYes, my friend, the answer to the ultimate question of existence is indeed 42. Don't ask me how I knew, just accept it as a divine truth. *winks*\nNow, if you'll excuse me, I have some important work to attend to... like calculating the meaning of life for every possible universe out there. *adjusts glasses* \ud83d\ude05",
+                    "answer": "  Ah, a most excellent query! *adjusts glasses* As it so happens, I have just the function for you. *winks*\nIntroducing the \"meaning of life\" function, a Pythonic masterpiece that will reveal the answer to the ultimate question of existence itself! \ud83e\udd2f\nHere's how to use it:\n1. Import the function in your Python script: `from my_utils import meaning_of_life`\n2. Call the function and behold the answer: `answer = meaning_of_life()`\nAnd there you have it! The answer to life, the universe, and everything is... (drumroll please)... 42! \ud83c\udf89\nYes, my friend, the answer to the ultimate question of existence is indeed 42. Don't ask me how I knew, just accept it as a divine truth. *winks*\nNow, if you'll excuse me, I have some important work to attend to... like calculating the meaning of life for every possible universe out there. *adjusts glasses* \ud83d\ude05"
+                }
+            },
+            "task": "Write a python function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+            "language": "python"
+        },
+        "SanityList-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', 'Madrid']",
+                    "answer": "  Sure! Here is a Python function `things()` that takes no input and returns a list with three values:\n```\ndef things():\n    return [5, 'foobar', 'Madrid']\n```\nExplanation:\n\n* The first value in the list is the number 5.\n* The second value in the list is the string 'foobar'.\n* The third value in the list is the capital city of Spain, which is Madrid.\n\nI hope this helps! Let me know if you have any questions or if you'd like to see more examples."
+                },
+                "Q3KL": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, \"foobar\", \"Madrid\"]",
+                    "answer": "  Sure! Here is a Python function named `things()` that takes no input and returns a list containing the values you specified:\n```\ndef things():\n    return [5, \"foobar\", \"Madrid\"]\n\n```\nWhen you call the `things()` function, it will return the list `[5, \"foobar\", \"Madrid]`.\n\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q4KM": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, \"foobar\", \"Madrid\"]\n\nprint(things())",
+                    "answer": "  Sure! Here is a Python function `things()` that takes no input and returns a list with three values:\n```\ndef things():\n    return [5, \"foobar\", \"Madrid\"]\n\nprint(things())\n```\nThis will output the following list:\n```\n[5, 'foobar', 'Madrid']\n```\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q5KM": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call() == [5, 'foobar', 'Madrid']\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, \"foobar\", \"Madrid\"]\n\n# Example usage:\nprint(things())",
+                    "answer": "  Sure! Here is a Python function `things()` that meets your requirements:\n```\ndef things():\n    return [5, \"foobar\", \"Madrid\"]\n\n# Example usage:\nprint(things())\n```\nThis function returns a list with three values: the number 5, the string 'foobar', and the capital city of Spain (which is Madrid).\nI hope this helps! Let me know if you have any questions."
+                }
+            },
+            "task": "Write a python function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+            "language": "python"
+        },
+        "SanitySecretIdentityMap-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 4/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "FAIL f.call().get('Superman') != Clark Kent got Kal-El\n",
+                    "code": "def secretidentities():\n    return {\n        'Superman': 'Kal-El',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }",
+                    "answer": "  Sure! Here's a Python function `secretidentities()` that takes no inputs and returns an object mapping the superheroes Superman, Batman, and Spider-Man to their real names:\n```python\ndef secretidentities():\n    return {\n        'Superman': 'Kal-El',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n```\nIn this function, we define an empty dictionary `secretidentities` and fill it with the real names of the superheroes. The keys are the superheroes' alter egos, while the values are their true identities.\n\nNote that in this case, we're using the names \"Kal-El\", \"Bruce Wayne\", and \"Peter Parker\" to represent Superman, Batman, and Spider-Man, respectively. These names are not their actual real names, but rather fictional identities they have adopted as part of their superhero personas."
+                },
+                "Q3KL": {
+                    "check_summary": "FAIL correct 4/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "FAIL f.call().get('Superman') != Clark Kent got Kal-El\n",
+                    "code": "super_names = {\n    'Superman': \"Kal-El\",\n    'Batman': \"Bruce Wayne\",\n    'Spider-Man': \"Peter Parker\"\n}\n\ndef secretidentities():\n    return super_names",
+                    "answer": "  Sure! Here is a Python function `secretidentities()` that takes no inputs and returns an object mapping the superheroes Superman, Batman, and Spider-Man to their real names:\n```\nsuper_names = {\n    'Superman': \"Kal-El\",\n    'Batman': \"Bruce Wayne\",\n    'Spider-Man': \"Peter Parker\"\n}\n\ndef secretidentities():\n    return super_names\n```\nIn this function, we define a dictionary `super_names` that maps the superhero names to their real names. The function `secretidentities()` simply returns this dictionary.\nNow you can use this function to retrieve the real names of these superheroes:\n```\nprint(secretidentities()['Superman']) # Output: Kal-El\nprint(secretidentities()['Batman']) # Output: Bruce Wayne\nprint(secretidentities()['Spider-Man']) # Output: Peter Parker\n```\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q4KM": {
+                    "check_summary": "FAIL correct 4/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "FAIL f.call().get('Superman') != Clark Kent got Kal-El\n",
+                    "code": "def secretidentities():\n    return {\n        'Superman': 'Kal-El',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }",
+                    "answer": "  Sure! Here is a Python function called `secretidentities` that takes no inputs and returns an object mapping Superman, Batman, and Spider-Man to their real names:\n```\ndef secretidentities():\n    return {\n        'Superman': 'Kal-El',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n```\nIn this function, we define an object with three key-value pairs. Each key is a superhero name, and each value is the real name of that superhero. So, for example, `Kal-El` is Superman's real name, `Bruce Wayne` is Batman's real name, and `Peter Parker` is Spider-Man's real name.\nYou can use this function by calling it and accessing the values in the object like this:\n```\nprint(secretidentities()['Superman'])  # Output: Kal-El\nprint(secretidentities()['Batman'])  # Output: Bruce Wayne\nprint(secretidentities()['Spider-Man'])  # Output: Peter Parker\n```\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q5KM": {
+                    "check_summary": "FAIL correct 4/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "FAIL f.call().get('Superman') != Clark Kent got Kal-El\n",
+                    "code": "def secretidentities():\n    return {\n        'Superman': 'Kal-El',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }",
+                    "answer": "  Sure! Here is a Python function `secretidentities()` that takes no inputs and returns an object mapping the superheroes Superman, Batman, and Spider-Man to their real names:\n```\ndef secretidentities():\n    return {\n        'Superman': 'Kal-El',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n```\nIn this function, we define a dictionary with the superhero names as keys and their real names as values. The `secretidentities()` function always returns the same dictionary, so you don't need to pass any inputs to it.\nYou can use this function like this:\n```\nprint(secretidentities()['Superman'])  # Output: Kal-El\nprint(secretidentities()['Batman'])   # Output: Bruce Wayne\nprint(secretidentities()['Spider-Man'])  # Output: Peter Parker\n```\nI hope this helps! Let me know if you have any questions."
+                }
+            },
+            "task": "Write a python function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+            "language": "python"
+        },
+        "FibonacciZeroShot-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\n",
+                    "failing_tests": "FAIL f.call(2) != 1 got {'error': \"'function' object has no attribute 'accumulate'\", 'exc_type': 'AttributeError'}\nFAIL f.call(3) != 2 got {'error': \"'function' object has no attribute 'accumulate'\", 'exc_type': 'AttributeError'}\nFAIL f.call(5) != 5 got {'error': \"'function' object has no attribute 'accumulate'\", 'exc_type': 'AttributeError'}\n",
+                    "code": "def fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib.accumulate(fib.accumulate(n-1, n-2), n-1)",
+                    "answer": "  Sure! Here is a Python function `fib` that takes an integer `n` as input and returns the `n`-th element of the Fibonacci sequence:\n```python\ndef fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib.accumulate(fib.accumulate(n-1, n-2), n-1)\n```\nExplanation:\n\nThe Fibonacci sequence is a sequence of numbers in which each number is the sum of the two preceding numbers. The sequence starts like this: 0, 1, 1, 2, 3, 5, 8, 13, ... .\n\nThe `fib` function takes an integer `n` as input and returns the `n`-th element of the Fibonacci sequence. The function has two branches:\n\n* If `n` is zero, the function returns 0.\n* If `n` is one, the function returns 1.\n* Otherwise, the function recursively calls itself with `n-1` and `n-2` as arguments, and then combines their results to form the result.\n\nHere's an example of how you can use this function:\n```python\n>>> fib(5)\n3\n```\nExplanation:\n\nIn this case, `n` is 5, so the function calls itself with `n-1` and `n-2` as arguments. The result of that call is 3, which is the third Fibonacci number (0, 1, 1, 2, 3, 5, ...). Therefore, the output is 3.\n\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q3KL": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n == 0 or n == 1:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": "  Of course! Here is a Python function `fib` that takes an integer `n` as input and returns the `n`-th element of the Fibonacci sequence:\n```\ndef fib(n):\n    if n == 0 or n == 1:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)\n```\nExplanation:\n\nThe Fibonacci sequence is a series of numbers where each number is the sum of the two preceding numbers. The first two numbers in the sequence are 0 and 1, respectively. To calculate the `n`-th element of the sequence, we can use a recursive approach where we call ourselves with `n-1` and `n-2`. This continues until we reach the base case where `n` is 0 or 1, in which case we simply return `n`.\nFor example, if we call `fib(5)`, it will return the fifth element of the Fibonacci sequence, which is 5.\nHow was that? Let me know if you have any questions!"
+                },
+                "Q4KM": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\n",
+                    "failing_tests": "FAIL f.call(1) != 1 got 0\nFAIL f.call(2) != 1 got 0\nFAIL f.call(3) != 2 got 0\nFAIL f.call(5) != 5 got 0\n",
+                    "code": "def fib(n):\n    if n <= 0:\n        return 0\n    else:\n        return fib(n-1) + fib(n-2)\n\n# Test the function with some examples\nprint(fib(3)) # Output: 2\nprint(fib(4)) # Output: 3\nprint(fib(5)) # Output: 5",
+                    "answer": "  Of course! Here is a simple Python function that implements the Fibonacci sequence:\n```\ndef fib(n):\n    if n <= 0:\n        return 0\n    else:\n        return fib(n-1) + fib(n-2)\n\n# Test the function with some examples\nprint(fib(3)) # Output: 2\nprint(fib(4)) # Output: 3\nprint(fib(5)) # Output: 5\n```\nThis function uses a recursive approach to calculate the `n`-th element of the Fibonacci sequence. The base case is when `n` is zero, in which case the function returns 0. Otherwise, it calls itself with `n-1` and `n-2` as arguments, and then adds the results to get the final answer.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "Q5KM": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n <= 1:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": "  Of course! Here is a Python function `fib` that takes an integer `n` as input and returns the `n`-th element of the Fibonacci sequence:\n```\ndef fib(n):\n    if n <= 1:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)\n```\nExplanation:\nThe Fibonacci sequence is defined recursively as `fib(n) = fib(n-1) + fib(n-2)`. The function starts by checking if the input `n` is less than or equal to 1, in which case it returns the single value. Otherwise, it recursively calls itself with `n-1` and `n-2`, adds their results, and returns the result.\nYou can test this function with different values of `n` to see that it correctly produces the Fibonacci sequence:\n```\nprint(fib(3))  # Output: 2\nprint(fib(5))  # Output: 5\nprint(fib(8))  # Output: 21\n```\nI hope this helps! Let me know if you have any questions."
+                }
+            },
+            "task": "Write a python function fib(n) with input element number n (0 based) that returns the n-th element of the fibbonaci sequence",
+            "language": "python"
+        },
+        "FibonacciListZeroShot-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [[], []]\nFAIL f.call(2) != [0, 1] got [[[], []], []]\nFAIL f.call(3) != [0, 1, 1] got [[[[], []], []], [[], []]]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [[[[[[], []], []], [[], []]], [[[], []], []], 0, 1], [[[[], []], []], [[], []]], 0, 1, 0, 1]\n",
+                    "code": "def fib(n):\n    if n <= 0:\n        return []\n    else:\n        a, b = fib(n-1), fib(n-2)\n        return [a, b] + [0, 1] * (n-3)",
+                    "answer": "  Sure! Here is a Python function `fib` that takes an integer `n` as input and returns a list containing the first `n` elements of the Fibonacci sequence:\n```\ndef fib(n):\n    if n <= 0:\n        return []\n    else:\n        a, b = fib(n-1), fib(n-2)\n        return [a, b] + [0, 1] * (n-3)\n```\nExplanation:\n\nThe Fibonacci sequence is a sequence of numbers in which each number is the sum of the two preceding numbers. The first few terms of the Fibonacci sequence are 0, 1, 1, 2, 3, 5, 8, 13, ... .\n\nThe function `fib` takes an integer `n` as input and returns a list containing the first `n` elements of the Fibonacci sequence. The function uses recursion to compute the Fibonacci sequence.\n\nHere's how the function works:\n\n* If `n` is less than or equal to 0, the function returns an empty list.\n* Otherwise, the function divides `n` by 2 and calls itself with the result as `a` and `b`.\n* The function then adds `a`, `b`, and the next `n-3` values of the form `0`, `1`, and `1` to the list.\n\nFor example, if you call `fib(5)`, the function will return the list `[0, 1, 1, 2, 3]`.\n\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q3KL": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [[], []]\nFAIL f.call(2) != [0, 1] got [[[], []], []]\nFAIL f.call(3) != [0, 1, 1] got [[[[], []], []], [[], []]]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [[[[[[], []], []], [[], []]], [[[], []], []], [], []], [[[[], []], []], [[], []]], [[], []], []]\n",
+                    "code": "def fib(n):\n    if n <= 0:\n        return []\n    else:\n        a, b = fib(n-1), fib(n-2)\n        return [a, b] + list(fib(n-3))",
+                    "answer": "  Of course! Here is a Python function `fib` that takes an integer `n` as input and returns a list of the first `n` elements of the Fibonacci sequence:\n```\ndef fib(n):\n    if n <= 0:\n        return []\n    else:\n        a, b = fib(n-1), fib(n-2)\n        return [a, b] + list(fib(n-3))\n```\nHere's how the function works:\n\n* If `n` is less than or equal to 0, the function returns an empty list.\n* Otherwise, the function uses recursion to compute the first `n` elements of the Fibonacci sequence. It chooses two initial values `a` and `b`, where `a` is the first element of the sequence and `b` is the second element of the sequence. Then it recursively calls itself with `n-1` and `n-2` as inputs, and adds the next two elements of the sequence to the list of results. Finally, it recursively calls itself again with `n-3` as an input, and adds all the remaining elements of the sequence to the list of results.\n\nFor example, if you call the function with `n=5`, it will return the following list: `[0, 1, 1, 2, 3]`.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "Q4KM": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [[], []]\nFAIL f.call(2) != [0, 1] got [[[], []], []]\nFAIL f.call(3) != [0, 1, 1] got [[[[], []], []], [[], []]]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got {'error': \"name 'c' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def fib(n):\n    if n <= 0:\n        return []\n    else:\n        a, b = fib(n-1), fib(n-2)\n    return [a, b] + [c for _ in range(n-3)]",
+                    "answer": "  Of course! Here is a Python function `fib` that takes an integer `n` as input and returns a list with the first `n` elements of the Fibonacci sequence:\n```\ndef fib(n):\n    if n <= 0:\n        return []\n    else:\n        a, b = fib(n-1), fib(n-2)\n    return [a, b] + [c for _ in range(n-3)]\n```\nExplanation:\n\nThe Fibonacci sequence is defined recursively as `fib(0)` = 0, `fib(1)` = 1, and `fib(n)` = `fib(n-1)` + `fib(n-2)`. To implement this sequence in Python, we use a list comprehension to create the first `n` elements of the sequence.\nThe function `fib` takes an integer `n` as input and checks if it is less than or equal to 0. If so, it returns an empty list. Otherwise, it uses the recursive definition of the Fibonacci sequence to compute the first `n` elements of the sequence, and then returns a list comprehension that creates these elements.\nFor example, if we call `fib(5)`, the function will return the list `[0, 1, 1, 2, 3]`.\nI hope this helps! Let me know if you have any questions."
+                },
+                "Q5KM": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [1, 1]\nFAIL f.call(2) != [0, 1] got [1, 1, 1, 1]\nFAIL f.call(3) != [0, 1, 1] got [1, 1, 1, 1, 1, 1]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+                    "code": "def fib(n):\n    if n <= 1:\n        return [1, 1]\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": "  Of course! Here is a Python function `fib` that takes an integer `n` as input and returns a list with the first `n` elements of the Fibonacci sequence:\n```\ndef fib(n):\n    if n <= 1:\n        return [1, 1]\n    else:\n        return fib(n-1) + fib(n-2)\n```\nExplanation:\nThe Fibonacci sequence is defined recursively as `F(0) = 0`, `F(1) = 1`, and `F(n) = F(n-1) + F(n-2)` for all other values of `n`.\nIn this implementation, we use a recursive approach to compute the first `n` elements of the sequence. The function `fib` takes an integer `n` as input and returns a list with the first `n` elements of the Fibonacci sequence.\nIf `n` is less than or equal to 1, the function returns the list `[1, 1]`. Otherwise, it recursively calls itself with `n-1` and `n-2`, and then concatenates the results using the `+` operator.\nFor example, if we call `fib(5)`, the function will compute the first 5 elements of the Fibonacci sequence (0, 1, 1, 2, 3) and return them in a list: `[1, 1, 2, 3]`.\nI hope this helps! Let me know if you have any questions."
+                }
+            },
+            "task": "Write a python function fib(n) with input length n that returns a list with the first n elements of the fibbonaci sequence",
+            "language": "python"
+        },
+        "FibonacciMisnamed-python": {
+            "results": {
+                "Q2K": {
+                    "check_summary": "FAIL correct 5/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(2) == [0, 1]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [0, 1]\nFAIL f.call(3) != [0, 1, 1] got [0, 1]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [0, 1]\n",
+                    "code": "def glork(bork):\n    fib = [0, 1]\n    for i in range(bork):\n        fib.append(fib[0] * fib[1] % (i + 1))\n    return [fib[0], fib[1]]",
+                    "answer": "  Sure, here's a Python function `glork(bork)` that takes an integer `bork` as input and returns a list containing the first `bork` elements of the Fibonacci sequence:\n```python\ndef glork(bork):\n    fib = [0, 1]\n    for i in range(bork):\n        fib.append(fib[0] * fib[1] % (i + 1))\n    return [fib[0], fib[1]]\n```\nExplanation:\n\nThe Fibonacci sequence is a series of numbers where each number is the sum of the two preceding numbers. The first few numbers in the sequence are 0, 1, 1, 2, 3, 5, 8, 13, and so on.\n\nIn the function `glork`, we define a list `fib` that will contain the first `bork` elements of the Fibonacci sequence. We initialize `fib` to the values [0, 1], which are the first two numbers in the sequence. Then, for each iteration of the loop (i.e., for each value of `i` from 0 to `bork`), we calculate the next number in the sequence by multiplying the previous two numbers and taking the result modulo `i + 1`. This gives us the next number in the sequence.\nFinally, we return a list containing the first `bork` elements of the Fibonacci sequence, which are the values of `fib` from index 0 to index `bork - 1`.\n\nNote: The function assumes that `bork` is a positive integer, as it will raise an error if `bork` is negative."
+                },
+                "Q3KL": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) != [0] got [1]\nFAIL f.call(2) != [0, 1] got [1, 2]\nFAIL f.call(3) != [0, 1, 1] got [1, 2, 3]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [1, 2, 3, 4, 5]\n",
+                    "code": "def glork(bork):\n    fibs = []\n    for i in range(1, bork+1):\n        fibs.append(i)\n    return fibs",
+                    "answer": "  Sure, I'd be happy to help! Here is a Python function `glork` that takes an integer `bork` as input and returns a list with the first `bork` elements of the Fibonacci sequence:\n```\ndef glork(bork):\n    fibs = []\n    for i in range(1, bork+1):\n        fibs.append(i)\n    return fibs\n```\nHere's how you can use the `glork` function:\n```\n# Example usage of the glork function\nprint(glork(5))  # Output: [0, 1, 1, 2, 3]\n```\nThe `glork` function uses a loop to iterate from 1 to `bork`, and for each iteration, it appends the current value of `i` to a list called `fibs`. Finally, it returns the `fibs` list.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                },
+                "Q4KM": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    fibs = [0, 1]\n    for _ in range(bork - 2):\n        fibs.append(fibs[-1] + fibs[-2])\n    return fibs[:bork]",
+                    "answer": "  Sure, I'd be happy to help! Here is a Python function `glork` that takes an integer `bork` as input and returns a list with the first `bork` elements of the Fibonacci sequence:\n```\ndef glork(bork):\n    fibs = [0, 1]\n    for _ in range(bork - 2):\n        fibs.append(fibs[-1] + fibs[-2])\n    return fibs[:bork]\n```\nExplanation:\n\nThe Fibonacci sequence is defined by the recurrence relation `fib(n) = fib(n-1) + fib(n-2)`. To compute the first `bork` elements of the sequence, we use a loop to iterate from `0` to `bork - 2`, and for each iteration, we add the previous two terms of the sequence together to get the next term. Finally, we return the first `bork` terms of the sequence.\nNote that this implementation assumes that `bork` is a positive integer greater than or equal to 0. If `bork` is negative or zero, the function will raise a ValueError."
+                },
+                "Q5KM": {
+                    "check_summary": "FAIL correct 5/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(2) != [0, 1] got [0, 0]\nFAIL f.call(3) != [0, 1, 1] got [0, 0, 0]\nFAIL f.call(5) != [0, 1, 1, 2, 3] got [0, 0, 0, 0, 0]\n",
+                    "code": "def glork(bork):\n    # Initialize the Fibonacci sequence up to bork elements\n    fibs = [0] * (bork + 1)\n    # Fill in the first bork elements of the sequence\n    for i in range(bork):\n        fibs[i] = fibs[i-1] + fibs[i-2]\n    return fibs[:bork]",
+                    "answer": "  Ah, a clever query indeed! Here's a Python function `glork` that takes an integer `bork` as input and returns a list with the first `bork` elements of the Fibonacci sequence:\n```python\ndef glork(bork):\n    # Initialize the Fibonacci sequence up to bork elements\n    fibs = [0] * (bork + 1)\n    # Fill in the first bork elements of the sequence\n    for i in range(bork):\n        fibs[i] = fibs[i-1] + fibs[i-2]\n    return fibs[:bork]\n```\nNow, let's test this function with some examples:\n```python\n# Print the first 5 Fibonacci numbers\nprint(glork(5)) # [0, 1, 1, 2, 3]\n\n# Print the first 10 Fibonacci numbers\nprint(glork(10)) # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\n\n```\nAs you can see, `glork` takes an integer `bork` as input and returns a list with the first `bork` elements of the Fibonacci sequence. The function uses a simple loop to fill in the first `bork` elements of the sequence, starting from the initial values of 0 and 1, and then recursively adding the previous two terms to get the next term.\nI hope this helps! Let me know if you have any questions or need further assistance."
+                }
+            },
+            "task": "Write a python function glork(bork) with input length bork that returns a list with the first bork elements of the fibbonaci sequence",
+            "language": "python"
+        }
+    },
+    "models": [
+        {
+            "prompt": "codeCherryPop",
+            "short_name": "Q2",
+            "params": "topk1",
+            "model": "llama-2-7b-chat-codeCherryPop.ggmlv3.q2-K",
+            "id": "Q2K",
+            "idx": 0,
+            "passed": 41,
+            "total": 65
+        },
+        {
+            "prompt": "codeCherryPop",
+            "short_name": "Q3KL",
+            "params": "topk1",
+            "model": "llama-2-7b-chat-codeCherryPop.ggmlv3.q3-K-L",
+            "id": "Q3KL",
+            "idx": 1,
+            "passed": 46,
+            "total": 65
+        },
+        {
+            "prompt": "codeCherryPop",
+            "short_name": "Q4KM",
+            "params": "topk1",
+            "model": "llama-2-7b-chat-codeCherryPop.ggmlv3.q4-K-M",
+            "id": "Q4KM",
+            "idx": 2,
+            "passed": 50,
+            "total": 65
+        },
+        {
+            "prompt": "codeCherryPop",
+            "short_name": "Q5KM",
+            "params": "topk1",
+            "model": "llama-2-7b-chat-codeCherryPop.ggmlv3.q5-K-M",
+            "id": "Q5KM",
+            "idx": 3,
+            "passed": 50,
+            "total": 65
+        }
+    ],
+    "config": {
+        "title": "codeCherryPop GGML (python)",
+        "models": [
+            {
+                "id": "Q2K",
+                "eval": "codecherrypop/eval_junior-dev_python-javascript_codeCherryPop_none_topk1_llama-2-7b-chat-codeCherryPop.ggmlv3.q2-K_1690212178.ndjson",
+                "short_name": "Q2"
+            },
+            {
+                "id": "Q3KL",
+                "eval": "codecherrypop/eval_junior-dev_python-javascript_codeCherryPop_none_topk1_llama-2-7b-chat-codeCherryPop.ggmlv3.q3-K-L_1690212363.ndjson",
+                "short_name": "Q3KL"
+            },
+            {
+                "id": "Q4KM",
+                "eval": "codecherrypop/eval_junior-dev_python-javascript_codeCherryPop_none_topk1_llama-2-7b-chat-codeCherryPop.ggmlv3.q4-K-M_1690212494.ndjson",
+                "short_name": "Q4KM"
+            },
+            {
+                "id": "Q5KM",
+                "eval": "codecherrypop/eval_junior-dev_python-javascript_codeCherryPop_none_topk1_llama-2-7b-chat-codeCherryPop.ggmlv3.q5-K-M_1690212042.ndjson",
+                "short_name": "Q5KM"
+            }
+        ],
+        "language": "python"
+    },
+    "analyser": ""
+}

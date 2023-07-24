@@ -1,0 +1,14 @@
+title: codeCherryPop GGML
+models:
+  - id: Q2K
+    eval: codecherrypop/eval_junior-dev_python-javascript_codeCherryPop_none_topk1_llama-2-7b-chat-codeCherryPop.ggmlv3.q2-K_1690212178.ndjson
+    short_name: Q2
+  - id: Q3KL
+    eval: codecherrypop/eval_junior-dev_python-javascript_codeCherryPop_none_topk1_llama-2-7b-chat-codeCherryPop.ggmlv3.q3-K-L_1690212363.ndjson
+    short_name: Q3KL
+  - id: Q4KM
+    eval: codecherrypop/eval_junior-dev_python-javascript_codeCherryPop_none_topk1_llama-2-7b-chat-codeCherryPop.ggmlv3.q4-K-M_1690212494.ndjson
+    short_name: Q4KM
+  - id: Q5KM
+    eval: codecherrypop/eval_junior-dev_python-javascript_codeCherryPop_none_topk1_llama-2-7b-chat-codeCherryPop.ggmlv3.q5-K-M_1690212042.ndjson
+    short_name: Q5KM
