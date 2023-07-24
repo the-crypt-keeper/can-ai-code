@@ -7,48 +7,46 @@ import os
 from extract import extract_code
 
 def evaluation(test, language, code):
-    total = 0
+    total = len(test['Checks'].keys())
     passed = 0
     checks = []
 
-    if code:
-        f = FunctionSandbox(code, language)
-
-        for check_name in test['Checks'].keys():
-            check = test['Checks'][check_name].copy()
-            if check.get('assert'):
-                total += 1
-                test_value = None
-                try:
-                    test_value = eval(check['assert'])
-                except Exception as e:
-                    test_value = str(e)
-
-                check['got'] = test_value
-
-                if ('eq-any' in check):
-                    test_result = (test_value in check['eq-any'])
-                    test_operation = 'inside'
-                else:
-                    test_result = (test_value == check['eq'])
-                    test_operation = '=='
-                
-                if (test_result):
-                    passed += 1
-                    check['status'] = 1
-                    print('   ',check_name, "passed", test_value,
-                          'inside' if 'eq-any' in check else '==', check.get('eq', check.get('eq-any')))
-                else:
-                    check['status'] = 0
-                    print('   ',check_name, "failed", check['assert'], 'got', test_value,
-                          'not inside' if 'eq-any' in check else '!=', check.get('eq', check.get('eq-any')))
-                    
-            checks.append(check)
-    else:
+    if not code:
         print(test['name'], "No code found!")
-        total = len(test['Checks'].keys())
+        return total,passed,checks,"NO_CODE"
+    
+    f = FunctionSandbox(code, language)
+    if f.functions['name'] == '':
+        print(test['name'], "No function found!")
+        return total,passed,checks,"NO_FUNCTION"
 
-    return total,passed,checks
+    for check_name in test['Checks'].keys():
+        check = test['Checks'][check_name].copy()
+        if not check.get('assert'):
+            raise Exception(f'check {check_name} missing assert')
+
+        test_value = None
+        try:
+            test_value = eval(check['assert'])
+        except Exception as e:
+            test_value = str(e)
+
+        check['got'] = test_value
+
+        test_result = (test_value in check['eq-any']) if ('eq-any' in check) else (test_value == check['eq'])           
+        if (test_result):
+            passed += 1
+            check['status'] = 1
+            print('   ',check_name, "passed", test_value,
+                    'inside' if 'eq-any' in check else '==', check.get('eq', check.get('eq-any')))
+        else:
+            check['status'] = 0
+            print('   ',check_name, "failed", check['assert'], 'got', test_value,
+                    'not inside' if 'eq-any' in check else '!=', check.get('eq', check.get('eq-any')))
+            
+        checks.append(check)
+
+    return total,passed,checks,"PASS" if (total==passed) else "FAIL"
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview evaluator')
@@ -82,7 +80,7 @@ if __name__ == '__main__':
             print(test['name'], test['language'], 'extract_code failed')
             print(test['answer'])
 
-        total, passed, checks = evaluation(interview[test['name']], test['language'], code)
+        total, passed, checks, status = evaluation(interview[test['name']], test['language'], code)
 
         all_total[test['language']] += total
         all_passed[test['language']] += passed
@@ -90,7 +88,7 @@ if __name__ == '__main__':
         row = test.copy()
         row['code'] = code
         row['checks'] = checks
-        row['status'] = 'NOCODE' if (not code) else 'PASS' if passed == total else 'FAIL'
+        row['status'] = status
         row['passed'] = passed
         row['total'] = total
         results.append(row)
