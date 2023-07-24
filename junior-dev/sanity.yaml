@@ -20,7 +20,7 @@ SanityList:
     Input: "with no inputs"
     Output: "a list with three values: the number 5, the string 'foobar', the capital city of Spain"
     Fact: "the capital city of Spain is Madrid"
-    Description: "List function, see if the model can combine input facts with internal knowledge."
+    Description: "A simple list function, see if the model can combine input facts with internal knowledge."
     Checks:
         input_name:
             assert: "f.name"
@@ -28,9 +28,15 @@ SanityList:
         no_arguments:
           assert: "len(f.args)"
           eq: 0
-        returns:
-          assert: "f.call()"
-          eq: [5, "foobar", "Madrid"]
+        returns_five:
+          assert: "f.call()[0]"
+          eq: 5
+        returns_foobar:
+          assert: "f.call()[1]"
+          eq: "foobar"
+        returns_madrid: 
+          assert: "f.call()[2]"
+          eq: "Madrid"
 
 SanitySecretIdentityMap:
     Signature: "secretidentities()"
