@@ -38,9 +38,11 @@ def prepare(TEST_LANGUAGE, path, files):
             failing_tests = ''
             for c in r['checks']:
                 if c['status'] == 1:
-                    passing_tests += f"PASS {c['assert']} == {c['eq']}\n"
+                    eq = "inside" if 'eq-any' in c else '=='
+                    passing_tests += f"PASS {c['assert']} {eq} {c.get('eq',c.get('eq-any'))}\n"
                 else:
-                    failing_tests += f"FAIL {c['assert']} != {c['eq']} got {c['got']}\n"
+                    neq = "not inside" if 'eq-any' in c else '!='
+                    failing_tests += f"FAIL {c['assert']} {eq} {c.get('eq',c.get('eq-any'))} got {c['got']}\n"
 
             out[testid]['results'][id] = {
                 'check_summary': check_summary,
