@@ -74,14 +74,21 @@ image = (
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     .pip_install("scipy", "pyarrow")
+    .pip_install(
+        "auto-gptq @ git+https://github.com/PanQiWei/AutoGPTQ@45576f0933f5e9ef7c1617006d5db359e1669155",
+        index_url="https://download.pytorch.org/whl/cu118",
+        extra_index_url="https://pypi.org/simple"
+    )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_llama2_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_tinycoderpy_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELET RUNTIME HERE ##############
 RUNTIME = "transformers"
+#RUNTIME = "vllm"
+#RUNTIME = "autogptq"
 #######################################
 
 gpu_request = gpu.A10G(count=1)
