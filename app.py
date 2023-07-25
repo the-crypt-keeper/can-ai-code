@@ -17,13 +17,7 @@ def load_data():
     if len(sys.argv) > 1:
         paths = [sys.argv[1]]
     else:
-        paths = ['results/eval*.ndjson',
-                 'results/orca-mini-v2/eval*.ndjson',
-                 'results/salesforce/eval*.ndjson',
-                 'results/falcon/eval*.ndjson',
-                 'results/vicuna-1.3/eval*.ndjson',
-                 'results/airoboros-1.4/eval*.ndjson',
-                 'results/llama2/eval*.ndjson']
+        paths = ['results/**/eval*.ndjson']
     files = []
     for path in paths:
         files += glob.glob(path)
