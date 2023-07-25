@@ -73,24 +73,37 @@ image = (
         extra_index_url="https://pypi.org/simple"
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
-    .pip_install("scipy")
+    .pip_install("scipy", "pyarrow")
+    ##### SELECT MODEL HERE ##############
     .run_function(download_llama2_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    ######################################
 )
 stub = Stub(image=image)
+
+##### SELET RUNTIME HERE ##############
+RUNTIME = "transformers"
+#######################################
 
 gpu_request = gpu.A10G(count=1)
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
 class ModalWrapper:
     def __enter__(self):
-        from interview_cuda import InterviewTransformers, QUANT_FP16, QUANT_FP4
+        from interview_cuda import InterviewTransformers, InterviewVLLM, QUANT_FP16, QUANT_FP4
         self.info = json.load(open('./_info.json'))
-        self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT_FP16)
+
+        if RUNTIME == "transformers":
+            self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT_FP16)
+        elif RUNTIME == "vllm":
+            self.wrapper = InterviewVLLM(self.info['model_name'], self.info)
+        else:
+            raise Exception("Unknown RUNTIME")
+
         self.wrapper.load()
 
     @method()
     def generate(self, prompt, params):
         return self.wrapper.generate(prompt, params)
-    
+
 # For local testing, run `modal run -q interview_modal.py --input results/prepare.ndjson --params params/precise.json`
 @stub.local_entrypoint()
 def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
@@ -104,5 +117,5 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
     output_template = Template(open(templateout).read()) if templateout else None
 
     for iter in range(iterations):
-        results, remote_info = interview_run(model.generate.call, interview, params_json, output_template)
+        results, remote_info = interview_run(RUNTIME, model.generate.call, interview, params_json, output_template, batch=(RUNTIME=="vllm") )
         save_interview(input, templateout if templateout else 'none', params, remote_info['model_name'], results)

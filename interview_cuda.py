@@ -72,7 +72,7 @@ class InterviewTransformers:
 ####################
 
 class InterviewVLLM:
-    def __init__(self, model_name, model_info = {}, quant = QUANT_FP16):
+    def __init__(self, model_name, model_info = {}, quant = None):
         self.model_name = model_name
         self.info = model_info
         self.quant = quant
@@ -112,11 +112,12 @@ class InterviewVLLM:
 
         return answers, self.info
     
-def interview_run(generate, interview, params_json, output_template, batch = False):
+def interview_run(runtime, generate, interview, params_json, output_template, batch = False):
     if batch:
         print(f"Running batch of {len(interview)} prompts")
         prompts = [q['prompt'] for q in interview]
-        answers, model_info = generate.call(prompts, params=params_json)
+        answers, model_info = generate(prompts, params=params_json)
+        print('Local model info:', model_info)
     else:
         answers = []
         model_info = None
@@ -149,9 +150,9 @@ def interview_run(generate, interview, params_json, output_template, batch = Fal
 
         result = question.copy()
         result['answer'] = answers[idx]
-        result['params'] = info['sampling_params']
-        result['model'] = info['model_name']
-        result['runtime'] = 'transformers'
+        result['params'] = model_info['sampling_params']
+        result['model'] = model_info['model_name']
+        result['runtime'] = runtime
         results.append(result)
 
     return results, model_info
@@ -173,7 +174,7 @@ def main(input: str, params: str, model_name: str, iterations: int = 1, runtime:
     output_template = Template(open(templateout).read()) if templateout else None
 
     for iter in range(iterations):
-        results, remote_info = interview_run(model.generate, interview, params_json, output_template, batch=model.batch)
+        results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch)
         save_interview(input, templateout if templateout else 'none', params, remote_info['model_name'], results)
 
 if __name__ == "__main__":
