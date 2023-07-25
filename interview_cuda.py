@@ -3,12 +3,14 @@ import time
 import json
 from jinja2 import Template
 
+#########################################
+##  Transformers/BitsAndBytes Adapter  ##
+#########################################
+
 QUANT_FP32 = 0
 QUANT_FP16 = 1
 QUANT_INT8 = 10
 QUANT_FP4  = 20
-QUANT_GPTQ4 = 100
-QUANT_AWQ4  = 200
 
 quant_suffix = {}
 quant_suffix[QUANT_FP32] = 'fp32'
@@ -22,6 +24,8 @@ class InterviewTransformers:
         self.info = model_info
         self.quant = quant
 
+        self.batch = False
+
     def load(self):
         from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
         import torch
@@ -34,9 +38,8 @@ class InterviewTransformers:
                                                  bnb_4bit_quant_type = "fp4")
         
         t0 = time.time()
-        self.info['use_fast'] = self.info.get('use_fast', True)
-        print('Loading tokenizer, use_fast=', self.info['use_fast'])
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True, use_fast=self.info['use_fast'])
+        print('Loading tokenizer...')
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True, **self.info.get('tokenizer_args', {}))
         print('Loading model...')
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, trust_remote_code=True)
         
@@ -52,44 +55,100 @@ class InterviewTransformers:
         print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")        
 
     def generate(self, prompt, params):
-        sampling_params = {
-            'do_sample': True,
-            'temperature': params.get('temperature', 1.0),
-            'max_new_tokens': params.get('max_new_tokens', 512),
-            'top_k': params.get('top_k', 1000),
-            'top_p': params.get('top_p', 1.0),
-            'repetition_penalty': params.get('repetition_penalty', 1.0)
-        }
-        self.info['sampling_params'] = sampling_params        
+        from transformers import GenerationConfig
+
+        generation_config, unused_kwargs = GenerationConfig.from_pretrained(
+            self.model_name, do_sample = True, **params, return_unused_kwargs=True
+        )
+        self.info['sampling_params'] = str(generation_config)
 
         inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
-        sample = self.model.generate(inputs, eos_token_id=self.tokenizer.eos_token_id, **sampling_params)
+        sample = self.model.generate(inputs, generation_config=generation_config)
         answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','')
         return answer, self.info
+
+####################
+##  vLLM Adapter  ##
+####################
+
+class InterviewVLLM:
+    def __init__(self, model_name, model_info = {}, quant = QUANT_FP16):
+        self.model_name = model_name
+        self.info = model_info
+        self.quant = quant
+
+        self.batch = True
+
+    def load(self):
+        from vllm import LLM
+
+        print('Remote model', self.model_name, ' info', self.info)
+
+        t0 = time.time()
+        print('Starting up...')
+        self.llm = LLM(model=self.model_name)
+        
+        print(f"Model loaded in {time.time() - t0:.2f}s")   
+
+    def generate(self, prompt, params):
+        from vllm import SamplingParams
+
+        sampling_params = SamplingParams(
+            temperature=params.get('temperature', 1.0),
+            top_k=params.get('top_k', 1000),
+            top_p=params.get('top_p', 1.0),
+            max_tokens=params.get('max_new_tokens', 512),
+            presence_penalty=params.get('repetition_penalty', 1.0)
+        )
+        result = self.llm.generate(prompt, sampling_params)
+        self.info['sampling_params'] = str(sampling_params)
+
+        answers = []
+        for i in range(len(prompt)):
+            for r in result:
+                if r.prompt == prompt[i]:
+                    answers.append(r.outputs[0].text.replace('</s>','').replace('<|endoftext|>',''))
+                    break
+
+        return answers, self.info
     
-def interview_run(generate, interview, params_json, output_template):
+def interview_run(generate, interview, params_json, output_template, batch = False):
+    if batch:
+        print(f"Running batch of {len(interview)} prompts")
+        prompts = [q['prompt'] for q in interview]
+        answers, model_info = generate.call(prompts, params=params_json)
+    else:
+        answers = []
+        model_info = None
+        for idx, question in enumerate(interview):
+            print(f"{idx+1}/{len(interview)} {question['name']} {question['language']}")
+
+            # generate the answer
+            result, info = generate(question['prompt'], params=params_json)
+
+            # save for later
+            if model_info is None:
+                model_info = info
+                print('Local model info:', model_info)
+
+            # optional output template
+            answer = output_template.render(**question, Answer=result) if output_template else result
+            answers.append(answer)
+
+            print()
+            print(answer)
+            print()
+
     results = []
-    model_info = None
     for idx, question in enumerate(interview):
-        print(f"{idx+1}/{len(interview)} {question['name']} {question['language']}")
 
-        # generate the answer
-        result, info = generate(question['prompt'], params=params_json)
-
-        # save for later
-        if model_info is None:
-            model_info = info
-            print('Local model info:', model_info)
-
-        # optional output template
-        answer = output_template.render(**question, Answer=result) if output_template else result
-            
-        print()
-        print(answer)
-        print()
+        if batch:
+            print()
+            print(answers[idx])
+            print()
 
         result = question.copy()
-        result['answer'] = answer
+        result['answer'] = answers[idx]
         result['params'] = info['sampling_params']
         result['model'] = info['model_name']
         result['runtime'] = 'transformers'
@@ -97,10 +156,16 @@ def interview_run(generate, interview, params_json, output_template):
 
     return results, model_info
 
-def main(input: str, params: str, model_name: str, iterations: int = 1, templateout: str = ""):
+def main(input: str, params: str, model_name: str, iterations: int = 1, runtime: str = "transformers", templateout: str = ""):
     from prepare import save_interview
 
-    model = InterviewTransformers(model_name, {})
+    if runtime == 'transformers':
+        model = InterviewTransformers(model_name, {})
+    elif runtime == 'vllm':
+        model = InterviewVLLM(model_name, {})
+    else:
+        raise Exception('Unknown runtime '+runtime)
+    
     model.load()
 
     interview = [json.loads(line) for line in open(input)]
@@ -108,7 +173,7 @@ def main(input: str, params: str, model_name: str, iterations: int = 1, template
     output_template = Template(open(templateout).read()) if templateout else None
 
     for iter in range(iterations):
-        results, remote_info = interview_run(model.generate, interview, params_json, output_template)
+        results, remote_info = interview_run(model.generate, interview, params_json, output_template, batch=model.batch)
         save_interview(input, templateout if templateout else 'none', params, remote_info['model_name'], results)
 
 if __name__ == "__main__":
