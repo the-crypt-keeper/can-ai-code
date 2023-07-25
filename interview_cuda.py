@@ -7,6 +7,8 @@ QUANT_FP32 = 0
 QUANT_FP16 = 1
 QUANT_INT8 = 10
 QUANT_FP4  = 20
+QUANT_GPTQ4 = 100
+QUANT_AWQ4  = 200
 
 quant_suffix = {}
 quant_suffix[QUANT_FP32] = 'fp32'
@@ -38,11 +40,14 @@ class InterviewTransformers:
         print('Loading model...')
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, trust_remote_code=True)
         
+        # if passed a path, take the last dir name otherwise replace / with -
         if self.model_name[0] == '/':
             self.info['model_name'] = self.model_name.split('/')[-1]
         else:
             self.info['model_name'] = self.model_name.replace('/','-')
-        self.info['model_name'] += '-' + quant_suffix[self.quant]
+        # add quant suffix
+        if self.quant in quant_suffix:
+            self.info['model_name'] += '-' + quant_suffix[self.quant]
 
         print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")        
 
@@ -62,14 +67,14 @@ class InterviewTransformers:
         answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','')
         return answer, self.info
     
-def interview_run(model, interview, params_json, output_template):
+def interview_run(generate, interview, params_json, output_template):
     results = []
     model_info = None
     for idx, question in enumerate(interview):
         print(f"{idx+1}/{len(interview)} {question['name']} {question['language']}")
 
         # generate the answer
-        result, info = model.generate(question['prompt'], params=params_json)
+        result, info = generate(question['prompt'], params=params_json)
 
         # save for later
         if model_info is None:
@@ -103,7 +108,7 @@ def main(input: str, params: str, model_name: str, iterations: int = 1, template
     output_template = Template(open(templateout).read()) if templateout else None
 
     for iter in range(iterations):
-        results, remote_info = interview_run(model, interview, params_json, output_template)
+        results, remote_info = interview_run(model.generate, interview, params_json, output_template)
         save_interview(input, templateout if templateout else 'none', params, remote_info['model_name'], results)
 
 if __name__ == "__main__":
