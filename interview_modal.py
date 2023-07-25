@@ -49,18 +49,32 @@ def download_codeCherryPop_7b_model():
     download_model("TokenBender/llama2-7b-chat-hf-codeCherryPop-qLoRA-merged")
 
 def download_tinycoderpy_model():
-    download_model("bigcode/tiny_starcoder_py")
+    download_model("bigcode/tiny_starcoder_py", ignore_patterns=["*.bin"])
 
 image = (
-    Image.from_dockerhub("nvcr.io/nvidia/pytorch:23.06-py3")
+    Image.from_dockerhub(
+        "nvidia/cuda:11.8.0-devel-ubuntu22.04",
+        setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"]
+    )
     .pip_install(
-        "transformers==4.30.2",
+        "transformers==4.31",
         "tiktoken==0.4.0",
         "bitsandbytes==0.40.1.post1",
-        "accelerate==0.21.0"
+        "accelerate==0.21.0",
+        "einops==0.6.1",
+        "sentencepiece==0.1.99",
+        "hf-transfer~=0.1",
+        index_url="https://download.pytorch.org/whl/cu118",
+        extra_index_url="https://pypi.org/simple"
+    )  
+    .pip_install(
+        "vllm @ git+https://github.com/vllm-project/vllm.git@d7a1c6d614756b3072df3e8b52c0998035fb453f",
+        index_url="https://download.pytorch.org/whl/cu118",
+        extra_index_url="https://pypi.org/simple"
     )
-    .pip_install("einops==0.6.1", "sentencepiece==0.1.99")
-    .run_function(download_tinycoderpy_model, secret=Secret.from_name("my-huggingface-secret"))
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
+    .pip_install("scipy")
+    .run_function(download_llama2_7b_model, secret=Secret.from_name("my-huggingface-secret"))
 )
 stub = Stub(image=image)
 
@@ -68,16 +82,16 @@ gpu_request = gpu.A10G(count=1)
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
 class ModalWrapper:
     def __enter__(self):
-        from interview_cuda import InterviewTransformers
+        from interview_cuda import InterviewTransformers, QUANT_FP16, QUANT_FP4
         self.info = json.load(open('./_info.json'))
-        self.wrapper = InterviewTransformers(self.info['model_name'], self.info)
+        self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT_FP16)
         self.wrapper.load()
 
     @method()
     def generate(self, prompt, params):
         return self.wrapper.generate(prompt, params)
     
-# For local testing, run `modal run -q interview-transformers-modal.py --input questions.csv --params model_parameters/precise.json`
+# For local testing, run `modal run -q interview_modal.py --input results/prepare.ndjson --params params/precise.json`
 @stub.local_entrypoint()
 def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
     from prepare import save_interview

@@ -64,7 +64,7 @@ class InterviewTransformers:
 
         inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
         sample = self.model.generate(inputs, generation_config=generation_config)
-        answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','')
+        answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
         return answer, self.info
 
 ####################
