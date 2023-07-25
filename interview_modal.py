@@ -4,9 +4,9 @@ import time
 import json
 from jinja2 import Template
 
-def download_model(name, **kwargs):
+def download_model(name, info = {}, **kwargs):
     with open("./_info.json",'w') as f:
-        json.dump({"model_name": name}, f)
+        json.dump({"model_name": name, **info}, f)
     snapshot_download(name, **kwargs)
 
 def download_codegen_2p5_7b_mono_model():
