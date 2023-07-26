@@ -70,6 +70,24 @@ def download_codeCherryPop_7b_model():
 def download_tinycoderpy_model():
     download_model("bigcode/tiny_starcoder_py", ignore_patterns=["*.bin"])
 
+def download_wizardlm_13b_1p1_model():
+    download_model("WizardLM/WizardLM-13B-V1.1")
+
+def download_wizardlm_13b_1p2_model():
+    download_model("WizardLM/WizardLM-13B-V1.2")
+
+def download_airoboros_7b_1p4p1_model():
+    download_model("jondurbin/airoboros-7b-gpt4-1.4.1-qlora")
+
+def download_airoboros_l2_7b_1p4p1_model():
+    download_model("jondurbin/airoboros-l2-7b-gpt4-1.4.1")
+
+def download_airoboros_13b_1p4p1_model():
+    download_model("jondurbin/airoboros-13b-gpt4-1.4.1-qlora")
+
+def download_airoboros_l2_13b_1p4p1_model():
+    download_model("jondurbin/airoboros-l2-13b-gpt4-1.4.1")
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -107,7 +125,7 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_vicuna_1p3_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_airoboros_l2_13b_1p4p1_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -136,6 +154,7 @@ class ModalWrapper:
             self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
         elif RUNTIME == "vllm":
             gpu_split = 2 if gpu_request.count == 2 else None
+            print(gpu_split)
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
