@@ -32,15 +32,15 @@ class InterviewTransformers:
 
         print('Remote model', self.model_name, ' info', self.info)
 
-        torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.float16
-        quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
-                                                 load_in_4bit = self.quant == QUANT_FP4,
-                                                 bnb_4bit_quant_type = "fp4")
-        
         t0 = time.time()
         print('Loading tokenizer...')
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True, **self.info.get('tokenizer_args', {}))
-        print('Loading model...')
+
+        print('Loading model with accelerate...')
+        torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.float16
+        quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
+                                                load_in_4bit = self.quant == QUANT_FP4,
+                                                bnb_4bit_quant_type = "fp4")            
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, trust_remote_code=True)
         
         # if passed a path, take the last dir name otherwise replace / with -
@@ -67,6 +67,54 @@ class InterviewTransformers:
         answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
         return answer, self.info
 
+#########################
+##  auto-gptq Adapter  ##
+#########################
+class InterviewAutoGPTQ:
+    def __init__(self, model_name, model_info = {}, quant = None):
+        self.model_name = model_name
+        self.info = model_info
+        self.quant = quant
+
+        self.batch = False
+
+    def load(self):
+        from transformers import AutoTokenizer
+        from auto_gptq import AutoGPTQForCausalLM
+        import torch
+
+        print('Remote model', self.model_name, ' info', self.info)
+
+        t0 = time.time()
+        print('Loading tokenizer...')
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True, **self.info.get('tokenizer_args', {}))
+
+        print('Loading model with autogptq...')        
+        self.model = AutoGPTQForCausalLM.from_quantized(self.model_name, device_map="auto", use_triton=False, use_safetensors=self.info.get('model_safetensors', True), torch_dtype=torch.float32, trust_remote_code=True)
+    
+        # if passed a path, take the last dir name otherwise replace / with -
+        if self.model_name[0] == '/':
+            self.info['model_name'] = self.model_name.split('/')[-1]
+        else:
+            self.info['model_name'] = self.model_name.replace('/','-')
+
+        print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")        
+
+    def generate(self, prompt, params):
+        sampling_params = {
+            "temperature": params.get('temperature', 1.0),
+            "repetition_penalty": params.get('repetition_penalty', 1.0),
+            "top_k": params.get('top_k', 1000),
+            "top_p": params.get('top_p', 1.0),
+            "max_new_tokens": params.get('max_new_tokens', 512)
+        }
+        self.info['sampling_params'] = sampling_params
+
+        tokens = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
+        sample = self.model.generate(input_ids=tokens, do_sample=True, **sampling_params)
+        answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
+        return answer, self.info
+    
 ####################
 ##  vLLM Adapter  ##
 ####################

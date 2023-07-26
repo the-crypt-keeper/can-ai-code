@@ -3,6 +3,7 @@ from huggingface_hub import snapshot_download
 import time
 import json
 from jinja2 import Template
+from interview_cuda import *
 
 def download_model(name, info = {}, **kwargs):
     with open("./_info.json",'w') as f:
@@ -39,6 +40,9 @@ def download_vicuna_1p3_7b_model():
 def download_llama2_7b_model():
     download_model("meta-llama/Llama-2-7b-hf", ignore_patterns=["*.bin"])
 
+def download_llama2_gptq_7b_model():
+    download_model("TheBloke/Llama-2-7B-GPTQ")
+
 def download_llama2_13b_model():
     download_model("meta-llama/Llama-2-13b-hf", ignore_patterns=["*.bin"])
 
@@ -74,34 +78,37 @@ image = (
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     .pip_install("scipy", "pyarrow")
+    .env({"GITHUB_ACTIONS": "true", "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
     .pip_install(
         "auto-gptq @ git+https://github.com/PanQiWei/AutoGPTQ@45576f0933f5e9ef7c1617006d5db359e1669155",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_tinycoderpy_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_llama2_gptq_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELET RUNTIME HERE ##############
-RUNTIME = "transformers"
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "vllm"
-#RUNTIME = "autogptq"
+RUNTIME = "autogptq"
 #######################################
 
 gpu_request = gpu.A10G(count=1)
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
 class ModalWrapper:
     def __enter__(self):
-        from interview_cuda import InterviewTransformers, InterviewVLLM, QUANT_FP16, QUANT_FP4
         self.info = json.load(open('./_info.json'))
 
         if RUNTIME == "transformers":
-            self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT_FP16)
+            self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
         elif RUNTIME == "vllm":
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info)
+        elif RUNTIME == "autogptq":
+            self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
         else:
             raise Exception("Unknown RUNTIME")
 
