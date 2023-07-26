@@ -251,9 +251,13 @@ class InterviewVLLM:
         print('Remote model', self.model_name, ' info', self.info)
 
         t0 = time.time()
-        print('Starting up...')
-        self.llm = LLM(model=self.model_name, tensor_parallel_size=1 if self.gpu_split else 2)
-        
+        if self.gpu_split is not None:
+            print('Starting in multi-gpu mode...')
+            self.llm = LLM(model=self.model_name, tensor_parallel_size=self.gpu_split)
+        else:
+            print('Starting in single GPU mode..')
+            self.llm = LLM(model=self.model_name)
+
         print(f"Model loaded in {time.time() - t0:.2f}s")   
 
     def generate(self, prompt, params):
