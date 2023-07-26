@@ -34,8 +34,17 @@ def download_replit_code_instruct_3b_model():
 def download_replit_code_v1_3b_model():
     download_model("replit/replit-code-v1-3b")
 
+def download_vicuna_1p1_7b_model():
+    download_model("lmsys/vicuna-7b-v1.1")
+
+def download_vicuna_1p1_13b_model():
+    download_model("lmsys/vicuna-13b-v1.1")
+
 def download_vicuna_1p3_7b_model():
     download_model("lmsys/vicuna-7b-v1.3")
+
+def download_vicuna_1p3_13b_model():
+    download_model("lmsys/vicuna-13b-v1.3")
 
 def download_llama2_7b_model():
     download_model("meta-llama/Llama-2-7b-hf", ignore_patterns=["*.bin"])
@@ -98,21 +107,25 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_vicuna_1p3_awq_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_vicuna_1p3_13b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
-##### SELET RUNTIME HERE ##############
+##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "awq"
+#RUNTIME = "awq"
 #######################################
 
-gpu_request = gpu.A10G(count=1)
+##### SELECT GPU HERE #################
+#gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A100(count=1)
+#######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
 class ModalWrapper:
@@ -122,7 +135,8 @@ class ModalWrapper:
         if RUNTIME == "transformers":
             self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
         elif RUNTIME == "vllm":
-            self.wrapper = InterviewVLLM(self.info['model_name'], self.info)
+            gpu_split = (gpu_request.count == 2)
+            self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
         elif RUNTIME == "exllama":
