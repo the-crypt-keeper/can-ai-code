@@ -40,8 +40,14 @@ def download_vicuna_1p3_7b_model():
 def download_llama2_7b_model():
     download_model("meta-llama/Llama-2-7b-hf", ignore_patterns=["*.bin"])
 
+def download_llama2_chat_7b_awq_model():
+    download_model("abhinavkulkarni/meta-llama-Llama-2-7b-chat-hf-w4-g128-awq")
+
 def download_llama2_gptq_7b_model():
     download_model("TheBloke/Llama-2-7B-GPTQ")
+
+def download_vicuna_1p3_awq_7b_model():
+    download_model("mit-han-lab/vicuna-7b-v1.3-4bit-g128-awq")
 
 def download_llama2_13b_model():
     download_model("meta-llama/Llama-2-13b-hf", ignore_patterns=["*.bin"])
@@ -87,8 +93,12 @@ image = (
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout cade9bc5576292056728cf55c0c9faf4adae62f8"
     )
+    .run_commands("git clone https://github.com/mit-han-lab/llm-awq",
+                  "cd llm-awq && git checkout 71d8e68df78de6c0c817b029a568c064bf22132d && pip install -e .",
+                  "cd llm-awq/awq/kernels && python setup.py install"
+    )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_llama2_gptq_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_vicuna_1p3_awq_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -97,11 +107,13 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "vllm"
-RUNTIME = "autogptq"
+#RUNTIME = "autogptq"
 #RUNTIME = "exllama"
+RUNTIME = "awq"
 #######################################
 
 gpu_request = gpu.A10G(count=1)
+
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
 class ModalWrapper:
     def __enter__(self):
@@ -114,7 +126,14 @@ class ModalWrapper:
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
         elif RUNTIME == "exllama":
-            self.wrapper = InterviewExllama(self.info['model_name'], self.info)
+            gpu_split = '17,24' if gpu_request.count == 2 else None
+            self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)
+        elif RUNTIME == "awq":
+            if self.info.get('big_model'):
+                gpu_split = '0,1' if gpu_request.count == 2 else '0,cpu'
+            else:
+                gpu_split = None
+            self.wrapper = InterviewAWQ(self.info['model_name'], self.info, gpu_split=gpu_split)
         else:
             raise Exception("Unknown RUNTIME")
 

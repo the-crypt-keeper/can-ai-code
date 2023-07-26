@@ -89,6 +89,12 @@ class InterviewAutoGPTQ:
         print('Loading tokenizer...')
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True, **self.info.get('tokenizer_args', {}))
 
+        # TODO: support models without quantize config specified
+        #quantize_config = BaseQuantizeConfig()
+        #quantize_config.desc_act = self.info['model_actorder']
+        #quantize_config.bits = self.info['model_bits']
+        #quantize_config.group = self.info['model_group']
+
         print('Loading model with autogptq...')        
         self.model = AutoGPTQForCausalLM.from_quantized(self.model_name, device_map="auto", use_triton=False, use_safetensors=self.info.get('model_safetensors', True), torch_dtype=torch.float32, trust_remote_code=True)
     
@@ -230,7 +236,6 @@ class InterviewExllama:
 ####################
 ##  vLLM Adapter  ##
 ####################
-
 class InterviewVLLM:
     def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
         self.model_name = model_name
@@ -272,6 +277,81 @@ class InterviewVLLM:
 
         return answers, self.info
     
+###################
+##  AWQ Adapter  ##
+###################
+class InterviewAWQ:
+    def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
+        self.model_name = model_name
+        self.info = model_info
+        self.quant = quant
+        self.gpu_split = gpu_split
+
+        self.batch = True
+
+    def load(self):
+        import torch
+        from awq.quantize.quantizer import real_quantize_model_weight
+        from transformers import AutoModelForCausalLM, AutoConfig, AutoTokenizer
+        from accelerate import init_empty_weights, load_checkpoint_and_dispatch, infer_auto_device_map
+        from huggingface_hub import hf_hub_download, HfApi
+
+        # Config
+        print('Starting up...')
+        config = AutoConfig.from_pretrained(self.model_name, trust_remote_code=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True)
+
+        # Model
+        t0 = time.time()
+
+        api = HfApi()
+        files = api.list_files_info(self.model_name)
+        model_path = None
+        search_list = [".index.json", ".pt", ".bin"]
+        for file_info in files:
+            for needle in search_list:
+                if file_info.rfilename.find(needle) != -1:
+                    model_path = hf_hub_download(repo_id=self.model_name, filename=file_info.rfilename)
+                    break
+
+        with init_empty_weights():
+            model = AutoModelForCausalLM.from_config(config, torch_dtype=torch.float16, trust_remote_code=True)
+
+        q_config = { "zero_point": True, "q_group_size": self.info.get('q_group_size', 128) }
+        real_quantize_model_weight(model, w_bit=self.info.get('w_bit', 4), q_config=q_config, init_only=True)
+
+        if self.gpu_split != None:
+            print('Loading big model with gpu_count', gpu_split)
+            max_memory = {0:"18GiB", "cpu":"99GiB"} if gpu_split == "0,cpu" else { 0:"18GiB", 1:"22GiB" }
+            device_map = infer_auto_device_map(model,
+                                               no_split_module_classes=["DecoderLayer"],
+                                               max_memory=max_memory)
+            if device_map['lm_head'] == 'cpu': device_map['lm_head'] = 0
+            print(device_map)
+        else:
+            device_map = 'balanced'
+        
+        self.model = load_checkpoint_and_dispatch(model, model_path, device_map=device_map)
+
+        print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
+
+    def generate(self, prompt, params):
+        input = self.tokenizer(prompt, return_tensors="pt")
+        input_ids = input.input_ids.to('cuda')
+        attention_mask = input.attention_mask.to('cuda')
+        sampling_params = {
+            'do_sample': True,
+            'temperature': params.get('temperature', 1.0),
+            'max_length': params.get('max_new_tokens', 512),
+            'top_k': params.get('top_k', 40),
+            'top_p': params.get('top_p', 1.0),
+            'repetition_penalty': params.get('repetition_penalty', 1.0)
+        }
+        sample = self.model.generate(input_ids, attention_mask=attention_mask, use_cache=True, eos_token_id=self.tokenizer.eos_token_id, **sampling_params)
+        self.info['sampling_params'] = sampling_params
+        answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
+        return answer, self.info
+
 def interview_run(runtime, generate, interview, params_json, output_template, batch = False):
     if batch:
         print(f"Running batch of {len(interview)} prompts")
@@ -317,17 +397,22 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
 
     return results, model_info
 
-def main(input: str, params: str, model_name: str, iterations: int = 1, runtime: str = "transformers", templateout: str = ""):
+def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, gpusplit: str = "", templateout: str = ""):
     from prepare import save_interview
 
+    gpu_split = gpusplit if gpusplit != '' else None
+    model_info = json.loads(info)
+
     if runtime == 'transformers':
-        model = InterviewTransformers(model_name, {})
+        model = InterviewTransformers(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'vllm':
-        model = InterviewVLLM(model_name, {})
+        model = InterviewVLLM(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'autogptq':
-        model = InterviewAutoGPTQ(model_name, {})
+        model = InterviewAutoGPTQ(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'exllama':
-        model = InterviewExllama(model_name, {})
+        model = InterviewExllama(model_name, model_info, gpu_split=gpu_split)
+    elif runtime == 'awq':
+        model = InterviewAWQ(model_name, model_info, gpu_split=gpu_split)
     else:
         raise Exception('Unknown runtime '+runtime)
     
