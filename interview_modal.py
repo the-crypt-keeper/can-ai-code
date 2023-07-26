@@ -149,12 +149,20 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
     from prepare import save_interview
     from interview_cuda import interview_run
 
-    model = ModalWrapper()
-
-    interview = [json.loads(line) for line in open(input)]
-    params_json = json.load(open(params,'r'))
     output_template = Template(open(templateout).read()) if templateout else None
 
-    for iter in range(iterations):
+    tasks = []
+    for param_file in params.split(','):
+        for input_file in input.split(','):
+            tasks.append((param_file, input_file))
+
+    model = ModalWrapper()
+
+    for param_file, input_file in tasks:
+      interview = [json.loads(line) for line in open(input_file)]
+      params_json = json.load(open(param_file,'r'))
+
+      for iter in range(iterations):
+        print(f"Starting iteration {iter} of {param_file} {input_file}")
         results, remote_info = interview_run(RUNTIME, model.generate.call, interview, params_json, output_template, batch=(RUNTIME=="vllm") )
-        save_interview(input, templateout if templateout else 'none', params, remote_info['model_name'], results)
+        save_interview(input_file, templateout if templateout else 'none', param_file, remote_info['model_name'], results)
