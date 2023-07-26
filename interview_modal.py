@@ -83,7 +83,10 @@ image = (
         "auto-gptq @ git+https://github.com/PanQiWei/AutoGPTQ@45576f0933f5e9ef7c1617006d5db359e1669155",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
-    )    
+    )
+    .run_commands(
+        "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout cade9bc5576292056728cf55c0c9faf4adae62f8"
+    )
     ##### SELECT MODEL HERE ##############
     .run_function(download_llama2_gptq_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
@@ -95,6 +98,7 @@ stub = Stub(image=image)
 #QUANT = QUANT_FP16
 #RUNTIME = "vllm"
 RUNTIME = "autogptq"
+#RUNTIME = "exllama"
 #######################################
 
 gpu_request = gpu.A10G(count=1)
@@ -109,6 +113,8 @@ class ModalWrapper:
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
+        elif RUNTIME == "exllama":
+            self.wrapper = InterviewExllama(self.info['model_name'], self.info)
         else:
             raise Exception("Unknown RUNTIME")
 
