@@ -243,6 +243,7 @@ class InterviewVLLM:
         self.quant = quant
 
         self.batch = True
+        self.gpu_split = gpu_split
 
     def load(self):
         from vllm import LLM
@@ -251,7 +252,7 @@ class InterviewVLLM:
 
         t0 = time.time()
         print('Starting up...')
-        self.llm = LLM(model=self.model_name)
+        self.llm = LLM(model=self.model_name, tensor_parallel_size=1 if self.gpu_split else 2)
         
         print(f"Model loaded in {time.time() - t0:.2f}s")   
 
