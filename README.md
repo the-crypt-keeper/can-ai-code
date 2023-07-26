@@ -18,15 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/26** Preparing to re-evaluate all models.  Unified all GPU-based interviewers under `interview_cuda.py` and created a single common `interview_modal.py` wrapper for them.
+
+**7/24** Created `junior-v2` test suite: 2 new tests, many more checks and bugfixes. Old results moved to `results-v1/` and `compare/v1`.
+
 **7/20** Llama-2 evaluations completed, Upstart Llama 30B as well.
 
 **7/16** Airboros-1.4 evaluation and comparison between 1.4 and 1.4.1 has been added.  Note [the code extractor is failing on some of the GPTQ answers](https://github.com/the-crypt-keeper/can-ai-code/issues/43) so the GPTQ quants are scoring lower then they should be.
-
-**7/16** Updated results for Vicuna-1.3 AWQ and merged the `compare` feature!  Browse [Comparisons](https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare) at our new space.
-
-**7/15** bitsandbytes [INT8](https://github.com/TimDettmers/bitsandbytes) and [NF4](https://huggingface.co/blog/4bit-transformers-bitsandbytes) now supported via `interview-transformers-modal.py`
-
-
 
 ## Test Suites
 
