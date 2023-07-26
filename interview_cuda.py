@@ -19,7 +19,7 @@ quant_suffix[QUANT_INT8] = 'int8'
 quant_suffix[QUANT_FP4] = 'fp4'
 
 class InterviewTransformers:
-    def __init__(self, model_name, model_info = {}, quant = QUANT_FP16):
+    def __init__(self, model_name, model_info = {}, quant = QUANT_FP16, gpu_split = None):
         self.model_name = model_name
         self.info = model_info
         self.quant = quant
@@ -71,7 +71,7 @@ class InterviewTransformers:
 ##  auto-gptq Adapter  ##
 #########################
 class InterviewAutoGPTQ:
-    def __init__(self, model_name, model_info = {}, quant = None):
+    def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
         self.model_name = model_name
         self.info = model_info
         self.quant = quant
@@ -119,11 +119,11 @@ class InterviewAutoGPTQ:
 ##  exllama Adapter  ##
 #######################
 class InterviewExllama:
-    def __init__(self, model_name, model_info = {}, quant = None):
+    def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
         self.model_name = model_name
         self.info = model_info
+        self.gpu_split = gpu_split
         self.quant = quant
-
         self.batch = False
 
     def load(self):
@@ -158,8 +158,8 @@ class InterviewExllama:
         self.config = ExLlamaConfig(hf_hub_download(repo_id=self.model_name, filename="config.json"))
         self.config.model_path = model_path
         self.config.max_seq_len = self.info.get('max_seq_len', 2048)
-        #if gpu_split is not None:
-        #    self.config.set_auto_map(gpu_split)
+        if self.gpu_split is not None:
+            self.config.set_auto_map(self.gpu_split)
 
         print('Loading model...')
         t0 = time.time()
@@ -232,7 +232,7 @@ class InterviewExllama:
 ####################
 
 class InterviewVLLM:
-    def __init__(self, model_name, model_info = {}, quant = None):
+    def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
         self.model_name = model_name
         self.info = model_info
         self.quant = quant
