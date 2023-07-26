@@ -114,7 +114,119 @@ class InterviewAutoGPTQ:
         sample = self.model.generate(input_ids=tokens, do_sample=True, **sampling_params)
         answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
         return answer, self.info
-    
+
+#######################
+##  exllama Adapter  ##
+#######################
+class InterviewExllama:
+    def __init__(self, model_name, model_info = {}, quant = None):
+        self.model_name = model_name
+        self.info = model_info
+        self.quant = quant
+
+        self.batch = False
+
+    def load(self):
+        import sys
+        sys.path.insert(0, "/repositories/exllama")
+        print('Starting up...')
+        import torch
+        from model import ExLlama, ExLlamaCache, ExLlamaConfig
+        from tokenizer import ExLlamaTokenizer
+        from huggingface_hub import hf_hub_download, HfApi
+
+        torch.set_grad_enabled(False)
+        torch.cuda._lazy_init()
+
+        print("Loading tokenizer..")
+        tokenizer_model_path = hf_hub_download(repo_id=self.model_name, filename="tokenizer.model")
+        self.tokenizer = ExLlamaTokenizer(tokenizer_model_path)
+
+        api = HfApi()
+        files = api.list_files_info(self.model_name)
+        model_path = None
+        for file_info in files:
+            if (file_info.rfilename.find(".safetensors") != -1):
+                model_path = hf_hub_download(repo_id=self.model_name, filename=file_info.rfilename)
+                break
+        
+        if model_path is None:
+            raise Exception("Could not find safetensors.")
+        else:
+            print("Loading from", model_path)
+        
+        self.config = ExLlamaConfig(hf_hub_download(repo_id=self.model_name, filename="config.json"))
+        self.config.model_path = model_path
+        self.config.max_seq_len = self.info.get('max_seq_len', 2048)
+        #if gpu_split is not None:
+        #    self.config.set_auto_map(gpu_split)
+
+        print('Loading model...')
+        t0 = time.time()
+        self.model = ExLlama(self.config)
+        self.cache = ExLlamaCache(self.model)
+        print(f"Model loaded in {time.time() - t0:.2f}s")
+
+    def generate(self, prompt, params):
+        # Init generator
+        from generator import ExLlamaGenerator
+        import sys
+
+        generator = ExLlamaGenerator(self.model, self.tokenizer, self.cache)
+        generator.settings = ExLlamaGenerator.Settings()
+        generator.settings.temperature = params.get('temperature', 1.0)
+        generator.settings.top_k = params.get('top_k', 1000)
+        generator.settings.top_p = params.get('top_p', 1.0)
+        generator.settings.min_p = 0
+        generator.settings.token_repetition_penalty_max = params.get('repetition_penalty', 1.0)
+        generator.settings.token_repetition_penalty_sustain = params.get('repeat_last_n', 256)
+        generator.settings.token_repetition_penalty_decay = params.get('repetition_decay', 128)
+
+        # Beam Search Parameters
+        generator.settings.beams = params.get('beams', 1)
+        generator.settings.beam_length = params.get('beam_length', 1)
+
+        self.info['sampling_params'] = str(generator.settings.__dict__)
+
+        # Encode prompt and init the generator
+        prompt_ids = self.tokenizer.encode(prompt)
+        num_res_tokens = prompt_ids.shape[-1]
+        generator.gen_begin(prompt_ids)
+
+        # Begin beam search
+        generator.begin_beam_search()
+        min_response_tokens = 10
+        res_line = ''
+
+        t0 = time.time()
+
+        for i in range(params['max_new_tokens']):
+            # Get a token
+            gen_token = generator.beam_search()
+
+            # If token is EOS, replace it with newline before continuing
+            if gen_token.item() == self.tokenizer.eos_token_id:
+                generator.replace_last_token(self.tokenizer.newline_token_id)
+
+            # Decode the current line and print any characters added
+            num_res_tokens += 1
+            text = self.tokenizer.decode(generator.sequence_actual[:, -num_res_tokens:][0])
+            new_text = text[len(res_line):]
+            res_line += new_text    
+
+            #print(new_text, end="")  # (character streaming output is here)
+            #sys.stdout.flush()
+
+            # End conditions
+            if gen_token.item() == self.tokenizer.eos_token_id: break
+            if res_line.endswith(params.get('stop_seq','###')): break
+
+            generator.end_beam_search()
+            answer = text[len(prompt)+1:]
+
+        print(f"Generated {num_res_tokens-prompt_ids.shape[-1]} tokens in {time.time()-t0:.2f}s")
+        return answer, self.info
+
 ####################
 ##  vLLM Adapter  ##
 ####################
@@ -212,6 +324,10 @@ def main(input: str, params: str, model_name: str, iterations: int = 1, runtime:
         model = InterviewTransformers(model_name, {})
     elif runtime == 'vllm':
         model = InterviewVLLM(model_name, {})
+    elif runtime == 'autogptq':
+        model = InterviewAutoGPTQ(model_name, {})
+    elif runtime == 'exllama':
+        model = InterviewExllama(model_name, {})
     else:
         raise Exception('Unknown runtime '+runtime)
     
