@@ -135,7 +135,7 @@ class ModalWrapper:
         if RUNTIME == "transformers":
             self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
         elif RUNTIME == "vllm":
-            gpu_split = (gpu_request.count == 2)
+            gpu_split = 2 if gpu_request.count == 2 else None
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
