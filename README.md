@@ -20,11 +20,11 @@ A self-evaluating interview for AI coding models.
 
 **7/26** Preparing to re-evaluate all models.  Unified all GPU-based interviewers under `interview_cuda.py` and created a single common `interview_modal.py` wrapper for them.
 
-**7/24** Created `junior-v2` test suite: 2 new tests, many more checks and bugfixes. Old results moved to `results-v1/` and `compare/v1`.
+**7/24** Created `junior-v2` test suite: 2 new tests, many more checks and bugfixes. Old results moved to `results-v1/` and `compare-v1/`.
 
 **7/20** Llama-2 evaluations completed, Upstart Llama 30B as well.
 
-**7/16** Airboros-1.4 evaluation and comparison between 1.4 and 1.4.1 has been added.  Note [the code extractor is failing on some of the GPTQ answers](https://github.com/the-crypt-keeper/can-ai-code/issues/43) so the GPTQ quants are scoring lower then they should be.
+**7/16** Airboros-1.4 evaluation and comparison between 1.4 and 1.4.1 has been added.  Note [the code extractor is failing on some of the GPTQ answers](https://github.com/the-crypt-keeper/can-ai-code/issues/43) so the GPTQ quants are scoring lower then they should be. 
 
 ## Test Suites
 
@@ -93,13 +93,9 @@ See https://github.com/my-other-github-account/llm-humaneval-benchmarks and http
 
 |        Script            |     Runtime    | Models | Quants | Local/Remote |
 |--------------------------|----------------|--------|--------|--------------|
-| `interview-langchain.py` | langchain      | lots   | n/a    | n/a          |
-| `interview-oobabooga.py` | oobabooga, koboldcpp | lots | yes | remote      |
-| `interview-autogptq.py`  | autogptq       | lots   | gptq   | local + modal via `interview-autogptq-modal.py` |
-| `interview-transformers.py` | transformers | lots | yes | local + modal via `interview-transformers-modal.py` |
-| `interview-exllama-modal.py` | exllama | llama | gptq | remote via modal |
-| `interview-vllm-modal.py` | vllm | llama | n/a | remote via modal |
-| `interview-awq-modal.py` | awq | llama, falcon | awq | remote via modal |
+| `interview_cuda.py` | awq | transformers, autogptq, exllama, vllm, awq | all | remote via modal `interview_modal.py` |
+| `interview-langchain.py` | langchain      | lots   | n/a    | remote      |
+| `interview-oobabooga.py` | oobabooga, koboldcpp | lots | n/a | remote      |
 | `interview-llamacpp.py`  | ggml, ggllm, llamacpp | lots | GGML | local + remote via ssh |
 | `interview-hfinference.py` | hf-inference-api | lots | n/a | remote |
 | `interview-gradio.py`    | gradio | lots | n/a | remote |
@@ -108,7 +104,7 @@ See https://github.com/my-other-github-account/llm-humaneval-benchmarks and http
 
 * LangChain: To add a new model, update `init_model` to add parameter mappings and adapter instance.
 
-* All modal scripts:   The nature of Modal does not allow command-line selection of LLM model.  In order to select models, you'll have to open the script and uncomment the `.run_function(download...)` line of choice.  Note that only one model can be selected at a time.   To add a new model, implement a new `download...` function.  Quantization parameters are only required if the model does not contain a `quantize_config.json`.
+* `interview_modal`:   The nature of Modal does not allow command-line selection of LLM model.  In order to select models, you'll have to open the script and uncomment the `.run_function(download...)` line of choice.  Note that only one model can be selected at a time.   To add a new model, implement a new `download...` function.
 
 ### Notes on llamacpp
 
