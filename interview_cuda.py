@@ -423,13 +423,20 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
     
     model.load()
 
-    interview = [json.loads(line) for line in open(input)]
-    params_json = json.load(open(params,'r'))
+    tasks = []
+    for param_file in params.split(','):
+        for input_file in input.split(','):
+            tasks.append((param_file, input_file))
+
     output_template = Template(open(templateout).read()) if templateout else None
 
-    for iter in range(iterations):
+    for param_file, input_file in tasks:
+      interview = [json.loads(line) for line in open(input_file)]
+      params_json = json.load(open(param_file,'r'))
+
+      for iter in range(iterations):
         results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch)
-        save_interview(input, templateout if templateout else 'none', params, remote_info['model_name'], results)
+        save_interview(input_file, templateout if templateout else 'none', param_file, remote_info['model_name'], results)
 
 if __name__ == "__main__":
     import fire
