@@ -49,6 +49,12 @@ def download_vicuna_1p3_13b_model():
 def download_llama2_7b_model():
     download_model("meta-llama/Llama-2-7b-hf", ignore_patterns=["*.bin"])
 
+def download_llama2_chat_7b_model():
+    download_model("meta-llama/Llama-2-7b-chat-hf", ignore_patterns=["*.bin"])
+
+def download_llama2_chat_13b_model():
+    download_model("meta-llama/Llama-2-13b-chat-hf", ignore_patterns=["*.bin"])
+
 def download_llama2_chat_7b_awq_model():
     download_model("abhinavkulkarni/meta-llama-Llama-2-7b-chat-hf-w4-g128-awq")
 
@@ -125,7 +131,7 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_airoboros_l2_13b_1p4p1_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_llama2_chat_13b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
