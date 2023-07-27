@@ -404,6 +404,13 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
 
 def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, gpusplit: str = "", templateout: str = ""):
     from prepare import save_interview
+    from huggingface_hub import snapshot_download
+    import os
+    
+    if os.getenv('HF_HUB_ENABLE_HF_TRANSFER') != "1":
+        print('WARING: You should set HF_HUB_ENABLE_HF_TRANSFER=1 and pip install hf-transfer for faster downloads')
+    print('Downloading', model_name)
+    snapshot_download(model_name)
 
     gpu_split = gpusplit if gpusplit != '' else None
     model_info = json.loads(info)
