@@ -173,6 +173,8 @@ class InterviewExllama:
         self.cache = ExLlamaCache(self.model)
         print(f"Model loaded in {time.time() - t0:.2f}s")
 
+        self.info['model_name'] = self.model_name
+
     def generate(self, prompt, params):
         # Init generator
         from generator import ExLlamaGenerator
@@ -258,6 +260,13 @@ class InterviewVLLM:
             print('Starting in single GPU mode..')
             self.llm = LLM(model=self.model_name)
 
+        eos_token_id = self.info.get('generate_args', {}).get('eos_token_id')
+        if eos_token_id:
+            self.llm.llm_engine.tokenizer.eos_token_id = int(eos_token_id)
+            print('Override generate_args.eos_token_id = ', eos_token_id)
+
+        self.info['model_name'] = self.model_name
+
         print(f"Model loaded in {time.time() - t0:.2f}s")   
 
     def generate(self, prompt, params):
@@ -337,6 +346,8 @@ class InterviewAWQ:
             device_map = 'balanced'
         
         self.model = load_checkpoint_and_dispatch(model, model_path, device_map=device_map)
+
+        self.info['model_name'] = self.model_name
 
         print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
 
@@ -453,15 +464,19 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         for input_file in input.split(','):
             tasks.append((param_file, input_file))
 
-    output_template = Template(open(templateout).read()) if templateout else None
+    for param_file, input_pairs in tasks:
+      insplit = input_pairs.split(':')
+      input_file = insplit[0]
+      templateout_file = insplit[1] if len(insplit)>1 else templateout
 
-    for param_file, input_file in tasks:
       interview = [json.loads(line) for line in open(input_file)]
+      output_template = Template(open(templateout_file).read()) if templateout_file else None
       params_json = json.load(open(param_file,'r'))
 
       for iter in range(iterations):
+        print("Starting", model_name, "iter=", iter, "param_file=", param_file, "input_file=", input_file, "templateout_file=", templateout_file)
         results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch)
-        save_interview(input_file, templateout if templateout else 'none', param_file, remote_info['model_name'], results)
+        save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
 
 if __name__ == "__main__":
     import fire
