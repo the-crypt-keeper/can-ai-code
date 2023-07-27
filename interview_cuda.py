@@ -63,8 +63,8 @@ class InterviewTransformers:
         self.info['sampling_params'] = str(generation_config)
 
         inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
-        sample = self.model.generate(inputs, generation_config=generation_config)
-        answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
+        sample = self.model.generate(inputs, generation_config=generation_config, **self.info.get('generate_args',{}))
+        answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|end|>','').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
         return answer, self.info
 
 #########################
@@ -431,7 +431,7 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
     download_safetensors(model_name)
 
     gpu_split = gpusplit if gpusplit != '' else None
-    model_info = json.loads(info)
+    model_info = json.loads(info) if isinstance(info, str) else info
 
     if runtime == 'transformers':
         model = InterviewTransformers(model_name, model_info, gpu_split=gpu_split)
