@@ -1,0 +1,6 @@
+<s>[INST] <<SYS>>
+You are a helpful, respectful and honest assistant. Always answer as helpfully as possible.
+Write simple, concise code that does not rely on any library functions.  The code must start with ```{{language}} and end with ```.
+<</SYS>>
+
+Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}. [/INST]
