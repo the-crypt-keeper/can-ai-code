@@ -1,3 +1,0 @@
-### human: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}.
-
-### gpt:

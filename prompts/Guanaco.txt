@@ -1,1 +1,0 @@
-### Human: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}. All code must start with ``` and also end with ```. ### Assistant:
