@@ -2,11 +2,13 @@
 import time
 import json
 from jinja2 import Template
+from typing import List
+from copy import copy
 
 #########################################
 ##  Transformers/BitsAndBytes Adapter  ##
 #########################################
-
+   
 QUANT_FP32 = 0
 QUANT_FP16 = 1
 QUANT_INT8 = 10
@@ -62,8 +64,36 @@ class InterviewTransformers:
         )
         self.info['sampling_params'] = str(generation_config)
 
+        generate_args = copy(self.info['generate_args']) if 'generate_args' in self.info else {}
+        if 'stop_seq' in generate_args:
+            from transformers import StoppingCriteriaList
+            from transformers import StoppingCriteria
+
+            class StopSequenceCriteria(StoppingCriteria):
+                def __init__(self, tokenizer, stop_texts: List[str], *args, **kwargs):
+                    super().__init__(*args, **kwargs)
+                    self.tokenizer = tokenizer
+                    self.input_length = None
+                    self.stop_texts = stop_texts
+
+                def __call__(self, input_ids, scores, **kwargs) -> bool:
+                    decoded = self.tokenizer.decode(input_ids[0])
+
+                    if self.input_length is None:
+                        self.input_length = len(decoded)
+                        return False
+
+                    for stop_seq in self.stop_texts:
+                        if stop_seq in decoded[self.input_length:]:
+                            return True
+                        
+                    return False
+                
+            generate_args['stopping_criteria'] = StoppingCriteriaList([StopSequenceCriteria(self.tokenizer, generate_args['stop_seq'])])
+            del generate_args['stop_seq']
+            
         inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
-        sample = self.model.generate(inputs, generation_config=generation_config, **self.info.get('generate_args',{}))
+        sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
         answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|end|>','').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
         return answer, self.info
 
@@ -434,7 +464,17 @@ def download_safetensors(model_name):
         print('WARING: You should set HF_HUB_ENABLE_HF_TRANSFER=1 and pip install hf-transfer for faster downloads')
     else:
         print('FAST downloading', model_name, 'found_safetensors=',found_safetensors)
-    snapshot_download(model_name, ignore_patterns=ignore_patterns)
+
+    while True:
+        try:
+            snapshot_download(model_name, ignore_patterns=ignore_patterns, resume_download=True)
+        except KeyboardInterrupt:
+            print('Download aborted')
+            exit(1)
+        except Exception as e:
+            print('Download problem: ', e)
+            continue
+        break
 
 def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, gpusplit: str = "", templateout: str = ""):
     from prepare import save_interview
