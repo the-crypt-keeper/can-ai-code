@@ -42,7 +42,7 @@ class InterviewTransformers:
         torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.float16
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
                                                 load_in_4bit = self.quant == QUANT_FP4,
-                                                bnb_4bit_quant_type = "fp4")            
+                                                bnb_4bit_quant_type = "fp4")
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, trust_remote_code=True)
         
         # if passed a path, take the last dir name otherwise replace / with -
@@ -59,16 +59,22 @@ class InterviewTransformers:
     def generate(self, prompt, params):
         from transformers import GenerationConfig
 
-        generation_config, unused_kwargs = GenerationConfig.from_pretrained(
-            self.model_name, do_sample = True, **params, return_unused_kwargs=True
-        )
+        generate_args = copy(self.info['generate_args']) if 'generate_args' in self.info else {}
+
+        try:
+            generation_config, unused_kwargs = GenerationConfig.from_pretrained(
+                self.model_name, do_sample = True, **params, return_unused_kwargs=True
+            )
+        except Exception as e:
+            print('WARNING: generate config could not be auto-loaded from model:', str(e))
+            generation_config = GenerationConfig(do_sample = True, **params)
+
+        if not generation_config.eos_token_id:
+            generation_config.eos_token_id = self.info.get('eos_token_id', self.tokenizer.eos_token_id)
         self.info['sampling_params'] = str(generation_config)
 
-        generate_args = copy(self.info['generate_args']) if 'generate_args' in self.info else {}
         if 'stop_seq' in generate_args:
-            from transformers import StoppingCriteriaList
-            from transformers import StoppingCriteria
-
+            from transformers import StoppingCriteria, StoppingCriteriaList
             class StopSequenceCriteria(StoppingCriteria):
                 def __init__(self, tokenizer, stop_texts: List[str], *args, **kwargs):
                     super().__init__(*args, **kwargs)
@@ -94,7 +100,14 @@ class InterviewTransformers:
             
         inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
         sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
-        answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|end|>','').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
+        answer = self.tokenizer.decode(sample[0]).replace(prompt, '')
+        
+        eos_list = [ '<|end|>', '<|endoftext|>', '</s>', '<s>']
+        if 'stopping_criteria' in generate_args: eos_list += generate_args['stopping_criteria'][0].stop_texts
+        
+        for eos in eos_list:
+            answer = answer.replace(eos, '')
+
         return answer, self.info
 
 #########################
