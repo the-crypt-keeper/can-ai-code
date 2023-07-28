@@ -32,7 +32,7 @@ def download_replit_code_instruct_3b_model():
     download_model("sahil2801/replit-code-instruct-glaive")
 
 def download_replit_code_v1_3b_model():
-    download_model("replit/replit-code-v1-3b")
+    download_model("replit/replit-code-v1-3b", info={"generate_args": { "stop_seq": ["###"]}})
 
 def download_vicuna_1p1_7b_model():
     download_model("lmsys/vicuna-7b-v1.1")
@@ -131,24 +131,24 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_llama2_chat_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_replit_code_v1_3b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
-RUNTIME = "vllm"
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"
 #######################################
 
 ##### SELECT GPU HERE #################
-#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A10G(count=1)
 #gpu_request = gpu.A10G(count=2)
-gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
