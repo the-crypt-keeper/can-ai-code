@@ -5,8 +5,7 @@ import json
 import os
 import sys
 import yaml
-
-from prepare import load_questions
+from copy import copy
 
 def read_ndjson(file):
     with open(file) as f:
@@ -51,7 +50,28 @@ def load_data():
 
 def load_models():
     with open('models/models.yaml') as f:
-        model_list = yaml.safe_load(f)
+        models = yaml.safe_load(f)
+
+    model_list = []
+    for id, model in models.items():
+        model['id'] = id
+        if model['size'][-1] == 'M':
+            model['size'] = str(int(model['size'][:-1])/1000)
+        elif model['size'][-1] == 'B':
+            model['size'] = model['size'][:-1]
+        else:
+            raise Exception('bad model size '+model['size'])
+        if 'alias' in model:
+            m1 = copy(model)
+            m2 = copy(model)
+            m2['id'] = m1['alias']
+            del m1['alias']
+            del m2['alias']
+            model_list.append(m1)
+            model_list.append(m2)
+        else:
+            model_list.append(model)
+
     model_df = pd.DataFrame(model_list)
     return model_df
 
@@ -151,8 +171,9 @@ def main():
                 label="Quant",
                 width=30
             ),
-            "size": st.column_config.TextColumn(
+            "size": st.column_config.NumberColumn(
                 label="Size",
+                format="%fB",
                 width=30
             )  
         }
