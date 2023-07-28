@@ -29,7 +29,7 @@ def download_falcon_instruct_7b_model():
     download_model("tiiuae/falcon-7b-instruct", allow_patterns=["*.json","*.model","pytorch*.bin"])
 
 def download_replit_code_instruct_3b_model():
-    download_model("sahil2801/replit-code-instruct-glaive")
+    download_model("sahil2801/replit-code-instruct-glaive", info={"generate_args": { "eos_token_id": 1 }})
 
 def download_replit_code_v1_3b_model():
     download_model("replit/replit-code-v1-3b", info={"generate_args": { "stop_seq": ["###"]}})
@@ -131,7 +131,7 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_replit_code_v1_3b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_replit_code_instruct_3b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
