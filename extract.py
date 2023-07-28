@@ -4,7 +4,7 @@ import re
 # Useful functions for extracting code from LLM responces
 def extract_code_markdown(answer):
     # Look for start tokens   
-    match = re.search(r'```(\w*)', answer)
+    match = re.search(r'`{3,}(\w*)', answer)
     start_token = match.group(0) if match else None
     start_index = match.start() if match else -1
 
