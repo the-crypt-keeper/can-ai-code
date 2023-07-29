@@ -12,11 +12,7 @@ def read_ndjson(file):
         data = [json.loads(line) for line in f]
     return data
 
-def load_data():
-    if len(sys.argv) > 1:
-        paths = [sys.argv[1]]
-    else:
-        paths = ['results/**/eval*.ndjson']
+def load_data(paths):
     files = []
     for path in paths:
         files += glob.glob(path)
@@ -88,7 +84,7 @@ def calculate_summary(data):
         total = sum(x['total'] for x in res)
         summary.append(info['tags'] + [passed, total] + [info['runtime']])
     sumdf = pd.DataFrame(summary, columns=['Eval', 'Interview', 'Languages', 'Template', 'TemplateOut', 'Params', 'Model', 'Timestamp', 'Passed', 'Total', 'Runtime'])
-    sumdf = sumdf[['Languages','Model','Params','Template','Runtime','Passed','Total']]
+    sumdf = sumdf[['Interview','Languages','Model','Params','Template','Runtime','Passed','Total']]
     sumdf['Score'] = sumdf['Passed'] / sumdf['Total']
     sumdf.drop('Total', axis=1, inplace=True)
 
@@ -101,7 +97,11 @@ def calculate_summary(data):
 
 @st.cache_data
 def load_and_prepare_data():
-    data = load_data()
+    if len(sys.argv) > 1:
+        paths = [sys.argv[1]]
+    else:
+        paths = ['results/**/eval*.ndjson', 'results-v1/**/eval*.ndjson']
+    data = load_data(paths)
     summary = calculate_summary(data)
     return data, summary
 
@@ -123,36 +123,43 @@ def main():
     
     data, summary = load_and_prepare_data()
 
-    #st.sidebar.title('CanAiCode? 🤔')
-    #st.sidebar.markdown('A visual tool to explore the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code)')
-
     tabs = ['Summary', 'Explore', 'Compare']
     selected_tab = 'Summary' #st.sidebar.radio('', tabs)
 
     if selected_tab == 'Summary':
         st.title('CanAiCode Leaderboard 🏆')
-        st.markdown('A visual tool to explore the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code)')
-        
-        settings_col, mode_col = st.columns((1,5))
-        with mode_col:
-            mode = st.radio(label='View', options=['Side by Side','Python','JavaScript'], horizontal=True, label_visibility='collapsed')
-        with settings_col:
-            best_of = st.checkbox(label='Show best result from each Model', value=True)
-            
-        tag_list = sorted(summary['tags'].explode().dropna().unique())
-        if len(tag_list) > 0:
-            tag_cols = st.columns(len(tag_list))
-            tag_checks = []
-            for i, tag in enumerate(tag_list):
-                with tag_cols[i]:
-                    tag_checks.append(st.checkbox(tag))
 
-            tags_selected = [tag_list[i] for i, tag in enumerate(tag_list) if tag_checks[i]]
-            if len(tags_selected) == 0:
-                tags_selected = tag_list
-            filtered = summary[summary['tags'].apply(lambda x: x != x or any(elem in x for elem in tags_selected))]
-        else:
-            filtered = summary
+        view_col, interview_col, model_col, size_col = st.columns(4)
+
+        with view_col:
+            st.markdown('A visual tool to explore the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code)')
+            mode_col, note_col = st.columns(2)
+            with mode_col:
+                mode = st.radio(label='View', options=['Side by Side','Python','JavaScript'], label_visibility='collapsed')
+            with note_col:
+                best_of = st.checkbox(label='Summarize Results', value=True)
+                st.write('🔍 The language-specific views have additional columns.')
+
+        with interview_col:
+            interview_list = sorted(summary['Interview'].unique())
+            selected_interview = st.selectbox('Interview', interview_list, index=interview_list.index('junior-v2'))
+            filtered = summary[ summary['Interview'] == selected_interview ]
+
+        with model_col:
+            tag_list = ["all"] + sorted(filtered['tags'].explode().dropna().unique())
+            selected_tag = st.selectbox('Model Group',tag_list,index=0)
+            
+            if selected_tag != 'all':
+                filtered = filtered[filtered['tags'].apply(lambda x: x != x or selected_tag in x)]
+
+        with size_col:
+            size_list = list(filtered['size'].dropna().unique())
+            if '' in size_list: size_list.remove('')
+            size_list.sort(key=lambda x: float(x) if x else 0)
+            size_list = ['all'] + size_list
+            selected_size = st.selectbox('Size', size_list, format_func=lambda x: 'all' if x == 'all' else '%dM'%(float(x)*1000) if float(x)<1 else x+'B')
+            if selected_size != 'all':
+                filtered = filtered[filtered['size'] == selected_size]
 
         if best_of:
             idx = filtered.groupby(['name','size','Languages'])['Score'].idxmax()
