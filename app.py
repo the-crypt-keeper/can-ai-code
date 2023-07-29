@@ -63,13 +63,15 @@ def load_models():
 
         model['id'] = id
         if 'alias' in model:
-            m1 = copy(model)
-            m2 = copy(model)
-            m2['id'] = m1['alias']
-            del m1['alias']
-            del m2['alias']
-            model_list.append(m1)
-            model_list.append(m2)
+            alias_list = [model['alias']] if not isinstance(model['alias'], list) else model['alias']
+            base_copy = copy(model)
+            del base_copy['alias']
+            model_list.append(base_copy)
+
+            for id in alias_list:
+                new_copy = copy(base_copy)
+                new_copy['id'] = id
+                model_list.append(new_copy)
         else:
             model_list.append(model)
 
@@ -123,16 +125,25 @@ def main():
     
     data, summary = load_and_prepare_data()
 
-    tabs = ['Summary', 'Explore', 'Compare']
-    selected_tab = 'Summary' #st.sidebar.radio('', tabs)
+    lb_tab, faq_tab, explore_tab = st.tabs(['Leaderboard 🏆', 'FAQ ❓', 'Explore 🔍'])
 
-    if selected_tab == 'Summary':
-        st.title('CanAiCode Leaderboard 🏆')
+    with faq_tab:
+        st.markdown(
+        """
+        ## What is this?
+
+        This application explores the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code).
+        """)
+
+    with explore_tab:
+        st.markdown('Under construction.')
+    
+    with lb_tab:
+        st.markdown('## CanAiCode Leaderboard 🏆 <sub>A visual tool to explore the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code)</sub>', unsafe_allow_html=True)
 
         view_col, interview_col, model_col, size_col = st.columns(4)
 
-        with view_col:
-            st.markdown('A visual tool to explore the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code)')
+        with view_col:            
             mode_col, note_col = st.columns(2)
             with mode_col:
                 mode = st.radio(label='View', options=['Side by Side','Python','JavaScript'], label_visibility='collapsed')
@@ -209,27 +220,27 @@ def main():
                 st.subheader('JavaScript')
                 st.dataframe(filtered[filtered['Languages'] == 'javascript'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
 
-    elif selected_tab == 'Compare':
-        st.title('🚧 CanAiCode Compare')
+    #elif selected_tab == 'Compare':
+    #    st.title('🚧 CanAiCode Compare')
+    #
+    #    filenames = list(data.keys())
+    #    left_file = st.selectbox('Select the left result', filenames)
+    #    right_file = st.selectbox('Select the right result', filenames)
+    #    left_data = data[left_file]['results']
+    #    right_data = data[right_file]['results']
+    #    for left, right in zip(left_data, right_data):
+    #        expander = st.expander(f'{left["name"]} - {left["language"]}')
+    #        expander.write('Left: ', left)
+    #        expander.write('Right: ', right)
 
-        filenames = list(data.keys())
-        left_file = st.selectbox('Select the left result', filenames)
-        right_file = st.selectbox('Select the right result', filenames)
-        left_data = data[left_file]['results']
-        right_data = data[right_file]['results']
-        for left, right in zip(left_data, right_data):
-            expander = st.expander(f'{left["name"]} - {left["language"]}')
-            expander.write('Left: ', left)
-            expander.write('Right: ', right)
+    #elif selected_tab == 'Explore':
+    #    st.title('🚧 CanAiCode Explore')
 
-    elif selected_tab == 'Explore':
-        st.title('🚧 CanAiCode Explore')
-
-        filenames = list(data.keys())
-        filename = st.selectbox('Select the result', filenames)
-        data = data[filename]
-        results = data['results']
-        st.dataframe(results, use_container_width=True, hide_index=True)
+    #    filenames = list(data.keys())
+    #    filename = st.selectbox('Select the result', filenames)
+    #    data = data[filename]
+    #    results = data['results']
+    #    st.dataframe(results, use_container_width=True, hide_index=True)
 
 if __name__ == "__main__":
     main()
