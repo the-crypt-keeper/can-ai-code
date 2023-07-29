@@ -54,13 +54,18 @@ def load_models():
 
     model_list = []
     for id, model in models.items():
-        model['id'] = id
+
         if model['size'][-1] == 'M':
             model['size'] = str(int(model['size'][:-1])/1000)
         elif model['size'][-1] == 'B':
             model['size'] = model['size'][:-1]
         else:
             raise Exception('bad model size '+model['size'])
+        
+        if not 'url' in model:
+            model['url'] = 'https://huggingface.co/' + id.replace('-','/',1).replace('-fp16','')
+
+        model['id'] = id
         if 'alias' in model:
             m1 = copy(model)
             m2 = copy(model)
