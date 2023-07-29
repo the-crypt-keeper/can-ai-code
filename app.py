@@ -132,7 +132,23 @@ def main():
         """
         ## What is this?
 
-        This application explores the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code).
+        This application explores the results of [CanAiCode](https://github.com/the-crypt-keeper/can-ai-code), a test suite specifically designed for testing small text-to-code LLMs.
+        
+        ## Why not HumanEval?
+
+        These are complex interviews with hundreds of questions and the evaluation harness is python-specific.  See [llm-humaneval-benchmarks](https://github.com/my-other-github-account/llm-humaneval-benchmarks) and [code-eval](https://github.com/abacaj/code-eval) for projects large lists of Humaneval LLM benchmark results.
+
+        ## What is the difference between `junior-v2` and `junior-dev` interviews?
+
+        The v2 interview fixes a number of bugs in the prompt, self-checking, and evaluation harness.  It also focuses on code-generation models and avoids quantization where possible.
+
+        ## Who are you?
+
+        This leaderboard is maintained by [the-crypt-keeper](https://github.com/the-crypt-keeper)
+
+        ## How can I add a model?
+
+        Open an issue tagged model request, or submit a PR!
         """)
 
     with explore_tab:
