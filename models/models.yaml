@@ -2,15 +2,51 @@ openai-chatgpt: { name: "OpenAI gpt-3.5-turbo", size: "170B", url: "https://open
 ai21-j2-jumbo-instruct: { name: "AI21 J2", size: "178B", url: "https://www.ai21.com/", tags: ["commercial"] }
 cohere-command-nightly: { name: "Cohere Command", size: "52B", url: "https://cohere.ai/", tags: ["commercial"] }
 
-bigcode-starcoderbase-1b-fp16: { name: 'StarCoderBase', size: '1B', tags: ["bigcode"], url: "https://huggingface.co/bigcode/starcoderbase-1b" }
-bigcode-starcoderbase-3b-fp16: { name: 'StarCoderBase', size: '3B', tags: ["bigcode"], url: "https://huggingface.co/bigcode/starcoderbase-3b" }
-bigcode-starcoderbase-7b-fp16: { name: 'StarCoderBase', size: '7B', tags: ["bigcode"], url: "https://huggingface.co/bigcode/starcoderbase-7b" }
-bigcode-starcoderbase-fp16: { name: 'StarCoderBase', size: '15B', tags: ["bigcode"], url: "https://huggingface.co/bigcode/starcoderbase" }
+bigcode-starcoderbase-1b-fp16: { name: 'StarCoderBase', size: '1B', tags: ["bigcode"] }
+bigcode-starcoderbase-3b-fp16: { name: 'StarCoderBase', size: '3B', tags: ["bigcode"] }
+bigcode-starcoderbase-7b-fp16: { name: 'StarCoderBase', size: '7B', tags: ["bigcode"] }
+bigcode-starcoderbase-fp16: { name: 'StarCoderBase', size: '15B', tags: ["bigcode"] }
+bigcode-tiny-starcoder-py-fp16: { name: 'StarCoderTiny-Py', size: "164M", tags: ["bigcode"] }
+bigcode-starcoderplus: { name: 'StarCoderPlus', size: '15B', tags: ["bigcode"], alias: "bigcode-starcoderplus-fp16" }
+bigcode-gpt-bigcode-santacoder-fp16: { name: 'SantaCoder', size: '3B', tags: ["bigcode"] }
+HuggingFaceH4-starchat-alpha: { name: "StarChat-Alpha", size: "15B", tags: ["bigcode"], alias: "HuggingFaceH4-starchat-alpha-fp16" }
+HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigcode"], alias: "HuggingFaceH4-starchat-beta-fp16" }
+WizardLM-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], alias: "WizardLM-WizardCoder-15B-V1.0-fp16" }
+TheBloke-WizardCoder-15B-1.0-GPTQ: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GPTQ-4b" }
+openaccess-ai-collective-minotaur-15b: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], alias: "openaccess-ai-collective-minotaur-15b-fp16", url: "https://huggingface.co/openaccess-ai-collective/minotaur-15b" }
 
-bigcode-tiny-starcoder-py-fp16: { name: 'StarCoderTiny-Py', size: "164M", tags: ["bigcode"], url: "https://huggingface.co/bigcode/tiny_starcoder_py" }
+Salesforce-codegen2-1B-fp16: { name: 'Codegen2', size: '1B', tags: ['salesforce'] }
+Salesforce-codegen2-3-7B-fp16: { name: 'Codegen2', size: '3.7B', tags: ['salesforce'], url: "https://huggingface.co/Salesforce/codegen2-3_7B" }
+Salesforce-codegen2-7B-fp16: { name: 'Codegen2', size: '7B', tags: ['salesforce'] }
+Salesforce-codegen25-7b-instruct-fp16: { name: 'Codegen2.5 Instruct', size: '7B', tags: ['salesforce'] }
+Salesforce-codegen25-7b-mono-fp16: { name: 'Codegen2.5 Mono', size: '7B', tags: ['salesforce'] }
+Salesforce-codegen25-7b-multi-fp16: { name: 'Codegen2.5 Multi', size: '7B', tags: ['salesforce'] }
 
-WizardLM-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], url: "https://huggingface.co/WizardLM/WizardCoder-15B-V1.0", alias: "WizardLM-WizardCoder-15B-V1.0-fp16" }
-WizardLM-WizardLM-13B-V1.2: { name: 'WizardLM v1.2', size: "13B", tags: ["llama","wizard"], url: "https://huggingface.co/WizardLM/WizardLM-13B-V1.2" }
+WizardLM-WizardLM-13B-V1.1: { name: 'WizardLM v1.1', size: "13B", tags: ["llama","wizard"] }
+WizardLM-WizardLM-13B-V1.2: { name: 'WizardLM v1.2', size: "13B", tags: ["llama2","wizard"] }
 
-HuggingFaceH4-starchat-alpha-fp16: { name: "StarChat-Alpha", size: "15B", tags: ["bigcode"], url: "https://huggingface.co/HuggingFaceH4/starchat-alpha" }
-HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigcode"], url: "https://huggingface.co/HuggingFaceH4/starchat-beta", alias: "HuggingFaceH4-starchat-beta-fp16" }
+teknium-Replit-v2-CodeInstruct-3B-fp16: { name: "Replit-v2-CodeInstruct", size: "3B", tags: ["replit"] }
+sahil2801-replit-code-instruct-glaive-fp16: { name: "replit-code-instruct-glaive", size: "3B", tags: ["replit"] }
+replit-replit-code-v1-3b-fp16: { name: "replit-code-v1", size: "3B", tags: ["replit"] }
+nickrosh-Evol-Replit-v1-fp16: { name: "Evol-Replit-v1", size: "3B", tags: ["replit"] }
+
+lmsys-vicuna-7b-v1.1: { name: "Vicuna-1.1", size: "7B", tags: ["vicuna"] }
+lmsys-vicuna-7b-v1.3: { name: "Vicuna-1.3", size: "7B", tags: ["vicuna"] }
+mit-han-lab-vicuna-7b-v1.3-4bit-g128-awq: { name: "Vicuna-1.3", size: "7B", quant: "AWQ-4b", tags: ["vicuna"], url: "https://huggingface.co/mit-han-lab/vicuna-7b-v1.3-4bit-g128-awq" }
+lmsys-vicuna-13b-v1.1: { name: "Vicuna-1.1", size: "13B", tags: ["vicuna"] }
+lmsys-vicuna-13b-v1.3: { name: "Vicuna-1.3", size: "13B", tags: ["vicuna"] }
+
+meta-llama-Llama-2-7b-chat-hf: { name: "Llama 2 Chat", size: "7B", tags: ["llama2"] }
+meta-llama-Llama-2-13b-chat-hf: { name: "Llama 2 Chat", size: "13B", tags: ["llama2"] }
+TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16: { name: "codeCherryPop", size: "7B", tags: ["llama2"] }
+TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ: { name: "codeCherryPop", size: "7B", quant: "GPTQ-4b", tags: ["llama2"] }
+
+psmathur-orca-mini-v2-7b-fp16: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"] }
+psmathur-orca-mini-v2-13b-fp16: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"] }
+
+jondurbin-airoboros-7b-gpt4-1.4.1-qlora: { name: "Airboros-1.4.1", size: "7B", tags: ["airoboros"] }
+jondurbin-airoboros-13b-gpt4-1.4.1-qlora: { name: "Airboros-1.4.1", size: "13B", tags: ["airoboros"] }
+jondurbin-airoboros-l2-7b-gpt4-1.4.1: { name: "Airboros-L2-1.4.1", size: "7B", tags: ["airoboros","llama2"] }
+jondurbin-airoboros-l2-13b-gpt4-1.4.1: { name: "Airboros-L2-1.4.1", size: "13B", tags: ["airoboros","llama2"] }
+
+tiiuae-falcon-7b-instruct-fp16: { name: "Falcon Instruct", size: "7B", tags: ["falcon"] }
