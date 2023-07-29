@@ -29,10 +29,15 @@ def download_falcon_instruct_7b_model():
     download_model("tiiuae/falcon-7b-instruct", allow_patterns=["*.json","*.model","pytorch*.bin"])
 
 def download_replit_code_instruct_3b_model():
-    download_model("sahil2801/replit-code-instruct-glaive", info={"generate_args": { "eos_token_id": 1 }})
+    download_model("sahil2801/replit-code-instruct-glaive", info={"eos_token_id": 1 })
 
 def download_replit_code_v1_3b_model():
     download_model("replit/replit-code-v1-3b", info={"generate_args": { "stop_seq": ["###"]}})
+
+def download_replit_codeinstruct_v2_3b_model():
+    download_model("teknium/Replit-v2-CodeInstruct-3B", info={"eos_token_id": 1 })
+
+#https://huggingface.co/matorus/replit-openorca
 
 def download_vicuna_1p1_7b_model():
     download_model("lmsys/vicuna-7b-v1.1")
@@ -131,7 +136,7 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_replit_code_instruct_3b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_replit_codeinstruct_v2_3b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -146,7 +151,7 @@ QUANT = QUANT_FP16
 #######################################
 
 ##### SELECT GPU HERE #################
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.T4(count=1)
 #gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1)
 #######################################
