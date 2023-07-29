@@ -303,7 +303,7 @@ class InterviewVLLM:
             print('Starting in single GPU mode..')
             self.llm = LLM(model=self.model_name)
 
-        eos_token_id = self.info.get('generate_args', {}).get('eos_token_id')
+        eos_token_id = self.info.get('eos_token_id')
         if eos_token_id:
             self.llm.llm_engine.tokenizer.eos_token_id = int(eos_token_id)
             print('Override generate_args.eos_token_id = ', eos_token_id)
