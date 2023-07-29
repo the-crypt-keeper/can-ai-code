@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/29** Results of `junior-v2` are live!  Many improvements to the results app as well, with more coming.
+
 **7/26** Preparing to re-evaluate all models.  Unified all GPU-based interviewers under `interview_cuda.py` and created a single common `interview_modal.py` wrapper for them.
 
 **7/24** Created `junior-v2` test suite: 2 new tests, many more checks and bugfixes. Old results moved to `results-v1/` and `compare-v1/`.
