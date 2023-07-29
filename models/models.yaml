@@ -18,6 +18,8 @@ WizardCoder-15B-1.0.ggmlv3.q5-0: { name: "WizardCoder", size: "15B", tags: ["big
 openaccess-ai-collective-minotaur-15b: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], alias: "openaccess-ai-collective-minotaur-15b-fp16", url: "https://huggingface.co/openaccess-ai-collective/minotaur-15b" }
 TheBloke-minotaur-15B-GPTQ: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
 TheBloke-WizardCoder-Guanaco-15B-V1.1-GPTQ: { name: "WizardCoder-Guanaco", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
+openchat-opencoderplus-fp16: { name: "OpenCoderPlus", size: "15B", tags: ["bigcode"] }
+openchat-opencoderplus-ggml-q5-0: { name: "OpenCoderPlus", size: "15B", tags: ["bigcode"], quant: "GGML-q5_0", url: "https://huggingface.co/cooki3monster/openchat_opencoderplus-GGML" }
 
 Salesforce-codegen2-1B-fp16: { name: 'Codegen2', size: '1B', tags: ['salesforce'] }
 Salesforce-codegen2-3-7B-fp16: { name: 'Codegen2', size: '3.7B', tags: ['salesforce'], url: "https://huggingface.co/Salesforce/codegen2-3_7B" }
@@ -67,11 +69,14 @@ TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16: { name: "codeCher
 TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ: { name: "codeCherryPop", size: "7B", quant: "GPTQ-4b", tags: ["llama2"] }
 meta-llama-Llama-2-13b-chat-hf: { name: "Llama 2 Chat", size: "13B", tags: ["llama2"], url: "https://huggingface.co/meta-llama/Llama-2-13b-chat-hf" }
 llama-2-13b-chat.ggmlv3.q5-0: { name: "Llama 2 Chat", size: "13B", tags: ["llama2"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML" }
+NousResearch-Redmond-Puffin-13B-fp16: { name: "Redmond-Puffin", size: "13B", tags: ["llama2"] }
 
 llama-2-7b.ggmlv3.q5-0: { name: "Llama 2", size: "7B", quant: "GGML-q5_0", tags: ["llama2"], url: "https://huggingface.co/TheBloke/Llama-2-7B-GGML" }
 TheBloke-Llama-2-13B-GPTQ: { name: "Llama 2", size: "13B", quant: "GPTQ-4b", tags: ["llama2"] }
 llama-2-13b.ggmlv3.q5-0: { name: "Llama 2", size: "13B", quant: "GGML-q5_0", tags: ["llama2"], url: "https://huggingface.co/TheBloke/Llama-2-13B-GGML" }
 meta-llama-Llama-2-13b-hf-int8: { name: "Llama 2", size: "13B", quant: "INT8", url: "https://huggingface.co/meta-llama/Llama-2-13b-hf", tags: ["llama2"] }
+
+Panchovix-LLaMA-2-70B-GPTQ-transformers4.32.0.dev0: { name: "Llama 2", size: "70B", quant: "GPTQ-4b", tags: ["llama2"], url: "https://huggingface.co/Panchovix/LLaMA-2-70B-GPTQ-transformers4.32.0.dev0" }
 
 psmathur-orca-mini-v2-7b: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], alias: "psmathur-orca-mini-v2-7b-fp16" }
 TheBloke-orca-mini-v2-7B-GPTQ: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], quant: "GPTQ-4b" }
@@ -108,6 +113,20 @@ falcon-40b-instruct.ggccv1.q3-k: { name: "Falcon Instruct", size: "40B", quant: 
 falcon-40b-instruct.ggccv1.q4-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q4_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
 falcon-40b-instruct.ggccv1.q5-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q5_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
 
+guanaco-7B.ggmlv3.q5: { name: "Guanaco", size: "7B", quant: "GGML-q5_0", tags: ["llama"], url: "https://huggingface.co/TheBloke/guanaco-7B-GGML" }
+guanaco-13B.ggmlv3.q5: { name: "Guanaco", size: "13B", quant: "GGML-q5_0", tags: ["llama"], url: "https://huggingface.co/TheBloke/guanaco-13B-GGML" }
+
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-gpt4-alpaca-lora: { name: "Alpaca MLP", size: "65B", quant: "GPTQ-4b", tags: ["llama"], url: "https://huggingface.co/TheBloke/gpt4-alpaca-lora_mlp-65B-GPTQ" }
+TheBloke-minotaur-13B-GPTQ: { name: "Minotaur", size: "13B", quant: "GPTQ-4b", tags: ["llama"] }
+TheBloke-UltraLM-13B-GPTQ: { name: "UltraLM", size: "13B", quant: "GPTQ-4b", tags: ["llama"] }
+TheBloke-robin-13B-v2-GPTQ: { name: "Robin v2", size: "13B", quant: "GPTQ-4b", tags: ["llama"] }
+koala-13B.ggmlv3.q5: { name: "Koala", size: "13B", quant: "GGML-q5_0", tags: ["llama"], url: "https://huggingface.co/TheBloke/koala-13B-GGML" }
+Manticore-13B.ggmlv3.q5: { name: "Manticore", size: "13B", quant: "GPTQ-4b", tags: ["llama"], url: "https://huggingface.co/TheBloke/Manticore-13B-GGML" }
+Manticore-13B-Chat-Pyg-Guanaco-GGML-q4: { name: "Manticore-Chat-Pyg-Guanaco", size: "13B", quant: "GGML-q5_0", tags: ["llama"], url: "https://huggingface.co/mindrage/Manticore-13B-Chat-Pyg-Guanaco-GGML" }
+nous-hermes-13b.ggmlv3.q5: { name: "Nous-Hermes", size: "13B", quant: "GGML-q5_0", tags: ["llama"], url: "https://huggingface.co/TheBloke/Nous-Hermes-13B-GGML" }
+Neko-Institute-of-Science-LLaMA-65B-4bit-128g: { name: "Llama", size: "65B", quant: "GPTQ-4b", tags: ["llama"], url: "https://huggingface.co/Neko-Institute-of-Science/LLaMA-65B-4bit-128g"}
+llama-deus-7b-v3.ggmlv3.q5: { name: "Llama Deus", size: "7B", quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/llama-deus-7b-v3-GGML" }
+Wizard-Vicuna-13B-Uncensored.ggmlv3.q5: { name: "WizardVicuna-Uncensored", tags: ["vicuna","wizard"], size: "13B", quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML"}
+open-llama-7b-open-instruct-hf-16bit: { name: "OpenLLaMa Instruct", size: "7B", url: "https://huggingface.co/VMware/open-llama-7b-open-instruct" }
