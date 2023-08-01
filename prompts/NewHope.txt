@@ -1,0 +1,4 @@
+<s> ### Instruction:
+Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}.
+
+### Response:

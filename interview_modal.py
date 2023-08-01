@@ -99,6 +99,9 @@ def download_airoboros_13b_1p4p1_model():
 def download_airoboros_l2_13b_1p4p1_model():
     download_model("jondurbin/airoboros-l2-13b-gpt4-1.4.1")
 
+def download_NewHope_model():
+    download_model("SLAM-group/NewHope")
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -136,24 +139,24 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_replit_codeinstruct_v2_3b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_NewHope_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
-#RUNTIME = "vllm"
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"
 #######################################
 
 ##### SELECT GPU HERE #################
-gpu_request = gpu.T4(count=1)
+#gpu_request = gpu.T4(count=1)
 #gpu_request = gpu.A10G(count=2)
-#gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))

@@ -75,6 +75,7 @@ llama-2-7b.ggmlv3.q5-0: { name: "Llama 2", size: "7B", quant: "GGML-q5_0", tags:
 TheBloke-Llama-2-13B-GPTQ: { name: "Llama 2", size: "13B", quant: "GPTQ-4b", tags: ["llama2"] }
 llama-2-13b.ggmlv3.q5-0: { name: "Llama 2", size: "13B", quant: "GGML-q5_0", tags: ["llama2"], url: "https://huggingface.co/TheBloke/Llama-2-13B-GGML" }
 meta-llama-Llama-2-13b-hf-int8: { name: "Llama 2", size: "13B", quant: "INT8", url: "https://huggingface.co/meta-llama/Llama-2-13b-hf", tags: ["llama2"] }
+SLAM-group-NewHope: { name: "NewHope", size: "13B", tags: ["llama2"] }
 
 Panchovix-LLaMA-2-70B-GPTQ-transformers4.32.0.dev0: { name: "Llama 2", size: "70B", quant: "GPTQ-4b", tags: ["llama2"], url: "https://huggingface.co/Panchovix/LLaMA-2-70B-GPTQ-transformers4.32.0.dev0" }
 
