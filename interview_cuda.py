@@ -355,7 +355,7 @@ class InterviewAWQ:
 
         # Config
         print('Starting up...')
-        base_model = info.get('base_model', self.model_name)
+        base_model = self.info.get('base_model', self.model_name)
         config = AutoConfig.from_pretrained(base_model, trust_remote_code=True)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True)
 
