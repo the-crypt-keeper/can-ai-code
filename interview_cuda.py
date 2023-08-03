@@ -344,7 +344,7 @@ class InterviewAWQ:
         self.quant = quant
         self.gpu_split = gpu_split
 
-        self.batch = True
+        self.batch = False
 
     def load(self):
         import torch
