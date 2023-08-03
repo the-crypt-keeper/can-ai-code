@@ -379,8 +379,8 @@ class InterviewAWQ:
         real_quantize_model_weight(model, w_bit=self.info.get('w_bit', 4), q_config=q_config, init_only=True)
 
         if self.gpu_split != None:
-            print('Loading big model with gpu_count', gpu_split)
-            max_memory = {0:"18GiB", "cpu":"99GiB"} if gpu_split == "0,cpu" else { 0:"18GiB", 1:"22GiB" }
+            print('Loading big model with gpu_count', self.gpu_split)
+            max_memory = {0:"18GiB", "cpu":"99GiB"} if self.gpu_split == "0,cpu" else { 0:"18GiB", 1:"22GiB" }
             device_map = infer_auto_device_map(model,
                                                no_split_module_classes=["DecoderLayer"],
                                                max_memory=max_memory)
