@@ -106,6 +106,10 @@ jondurbin-airoboros-7b-gpt4-1.4.1-qlora: { name: "Airboros-1.4.1", size: "7B", t
 jondurbin-airoboros-13b-gpt4-1.4.1-qlora: { name: "Airboros-1.4.1", size: "13B", tags: ["airoboros"] }
 jondurbin-airoboros-l2-7b-gpt4-1.4.1: { name: "Airboros-L2-1.4.1", size: "7B", tags: ["airoboros","llama2"] }
 jondurbin-airoboros-l2-13b-gpt4-1.4.1: { name: "Airboros-L2-1.4.1", size: "13B", tags: ["airoboros","llama2"] }
+jondurbin-airoboros-l2-7b-gpt4-2.0: { name: "Airboros-L2-2.0", size: "7B", tags: ["airoboros","llama2"] }
+jondurbin-airoboros-l2-7b-gpt4-m2.0: { name: "Airboros-L2-m2.0", size: "7B", tags: ["airoboros","llama2"] }
+jondurbin-airoboros-l2-13b-gpt4-2.0: { name: "Airboros-L2-2.0", size: "13B", tags: ["airoboros","llama2"] }
+jondurbin-airoboros-l2-13b-gpt4-m2.0: { name: "Airboros-L2-m2.0", size: "13B", tags: ["airoboros","llama2"] }
 
 tiiuae-falcon-7b-instruct-fp16: { name: "Falcon Instruct", size: "7B", tags: ["falcon"] }
 TheBloke-falcon-7b-instruct-GPTQ: { name: "Falcon Instruct", size: "7B", quant: "GPTQ-4b", tags: ["falcon"] }
