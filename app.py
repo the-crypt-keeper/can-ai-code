@@ -144,7 +144,7 @@ def main():
 
         ## Who are you?
 
-        This leaderboard is maintained by [the-crypt-keeper](https://github.com/the-crypt-keeper)
+        This leaderboard is maintained by [the-crypt-keeper](https://github.com/the-crypt-keeper) aka [kryptkpr](https://www.reddit.com/user/kryptkpr)
 
         ## How can I add a model?
 
