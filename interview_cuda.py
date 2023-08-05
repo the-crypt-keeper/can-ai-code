@@ -207,6 +207,8 @@ class InterviewExllama:
         self.config = ExLlamaConfig(hf_hub_download(repo_id=self.model_name, filename="config.json"))
         self.config.model_path = model_path
         self.config.max_seq_len = self.info.get('max_seq_len', 2048)
+        self.config.compress_pos_emb = self.info.get('compress_pos_emb', 1.0)
+
         if self.gpu_split is not None:
             self.config.set_auto_map(self.gpu_split)
 

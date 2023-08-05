@@ -113,7 +113,7 @@ jondurbin-airoboros-l2-13b-gpt4-m2.0: { name: "Airboros-L2-m2.0", size: "13B", t
 
 tiiuae-falcon-7b-instruct-fp16: { name: "Falcon Instruct", size: "7B", tags: ["falcon"] }
 TheBloke-falcon-7b-instruct-GPTQ: { name: "Falcon Instruct", size: "7B", quant: "GPTQ-4b", tags: ["falcon"] }
-abhinavkulkarni-falcon-7b-instruct-w4-g64-awq: { name: "Falcon Instruct", size: "7B", quant: "AWQ-4b", tags: ["falcon"] }
+abhinavkulkarni-falcon-7b-instruct-w4-g64-awq: { name: "Falcon Instruct", size: "7B", quant: "AWQ-4b", tags: ["falcon"], alias: "abhinavkulkarni-tiiuae-falcon-7b-instruct-w4-g64-awq" }
 falcon-7b-instruct.ggccv1.q5-0: { name: "Falcon Instruct", size: "7B", quant: "GGML-q5_0", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-7b-instruct-GGML" }
 TheBloke-falcon-40b-instruct-GPTQ: { name: "Falcon Instruct", size: "40B", quant: "GPTQ-4b", tags: ["falcon"] }
 abhinavkulkarni-tiiuae-falcon-40b-instruct-w4-g128-awq: { name: "Falcon Instruct", size: "40B", quant: "AWQ-4b", tags: ["falcon"] }
