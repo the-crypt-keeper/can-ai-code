@@ -46,6 +46,7 @@ lmsys-vicuna-7b-v1.1: { name: "Vicuna-1.1", size: "7B", tags: ["vicuna"], alias:
 lmsys-vicuna-7b-v1.3: { name: "Vicuna-1.3", size: "7B", tags: ["vicuna"], alias: "lmsys-vicuna-7b-v1.3-fp16" }
 lmsys-vicuna-7b-v1.3-fp4: { name: "Vicuna-1.3", size: "7B", tags: ["vicuna"], quant: "FP4", url: "https://huggingface.co/lmsys/vicuna-7b-v1.3" }
 lmsys-vicuna-7b-v1.3-int8: { name: "Vicuna-1.3", size: "7B", tags: ["vicuna"], quant: "INT8", url: "https://huggingface.co/lmsys/vicuna-7b-v1.3" }
+lmsys-vicuna-33b-v1.3: { name: "Vicuna-1.3", size: "33B", tags: ["vicuna"] }
 ggml-vicuna-7b-1.1-q5: { name: "Vicuna-1.1", size: "7B", quant: "GGML-q5_0", tags: ["vicuna"], url: "https://huggingface.co/CRD716/ggml-vicuna-1.1-quantized" }
 mit-han-lab-vicuna-7b-v1.3-4bit-g128-awq: { name: "Vicuna-1.3", size: "7B", quant: "AWQ-4b", tags: ["vicuna"], url: "https://huggingface.co/mit-han-lab/vicuna-7b-v1.3-4bit-g128-awq" }
 vicuna-7b-v1.3.ggmlv3.q5-0: { name: "Vicuna-1.3", size: "7B", quant: "GGML-q5_0", tags: ["vicuna"], url: "https://huggingface.co/TheBloke/vicuna-7B-v1.3-GGML" }
@@ -74,6 +75,7 @@ meta-llama-Llama-2-13b-chat-hf: { name: "Llama 2 Chat", size: "13B", tags: ["lla
 llama-2-13b-chat.ggmlv3.q5-0: { name: "Llama 2 Chat", size: "13B", tags: ["llama2"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML" }
 NousResearch-Redmond-Puffin-13B-fp16: { name: "Redmond-Puffin", size: "13B", tags: ["llama2"] }
 deepse-CodeUp-Llama-2-13b-chat-hf: { name: "CodeUp-Llama-2", size: "13B", tags: ["llama2"] }
+Open-Orca-OpenOrcaxOpenChat-Preview2-13B: { name: "OpenOrcaxOpenChat-Preview2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/Open-Orca/OpenOrcaxOpenChat-Preview2-13B" }
 
 llama-2-7b.ggmlv3.q5-0: { name: "Llama 2", size: "7B", quant: "GGML-q5_0", tags: ["llama2"], url: "https://huggingface.co/TheBloke/Llama-2-7B-GGML" }
 TheBloke-Llama-2-13B-GPTQ: { name: "Llama 2", size: "13B", quant: "GPTQ-4b", tags: ["llama2"] }
@@ -110,6 +112,8 @@ jondurbin-airoboros-l2-7b-gpt4-2.0: { name: "Airboros-L2-2.0", size: "7B", tags:
 jondurbin-airoboros-l2-7b-gpt4-m2.0: { name: "Airboros-L2-m2.0", size: "7B", tags: ["airoboros","llama2"] }
 jondurbin-airoboros-l2-13b-gpt4-2.0: { name: "Airboros-L2-2.0", size: "13B", tags: ["airoboros","llama2"] }
 jondurbin-airoboros-l2-13b-gpt4-m2.0: { name: "Airboros-L2-m2.0", size: "13B", tags: ["airoboros","llama2"] }
+jondurbin-airoboros-33b-gpt4-2.0: { name: "Airboros-2.0", size: "33B", tags: ["airoboros"] }
+jondurbin-airoboros-33b-gpt4-m2.0: { name: "Airboros-m2.0", size: "33B", tags: ["airoboros"] }
 
 tiiuae-falcon-7b-instruct-fp16: { name: "Falcon Instruct", size: "7B", tags: ["falcon"] }
 TheBloke-falcon-7b-instruct-GPTQ: { name: "Falcon Instruct", size: "7B", quant: "GPTQ-4b", tags: ["falcon"] }
@@ -117,7 +121,7 @@ abhinavkulkarni-falcon-7b-instruct-w4-g64-awq: { name: "Falcon Instruct", size: 
 falcon-7b-instruct.ggccv1.q5-0: { name: "Falcon Instruct", size: "7B", quant: "GGML-q5_0", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-7b-instruct-GGML" }
 TheBloke-falcon-40b-instruct-GPTQ: { name: "Falcon Instruct", size: "40B", quant: "GPTQ-4b", tags: ["falcon"] }
 abhinavkulkarni-tiiuae-falcon-40b-instruct-w4-g128-awq: { name: "Falcon Instruct", size: "40B", quant: "AWQ-4b", tags: ["falcon"] }
-falcon-40b-instruct.ggccv1.q2-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q3_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
+falcon-40b-instruct.ggccv1.q2-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q2_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
 falcon-40b-instruct.ggccv1.q3-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q3_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
 falcon-40b-instruct.ggccv1.q4-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q4_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
 falcon-40b-instruct.ggccv1.q5-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q5_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
