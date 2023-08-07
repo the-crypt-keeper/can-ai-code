@@ -78,6 +78,7 @@ NousResearch-Redmond-Puffin-13B-fp16: { name: "Redmond-Puffin", size: "13B", tag
 deepse-CodeUp-Llama-2-13b-chat-hf: { name: "CodeUp-Llama-2", size: "13B", tags: ["llama2"] }
 Open-Orca-OpenOrcaxOpenChat-Preview2-13B: { name: "OpenOrcaxOpenChat-Preview2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/Open-Orca/OpenOrcaxOpenChat-Preview2-13B" }
 ehartford-dolphin-llama2-7b: { name: "Dolphin Llama-2", size: "13B", tags: ["llama2"] }
+ehartford-WizardLM-1.0-Uncensored-Llama2-13b: { name: "WizardLM-1.0-Uncensored-Llama2", size: "13B", tags: ["wizard","llama2"]}
 
 llama-2-7b.ggmlv3.q5-0: { name: "Llama 2", size: "7B", quant: "GGML-q5_0", tags: ["llama2"], url: "https://huggingface.co/TheBloke/Llama-2-7B-GGML" }
 TheBloke-Llama-2-13B-GPTQ: { name: "Llama 2", size: "13B", quant: "GPTQ-4b", tags: ["llama2"] }

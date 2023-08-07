@@ -108,6 +108,9 @@ def download_NewHope_model():
 def download_dolphin_llama2_7b_model():
     download_model('ehartford/dolphin-llama2-7b')
 
+def download_wizardlm_uncencored_llama2_13b_model():
+    download_model('ehartford/WizardLM-1.0-Uncensored-Llama2-13b')
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -145,7 +148,7 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_dolphin_llama2_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_wizardlm_uncencored_llama2_13b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -161,8 +164,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))

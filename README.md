@@ -18,7 +18,9 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**8/08** Evaluations of quantized falcon, vicuna-1.3 33B, OpenOrcaxOpenChat-Preview2 and airboros-2.0 33B are up.
+**8/08** Evaluations of WizardLM-1.0-Uncensored-Llama2-13b and Dolphin are up.  Comparison of Falcon-Instruct 40B quants is now available.
+
+**8/05** Evaluations of quantized falcon, vicuna-1.3 33B, OpenOrcaxOpenChat-Preview2 and airboros-2.0 33B are up.
 
 **8/03** Evaluations of vicuna 1.5, airoboros 2.0 and CodeUp-Llama-2-13b are up.
 
