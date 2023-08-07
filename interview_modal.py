@@ -105,6 +105,9 @@ def download_airoboros_l2_13b_1p4p1_model():
 def download_NewHope_model():
     download_model("SLAM-group/NewHope")
 
+def download_dolphin_llama2_7b_model():
+    download_model('ehartford/dolphin-llama2-7b')
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -142,7 +145,7 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codeCherryPy_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_dolphin_llama2_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)

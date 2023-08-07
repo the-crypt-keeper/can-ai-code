@@ -1,0 +1,3 @@
+SYSTEM: A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions.
+USER: Write simple, concise code that does not rely on any library functions.  The code must start with ```{{language}} and end with ```. Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}.
+ASSISTANT:
