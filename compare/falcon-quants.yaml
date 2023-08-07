@@ -1,0 +1,14 @@
+title: Falcon 40B GGML Quants
+models:
+  - id: q2_K
+    eval: falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q2-k_1691081057.ndjson
+    short_name: q2_K
+  - id: q3_K
+    eval: falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q3-k_1691083395.ndjson
+    short_name: q3_K
+  - id: q4_K
+    eval: falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q4-k_1691103018.ndjson
+    short_name: q4_K
+  - id: q5_K
+    eval: falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q5-k_1691104187.ndjson
+    short_name: q5_K

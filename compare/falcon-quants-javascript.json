@@ -1,0 +1,549 @@
+{
+    "tests": {
+        "StringCountTokens-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.name == substrcount got substrCount\nFAIL f.call('aaa','a') == 3 got 4\nFAIL f.call(\"babaab\",\"ab\") == 2 got 3\nFAIL f.call(\"abcabcefgabc\",\"abc\") == 3 got 4\n",
+                    "code": "function substrCount(str, substr) {\n  const count = str.split(substr).length;\n  return count;\n}",
+                    "answer": " Here's an example code for the substrcount() function:\n\n```javascript\nfunction substrCount(str, substr) {\n  const count = str.split(substr).length;\n  return count;\n}\n``` \n\nThis function splits the input string into an array using the sub-string as a separator and returns the length of that array, which represents the number of occurrences of the sub-string in the original string."
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 6/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "FAIL f.call(\"babaab\",\"ab\") == 2 got 3\n",
+                    "code": "function substrcount(str, substr) {\n  let count = 0;\n  str.split('').forEach((char) => {\n    if (char === substr[0]) {\n      count++;\n    }\n  });\n  return count;\n}",
+                    "answer": " Here's an example code snippet for the given task:\n\n```javascript\nfunction substrcount(str, substr) {\n  let count = 0;\n  str.split('').forEach((char) => {\n    if (char === substr[0]) {\n      count++;\n    }\n  });\n  return count;\n}\n``` \n\nThis function splits the input string into an array of characters using the `split()` method, and then loops through each character in the array. If the current character matches the first character of the substring, it increments the count variable by one. Finally, the function returns the total count of occurrences of the substring in the input string."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "",
+                    "code": "function substrcount(str, substr) {\n  let count = 0;\n  for (let i = 0; i < str.length; i++) {\n    if (str.substring(i, i+substr.length) === substr) {\n      count++;\n    }\n  }\n  return count;\n}",
+                    "answer": " Here's an example implementation of the `substrcount` function using only basic JavaScript syntax:\n\n```javascript\nfunction substrcount(str, substr) {\n  let count = 0;\n  for (let i = 0; i < str.length; i++) {\n    if (str.substring(i, i+substr.length) === substr) {\n      count++;\n    }\n  }\n  return count;\n}\n``` \n\nThis function takes in two arguments: the string to search and the substring to find. It then loops through each character of the input string using a for loop, checking if that character matches the beginning of the substring. If it does, it increments the `count` variable. Finally, it returns the count of how many times the substring was found in the input string."
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 6/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "FAIL f.call(\"babaab\",\"ab\") == 2 got 3\n",
+                    "code": "function substrcount(str, substr) {\n  let count = 0;\n  for (let i = 0; i < str.length; i++) {\n    if (str[i] === substr[0]) {\n      count++;\n    }\n  }\n  return count;\n}",
+                    "answer": " Here's an example implementation of the `substrcount` function using only basic JavaScript syntax:\n\n```javascript\nfunction substrcount(str, substr) {\n  let count = 0;\n  for (let i = 0; i < str.length; i++) {\n    if (str[i] === substr[0]) {\n      count++;\n    }\n  }\n  return count;\n}\n```\n\nThis function takes in two arguments: the string to search through and the substring to find. It then loops through each character of the string, checking if it matches the first character of the substring. If there is a match, it increments the `count` variable. Finally, it returns the count of how many times the substring was found in the string."
+                }
+            },
+            "task": "Write a javascript function substrcount(str, substr) with inputs `str` and `substr` that returns counts the number of times the sub-string `substr` occurs in `str`",
+            "language": "javascript"
+        },
+        "FactorialZeroShot-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}",
+                    "answer": " Here's an example of how to write a JavaScript function for computing the factorial of a number using recursion:\n\n```javascript\nfunction factorial(n) {\n  if (n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}\n``` \n\nThis function takes a parameter `n`, which represents the number whose factorial we want to compute. It returns the result of the calculation by multiplying the current value with the result of the recursive call for the next iteration, until it reaches 1. The base case is handled separately by returning 1 when n equals 1. \n\nThis function can be called with any number as an argument and will return its factorial using this simple, concise code that does not rely on any library functions."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 0) return 1;\n  else return n * factorial(n-1);\n}",
+                    "answer": " Here's an example solution to the problem:\n\n```javascript\nfunction factorial(n) {\n  if (n === 0) return 1;\n  else return n * factorial(n-1);\n}\n``` \n\nThis function uses recursion to calculate the factorial of a given number. It starts by checking if the input is equal to 0, in which case it returns 1. Otherwise, it multiplies the current value with the result of calling itself with the input minus 1. This process continues until the base case is reached, at which point the function returns the final result."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 0) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}",
+                    "answer": " Here's an example implementation of the factorial function using iteration in JavaScript:\n\n```javascript\nfunction factorial(n) {\n  if (n === 0) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 0) return 1;\n  else return n * factorial(n-1);\n}",
+                    "answer": " Here's an example implementation of the factorial function using iteration in JavaScript:\n\n```javascript\nfunction factorial(n) {\n  if (n === 0) return 1;\n  else return n * factorial(n-1);\n}\n``` \n\nThis function takes a single argument, which is the number for which we want to calculate the factorial. It uses recursion to calculate the product of all integers from 1 up to and including the input number. If the input number is zero, it returns 1 as the result. Otherwise, it multiplies the current value by the result of calling itself with the input number minus one. This process continues until the base case is reached, where the function returns the final result."
+                }
+            },
+            "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using iteration",
+            "language": "javascript"
+        },
+        "FactorialRecursiveZeroShot-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}",
+                    "answer": " Here's an example of how to write a simple, concise JavaScript function for computing the factorial of a number using recursion:\n\n```javascript\nfunction factorial(n) {\n  if (n === 1) {\n    return 1;\n  } else {\n    return n * factorial(n - 1);\n  }\n}\n``` \n\nThis function takes a single parameter, `n`, and returns the factorial of that number using recursion. It first checks if the input is equal to 1, in which case it returns 1 as the result. Otherwise, it multiplies the current result by the factorial of the previous result subtracted by 1. This process continues until the result reaches 1, at which point the function stops and returns that value. \n\nThis function meets all the requirements mentioned above: simple, concise, does not rely on any library functions, and starts with `javascript` and ends with `````."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 0) return 1;\n  else return n * factorial(n-1);\n}",
+                    "answer": " Here's an example solution to the problem:\n\n```javascript\nfunction factorial(n) {\n  if (n === 0) return 1;\n  else return n * factorial(n-1);\n}\n``` \n\nThis function takes in a number as input and recursively calculates its factorial by multiplying the current number by the result of calling the same function with the previous number subtracted by 1. When the base case is reached, where n equals 0, the function returns 1."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 0) {\n    return 1;\n  } else {\n    return n * factorial(n-1);\n  }\n}",
+                    "answer": " Here's an example implementation of the factorial function using recursion in JavaScript:\n\n```javascript\nfunction factorial(n) {\n  if (n === 0) {\n    return 1;\n  } else {\n    return n * factorial(n-1);\n  }\n}\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 0) return 1;\n  else return n * factorial(n-1);\n}",
+                    "answer": " Here's an example implementation of the factorial function using recursion in JavaScript:\n\n```javascript\nfunction factorial(n) {\n  if (n === 0) return 1;\n  else return n * factorial(n-1);\n}\n``` \n\nThis function takes a single argument, which is the number for which we want to calculate the factorial. If the input is 0, it returns 1 as the factorial of 0 is 1. Otherwise, it multiplies the current value of n with the result of calling itself with n-1 as the argument, and returns that result. This process continues until the base case is reached, where n equals 0."
+                }
+            },
+            "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using recursion",
+            "language": "javascript"
+        },
+        "FactorialMisnamed-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 5/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(5) == 120 got 5\n",
+                    "code": "function glork(bork) {\n  return bork * 1;\n}",
+                    "answer": " Here's an example solution for glork(bork):\n\n```javascript\nfunction glork(bork) {\n  return bork * 1;\n}\n``` \n\nThis function takes in a single parameter, bork, and returns its factorial by multiplying it by 1. This function does not rely on any library functions or external libraries."
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) == True got False\nFAIL f.call(1) == 1 got {'error': 'Math.factorial is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(5) == 120 got {'error': 'Math.factorial is not a function', 'exc_type': 'TypeError'}\n",
+                    "code": "function glork(bork) {\n  return Math.factorial(bork);\n}",
+                    "answer": " Here's your solution:\n\n```javascript\nfunction glork(bork) {\n  return Math.factorial(bork);\n}\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "function glork(bork) {\n  if (bork === 0) {\n    return 1;\n  } else {\n    return bork * glork(bork - 1);\n  }\n}",
+                    "answer": " Here's an example solution to your problem:\n\n```javascript\nfunction glork(bork) {\n  if (bork === 0) {\n    return 1;\n  } else {\n    return bork * glork(bork - 1);\n  }\n}\n``` \n\nThis function takes in a number as input and returns its factorial. It uses recursion to calculate the factorial of any given number. If the input is 0, it returns 1. Otherwise, it multiplies the current result by the result of calling itself with the input minus 1."
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "function glork(bork) {\n  if (bork === 0) return 1;\n  else return bork * glork(bork - 1);\n}",
+                    "answer": " Here's an example implementation of the glork function in JavaScript:\n\n```javascript\nfunction glork(bork) {\n  if (bork === 0) return 1;\n  else return bork * glork(bork - 1);\n}\n``` \n\nThis function uses recursion to calculate the factorial of a given number. It starts by checking if the input is equal to 0, in which case it returns 1. Otherwise, it multiplies the current value of bork with the result of calling glork on bork minus 1. This process continues until the base case is reached and the function returns the final result."
+                }
+            },
+            "task": "Write a javascript function glork(bork) with input bork that returns the factorial of bork",
+            "language": "javascript"
+        },
+        "GCDZeroShot-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "function gcd(a, b) {\n  if (b === 0) return a;\n  else return gcd(b, a % b);\n}",
+                    "answer": " Here's an example code for the gcd function:\n\n```javascript\nfunction gcd(a, b) {\n  if (b === 0) return a;\n  else return gcd(b, a % b);\n}\n``` \n\nThis function takes two inputs and returns the greatest common denominator between them. It first checks if the second input is equal to zero, if yes then it returns the first input as the result. If not, it recursively calls itself with the remainder of the first input divided by the second input until a result is obtained."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "function gcd(a, b) {\n  if (b === 0) return a;\n  return gcd(b, a % b);\n}",
+                    "answer": " Here's an example solution in JavaScript:\n\n```javascript\nfunction gcd(a, b) {\n  if (b === 0) return a;\n  return gcd(b, a % b);\n}\n```\n\nThis function uses the modulus operator to find the remainder of dividing a by b. If b is zero, then a must be divisible by b and therefore the greatest common denominator is a. Otherwise, we recursively call the function with b as the new input and the remainder of dividing a by b as the new output. This process continues until we reach a point where b is not zero, at which point we have found the greatest common denominator."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "function gcd(a, b) {\n  if (b === 0) return a;\n  return gcd(b, a % b);\n}",
+                    "answer": " Here's an example implementation of the gcd function in JavaScript:\n\n```javascript\nfunction gcd(a, b) {\n  if (b === 0) return a;\n  return gcd(b, a % b);\n}\n```\n\nThis implementation uses recursion to find the greatest common divisor of two numbers. The function takes in two arguments: a and b. If b is equal to zero, then the function returns a as the greatest common denominator. Otherwise, it calls itself with the remainder of a divided by b (which represents the quotient of a divided by b) and the new value of b. This process continues until b becomes zero, at which point the function returns the final result."
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "function gcd(a, b) {\n  if (b === 0) return a;\n  return gcd(b, a % b);\n}",
+                    "answer": " Here is an example implementation of the gcd function in JavaScript:\n\n```javascript\nfunction gcd(a, b) {\n  if (b === 0) return a;\n  return gcd(b, a % b);\n}\n```\n\nThis function uses recursion to find the greatest common divisor of two numbers. It starts by checking if one of the numbers is zero, in which case it returns the other number as the result. If both numbers are non-zero, it calculates the remainder of dividing the larger number by the smaller number and then calls itself with the quotient (which is the smaller number) and the remainder (which is the difference between the two numbers). This process continues until one of the numbers becomes zero, at which point the function returns that number as the result."
+                }
+            },
+            "task": "Write a javascript function gcd(a, b) with two inputs a and b that returns the greatest common denominator of a and b",
+            "language": "javascript"
+        },
+        "GCDAlternative-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 6/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(5,0) == 5\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 100\nFAIL f.call(0,3) == 3 got 0\nFAIL f.call(13,7) == 1 got 13\n",
+                    "code": "function gcf(a, b) {\n  var temp;\n  if (b === 1) {\n    return a;\n  } else {\n    temp = Math.floor(Math.sqrt(Math.pow(a, 2)));\n    return temp;\n  }\n}",
+                    "answer": " Here's an example code for the gcf() function:\n\n```javascript\nfunction gcf(a, b) {\n  var temp;\n  if (b === 1) {\n    return a;\n  } else {\n    temp = Math.floor(Math.sqrt(Math.pow(a, 2)));\n    return temp;\n  }\n}\n``` \n\nThis function first checks if the second input is equal to 1 or not. If it's equal to 1, then it returns the first input as the greatest common factor. Otherwise, it finds the square root of the product of the first and second inputs using Math.sqrt() method and returns that value as the gcf."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "",
+                    "code": "function gcf(a, b) {\n  if (b === 0) return a;\n  else return gcf(b, a % b);\n}",
+                    "answer": " Here's an example solution in JavaScript:\n\n```javascript\nfunction gcf(a, b) {\n  if (b === 0) return a;\n  else return gcf(b, a % b);\n}\n``` \n\nThis function uses the modulus operator to find the remainder of dividing a by b. If b is zero, then a is the greatest common factor. Otherwise, it recursively calls itself with b as the new input and the remainder of dividing a by b as the new output. This process continues until b becomes zero, at which point the function returns the final result."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "",
+                    "code": "function gcf(a, b) {\n  if (b === 0) return a;\n  else return gcf(b, a % b);\n}",
+                    "answer": " Here's an example solution in JavaScript:\n\n```javascript\nfunction gcf(a, b) {\n  if (b === 0) return a;\n  else return gcf(b, a % b);\n}\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "",
+                    "code": "function gcf(a, b) {\n  if (b === 0) return a;\n  else return gcf(b, a % b);\n}",
+                    "answer": " Here's an example implementation of the gcf function in JavaScript:\n\n```javascript\nfunction gcf(a, b) {\n  if (b === 0) return a;\n  else return gcf(b, a % b);\n}\n```\n\nThis function uses recursion to find the greatest common factor of two numbers. It starts by checking if one of the numbers is zero, in which case it returns the other number as the greatest common factor. If both numbers are non-zero, it calls itself with the remainder of the first number divided by the second number, and then uses that result to find the gcf of the original two numbers. This process continues until one of the numbers is zero or a base case is reached (i.e., the recursion depth limit is exceeded)."
+                }
+            },
+            "task": "Write a javascript function gcf(a, b) with two inputs a and b that returns the greatest common factor of a and b",
+            "language": "javascript"
+        },
+        "GCDMisnamed-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 6/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 100\nFAIL f.call(13,7) == 1 got 13\nFAIL f.name == fofx got gcd\n",
+                    "code": "function gcd(x, banana) {\n  const temp = Math.abs(x);\n  const temp2 = Math.abs(banana);\n  if (temp > temp2) {\n    return x;\n  } else {\n    return banana;\n  }\n}\n\n// Example usage:\nconsole.log(gcd(5, 3)); // Outputs 1\nconsole.log(gcd(10, 5)); // Outputs 2",
+                    "answer": " Here's an example solution for the problem:\n\n```javascript\nfunction gcd(x, banana) {\n  const temp = Math.abs(x);\n  const temp2 = Math.abs(banana);\n  if (temp > temp2) {\n    return x;\n  } else {\n    return banana;\n  }\n}\n\n// Example usage:\nconsole.log(gcd(5, 3)); // Outputs 1\nconsole.log(gcd(10, 5)); // Outputs 2\n```"
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(100,20) == 20 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(5,0) == 5 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(0,3) == 3 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\nFAIL f.call(13,7) == 1 got {'error': 'Math.gcd is not a function', 'exc_type': 'TypeError'}\n",
+                    "code": "function fofx(x, banana) {\n  return Math.gcd(x, banana);\n}",
+                    "answer": " Here's an example solution in JavaScript:\n\n```javascript\nfunction fofx(x, banana) {\n  return Math.gcd(x, banana);\n}\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "",
+                    "code": "function fofx(x, banana) {\n  if (banana === 0) {\n    return x;\n  } else {\n    return fofx(banana, x % banana);\n  }\n}",
+                    "answer": " Here's an example implementation of the function:\n\n```javascript\nfunction fofx(x, banana) {\n  if (banana === 0) {\n    return x;\n  } else {\n    return fofx(banana, x % banana);\n  }\n}\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "",
+                    "code": "function fofx(x, banana) {\n  if (banana === 0) return x;\n  else return fofx(banana, x % banana);\n}",
+                    "answer": " Here's an example implementation of the function in JavaScript:\n\n```javascript\nfunction fofx(x, banana) {\n  if (banana === 0) return x;\n  else return fofx(banana, x % banana);\n}\n```\n\nThis function uses recursion to find the greatest common denominator of two numbers. It starts by checking if the second number is zero, in which case it returns the first number as the gcd. Otherwise, it calls itself with the remainder of the first number divided by the second number, and continues until it reaches a base case where both numbers are equal to 0."
+                }
+            },
+            "task": "Write a javascript function fofx(x, banana) with two inputs x and banana that returns the greatest common denominator (gcd) of x and banana",
+            "language": "javascript"
+        },
+        "SanityMeaningOfLife-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 2/3",
+                    "passing_tests": "PASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "FAIL f.name == meaning_of_life got meaningOfLife\n",
+                    "code": "function meaningOfLife() {\n  return 42;\n}",
+                    "answer": " Here's an example of how you can write the function:\n\n```javascript\nfunction meaningOfLife() {\n  return 42;\n}\n``` \n\nThis function returns the number 42 as the answer to the ultimate question of existence."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "function meaning_of_life() {\n  return 42;\n}",
+                    "answer": " Here's your solution:\n\n```javascript\nfunction meaning_of_life() {\n  return 42;\n}\n```"
+                },
+                "q4_K": {
+                    "check_summary": "FAIL correct 2/3",
+                    "passing_tests": "PASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "FAIL f.name == meaning_of_life got meaningOfLife\n",
+                    "code": "function meaningOfLife() {\n  return 42;\n}",
+                    "answer": " Here's an example of how you can write a simple JavaScript function called \"meaning_of_life()\" that returns the answer to life, the universe, and everything as an integer:\n\n```javascript\nfunction meaningOfLife() {\n  return 42;\n}\n``` \n\nThis function simply returns the number 42, which is famously known as the answer to life, the universe, and everything in Douglas Adams' book series The Hitchhiker's Guide to the Galaxy."
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 2/3",
+                    "passing_tests": "PASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "FAIL f.name == meaning_of_life got meaningOfLife\n",
+                    "code": "function meaningOfLife() {\n  return 42;\n}",
+                    "answer": " Here's an example of how you can write the function in JavaScript:\n\n```javascript\nfunction meaningOfLife() {\n  return 42;\n}\n``` \n\nThis function simply returns the number 42 as the answer to the ultimate question of life, the universe, and everything."
+                }
+            },
+            "task": "Write a javascript function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+            "language": "javascript"
+        },
+        "SanityList-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call()[0] == 5 got 0\nFAIL f.call()[1] == foobar got 1\nFAIL f.call()[2] == Madrid got 2\n",
+                    "code": "function things() {\n  return [5, 'foobar', Madrid];\n}",
+                    "answer": " Here is an example solution for the given problem:\n\n```javascript\nfunction things() {\n  return [5, 'foobar', Madrid];\n}\n``` \n\nThis function returns a list with three values: 5, 'foobar', and Madrid. The first value is a number, the second value is a string, and the third value is the capital city of Spain."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "function things() {\n  return [5, 'foobar', 'Madrid'];\n}",
+                    "answer": " Here is the solution to your problem:\n\n```javascript\nfunction things() {\n  return [5, 'foobar', 'Madrid'];\n}\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "function things() {\n  return [5, 'foobar', 'Madrid'];\n}",
+                    "answer": " Here is an example solution to your problem:\n\n```javascript\nfunction things() {\n  return [5, 'foobar', 'Madrid'];\n}\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "function things() {\n  return [5, 'foobar', 'Madrid'];\n}",
+                    "answer": " Here is an example solution in JavaScript:\n\n```javascript\nfunction things() {\n  return [5, 'foobar', 'Madrid'];\n}\n```"
+                }
+            },
+            "task": "Write a javascript function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+            "language": "javascript"
+        },
+        "SanitySecretIdentityMap-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call().get('Superman') == ['Clark Kent', 'Kal-El'] got None\nFAIL f.call().get('Batman') == Bruce Wayne got None\nFAIL f.call().get('Spider-Man') == Peter Parker got None\n",
+                    "code": "function secretidentities() {\n  const supermanRealName = \"Clark Kent\";\n  const batmanRealName = \"Bruce Wayne\";\n  const spiderManRealName = \"Peter Parker\";\n\n  return {\n    Superman: supermanRealName,\n    Batman: batmanRealName,\n    Spider-Man: spiderManRealName\n  };\n}",
+                    "answer": " Here's one possible solution:\n\n```javascript\nfunction secretidentities() {\n  const supermanRealName = \"Clark Kent\";\n  const batmanRealName = \"Bruce Wayne\";\n  const spiderManRealName = \"Peter Parker\";\n\n  return {\n    Superman: supermanRealName,\n    Batman: batmanRealName,\n    Spider-Man: spiderManRealName\n  };\n}\n\n```"
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call().get('Superman') == ['Clark Kent', 'Kal-El'] got None\nFAIL f.call().get('Batman') == Bruce Wayne got None\nFAIL f.call().get('Spider-Man') == Peter Parker got None\n",
+                    "code": "function secretidentities() {\n  return {\n    Superman: \"Clark Kent\",\n    Batman: \"Bruce Wayne\",\n    Spider-Man: \"Peter Parker\"\n  };\n}",
+                    "answer": " Here's your solution:\n\n```javascript\nfunction secretidentities() {\n  return {\n    Superman: \"Clark Kent\",\n    Batman: \"Bruce Wayne\",\n    Spider-Man: \"Peter Parker\"\n  };\n}\n```"
+                },
+                "q4_K": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call().get('Superman') == ['Clark Kent', 'Kal-El'] got None\nFAIL f.call().get('Batman') == Bruce Wayne got None\nFAIL f.call().get('Spider-Man') == Peter Parker got None\n",
+                    "code": "function secretidentities() {\n  return {\n    superman: \"Clark Kent\",\n    batman: \"Bruce Wayne\",\n    spider_man: \"Peter Parker\"\n  };\n}",
+                    "answer": " Here's one possible solution:\n\n```javascript\nfunction secretidentities() {\n  return {\n    superman: \"Clark Kent\",\n    batman: \"Bruce Wayne\",\n    spider_man: \"Peter Parker\"\n  };\n}\n```"
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call().get('Superman') == ['Clark Kent', 'Kal-El'] got None\nFAIL f.call().get('Batman') == Bruce Wayne got None\nFAIL f.call().get('Spider-Man') == Peter Parker got None\n",
+                    "code": "function secretidentities() {\n  return {\n    superman: \"Clark Kent\",\n    batman: \"Bruce Wayne\",\n    spider_man: \"Peter Parker\"\n  };\n}",
+                    "answer": " Here's one possible solution:\n\n```javascript\nfunction secretidentities() {\n  return {\n    superman: \"Clark Kent\",\n    batman: \"Bruce Wayne\",\n    spider_man: \"Peter Parker\"\n  };\n}\n```"
+                }
+            },
+            "task": "Write a javascript function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+            "language": "javascript"
+        },
+        "FibonacciZeroShot-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(1) == 1\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got {'error': 'Maximum call stack size exceeded', 'exc_type': 'RangeError'}\nFAIL f.call(2) == 1 got 2\nFAIL f.call(3) == 2 got 3\nFAIL f.call(5) == 5 got 8\n",
+                    "code": "function fib(n) {\n  if (n === 1) {\n    return 1;\n  } else if (n === 2) {\n    return 2;\n  } else {\n    const prev = fib(n - 1);\n    const curr = fib(n - 2);\n    return prev + curr;\n  }\n}\n\n// Example usage: console.log(fib(5)); --> 3",
+                    "answer": " Here's an example solution for the problem:\n\n```javascript\nfunction fib(n) {\n  if (n === 1) {\n    return 1;\n  } else if (n === 2) {\n    return 2;\n  } else {\n    const prev = fib(n - 1);\n    const curr = fib(n - 2);\n    return prev + curr;\n  }\n}\n\n// Example usage: console.log(fib(5)); --> 3\n```"
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(2) == 1 got 0\nFAIL f.call(3) == 2 got 1\nFAIL f.call(5) == 5 got 2\n",
+                    "code": "function fib(n) {\n  if (n < 2) return n;\n  let a = 0, b = 1;\n  for (let i = 0; i < n-2; i++) {\n    a += b;\n    b = a - b;\n  }\n  return a;\n}",
+                    "answer": " Here's an example solution in JavaScript:\n\n```javascript\nfunction fib(n) {\n  if (n < 2) return n;\n  let a = 0, b = 1;\n  for (let i = 0; i < n-2; i++) {\n    a += b;\n    b = a - b;\n  }\n  return a;\n}\n```\n\nThis function uses the formula for the Fibonacci sequence: Fn = Fn-1 + Fn-2, where F0 = 0 and F1 = 1. It starts by checking if n is less than or equal to 2, in which case it returns the input value. Otherwise, it initializes variables a and b to 0 and 1 respectively, and then loops through the remaining iterations of the sequence using a for loop. In each iteration, it adds the current value of b to a, and then subtracts the previous value of b from a. This process continues until the final element of the sequence is computed. Finally, the function returns the result."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "function fib(n) {\n  if (n < 2) return n;\n  return fib(n - 1) + fib(n - 2);\n}",
+                    "answer": " Here's an example solution to your problem:\n\n```javascript\nfunction fib(n) {\n  if (n < 2) return n;\n  return fib(n - 1) + fib(n - 2);\n}\n```\n\nThis function recursively calculates the Fibonacci sequence using a base case of returning the input number when it is less than or equal to 1. Otherwise, it calls itself with the previous two elements in the sequence and adds them together to get the next element."
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "function fib(n) {\n  if (n < 2) return n;\n  return fib(n - 1) + fib(n - 2);\n}",
+                    "answer": " Here's an example implementation of the fibonacci sequence using recursion in JavaScript:\n\n```javascript\nfunction fib(n) {\n  if (n < 2) return n;\n  return fib(n - 1) + fib(n - 2);\n}\n```\n\nThis function takes an integer argument `n`, and returns the `n`-th element of the fibonacci sequence. If `n` is less than or equal to 1, it simply returns that number. Otherwise, it recursively calls itself with `n - 1` and `n - 2`, adds their results together, and returns the sum.\n\nTo use this function, you can call it with an integer argument:\n\n```javascript\nconsole.log(fib(5)); // Outputs 3\nconsole.log(fib(10)); // Outputs 55\n```"
+                }
+            },
+            "task": "Write a javascript function fib(n) with input element number n (0 based) that returns the `n`-th element of the fibonacci sequence",
+            "language": "javascript"
+        },
+        "FibonacciMisnamed-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(1) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got Expecting value: line 1 column 1 (char 0)\nFAIL f.call(2) == 1 got 2\nFAIL f.call(3) == 2 got 3\nFAIL f.call(5) == 5 got 8\n",
+                    "code": "function potato(g) {\n  const fibo = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765];\n  return fibo[g-1];\n}\n\n// Example usage:\nconsole.log(potato(3)); // Outputs 2",
+                    "answer": " Here's an example solution for the problem:\n\n```javascript\nfunction potato(g) {\n  const fibo = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765];\n  return fibo[g-1];\n}\n\n// Example usage:\nconsole.log(potato(3)); // Outputs 2\n``` \n\nThis function returns the `g`th element of the Fibonacci sequence using a simple loop to traverse the array and find the correct index based on the input number. The function does not rely on any library functions or external libraries, making it simple and concise."
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 5/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(2) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(1) == 1 got 0\nFAIL f.call(3) == 2 got 3\nFAIL f.call(5) == 5 got 10\n",
+                    "code": "function potato(g) {\n  let result = 0;\n  for (let i = 0; i < g; i++) {\n    result += i;\n  }\n  return result;\n}",
+                    "answer": " Here's an example solution in JavaScript:\n\n```javascript\nfunction potato(g) {\n  let result = 0;\n  for (let i = 0; i < g; i++) {\n    result += i;\n  }\n  return result;\n}\n``` \n\nThis function takes a number as input and returns the corresponding element of the Fibonacci sequence. The function uses a loop to calculate the sum of the first `g` numbers, which is equal to the `g`-th element of the sequence."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "",
+                    "code": "function potato(g) {\n  let fib = [0, 1];\n  for (let i = 2; i <= g; i++) {\n    fib.push(fib[i-1] + fib[i-2]);\n  }\n  return fib[g];\n}",
+                    "answer": " Here's an example solution to your problem:\n\n```javascript\nfunction potato(g) {\n  let fib = [0, 1];\n  for (let i = 2; i <= g; i++) {\n    fib.push(fib[i-1] + fib[i-2]);\n  }\n  return fib[g];\n}\n``` \n\nThis function takes in a number as input and returns the corresponding element of the Fibonacci sequence using recursion. The base case is when g equals 0 or 1, where we simply return 0 or 1 respectively. Otherwise, we use a loop to calculate the nth element of the Fibonacci sequence by adding up the previous two elements. Finally, we return the result."
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(2) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got Expecting value: line 1 column 1 (char 0)\nFAIL f.call(1) == 1 got 0\nFAIL f.call(3) == 2 got 1\nFAIL f.call(5) == 5 got 3\n",
+                    "code": "function potato(g) {\n  let fib = [0, 1];\n  for (let i = 2; i <= g; i++) {\n    fib.push(fib[i-1] + fib[i-2]);\n  }\n  return fib[g-1];\n}",
+                    "answer": " Here's an example implementation of the `potato` function in JavaScript:\n\n```javascript\nfunction potato(g) {\n  let fib = [0, 1];\n  for (let i = 2; i <= g; i++) {\n    fib.push(fib[i-1] + fib[i-2]);\n  }\n  return fib[g-1];\n}\n```\n\nThis function uses a simple recursive approach to calculate the nth element of the Fibonacci sequence, starting with the first two elements (0 and 1). It then adds each subsequent element by adding the previous two elements. Finally, it returns the gth element of the sequence."
+                }
+            },
+            "task": "Write a javascript function potato(g) with input element number g (0 based) that returns the `g`-th element of the fibonacci sequence",
+            "language": "javascript"
+        },
+        "FibonacciListZeroShot-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [1, 2]\nFAIL f.call(2) == [0, 1] got [1, 2]\nFAIL f.call(3) == [0, 1, 1] got [1, 2, None]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [1, 2, None, None, None]\n",
+                    "code": "function fib(n) {\n  const result = [1, 2];\n  for (let i = 3; i <= n; i++) {\n    result.push(result[i-2] + result[i-1]);\n  }\n  return result;\n}\n\n// Example usage: console.log(fib(10)) --> [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]",
+                    "answer": " Here's an example solution for the problem:\n\n```javascript\nfunction fib(n) {\n  const result = [1, 2];\n  for (let i = 3; i <= n; i++) {\n    result.push(result[i-2] + result[i-1]);\n  }\n  return result;\n}\n\n// Example usage: console.log(fib(10)) --> [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]\n```"
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got [0, 1, 1]\nFAIL f.call(3) == [0, 1, 1] got [0, 1, 1, 2]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, 1, 1, 2, 3, 5]\n",
+                    "code": "function fib(n) {\n  let arr = [0, 1];\n  for (let i = 2; i <= n; i++) {\n    arr.push(arr[i-2] + arr[i-1]);\n  }\n  return arr;\n}",
+                    "answer": " Here's an example solution in JavaScript:\n\n```javascript\nfunction fib(n) {\n  let arr = [0, 1];\n  for (let i = 2; i <= n; i++) {\n    arr.push(arr[i-2] + arr[i-1]);\n  }\n  return arr;\n}\n``` \n\nThis function uses a simple loop to generate the first `n` elements of the fibonacci sequence, and then returns an array containing those values."
+                },
+                "q4_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got [0, 1, 1]\nFAIL f.call(3) == [0, 1, 1] got [0, 1, 1, 2]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, 1, 1, 2, 3, 5]\n",
+                    "code": "function fib(n) {\n  let result = [0, 1];\n  for (let i = 2; i <= n; i++) {\n    result.push(result[i-1] + result[i-2]);\n  }\n  return result;\n}",
+                    "answer": " Here's an example solution to your problem:\n\n```javascript\nfunction fib(n) {\n  let result = [0, 1];\n  for (let i = 2; i <= n; i++) {\n    result.push(result[i-1] + result[i-2]);\n  }\n  return result;\n}\n``` \n\nThis function takes in an integer parameter `n`, and returns an array containing the first `n` elements of the Fibonacci sequence. The function starts by initializing an empty array called `result`. It then adds the first two elements of the sequence, 0 and 1, to the `result` array using the push method. Finally, it uses a for loop to add each subsequent element of the sequence to the `result` array by adding the previous two elements together. The function continues this process until it has added all `n` elements to the `result` array."
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got [1, 1]\nFAIL f.call(3) == [0, 1, 1] got [2, 0]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, -4]\n",
+                    "code": "function fib(n) {\n  if (n <= 1) return [0, 1];\n\n  let a = 0;\n  let b = 1;\n  let c = 0;\n  let d = 1;\n\n  for (let i = 2; i <= n; i++) {\n    c = a + b;\n    d = b - a;\n    a = c;\n    b = d;\n  }\n\n  return [a, b];\n}",
+                    "answer": " Here's an example implementation of the fibonacci sequence in JavaScript:\n\n```javascript\nfunction fib(n) {\n  if (n <= 1) return [0, 1];\n\n  let a = 0;\n  let b = 1;\n  let c = 0;\n  let d = 1;\n\n  for (let i = 2; i <= n; i++) {\n    c = a + b;\n    d = b - a;\n    a = c;\n    b = d;\n  }\n\n  return [a, b];\n}\n```\n\nThis function takes in an integer value for the length of the fibonacci sequence and returns an array containing the first n elements of the sequence. The implementation uses two variables to keep track of the current values of the sequence, and updates them recursively until it reaches the desired length."
+                }
+            },
+            "task": "Write a javascript function fib(n) with input length n that returns a list with the first `n` elements of the fibonacci sequence",
+            "language": "javascript"
+        },
+        "FibonacciListMisnamed-javascript": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 3/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(0),list) == True got False\nFAIL f.call(1) == [0] got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\nFAIL f.call(2) == [0, 1] got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\nFAIL f.call(3) == [0, 1, 1] got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\nFAIL f.call(5) == [0, 1, 1, 2, 3] got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\n",
+                    "code": "function glork(bork) {\n  const fibo = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 26214, 37737, 50095, 70471, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737,",
+                    "answer": " Here's an example solution for the problem:\n\n```javascript\nfunction glork(bork) {\n  const fibo = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 26214, 37737, 50095, 70471, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737, 57798, 78476, 10946, 17407, 26214, 37737,"
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got [0, 1, 1]\nFAIL f.call(3) == [0, 1, 1] got [0, 1, 1, 2]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, 1, 1, 2, 3, 5]\n",
+                    "code": "function glork(bork) {\n  const fibo = [0, 1];\n  for (let i = 2; i <= bork; i++) {\n    fibo.push(fibo[i-1] + fibo[i-2]);\n  }\n  return fibo;\n}",
+                    "answer": " Here's an example solution in JavaScript:\n\n```javascript\nfunction glork(bork) {\n  const fibo = [0, 1];\n  for (let i = 2; i <= bork; i++) {\n    fibo.push(fibo[i-1] + fibo[i-2]);\n  }\n  return fibo;\n}\n``` \n\nThis function takes in a parameter `bork`, which is the length of the Fibonacci sequence to generate. It initializes an empty array called `fibo` and sets its first two elements to 0 and 1 respectively. Then, it loops through the remaining elements of the sequence using a for loop that runs from 2 to `bork`. For each iteration, it adds the current element to the previous two elements in the sequence and pushes the result onto the `fibo` array. Finally, it returns the completed `fibo` array."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "function glork(bork) {\n  var fibo = [0, 1];\n  for (var i = 2; i <= bork; i++) {\n    fibo.push(fibo[i-1] + fibo[i-2]);\n  }\n  return fibo.slice(0, bork);\n}",
+                    "answer": " Here's an example implementation of the glork function in JavaScript:\n\n```javascript\nfunction glork(bork) {\n  var fibo = [0, 1];\n  for (var i = 2; i <= bork; i++) {\n    fibo.push(fibo[i-1] + fibo[i-2]);\n  }\n  return fibo.slice(0, bork);\n}\n``` \n\nThis function uses a simple loop to calculate the first `bork` elements of the Fibonacci sequence and returns them as an array. Note that this implementation assumes that the input value for `bork` is a positive integer."
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "function glork(bork) {\n  let fibo = [0, 1];\n  for (let i = 2; i <= bork; i++) {\n    fibo.push(fibo[i-1] + fibo[i-2]);\n  }\n  return fibo.slice(0, bork);\n}",
+                    "answer": " Here's an example implementation of the glork function in JavaScript:\n\n```javascript\nfunction glork(bork) {\n  let fibo = [0, 1];\n  for (let i = 2; i <= bork; i++) {\n    fibo.push(fibo[i-1] + fibo[i-2]);\n  }\n  return fibo.slice(0, bork);\n}\n```\n\nThis function uses a simple loop to generate the first `bork` elements of the Fibonacci sequence and then returns them as an array using the slice method."
+                }
+            },
+            "task": "Write a javascript function glork(bork) with input length bork that returns a list with the first `bork` elements of the fibonacci sequence",
+            "language": "javascript"
+        }
+    },
+    "models": [
+        {
+            "prompt": "falcon-instruct",
+            "short_name": "q2_K",
+            "params": "topk1",
+            "model": "falcon-40b-instruct.ggccv1.q2-k",
+            "id": "q2_K",
+            "idx": 0,
+            "passed": 56,
+            "total": 91
+        },
+        {
+            "prompt": "falcon-instruct",
+            "short_name": "q3_K",
+            "params": "topk1",
+            "model": "falcon-40b-instruct.ggccv1.q3-k",
+            "id": "q3_K",
+            "idx": 1,
+            "passed": 65,
+            "total": 91
+        },
+        {
+            "prompt": "falcon-instruct",
+            "short_name": "q4_K",
+            "params": "topk1",
+            "model": "falcon-40b-instruct.ggccv1.q4-k",
+            "id": "q4_K",
+            "idx": 2,
+            "passed": 83,
+            "total": 91
+        },
+        {
+            "prompt": "falcon-instruct",
+            "short_name": "q5_K",
+            "params": "topk1",
+            "model": "falcon-40b-instruct.ggccv1.q5-k",
+            "id": "q5_K",
+            "idx": 3,
+            "passed": 78,
+            "total": 91
+        }
+    ],
+    "config": {
+        "title": "Falcon 40B GGML Quants (javascript)",
+        "models": [
+            {
+                "id": "q2_K",
+                "eval": "falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q2-k_1691081057.ndjson",
+                "short_name": "q2_K"
+            },
+            {
+                "id": "q3_K",
+                "eval": "falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q3-k_1691083395.ndjson",
+                "short_name": "q3_K"
+            },
+            {
+                "id": "q4_K",
+                "eval": "falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q4-k_1691103018.ndjson",
+                "short_name": "q4_K"
+            },
+            {
+                "id": "q5_K",
+                "eval": "falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q5-k_1691104187.ndjson",
+                "short_name": "q5_K"
+            }
+        ],
+        "language": "javascript"
+    },
+    "analyser": ""
+}

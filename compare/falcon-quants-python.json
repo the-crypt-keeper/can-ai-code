@@ -1,0 +1,549 @@
+{
+    "tests": {
+        "StringCountTokens-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "",
+                    "code": "def substrcount(str, substr):\n    count = str.count(substr)\n    return count",
+                    "answer": " Here's an example code for the `substrcount` function:\n\n```python\ndef substrcount(str, substr):\n    count = str.count(substr)\n    return count\n``` \n\nThis function takes two inputs: `str`, a string containing the substring to be searched, and `substr`, the substring itself. It counts the number of times the substring occurs in the original string by using the built-in `count()` method on the input string. The result is returned as an integer value representing the count."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    start_pos = str.find(substr)\n    while start_pos != -1:\n        count += 1\n        start_pos = str.find(substr, start_pos+len(substr))\n    return count",
+                    "answer": " Here's an example code for the given task:\n\n```python\ndef substrcount(str, substr):\n    count = 0\n    start_pos = str.find(substr)\n    while start_pos != -1:\n        count += 1\n        start_pos = str.find(substr, start_pos+len(substr))\n    return count\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    for i in range(len(str)):\n        if str[i:i+len(substr)] == substr:\n            count += 1\n    return count",
+                    "answer": " Here's an example implementation of the `substrcount` function using only built-in Python functions:\n\n```python\ndef substrcount(str, substr):\n    count = 0\n    for i in range(len(str)):\n        if str[i:i+len(substr)] == substr:\n            count += 1\n    return count\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.name == substrcount\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\nPASS f.call(\"babaab\",\"ab\") == 2\nPASS f.call(\"abcabcefgabc\",\"abc\") == 3\n",
+                    "failing_tests": "",
+                    "code": "def substrcount(str, substr):\n    count = 0\n    for i in range(len(str)):\n        if str[i:i+len(substr)] == substr:\n            count += 1\n    return count",
+                    "answer": " Here's an example implementation of the `substrcount` function using Python:\n\n```python\ndef substrcount(str, substr):\n    count = 0\n    for i in range(len(str)):\n        if str[i:i+len(substr)] == substr:\n            count += 1\n    return count\n```\n\nThis implementation uses a loop to iterate over each character in the input string and check if it matches the given substring. If there is a match, the count is incremented by 1. Finally, the function returns the total count of all occurrences of the substring in the input string."
+                }
+            },
+            "task": "Write a python function substrcount(str, substr) with inputs `str` and `substr` that returns counts the number of times the sub-string `substr` occurs in `str`",
+            "language": "python"
+        },
+        "FactorialZeroShot-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 1:\n        return 1\n    else:\n        result = n * factorial(n-1)\n    return result",
+                    "answer": " Here's an example code for the function:\n\n```python\ndef factorial(n):\n    if n == 1:\n        return 1\n    else:\n        result = n * factorial(n-1)\n    return result\n``` \n\nThis function calculates the factorial of a given number using recursion. It first checks if the input number is equal to 1, and returns 1 as the result. Otherwise, it multiplies the current result with the result obtained by subtracting 1 from the original number. This process continues until the result reaches 1. The function ends when the result equals 1."
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 3/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\n",
+                    "failing_tests": "FAIL f.call(5) == 120 got 2\n",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(2, int(n**0.5)+1):\n        result *= i\n    return result",
+                    "answer": " Here is an example solution to the problem:\n\n```python\ndef factorial(n):\n    result = 1\n    for i in range(2, int(n**0.5)+1):\n        result *= i\n    return result\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(2, n+1):\n        result *= i\n    return result",
+                    "answer": " Here's an example implementation of the factorial function using iteration in Python:\n\n```python\ndef factorial(n):\n    result = 1\n    for i in range(2, n+1):\n        result *= i\n    return result\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(2, n+1):\n        result *= i\n    return result",
+                    "answer": " Here is an example implementation of the factorial function in Python:\n\n```python\ndef factorial(n):\n    result = 1\n    for i in range(2, n+1):\n        result *= i\n    return result\n```"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using iteration",
+            "language": "python"
+        },
+        "FactorialRecursiveZeroShot-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": " Here's an example code for the function:\n\n```python\ndef factorial(n):\n    if n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)\n```"
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": " Here is an example solution to the problem:\n\n```python\ndef factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": " Here's an example implementation of the factorial function using recursion in Python:\n\n```python\ndef factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": " Here is an example implementation of the factorial function using recursion in Python:\n\n```python\ndef factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)\n```"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using recursion",
+            "language": "python"
+        },
+        "FactorialMisnamed-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 5/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(5) == 120 got 25\n",
+                    "code": "def glork(bork):\n    return bork**2",
+                    "answer": " Here's an example code for glork function:\n\n```python\ndef glork(bork):\n    return bork**2\n```"
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    return int(factorial(bork))\n\ndef factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)",
+                    "answer": " Here's your code:\n\n```python\ndef glork(bork):\n    return int(factorial(bork))\n\ndef factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    else:\n        return n * factorial(n-1)\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    if bork == 0:\n        return 1\n    else:\n        return bork * glork(bork-1)",
+                    "answer": " Here's an example implementation of the glork function in Python:\n\n```python\ndef glork(bork):\n    if bork == 0:\n        return 1\n    else:\n        return bork * glork(bork-1)\n```"
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 5/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(5) == 120 got 5\n",
+                    "code": "def glork(bork):\n    return int(str(bork)[::-1]) if bork > 0 else 1",
+                    "answer": " Here is an example implementation of the glork function in Python:\n\n```python\ndef glork(bork):\n    return int(str(bork)[::-1]) if bork > 0 else 1\n```\n\nThis function takes a single argument, bork, and returns its factorial. It uses string manipulation to reverse the digits of bork and then converts it back to an integer using the int() function. If bork is negative or zero, it returns 1 as the factorial of any number less than or equal to 0 is 1."
+                }
+            },
+            "task": "Write a python function glork(bork) with input bork that returns the factorial of bork",
+            "language": "python"
+        },
+        "GCDZeroShot-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": " Here's an example code for the gcd function in Python:\n\n```python\ndef gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n``` \n\nThis function takes two inputs a and b and returns their greatest common denominator. It first checks if the second input is equal to zero, if yes then it returns the first input as the result. If not, it recursively calls itself with the remainder of the first input divided by the second input until there are no more common factors left."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": " Here is an example implementation of the gcd function in Python:\n\n```python\ndef gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n```\n\nThis function uses recursion to find the greatest common divisor of two numbers. It starts by checking if one of the inputs is zero, in which case it returns the other input as the result. Otherwise, it calculates the remainder of dividing the larger number by the smaller number and then calls itself with the quotient and the remainder as arguments. This process continues until a common divisor is found or one of the numbers becomes zero."
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": " Here's an example implementation of the gcd() function in Python:\n\n```python\ndef gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)",
+                    "answer": " Here is an example implementation of the gcd function in Python:\n\n```python\ndef gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n```"
+                }
+            },
+            "task": "Write a python function gcd(a, b) with two inputs a and b that returns the greatest common denominator of a and b",
+            "language": "python"
+        },
+        "GCDAlternative-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 5/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 400\nFAIL f.call(5,0) == 5 got 1\nFAIL f.call(0,3) == 3 got 1\nFAIL f.call(13,7) == 1 got 49\n",
+                    "code": "def gcf(a, b):\n    if a == 0 or b == 0:\n        return 1\n    else:\n        return a * b // abs(a) * abs(b)",
+                    "answer": " Here's an example code for the function:\n\n```python\ndef gcf(a, b):\n    if a == 0 or b == 0:\n        return 1\n    else:\n        return a * b // abs(a) * abs(b)\n``` \n\nThis function takes two inputs a and b as arguments and returns the greatest common factor of a and b. If either input is equal to zero, it returns 1. Otherwise, it divides the product of a and b by their absolute values to get the greatest common factor."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "",
+                    "code": "def gcf(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcf(b, a % b)",
+                    "answer": " Here is an example solution to the problem:\n\n```python\ndef gcf(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcf(b, a % b)\n```"
+                },
+                "q4_K": {
+                    "check_summary": "FAIL correct 5/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\nFAIL f.call(5,0) == 5 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\nFAIL f.call(0,3) == 3 got {'error': 'integer division or modulo by zero', 'exc_type': 'ZeroDivisionError'}\nFAIL f.call(13,7) == 1 got 0\n",
+                    "code": "def gcf(a, b):\n    if not isinstance(a, int) or not isinstance(b, int):\n        raise TypeError(\"Input must be integers\")\n    if a == 0 and b == 0:\n        return 0\n    elif a == 1:\n        return b\n    else:\n        return gcf(b, a % b)",
+                    "answer": " Here's an example implementation of the gcf() function in Python:\n\n```python\ndef gcf(a, b):\n    if not isinstance(a, int) or not isinstance(b, int):\n        raise TypeError(\"Input must be integers\")\n    if a == 0 and b == 0:\n        return 0\n    elif a == 1:\n        return b\n    else:\n        return gcf(b, a % b)\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "",
+                    "code": "def gcf(a, b):\n    if not isinstance(a, int) or not isinstance(b, int):\n        raise TypeError(\"Inputs must be integers\")\n    while b != 0:\n        a, b = b, a % b\n    return a",
+                    "answer": " Here is an example implementation of the gcf function in Python:\n\n```python\ndef gcf(a, b):\n    if not isinstance(a, int) or not isinstance(b, int):\n        raise TypeError(\"Inputs must be integers\")\n    while b != 0:\n        a, b = b, a % b\n    return a\n```"
+                }
+            },
+            "task": "Write a python function gcf(a, b) with two inputs a and b that returns the greatest common factor of a and b",
+            "language": "python"
+        },
+        "GCDMisnamed-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 6/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 100\nFAIL f.call(13,7) == 1 got 13\nFAIL f.name == fofx got gcd\n",
+                    "code": "def gcd(x, banana):\n    if x < banana:\n        return banana\n    else:\n        return x",
+                    "answer": " Here's an example implementation for the function:\n\n```python\ndef gcd(x, banana):\n    if x < banana:\n        return banana\n    else:\n        return x\n```"
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(100,20) == 20 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(5,0) == 5 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(0,3) == 3 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(13,7) == 1 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def fofx(x, banana):\n    return gcd(x, banana)",
+                    "answer": " Here is your solution:\n\n```python\ndef fofx(x, banana):\n    return gcd(x, banana)\n```"
+                },
+                "q4_K": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(100,20) == 20 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(5,0) == 5 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(0,3) == 3 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(13,7) == 1 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def fofx(x, banana):\n    if not isinstance(banana, int):\n        raise TypeError(\"Expected integer input for banana\")\n    return gcd(x, banana)",
+                    "answer": " Here's an example implementation of the function:\n\n```python\ndef fofx(x, banana):\n    if not isinstance(banana, int):\n        raise TypeError(\"Expected integer input for banana\")\n    return gcd(x, banana)\n```"
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(100,20) == 20 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(5,0) == 5 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(0,3) == 3 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(13,7) == 1 got {'error': \"name 'gcd' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def fofx(x, banana):\n    if not isinstance(banana, int):\n        raise TypeError(\"Expected integer input for banana\")\n    elif not isinstance(x, int):\n        raise TypeError(\"Expected integer input for x\")\n    else:\n        return gcd(x, banana)",
+                    "answer": " Here is an example implementation of the function in Python:\n\n```python\ndef fofx(x, banana):\n    if not isinstance(banana, int):\n        raise TypeError(\"Expected integer input for banana\")\n    elif not isinstance(x, int):\n        raise TypeError(\"Expected integer input for x\")\n    else:\n        return gcd(x, banana)\n```"
+                }
+            },
+            "task": "Write a python function fofx(x, banana) with two inputs x and banana that returns the greatest common denominator (gcd) of x and banana",
+            "language": "python"
+        },
+        "SanityMeaningOfLife-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": " Here's an example of how you can write the function:\n\n```python\ndef meaning_of_life():\n    return 42\n``` \n\nThis function returns the value 42 as the meaning of life."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": " Here is your solution:\n\n```python\ndef meaning_of_life():\n    return 42\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": " Here's an example of how you can write a Python function called \"meaning_of_life()\" that returns the answer to life, the universe, and everything as an integer:\n\n```python\ndef meaning_of_life():\n    return 42\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42",
+                    "answer": " Here's an example of how you can write a Python function called \"meaning_of_life\" that returns the answer to life, the universe, and everything as an integer:\n\n```python\ndef meaning_of_life():\n    return 42\n```"
+                }
+            },
+            "task": "Write a python function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+            "language": "python"
+        },
+        "SanityList-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', 'Madrid']",
+                    "answer": " Here is an example Python function that meets the requirements:\n\n```python\ndef things():\n    return [5, 'foobar', 'Madrid']\n```"
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return [5, 'foobar', 'Madrid']",
+                    "answer": " Here is the solution to your problem:\n\n```python\ndef things():\n    return [5, 'foobar', 'Madrid']\n```"
+                },
+                "q4_K": {
+                    "check_summary": "NO_FUNCTION correct 0/5",
+                    "passing_tests": "",
+                    "failing_tests": "",
+                    "code": "Madrid",
+                    "answer": " Madrid"
+                },
+                "q5_K": {
+                    "check_summary": "NO_FUNCTION correct 0/5",
+                    "passing_tests": "",
+                    "failing_tests": "",
+                    "code": "Madrid",
+                    "answer": " Madrid"
+                }
+            },
+            "task": "Write a python function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+            "language": "python"
+        },
+        "SanitySecretIdentityMap-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') inside ['Clark Kent', 'Kal-El']\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    return {'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker'}",
+                    "answer": " Here's the solution:\n\n```python\ndef secretidentities():\n    return {'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker'}\n```"
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') inside ['Clark Kent', 'Kal-El']\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    return {'Superman': 'Clark Kent',\n            'Batman': 'Bruce Wayne',\n            'Spider-Man': 'Peter Parker'}",
+                    "answer": " Here is the solution in Python:\n\n```python\ndef secretidentities():\n    return {'Superman': 'Clark Kent',\n            'Batman': 'Bruce Wayne',\n            'Spider-Man': 'Peter Parker'}\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') inside ['Clark Kent', 'Kal-El']\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    return {'Superman': 'Clark Kent',\n            'Batman': 'Bruce Wayne',\n            'Spider-Man': 'Peter Parker'}",
+                    "answer": " Here's one possible solution:\n\n```python\ndef secretidentities():\n    return {'Superman': 'Clark Kent',\n            'Batman': 'Bruce Wayne',\n            'Spider-Man': 'Peter Parker'}\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') inside ['Clark Kent', 'Kal-El']\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    return {'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker'}",
+                    "answer": " Here's one possible solution:\n\n```python\ndef secretidentities():\n    return {'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker'}\n```"
+                }
+            },
+            "task": "Write a python function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+            "language": "python"
+        },
+        "FibonacciZeroShot-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n < 2:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": " Here's an example code for the fibonacci sequence using Python:\n\n```python\ndef fib(n):\n    if n < 2:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)\n``` \n\nThis function takes in a single argument, which is the input number for the Fibonacci sequence. It returns the value of the `n`th element in the sequence by using recursion to calculate it. The base case checks if the input number is less than or equal to 2, and returns itself as the result. Otherwise, it calculates the next two elements in the sequence by adding their values together and returning that result. This continues until the desired value for `n` is reached."
+                },
+                "q3_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n < 2:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": " Here's an example solution in Python:\n\n```python\ndef fib(n):\n    if n < 2:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": " Here's an example implementation of the fib() function in Python:\n\n```python\ndef fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n-1) + fib(n-2)\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": " Here's an example implementation of the fibonacci sequence in Python without using any library functions:\n\n```python\ndef fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n-1) + fib(n-2)\n```\n\nThis function recursively calculates the next element of the sequence by adding the previous two elements. It starts with a base case where if n is 0, it returns 0, and if n is 1, it returns 1. Otherwise, it calls itself with n-1 and n-2 as arguments to calculate the next element in the sequence."
+                }
+            },
+            "task": "Write a python function fib(n) with input element number n (0 based) that returns the `n`-th element of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciMisnamed-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(1) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got 1\nFAIL f.call(2) == 1 got 2\nFAIL f.call(3) == 2 got 3\nFAIL f.call(5) == 5 got 8\n",
+                    "code": "def potato(g):\n    if g < 2:\n        return 1\n    else:\n        return potato(g-1)+potato(g-2)",
+                    "answer": " Here's an example solution for the problem:\n\n```python\ndef potato(g):\n    if g < 2:\n        return 1\n    else:\n        return potato(g-1)+potato(g-2)\n```"
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 5/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(2) == 1 got 2\nFAIL f.call(3) == 2 got 3\nFAIL f.call(5) == 5 got 8\n",
+                    "code": "def potato(g):\n    if g < 0:\n        raise ValueError(\"Input must be non-negative\")\n    elif g == 0:\n        return 0\n    else:\n        a, b = 0, 1\n        for i in range(g):\n            c = a + b\n            a, b = b, c\n        return c",
+                    "answer": " Here's your solution:\n\n```python\ndef potato(g):\n    if g < 0:\n        raise ValueError(\"Input must be non-negative\")\n    elif g == 0:\n        return 0\n    else:\n        a, b = 0, 1\n        for i in range(g):\n            c = a + b\n            a, b = b, c\n        return c\n```"
+                },
+                "q4_K": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(1) == 1 got {'error': 'Invalid input', 'exc_type': 'ValueError'}\nFAIL f.call(2) == 1 got {'error': 'Invalid input', 'exc_type': 'ValueError'}\nFAIL f.call(3) == 2 got {'error': 'Invalid input', 'exc_type': 'ValueError'}\nFAIL f.call(5) == 5 got {'error': 'Invalid input', 'exc_type': 'ValueError'}\n",
+                    "code": "def potato(g):\n    if g < 0:\n        raise ValueError(\"Invalid input\")\n    elif g == 0:\n        return 0\n    else:\n        return potato(g-1) + potato(g-2)",
+                    "answer": " Here's an example implementation of the `potato` function in Python:\n\n```python\ndef potato(g):\n    if g < 0:\n        raise ValueError(\"Invalid input\")\n    elif g == 0:\n        return 0\n    else:\n        return potato(g-1) + potato(g-2)\n```"
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(1) == 1 got {'error': 'Invalid input', 'exc_type': 'ValueError'}\nFAIL f.call(2) == 1 got {'error': 'Invalid input', 'exc_type': 'ValueError'}\nFAIL f.call(3) == 2 got {'error': 'Invalid input', 'exc_type': 'ValueError'}\nFAIL f.call(5) == 5 got {'error': 'Invalid input', 'exc_type': 'ValueError'}\n",
+                    "code": "def potato(g):\n    if g < 0:\n        raise ValueError(\"Invalid input\")\n    elif g == 0:\n        return 0\n    else:\n        return potato(g-1) + potato(g-2)",
+                    "answer": " Here's an example implementation of the `potato` function in Python:\n\n```python\ndef potato(g):\n    if g < 0:\n        raise ValueError(\"Invalid input\")\n    elif g == 0:\n        return 0\n    else:\n        return potato(g-1) + potato(g-2)\n```\n\nThis implementation uses recursion to calculate the nth element of the Fibonacci sequence. The function takes in a positive integer as an argument and returns its value. If the input is negative, it raises a ValueError. Otherwise, if the input is zero, it returns 0. For all other inputs, it calls itself with the arguments g-1 and g-2 to calculate the previous two elements of the sequence, then adds them together to get the current element."
+                }
+            },
+            "task": "Write a python function potato(g) with input element number g (0 based) that returns the `g`-th element of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciListZeroShot-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(2) == [0, 1]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(3) == [0, 1, 1] got [1, 1]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [2, 3]\n",
+                    "code": "def fib(n):\n    if n <= 1:\n        return [0, 1]\n    else:\n        a, b = 0, 1\n        for i in range(2, n):\n            a, b = b, a + b\n        return [a, b]",
+                    "answer": " Here's an example code for the fibonacci sequence using Python:\n\n```python\ndef fib(n):\n    if n <= 1:\n        return [0, 1]\n    else:\n        a, b = 0, 1\n        for i in range(2, n):\n            a, b = b, a + b\n        return [a, b]\n```"
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got []\nFAIL f.call(3) == [0, 1, 1] got [[0, 1]]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [[0, 1], [[0, 1]], [[0, 1], [[0, 1]], [0, 1]]]\n",
+                    "code": "def fib(n):\n    if n < 2:\n        return [0, 1]\n    else:\n        return [fib(i-1) + fib(i-2) for i in range(3, n+1)]",
+                    "answer": " Here's an example solution in Python:\n\n```python\ndef fib(n):\n    if n < 2:\n        return [0, 1]\n    else:\n        return [fib(i-1) + fib(i-2) for i in range(3, n+1)]\n```"
+                },
+                "q4_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got [0, 1, [0, 1]]\nFAIL f.call(3) == [0, 1, 1] got [0, 1, [0, 1, [0, 1]]]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, 1, [0, 1, [0, 1]], [0, 1, [0, 1], [0, 1, [0, 1, [0, 1]]]]]\n",
+                    "code": "def fib(n):\n    if n <= 1:\n        return [0, 1]\n    else:\n        return fib(n-2) + [fib(n-1)]",
+                    "answer": " Here's an example implementation of the fibonacci sequence using recursion in Python:\n\n```python\ndef fib(n):\n    if n <= 1:\n        return [0, 1]\n    else:\n        return fib(n-2) + [fib(n-1)]\n```\n\nThis function takes an integer input `n`, and returns a list containing the first `n` elements of the Fibonacci sequence. If `n` is less than or equal to 1, it returns a list with two zeros. Otherwise, it recursively calls itself with `n-2` and adds the result to a list containing the previous element of the sequence."
+                },
+                "q5_K": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [1]\nFAIL f.call(2) == [0, 1] got [1, 0]\nFAIL f.call(3) == [0, 1, 1] got [1, 0, 1]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [1, 0, 1, 1, 0, 1, 0, 1]\n",
+                    "code": "def fib(n):\n    if n == 0 or n == 1:\n        return [n]\n    else:\n        return fib(n-1) + fib(n-2)",
+                    "answer": " Here's an example implementation of the fibonacci sequence in Python without using any library functions:\n\n```python\ndef fib(n):\n    if n == 0 or n == 1:\n        return [n]\n    else:\n        return fib(n-1) + fib(n-2)\n```\n\nThis function recursively calculates the next element of the sequence by adding the previous two elements. It starts with a base case where if n is 0 or 1, it returns a list containing that number. Otherwise, it calls itself twice with n-1 and n-2 as arguments to get the next two elements of the sequence, and then adds them together to get the final result."
+                }
+            },
+            "task": "Write a python function fib(n) with input length n that returns a list with the first `n` elements of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciListMisnamed-python": {
+            "results": {
+                "q2_K": {
+                    "check_summary": "FAIL correct 3/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [1, 1]\nFAIL f.call(2) == [0, 1] got [1, 0, 1, 1, 1, 1]\nFAIL f.call(3) == [0, 1, 1] got [2, 1, 1, 1, 1, 1]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [4, 3, 2, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1]\nFAIL f.args[0].name == bork got n\n",
+                    "code": "def glork(n):\n    if n < 2:\n        return [1, 1]\n    else:\n        return [n-1, n-2] + glork(n-2) + glork(n-3)",
+                    "answer": " Here's an example solution for the problem:\n\n```python\ndef glork(n):\n    if n < 2:\n        return [1, 1]\n    else:\n        return [n-1, n-2] + glork(n-2) + glork(n-3)\n``` \n\nThis function takes an input parameter `n`, and returns a list containing the first `n` elements of the Fibonacci sequence. It does this by checking if `n` is less than or equal to 2, in which case it returns a list with two elements: 1 and 1. Otherwise, it recursively calls itself with `n-1`, `n-2`, and `n-3`, and adds those values to the result of the previous call until it reaches 2. The function ends when `n` is equal to 2, at which point it returns a list containing the first two elements of the Fibonacci sequence."
+                },
+                "q3_K": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [1]\nFAIL f.call(2) == [0, 1] got [1, 2]\nFAIL f.call(3) == [0, 1, 1] got [1, 2, 3]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [1, 2, 3, 5, 8]\n",
+                    "code": "def glork(bork):\n    if bork < 0:\n        raise ValueError(\"Bork must be non-negative\")\n    elif bork == 0:\n        return []\n    else:\n        a, b = 0, 1\n        for i in range(bork):\n            c = a + b\n            yield c\n            a, b = b, c",
+                    "answer": " Here's an example solution in Python:\n\n```python\ndef glork(bork):\n    if bork < 0:\n        raise ValueError(\"Bork must be non-negative\")\n    elif bork == 0:\n        return []\n    else:\n        a, b = 0, 1\n        for i in range(bork):\n            c = a + b\n            yield c\n            a, b = b, c\n```\n\nThis function takes an integer input `bork` and returns a list of the first `bork` elements of the Fibonacci sequence. It uses recursion to calculate each element of the sequence, starting with the first two elements (0 and 1) and then adding up the previous two elements for each subsequent number in the sequence. The function yields each element as it is calculated, so that it can be returned as a list.\n\nTo use this function, simply call it with an integer input:\n\n```python\n>>> glork(10)\n[0, 1, 2, 3, 5, 8, 13, 21, 34, 55]\n```"
+                },
+                "q4_K": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    fib_list = [0, 1]\n    for i in range(2, bork+1):\n        fib_list.append(fib_list[-1] + fib_list[-2])\n    return fib_list[:bork]",
+                    "answer": " Here's an example implementation of the glork function in Python:\n\n```python\ndef glork(bork):\n    fib_list = [0, 1]\n    for i in range(2, bork+1):\n        fib_list.append(fib_list[-1] + fib_list[-2])\n    return fib_list[:bork]\n```"
+                },
+                "q5_K": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    fib_list = [0, 1]\n    for i in range(2, bork+1):\n        fib_list.append(fib_list[-1] + fib_list[-2])\n    return fib_list[:bork]",
+                    "answer": " Here's an example implementation of the glork function in Python:\n\n```python\ndef glork(bork):\n    fib_list = [0, 1]\n    for i in range(2, bork+1):\n        fib_list.append(fib_list[-1] + fib_list[-2])\n    return fib_list[:bork]\n```"
+                }
+            },
+            "task": "Write a python function glork(bork) with input length bork that returns a list with the first `bork` elements of the fibonacci sequence",
+            "language": "python"
+        }
+    },
+    "models": [
+        {
+            "prompt": "falcon-instruct",
+            "short_name": "q2_K",
+            "params": "topk1",
+            "model": "falcon-40b-instruct.ggccv1.q2-k",
+            "id": "q2_K",
+            "idx": 0,
+            "passed": 71,
+            "total": 91
+        },
+        {
+            "prompt": "falcon-instruct",
+            "short_name": "q3_K",
+            "params": "topk1",
+            "model": "falcon-40b-instruct.ggccv1.q3-k",
+            "id": "q3_K",
+            "idx": 1,
+            "passed": 74,
+            "total": 91
+        },
+        {
+            "prompt": "falcon-instruct",
+            "short_name": "q4_K",
+            "params": "topk1",
+            "model": "falcon-40b-instruct.ggccv1.q4-k",
+            "id": "q4_K",
+            "idx": 2,
+            "passed": 69,
+            "total": 91
+        },
+        {
+            "prompt": "falcon-instruct",
+            "short_name": "q5_K",
+            "params": "topk1",
+            "model": "falcon-40b-instruct.ggccv1.q5-k",
+            "id": "q5_K",
+            "idx": 3,
+            "passed": 72,
+            "total": 91
+        }
+    ],
+    "config": {
+        "title": "Falcon 40B GGML Quants (python)",
+        "models": [
+            {
+                "id": "q2_K",
+                "eval": "falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q2-k_1691081057.ndjson",
+                "short_name": "q2_K"
+            },
+            {
+                "id": "q3_K",
+                "eval": "falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q3-k_1691083395.ndjson",
+                "short_name": "q3_K"
+            },
+            {
+                "id": "q4_K",
+                "eval": "falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q4-k_1691103018.ndjson",
+                "short_name": "q4_K"
+            },
+            {
+                "id": "q5_K",
+                "eval": "falcon/eval_junior-v2_python-javascript_falcon-instruct_none_topk1_falcon-40b-instruct.ggccv1.q5-k_1691104187.ndjson",
+                "short_name": "q5_K"
+            }
+        ],
+        "language": "python"
+    },
+    "analyser": ""
+}
