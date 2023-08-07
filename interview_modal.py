@@ -78,6 +78,9 @@ def download_redmond_puffin_preview_13b_model():
 def download_codeCherryPop_7b_model():
     download_model("TokenBender/llama2-7b-chat-hf-codeCherryPop-qLoRA-merged")
 
+def download_codeCherryPy_7b_model():
+    download_model('TokenBender/codeCherryPy_7B_llama2')
+
 def download_tinycoderpy_model():
     download_model("bigcode/tiny_starcoder_py", ignore_patterns=["*.bin"])
 
@@ -139,7 +142,7 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_NewHope_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codeCherryPy_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -155,8 +158,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=2)
-gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))

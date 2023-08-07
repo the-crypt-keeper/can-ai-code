@@ -70,6 +70,7 @@ TheBloke-VicUnlocked-30B-LoRA-GPTQ: { name: "VicUnlocked", size: "33B", tags: ["
 meta-llama-Llama-2-7b-chat-hf: { name: "Llama 2 Chat", size: "7B", tags: ["llama2"], alias: "meta-llama-Llama-2-7b-hf-fp16", url: "https://huggingface.co/meta-llama/Llama-2-7b-chat-hf" }
 llama-2-7b-chat.ggmlv3.q5-0: { name: "Llama 2 Chat", size: "7B", tags: ["llama2"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Llama-2-7B-chat-GGML" }
 TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16: { name: "codeCherryPop", size: "7B", tags: ["llama2"] }
+TokenBender-codeCherryPy-7B-llama2: { name: "codeCherryPy", size: "7B", tags: ["llama2"] }
 TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ: { name: "codeCherryPop", size: "7B", quant: "GPTQ-4b", tags: ["llama2"] }
 meta-llama-Llama-2-13b-chat-hf: { name: "Llama 2 Chat", size: "13B", tags: ["llama2"], url: "https://huggingface.co/meta-llama/Llama-2-13b-chat-hf" }
 llama-2-13b-chat.ggmlv3.q5-0: { name: "Llama 2 Chat", size: "13B", tags: ["llama2"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML" }

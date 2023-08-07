@@ -1,0 +1,11 @@
+title: codeCherryPy
+models:
+  - id: precise
+    eval: llama2/eval_junior-v2_python-javascript_codeCherryPop_none_precise_TokenBender-codeCherryPy-7B-llama2_1691430040.ndjson
+    short_name: precise
+  - id: greedy
+    eval: llama2/eval_junior-v2_python-javascript_codeCherryPop_none_greedy_TokenBender-codeCherryPy-7B-llama2_1691430058.ndjson
+    short_name: greedy
+  - id: topk1
+    eval: llama2/eval_junior-v2_python-javascript_codeCherryPop_none_topk1_TokenBender-codeCherryPy-7B-llama2_1691430076.ndjson
+    short_name: topk1
