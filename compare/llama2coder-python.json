@@ -1,0 +1,323 @@
+{
+    "tests": {
+        "SanityMeaningOfLife-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life():\n    return 42\n\nif __name__ == '__main__':\n    print(meaning_of_life())\n    # Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n#",
+                    "answer": " \ndef meaning_of_life():\n    return 42\n\nif __name__ == '__main__':\n    print(meaning_of_life())\n    # Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n# Output: 42\n\n#"
+                },
+                "multinomial": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "def meaning_of_life(): \n    return 42 # The Answer!\nmeaning_of_life() # Returns 42\nprint(meaning_of_life()) # Prints 42\n\nif __name__ == '__main__':\n    print(\"Hello World\")",
+                    "answer": " \ndef meaning_of_life(): \n    return 42 # The Answer!\nmeaning_of_life() # Returns 42\nprint(meaning_of_life()) # Prints 42\n\nif __name__ == '__main__':\n    print(\"Hello World\")\n    \n"
+                }
+            },
+            "task": "Write a python function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+            "language": "python"
+        },
+        "SanityList-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "def things():\n    return 5, 'foobar', 'Madrid'\n\nprint(things()) # Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, '",
+                    "answer": " \ndef things():\n    return 5, 'foobar', 'Madrid'\n\nprint(things()) # Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, 'foobar', 'Madrid')\n\n# Output: (5, '"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call()[0] == 5 got 0\nFAIL f.call()[1] == foobar got 1\nFAIL f.call()[2] == Madrid got 2\n",
+                    "code": "def things():\n    return [5, \"foobar\", Madrid] # Madrid is the capital city of Spain\nprint(things()) # prints [5, 'foobar', 'Madrid']\n\n# Output: [5, 'foobar', 'Madrid']\n\n# Note: The input for this function should be empty (no arguments).\n#       This means you can call it like so: print(things()).\n#       If you want to pass in an argument, use something else as your function name.",
+                    "answer": " \ndef things():\n    return [5, \"foobar\", Madrid] # Madrid is the capital city of Spain\nprint(things()) # prints [5, 'foobar', 'Madrid']\n\n# Output: [5, 'foobar', 'Madrid']\n\n# Note: The input for this function should be empty (no arguments).\n#       This means you can call it like so: print(things()).\n#       If you want to pass in an argument, use something else as your function name.\n"
+                }
+            },
+            "task": "Write a python function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+            "language": "python"
+        },
+        "SanitySecretIdentityMap-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\nPASS f.call().get('Superman') inside ['Clark Kent', 'Kal-El']\nPASS f.call().get('Batman') == Bruce Wayne\nPASS f.call().get('Spider-Man') == Peter Parker\n",
+                    "failing_tests": "",
+                    "code": "def secretidentities():\n    superheroes = {\n        'Superman': 'Clark Kent',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n    return superheroes\n\nsecretidentities()\n# Output: {'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker'}\n\nsecretidentities()\n# Output: {'Superman': 'Clark Kent', 'Batman': 'Bruce",
+                    "answer": " \ndef secretidentities():\n    superheroes = {\n        'Superman': 'Clark Kent',\n        'Batman': 'Bruce Wayne',\n        'Spider-Man': 'Peter Parker'\n    }\n    return superheroes\n\nsecretidentities()\n# Output: {'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker'}\n\nsecretidentities()\n# Output: {'Superman': 'Clark Kent', 'Batman': 'Bruce"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call().get('Superman') == ['Clark Kent', 'Kal-El'] got None\nFAIL f.call().get('Batman') == Bruce Wayne got None\nFAIL f.call().get('Spider-Man') == Peter Parker got None\n",
+                    "code": "def secretidentities(): \n    return { 'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker' }\nsecretidentities() # prints {'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker'}\n\nprint(secretidentities()) # same output as above\n\nsecretidentities('Superman') # prints 'Clark Kent'\nsecretidentities('Batman') # prints 'Bruce Wayne'\nsecretidentities('Spider-Man') # prints 'Peter Parker'\n\nsecretidentities({}) # throws KeyError exception because there is no input argument\nsecretidentities([]) # throws TypeError exception because there is no input argument\nsecretidentities(1) # throws ValueError exception because there is no input argument\nsecretidentities(\"\") # throws ValueError exception because there is no input argument\nsecretidentities(None) # throws AttributeError exception because None has no attribute \"keys\"\nsecretidentities(True) # throws TypeError exception because True does not have keys method\nsecretidentities(False) # throws TypeError exception because False does not have keys method\nsecretidentities(dict()) # throws TypeError exception because dict() does not have keys method\nsecretidentities(list()) # throws TypeError exception because list() does not have keys method\nsecretidentities(set()) # throws TypeError exception because set() does not have keys method\nsecretidentities(tuple()) # throws TypeError exception because tuple() does not have keys method\nsecretidentities(range()) # throws TypeError exception because range() does not have keys method\nsecretidentities(zip()) # throws TypeError exception because zip() does not have keys method\nsecretidentities(frozenset()) # throws TypeError exception because frozenset() does not have keys method\nsecretidentities(Counter()) # throws TypeError exception because Counter() does not have keys method\nsecretidentities(OrderedDict()) # throws TypeError exception because OrderedDict() does not have keys method\nsecretidentities(defaultdict()) # throws TypeError exception because defaultdict() does not have keys method\nsecretidentities(dict(a=1)) # throws TypeError exception because dict(a=1) does not have keys method\nsecretidentities(list([])) # throws TypeError exception because list(",
+                    "answer": " \ndef secretidentities(): \n    return { 'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker' }\nsecretidentities() # prints {'Superman': 'Clark Kent', 'Batman': 'Bruce Wayne', 'Spider-Man': 'Peter Parker'}\n\nprint(secretidentities()) # same output as above\n\nsecretidentities('Superman') # prints 'Clark Kent'\nsecretidentities('Batman') # prints 'Bruce Wayne'\nsecretidentities('Spider-Man') # prints 'Peter Parker'\n\nsecretidentities({}) # throws KeyError exception because there is no input argument\nsecretidentities([]) # throws TypeError exception because there is no input argument\nsecretidentities(1) # throws ValueError exception because there is no input argument\nsecretidentities(\"\") # throws ValueError exception because there is no input argument\nsecretidentities(None) # throws AttributeError exception because None has no attribute \"keys\"\nsecretidentities(True) # throws TypeError exception because True does not have keys method\nsecretidentities(False) # throws TypeError exception because False does not have keys method\nsecretidentities(dict()) # throws TypeError exception because dict() does not have keys method\nsecretidentities(list()) # throws TypeError exception because list() does not have keys method\nsecretidentities(set()) # throws TypeError exception because set() does not have keys method\nsecretidentities(tuple()) # throws TypeError exception because tuple() does not have keys method\nsecretidentities(range()) # throws TypeError exception because range() does not have keys method\nsecretidentities(zip()) # throws TypeError exception because zip() does not have keys method\nsecretidentities(frozenset()) # throws TypeError exception because frozenset() does not have keys method\nsecretidentities(Counter()) # throws TypeError exception because Counter() does not have keys method\nsecretidentities(OrderedDict()) # throws TypeError exception because OrderedDict() does not have keys method\nsecretidentities(defaultdict()) # throws TypeError exception because defaultdict() does not have keys method\nsecretidentities(dict(a=1)) # throws TypeError exception because dict(a=1) does not have keys method\nsecretidentities(list([])) # throws TypeError exception because list("
+                }
+            },
+            "task": "Write a python function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+            "language": "python"
+        },
+        "GCDZeroShot-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'unexpected EOF while parsing (<string>, line 12)', 'exc_type': 'SyntaxError'}\nFAIL f.call(100,20) == 20 got {'error': 'unexpected EOF while parsing (<string>, line 12)', 'exc_type': 'SyntaxError'}\nFAIL f.call(5,0) == 5 got {'error': 'unexpected EOF while parsing (<string>, line 12)', 'exc_type': 'SyntaxError'}\nFAIL f.call(0,3) == 3 got {'error': 'unexpected EOF while parsing (<string>, line 12)', 'exc_type': 'SyntaxError'}\nFAIL f.call(13,7) == 1 got {'error': 'unexpected EOF while parsing (<string>, line 12)', 'exc_type': 'SyntaxError'}\n",
+                    "code": "def gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n\nprint(gcd(10, 5)) # 5\nprint(gcd(10, 15)) # 5\nprint(gcd(10, 20)) # 5\nprint(gcd(10, 25)) # 5\nprint(gcd(10, 30)) # 5\nprint(gcd(10, 3",
+                    "answer": " \ndef gcd(a, b):\n    if b == 0:\n        return a\n    else:\n        return gcd(b, a % b)\n\nprint(gcd(10, 5)) # 5\nprint(gcd(10, 15)) # 5\nprint(gcd(10, 20)) # 5\nprint(gcd(10, 25)) # 5\nprint(gcd(10, 30)) # 5\nprint(gcd(10, 3"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'timeout!'}\nFAIL f.call(100,20) == 20 got {'error': 'timeout!'}\nFAIL f.call(5,0) == 5 got {'error': 'timeout!'}\nFAIL f.call(0,3) == 3 got {'error': 'timeout!'}\nFAIL f.call(13,7) == 1 got {'error': 'timeout!'}\n",
+                    "code": "def gcd(a,b): \n    while (a !=0): \n        a = a%b; \n    return b; \n  \nprint(\"gcd of\",12,36,\"is\",gcd(12,36)) # Output is 4",
+                    "answer": " \ndef gcd(a,b): \n    while (a !=0): \n        a = a%b; \n    return b; \n  \nprint(\"gcd of\",12,36,\"is\",gcd(12,36)) # Output is 4\n\n"
+                }
+            },
+            "task": "Write a python function gcd(a, b) with two inputs a and b that returns the greatest common denominator of a and b",
+            "language": "python"
+        },
+        "GCDAlternative-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 9/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "",
+                    "code": "def gcf(a, b):\n    if a == 0:\n        return b\n    elif b == 0:\n        return a\n    else:\n        return gcf(b, a % b)\n\nprint(gcf(10, 5)) # 5\nprint(gcf(10, 10)) # 5\nprint(gcf(10, 20)) # 10\nprint(gcf(10, 30)) # 10\nprint(gcf(10, 40))",
+                    "answer": " \ndef gcf(a, b):\n    if a == 0:\n        return b\n    elif b == 0:\n        return a\n    else:\n        return gcf(b, a % b)\n\nprint(gcf(10, 5)) # 5\nprint(gcf(10, 10)) # 5\nprint(gcf(10, 20)) # 10\nprint(gcf(10, 30)) # 10\nprint(gcf(10, 40))"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\nFAIL f.call(100,20) == 20 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\nFAIL f.call(5,0) == 5 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\nFAIL f.call(0,3) == 3 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\nFAIL f.call(13,7) == 1 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\n",
+                    "code": "def gcf(a,b): \n    if (a == 0 or b == 0): \n        return 1\n  \n    else : \n        return gcf(a % b , b ) \n    \nprint(gcf(6,8)) # Output: 2",
+                    "answer": " \ndef gcf(a,b): \n    if (a == 0 or b == 0): \n        return 1\n  \n    else : \n        return gcf(a % b , b ) \n    \nprint(gcf(6,8)) # Output: 2\n\n"
+                }
+            },
+            "task": "Write a python function gcf(a, b) with two inputs a and b that returns the greatest common factor of a and b",
+            "language": "python"
+        },
+        "GCDMisnamed-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\nPASS f.name == fofx\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'unexpected EOF while parsing (<string>, line 15)', 'exc_type': 'SyntaxError'}\nFAIL f.call(100,20) == 20 got {'error': 'unexpected EOF while parsing (<string>, line 15)', 'exc_type': 'SyntaxError'}\nFAIL f.call(5,0) == 5 got {'error': 'unexpected EOF while parsing (<string>, line 15)', 'exc_type': 'SyntaxError'}\nFAIL f.call(0,3) == 3 got {'error': 'unexpected EOF while parsing (<string>, line 15)', 'exc_type': 'SyntaxError'}\nFAIL f.call(13,7) == 1 got {'error': 'unexpected EOF while parsing (<string>, line 15)', 'exc_type': 'SyntaxError'}\n",
+                    "code": "def fofx(x, banana):\n    gcd = x % banana\n    while gcd != 0:\n        x = x // gcd\n        banana = banana // gcd\n        gcd = x % banana\n    return x, banana\n\nprint(fofx(5, 10))\n# Output: (5, 10)\n\nprint(fofx(5, 100))\n# Output: (5, 100)\n\nprint(fofx(5, 10",
+                    "answer": " \ndef fofx(x, banana):\n    gcd = x % banana\n    while gcd != 0:\n        x = x // gcd\n        banana = banana // gcd\n        gcd = x % banana\n    return x, banana\n\nprint(fofx(5, 10))\n# Output: (5, 10)\n\nprint(fofx(5, 100))\n# Output: (5, 100)\n\nprint(fofx(5, 10"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 3/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'invalid syntax (<string>, line 5)', 'exc_type': 'SyntaxError'}\nFAIL f.call(100,20) == 20 got {'error': 'invalid syntax (<string>, line 5)', 'exc_type': 'SyntaxError'}\nFAIL f.call(5,0) == 5 got {'error': 'invalid syntax (<string>, line 5)', 'exc_type': 'SyntaxError'}\nFAIL f.call(0,3) == 3 got {'error': 'invalid syntax (<string>, line 5)', 'exc_type': 'SyntaxError'}\nFAIL f.call(13,7) == 1 got {'error': 'invalid syntax (<string>, line 5)', 'exc_type': 'SyntaxError'}\nFAIL f.name == fofx got gcd_func\n",
+                    "code": "def gcd_func(x,banana): \n    if x == 0 or banana == 0 : return 1\n    else : return gcd_func(x%banana,banana)  \nreturn gcd_func(x,banana) # returns the GCD of x and banana\nprint(gcd_func(5,2)) // Outputs 1\n\n# Note: The above code is not optimized for performance as it uses recursion which can be slow in some cases. It should only be used when necessary.\n\n# Optimized version using loop:\ndef gcd_func(x,y): \n    while y > 0: \n        x = x % y \n        y = y - x \n    return x \nreturn gcd_func(x,banana) # returns the GCD of x and banana\nprint(gcd_func(5,2)) // Outputs 1",
+                    "answer": " \ndef gcd_func(x,banana): \n    if x == 0 or banana == 0 : return 1\n    else : return gcd_func(x%banana,banana)  \nreturn gcd_func(x,banana) # returns the GCD of x and banana\nprint(gcd_func(5,2)) // Outputs 1\n\n# Note: The above code is not optimized for performance as it uses recursion which can be slow in some cases. It should only be used when necessary.\n\n# Optimized version using loop:\ndef gcd_func(x,y): \n    while y > 0: \n        x = x % y \n        y = y - x \n    return x \nreturn gcd_func(x,banana) # returns the GCD of x and banana\nprint(gcd_func(5,2)) // Outputs 1\n"
+                }
+            },
+            "task": "Write a python function fofx(x, banana) with two inputs x and banana that returns the greatest common denominator (gcd) of x and banana",
+            "language": "python"
+        },
+        "FactorialZeroShot-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    result = 1\n    for i in range(1, n+1):\n        result *= i\n    return result\n\nprint(factorial(5)) # 120\nprint(factorial(0)) # 1\nprint(factorial(1)) # 1\nprint(factorial(2)) # 2\nprint(factorial(3)) # 6\nprint(factorial(4)) # 24\nprint(factorial(5)) # 120\nprint(factorial(6)) #",
+                    "answer": " \ndef factorial(n):\n    result = 1\n    for i in range(1, n+1):\n        result *= i\n    return result\n\nprint(factorial(5)) # 120\nprint(factorial(0)) # 1\nprint(factorial(1)) # 1\nprint(factorial(2)) # 2\nprint(factorial(3)) # 6\nprint(factorial(4)) # 24\nprint(factorial(5)) # 120\nprint(factorial(6)) #"
+                },
+                "multinomial": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial_iteration(n): \n    if (n == 0 or n == 1): \n        return 1; \n  \n    else: \n        return n * factorial_iteration(n-1); \n    \nprint(\"Factorial of 5 is\",factorial_iteration(5)); # Output Factorial of 5 is 120\n\n# Using recursion \ndef factorial_recursion(n): \n    if (n==0 or n==1): \n        return 1; \n    else : \n        return n*factorial_recursion(n - 1); \n    \nprint(\"Factorial of 5 is\",factorial_recursion(5)) ; # Output Factorial of 5 is 120\n\n# Using loop \ndef factorial_loop(n): \n    result = 1; \n    for i in range(1,n+1): \n        result += i; \n    return result; \n    \nprint(\"Factorial of 5 is\",factorial_loop(5)) ; # Output Factorial of 5 is 120",
+                    "answer": " \ndef factorial_iteration(n): \n    if (n == 0 or n == 1): \n        return 1; \n  \n    else: \n        return n * factorial_iteration(n-1); \n    \nprint(\"Factorial of 5 is\",factorial_iteration(5)); # Output Factorial of 5 is 120\n\n# Using recursion \ndef factorial_recursion(n): \n    if (n==0 or n==1): \n        return 1; \n    else : \n        return n*factorial_recursion(n - 1); \n    \nprint(\"Factorial of 5 is\",factorial_recursion(5)) ; # Output Factorial of 5 is 120\n\n# Using loop \ndef factorial_loop(n): \n    result = 1; \n    for i in range(1,n+1): \n        result += i; \n    return result; \n    \nprint(\"Factorial of 5 is\",factorial_loop(5)) ; # Output Factorial of 5 is 120"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using iteration",
+            "language": "python"
+        },
+        "FactorialRecursiveZeroShot-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n\nprint(factorial(5)) # 120\nprint(factorial(0)) # 1\nprint(factorial(1)) # 1\nprint(factorial(2)) # 2\nprint(factorial(3)) # 6\nprint(factorial(4)) # 24\nprint(factorial(5)) # 120\nprint(factorial(6)) #",
+                    "answer": " \ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n\nprint(factorial(5)) # 120\nprint(factorial(0)) # 1\nprint(factorial(1)) # 1\nprint(factorial(2)) # 2\nprint(factorial(3)) # 6\nprint(factorial(4)) # 24\nprint(factorial(5)) # 120\nprint(factorial(6)) #"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 1/4",
+                    "passing_tests": "PASS len(f.args) == 1\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) == True got False\nFAIL f.call(1) == 1 got {'error': 'unindent does not match any outer indentation level (<string>, line 4)', 'exc_type': 'IndentationError'}\nFAIL f.call(5) == 120 got {'error': 'unindent does not match any outer indentation level (<string>, line 4)', 'exc_type': 'IndentationError'}\n",
+                    "code": "def factorial(n): \n    if (n == 0 or n ==1): \n        return 1; \n   else : \n       return n * factorial(n-1); \nprint(\"Factorial of 5 is\",factorial(5)); # Output Factorial of 5 is 120\n\n# Output Factorial of 5 is 120",
+                    "answer": " \ndef factorial(n): \n    if (n == 0 or n ==1): \n        return 1; \n   else : \n       return n * factorial(n-1); \nprint(\"Factorial of 5 is\",factorial(5)); # Output Factorial of 5 is 120\n\n# Output Factorial of 5 is 120\n\n"
+                }
+            },
+            "task": "Write a python function factorial(n) with input n that returns the factorial of n using recursion",
+            "language": "python"
+        },
+        "FactorialMisnamed-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    factorial = 1\n    for i in range(1, bork+1):\n        factorial *= i\n    return factorial\n\nprint(glork(5)) # 120\nprint(glork(6)) # 720\nprint(glork(7)) # 5040\nprint(glork(8)) # 40320\nprint(glork(9)) # 362880\nprint(glork(10)) # 3628",
+                    "answer": " \ndef glork(bork):\n    factorial = 1\n    for i in range(1, bork+1):\n        factorial *= i\n    return factorial\n\nprint(glork(5)) # 120\nprint(glork(6)) # 720\nprint(glork(7)) # 5040\nprint(glork(8)) # 40320\nprint(glork(9)) # 362880\nprint(glork(10)) # 3628"
+                },
+                "multinomial": {
+                    "check_summary": "PASS correct 6/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork): \n    return (1 if bork == 0 else bork * glork(bork-1))  \nprint(glork(5)) # Outputs 120",
+                    "answer": " \ndef glork(bork): \n    return (1 if bork == 0 else bork * glork(bork-1))  \nprint(glork(5)) # Outputs 120\n\n"
+                }
+            },
+            "task": "Write a python function glork(bork) with input bork that returns the factorial of bork",
+            "language": "python"
+        },
+        "FibonacciZeroShot-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n-1) + fib(n-2)\n\nprint(fib(5)) # 5\nprint(fib(10)) # 55\nprint(fib(15)) # 89\nprint(fib(20)) # 144\nprint(fib(25)) # 233\nprint(fib(30)) #",
+                    "answer": " \ndef fib(n):\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        return fib(n-1) + fib(n-2)\n\nprint(fib(5)) # 5\nprint(fib(10)) # 55\nprint(fib(15)) # 89\nprint(fib(20)) # 144\nprint(fib(25)) # 233\nprint(fib(30)) #"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 2/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got {'error': 'maximum recursion depth exceeded in comparison', 'exc_type': 'RecursionError'}\nFAIL f.call(1) == 1 got [1, 1]\nFAIL f.call(2) == 1 got [1, 1]\nFAIL f.call(3) == 2 got [1, 1, 1, 1]\nFAIL f.call(5) == 5 got [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n",
+                    "code": "def fib(n): \n    if n == 1 or n == 2: \n        return 1, 1\n  \n    else: \n        return fib(n-1)+fib(n-2)\n    \nprint(fib(5)) # Output: [3, 4]",
+                    "answer": " \ndef fib(n): \n    if n == 1 or n == 2: \n        return 1, 1\n  \n    else: \n        return fib(n-1)+fib(n-2)\n    \nprint(fib(5)) # Output: [3, 4]\n\n"
+                }
+            },
+            "task": "Write a python function fib(n) with input element number n (0 based) that returns the `n`-th element of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciMisnamed-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 3/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got {'error': 'unexpected EOF while parsing (<string>, line 14)', 'exc_type': 'SyntaxError'}\nFAIL f.call(1) == 1 got {'error': 'unexpected EOF while parsing (<string>, line 14)', 'exc_type': 'SyntaxError'}\nFAIL f.call(2) == 1 got {'error': 'unexpected EOF while parsing (<string>, line 14)', 'exc_type': 'SyntaxError'}\nFAIL f.call(3) == 2 got {'error': 'unexpected EOF while parsing (<string>, line 14)', 'exc_type': 'SyntaxError'}\nFAIL f.call(5) == 5 got {'error': 'unexpected EOF while parsing (<string>, line 14)', 'exc_type': 'SyntaxError'}\n",
+                    "code": "def potato(g):\n    a, b = 0, 1\n    for i in range(g):\n        a, b = b, a + b\n    return b\n\nprint(potato(3)) # 5\nprint(potato(4)) # 8\nprint(potato(5)) # 13\nprint(potato(6)) # 21\nprint(potato(7)) # 34\nprint(potato(8)) # 55\nprint(potato(9)) # 89\nprint(",
+                    "answer": " \ndef potato(g):\n    a, b = 0, 1\n    for i in range(g):\n        a, b = b, a + b\n    return b\n\nprint(potato(3)) # 5\nprint(potato(4)) # 8\nprint(potato(5)) # 13\nprint(potato(6)) # 21\nprint(potato(7)) # 34\nprint(potato(8)) # 55\nprint(potato(9)) # 89\nprint("
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 3/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(1) == 1 got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(2) == 1 got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(3) == 2 got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(5) == 5 got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def potato(g): \n    if g < 1 or g > len(fib)-2 : \n        return \"Incorrect Input\"\n    else: \n        return fib[g-1]\nprint(potato(3)) # Outputs 5",
+                    "answer": " \ndef potato(g): \n    if g < 1 or g > len(fib)-2 : \n        return \"Incorrect Input\"\n    else: \n        return fib[g-1]\nprint(potato(3)) # Outputs 5\n\n"
+                }
+            },
+            "task": "Write a python function potato(g) with input element number g (0 based) that returns the `g`-th element of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciListZeroShot-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 7/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "",
+                    "code": "def fib(n):\n    a = 0\n    b = 1\n    result = []\n    for i in range(n):\n        result.append(a)\n        a, b = b, a + b\n    return result\n\nprint(fib(5))\n# Output: [0, 1, 1, 2, 3]\n\nprint(fib(10))\n# Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 3",
+                    "answer": " \ndef fib(n):\n    a = 0\n    b = 1\n    result = []\n    for i in range(n):\n        result.append(a)\n        a, b = b, a + b\n    return result\n\nprint(fib(5))\n# Output: [0, 1, 1, 2, 3]\n\nprint(fib(10))\n# Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 3"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got [0, 1, 0, 1]\nFAIL f.call(3) == [0, 1, 1] got [0, 1, 0, 1]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, 1, 0, 1, 0, 1, 0, 1]\n",
+                    "code": "def fib(n): \n    if n <= 1: \n        return [0, 1] \n  \n    else: \n        return fib(n-2)+fib(n-3) \n    \nprint (fib(5)) # Outputs [0, 1, 1, 2, 3]",
+                    "answer": " \ndef fib(n): \n    if n <= 1: \n        return [0, 1] \n  \n    else: \n        return fib(n-2)+fib(n-3) \n    \nprint (fib(5)) # Outputs [0, 1, 1, 2, 3]\n\n"
+                }
+            },
+            "task": "Write a python function fib(n) with input length n that returns a list with the first `n` elements of the fibonacci sequence",
+            "language": "python"
+        },
+        "FibonacciListMisnamed-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 8/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "",
+                    "code": "def glork(bork):\n    fib = [0, 1]\n    for i in range(bork):\n        fib.append(fib[-1] + fib[-2])\n    return fib[:bork]\n\nprint(glork(5))\n# Output: [0, 1, 1, 2, 3]\n\nprint(glork(10))\n# Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]",
+                    "answer": " \ndef glork(bork):\n    fib = [0, 1]\n    for i in range(bork):\n        fib.append(fib[-1] + fib[-2])\n    return fib[:bork]\n\nprint(glork(5))\n# Output: [0, 1, 1, 2, 3]\n\nprint(glork(10))\n# Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\n"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 3/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(0),list) == True got False\nFAIL f.call(1) == [0] got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(2) == [0, 1] got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(3) == [0, 1, 1] got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\nFAIL f.call(5) == [0, 1, 1, 2, 3] got {'error': \"name 'fib' is not defined\", 'exc_type': 'NameError'}\n",
+                    "code": "def glork(bork): \n    return [0,1] + [fib[i+2] for i in range(bork)]  \n    \nprint(glork(5)) # Outputs [0, 1, 1, 2, 3, 5]",
+                    "answer": " \ndef glork(bork): \n    return [0,1] + [fib[i+2] for i in range(bork)]  \n    \nprint(glork(5)) # Outputs [0, 1, 1, 2, 3, 5]\n\n"
+                }
+            },
+            "task": "Write a python function glork(bork) with input length bork that returns a list with the first `bork` elements of the fibonacci sequence",
+            "language": "python"
+        },
+        "StringCountTokens-python": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.name == substrcount got substr_count\nFAIL f.call('aaa','a') == 3 got {'error': 'EOL while scanning string literal (<string>, line 20)', 'exc_type': 'SyntaxError'}\nFAIL f.call(\"babaab\",\"ab\") == 2 got {'error': 'EOL while scanning string literal (<string>, line 20)', 'exc_type': 'SyntaxError'}\nFAIL f.call(\"abcabcefgabc\",\"abc\") == 3 got {'error': 'EOL while scanning string literal (<string>, line 20)', 'exc_type': 'SyntaxError'}\n",
+                    "code": "def substr_count(str, substr):\n    count = 0\n    for char in str:\n        if char == substr:\n            count += 1\n    return count\n\nprint(substr_count(\"Hello World\", \"World\"))\n# Output: 4\n\nprint(substr_count(\"Hello World\", \"Hello\"))\n# Output: 1\n\nprint(substr_count(\"Hello World\", \"World\"))\n# Output: 4\n\nprint(substr_count(\"Hello World\", \"Hello\"))\n# Output: 1\n\nprint(substr_count(\"",
+                    "answer": " \ndef substr_count(str, substr):\n    count = 0\n    for char in str:\n        if char == substr:\n            count += 1\n    return count\n\nprint(substr_count(\"Hello World\", \"World\"))\n# Output: 4\n\nprint(substr_count(\"Hello World\", \"Hello\"))\n# Output: 1\n\nprint(substr_count(\"Hello World\", \"World\"))\n# Output: 4\n\nprint(substr_count(\"Hello World\", \"Hello\"))\n# Output: 1\n\nprint(substr_count(\""
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.name == substrcount got substr_count\nFAIL f.call('aaa','a') == 3 got {'error': 'tuple index out of range', 'exc_type': 'IndexError'}\nFAIL f.call(\"babaab\",\"ab\") == 2 got {'error': 'tuple index out of range', 'exc_type': 'IndexError'}\nFAIL f.call(\"abcabcefgabc\",\"abc\") == 3 got {'error': 'tuple index out of range', 'exc_type': 'IndexError'}\n",
+                    "code": "def substr_count(str, substr): \n    count = 0\n    for i in str: \n        if i == substr: \n            count += 1\n    return count\nprint(substr_count(\"Hello World\", \"World\")) # Outputs 4\nprint(substr_count(\"Hello World\", \"Hell\")) # Outputs 2\nprint(substr_count(\"Hello World\", \"llo\")) # Outputs 3\nprint(substr_count(\"Hello World\", \"\")) # Outputs 7\nprint(substr_count(\"Hello World\", None)) # Outputs 0\nprint(substr_count(\"Hello World\", [])) # Outputs 0\nprint(substr_count(\"Hello World\", {})) # Outputs 0\nprint(substr_count(\"Hello World\", ())) # Outputs 0\nprint(substr_count(\"Hello World\", [None])) # Outputs 6\nprint(substr_count(\"Hello World\", [\"\"])) # Outputs 5\nprint(substr_count(\"Hello World\", (\"\"))) # Outputs 7\nprint(substr_count(\"Hello World\", ([]))) # Outputs 7\nprint(substr_count(\"Hello World\", ()[0])) # Outputs 7\nprint(substr_count(\"Hello World\", (()))) # Outputs 7\nprint(substr_count(\"Hello World\", ((),))) # Outputs 7\nprint(substr_count(\"Hello World\", ((),),())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint",
+                    "answer": " \ndef substr_count(str, substr): \n    count = 0\n    for i in str: \n        if i == substr: \n            count += 1\n    return count\nprint(substr_count(\"Hello World\", \"World\")) # Outputs 4\nprint(substr_count(\"Hello World\", \"Hell\")) # Outputs 2\nprint(substr_count(\"Hello World\", \"llo\")) # Outputs 3\nprint(substr_count(\"Hello World\", \"\")) # Outputs 7\nprint(substr_count(\"Hello World\", None)) # Outputs 0\nprint(substr_count(\"Hello World\", [])) # Outputs 0\nprint(substr_count(\"Hello World\", {})) # Outputs 0\nprint(substr_count(\"Hello World\", ())) # Outputs 0\nprint(substr_count(\"Hello World\", [None])) # Outputs 6\nprint(substr_count(\"Hello World\", [\"\"])) # Outputs 5\nprint(substr_count(\"Hello World\", (\"\"))) # Outputs 7\nprint(substr_count(\"Hello World\", ([]))) # Outputs 7\nprint(substr_count(\"Hello World\", ()[0])) # Outputs 7\nprint(substr_count(\"Hello World\", (()))) # Outputs 7\nprint(substr_count(\"Hello World\", ((),))) # Outputs 7\nprint(substr_count(\"Hello World\", ((),),())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint(substr_count(\"Hello World\", ((),), ())) # Outputs 7\nprint"
+                }
+            },
+            "task": "Write a python function substrcount(str, substr) with inputs `str` and `substr` that returns counts the number of times the sub-string `substr` occurs in `str`",
+            "language": "python"
+        }
+    },
+    "models": [
+        {
+            "prompt": "llama2-coder",
+            "short_name": "beamsearching",
+            "params": "llama2-coder",
+            "model": "mrm8488-llama-2-coder-7b-fp16",
+            "id": "beamsearching",
+            "idx": 0,
+            "passed": 72,
+            "total": 91
+        },
+        {
+            "prompt": "llama2-coder",
+            "short_name": "multinomial",
+            "params": "precise",
+            "model": "mrm8488-llama-2-coder-7b-fp16",
+            "id": "multinomial",
+            "idx": 1,
+            "passed": 43,
+            "total": 91
+        }
+    ],
+    "config": {
+        "title": "Llama2-Coder Beamsearch vs Multinomial (python)",
+        "models": [
+            {
+                "id": "beamsearching",
+                "eval": "llama2/eval_junior-v2_python-javascript_llama2-coder_none_llama2-coder_mrm8488-llama-2-coder-7b-fp16_1691526120.ndjson",
+                "short_name": "beamsearching"
+            },
+            {
+                "id": "multinomial",
+                "eval": "llama2/eval_junior-v2_python-javascript_llama2-coder_none_precise_mrm8488-llama-2-coder-7b-fp16_1691526744.ndjson",
+                "short_name": "multinomial"
+            }
+        ],
+        "language": "python"
+    },
+    "analyser": ""
+}

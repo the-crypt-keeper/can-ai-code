@@ -18,7 +18,9 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**8/08** Evaluations of WizardLM-1.0-Uncensored-Llama2-13b and Dolphin are up.  Comparison of Falcon-Instruct 40B quants is now available.
+**8/08** Evaluations of stablecode-instruct-alpha-3b, Nous-Hermes-Llama2-13b and mrm8488/llama-2-coder-7b performed.  stablecode-completion unfortunately does not seem to produce coherent results see [#61](https://github.com/the-crypt-keeper/can-ai-code/issues/61) for discussion.
+
+**8/07** Evaluations of WizardLM-1.0-Uncensored-Llama2-13b and Dolphin are up.  Comparison of Falcon-Instruct 40B quants is now available.
 
 **8/05** Evaluations of quantized falcon, vicuna-1.3 33B, OpenOrcaxOpenChat-Preview2 and airboros-2.0 33B are up.
 

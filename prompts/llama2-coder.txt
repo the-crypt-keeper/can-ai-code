@@ -1,0 +1,4 @@
+You are a coding assistant that will help the user to resolve the following instruction:
+### Instruction: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}.
+
+### Solution:

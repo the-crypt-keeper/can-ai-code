@@ -1,0 +1,323 @@
+{
+    "tests": {
+        "SanityMeaningOfLife-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 3/3",
+                    "passing_tests": "PASS f.name == meaning_of_life\nPASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "",
+                    "code": "function meaning_of_life() {\n  return 42;\n}\n\nconsole.log(meaning_of_life());\n// Output: 42",
+                    "answer": " \nfunction meaning_of_life() {\n  return 42;\n}\n\nconsole.log(meaning_of_life());\n// Output: 42\n\n"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 2/3",
+                    "passing_tests": "PASS len(f.args) == 0\nPASS f.call() == 42\n",
+                    "failing_tests": "FAIL f.name == meaning_of_life got meaningOfLife\n",
+                    "code": "function meaningOfLife(){ \n    return 42;  \n} \nconsole.log(meaningOfLife()); // prints 42\n// or you can use this syntax instead of console.log():\nmeaningOfLife(); // prints 42",
+                    "answer": " \nfunction meaningOfLife(){ \n    return 42;  \n} \nconsole.log(meaningOfLife()); // prints 42\n// or you can use this syntax instead of console.log():\nmeaningOfLife(); // prints 42\n```\n\n"
+                }
+            },
+            "task": "Write a javascript function meaning_of_life() with no inputs that returns a single integer, the answer to life the universe and everything",
+            "language": "javascript"
+        },
+        "SanityList-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "function things() {\n    return [5, 'foobar', 'Madrid'];\n}\n\nconsole.log(things()); // Output: [5, 'foobar', 'Madrid']",
+                    "answer": " \nfunction things() {\n    return [5, 'foobar', 'Madrid'];\n}\n\nconsole.log(things()); // Output: [5, 'foobar', 'Madrid']\n\n"
+                },
+                "multinomial": {
+                    "check_summary": "PASS correct 5/5",
+                    "passing_tests": "PASS f.name == things\nPASS len(f.args) == 0\nPASS f.call()[0] == 5\nPASS f.call()[1] == foobar\nPASS f.call()[2] == Madrid\n",
+                    "failing_tests": "",
+                    "code": "function things(){\n    return [5,'foobar','Madrid'];\n}\nconsole.log(things()); // Outputs [5,\"foobar\", \"Madrid\"]\n// Note: The input is not required for this function as it has been declared without any parameters.",
+                    "answer": " \nfunction things(){\n    return [5,'foobar','Madrid'];\n}\nconsole.log(things()); // Outputs [5,\"foobar\", \"Madrid\"]\n// Note: The input is not required for this function as it has been declared without any parameters.\n```\n\n"
+                }
+            },
+            "task": "Write a javascript function things() with no inputs that returns a list with three values: the number 5, the string 'foobar', the capital city of Spain",
+            "language": "javascript"
+        },
+        "SanitySecretIdentityMap-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 2/5",
+                    "passing_tests": "PASS f.name == secretidentities\nPASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.call().get('Superman') == ['Clark Kent', 'Kal-El'] got None\nFAIL f.call().get('Batman') == Bruce Wayne got None\nFAIL f.call().get('Spider-Man') == Peter Parker got None\n",
+                    "code": "function secretidentities() {\n  const superheroes = {\n    Superman: 'Clark Kent',\n    Batman: 'Bruce Wayne',\n    Spider-Man: 'Peter Parker'\n  };\n  return superheroes;\n}\n\nconsole.log(secretidentities()); // { Superman: 'Clark Kent', Batman: 'Bruce Wayne', Spider-Man: 'Peter Parker' }\n\n Output:",
+                    "answer": " \nfunction secretidentities() {\n  const superheroes = {\n    Superman: 'Clark Kent',\n    Batman: 'Bruce Wayne',\n    Spider-Man: 'Peter Parker'\n  };\n  return superheroes;\n}\n\nconsole.log(secretidentities()); // { Superman: 'Clark Kent', Batman: 'Bruce Wayne', Spider-Man: 'Peter Parker' }\n\n Output:\n"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 1/5",
+                    "passing_tests": "PASS len(f.args) == 0\n",
+                    "failing_tests": "FAIL f.name == secretidentities got secretIdentities\nFAIL f.call().get('Superman') == ['Clark Kent', 'Kal-El'] got None\nFAIL f.call().get('Batman') == Bruce Wayne got None\nFAIL f.call().get('Spider-Man') == Peter Parker got None\n",
+                    "code": "function secretIdentities(){ \n    let heroes = {Superman:'Clark Kent',Batman:'Bruce Wayne','Spider-Man':'Peter Parker'};  \n    return heroes; \n}\nconsole.log(secretIdentities()); // Outputs {\"Superman\":\"Clark Kent\",\"Batman\":\"Bruce Wayne\",\"Spider-Man\":\"Peter Parker\"}\n\n// Or you can use this syntax instead of returning an object directly from the function:\nlet heroes = {};\nfor (const [key, value] of Object.entries(superHeroes)) {\n    heroes[value] = key;\n}\nreturn heroes;\n\n// Outputs same as above\nconsole.log(secretIdentities());\n\n// If you want to access each property individually in your code, you can do so like this:\nlet superHeroNames = secretIdentities();\nconsole.log(superHeroNames['Superman']); // Clark Kent\nconsole.log(superHeroNames['Batman']); // Bruce Wayne\nconsole.log(superHeroNames['Spider-Man']); // Peter Parker\n\n// To get all properties at once, you can also use forEach():\nObject.keys(secretIdentities()).forEach((name) => console.log(${name}: ${secretIdentities()[name]}) );",
+                    "answer": " \nfunction secretIdentities(){ \n    let heroes = {Superman:'Clark Kent',Batman:'Bruce Wayne','Spider-Man':'Peter Parker'};  \n    return heroes; \n}\nconsole.log(secretIdentities()); // Outputs {\"Superman\":\"Clark Kent\",\"Batman\":\"Bruce Wayne\",\"Spider-Man\":\"Peter Parker\"}\n\n// Or you can use this syntax instead of returning an object directly from the function:\nlet heroes = {};\nfor (const [key, value] of Object.entries(superHeroes)) {\n    heroes[value] = key;\n}\nreturn heroes;\n\n// Outputs same as above\nconsole.log(secretIdentities());\n\n// If you want to access each property individually in your code, you can do so like this:\nlet superHeroNames = secretIdentities();\nconsole.log(superHeroNames['Superman']); // Clark Kent\nconsole.log(superHeroNames['Batman']); // Bruce Wayne\nconsole.log(superHeroNames['Spider-Man']); // Peter Parker\n\n// To get all properties at once, you can also use forEach():\nObject.keys(secretIdentities()).forEach((name) => console.log(`${name}: ${secretIdentities()[name]}`) );\n"
+                }
+            },
+            "task": "Write a javascript function secretidentities() with no inputs that returns an object mapping the superheroes Superman, Batman and Spider-Man to their real names",
+            "language": "javascript"
+        },
+        "GCDZeroShot-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(100,20) == 20 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(5,0) == 5 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(0,3) == 3 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(13,7) == 1 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\n",
+                    "code": "function gcd(a, b) {\n    while (b != 0) {\n        a %= b;\n        b %= a;\n    }\n    return a;\n}\n\nconsole.log(gcd(10, 15)); // 5\nconsole.log(gcd(10, 20)); // 5\nconsole.log(gcd(10, 30)); // 10\nconsole.log(gcd(10, 40)); // 10\nconsole.log(gcd(1",
+                    "answer": " \nfunction gcd(a, b) {\n    while (b != 0) {\n        a %= b;\n        b %= a;\n    }\n    return a;\n}\n\nconsole.log(gcd(10, 15)); // 5\nconsole.log(gcd(10, 20)); // 5\nconsole.log(gcd(10, 30)); // 10\nconsole.log(gcd(10, 40)); // 10\nconsole.log(gcd(1"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 6/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(13,7) == 1\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcd\n",
+                    "failing_tests": "FAIL f.call(100,20) == 20 got 1\nFAIL f.call(5,0) == 5 got 1\nFAIL f.call(0,3) == 3 got 1\n",
+                    "code": "function gcd (a,b){ \n    if (a === 0 || b === 0 ) return 1;  \n    else return gcd(b % a, a); } \nconsole.log(gcd(25,3)); // Outputs 5\nconsole.log(gcd(48,67)); // Outputs 19\nconsole.log(gcd(-1,-2)); // Outputs -1\nconsole.log(gcd(1,0)); // Outputs undefined",
+                    "answer": " \nfunction gcd (a,b){ \n    if (a === 0 || b === 0 ) return 1;  \n    else return gcd(b % a, a); } \nconsole.log(gcd(25,3)); // Outputs 5\nconsole.log(gcd(48,67)); // Outputs 19\nconsole.log(gcd(-1,-2)); // Outputs -1\nconsole.log(gcd(1,0)); // Outputs undefined\n```\n"
+                }
+            },
+            "task": "Write a javascript function gcd(a, b) with two inputs a and b that returns the greatest common denominator of a and b",
+            "language": "javascript"
+        },
+        "GCDAlternative-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\nFAIL f.call(100,20) == 20 got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\nFAIL f.call(5,0) == 5 got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\nFAIL f.call(0,3) == 3 got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\nFAIL f.call(13,7) == 1 got {'error': \"Unexpected token 'var'\", 'exc_type': 'SyntaxError'}\n",
+                    "code": "function gcf(a, b) {\n    if (a === 0) {\n        return b;\n    } else if (b === 0) {\n        return a;\n    } else {\n        return gcf(b % a, a);\n    }\n}\n\nconsole.log(gcf(15, 20)); // 5\nconsole.log(gcf(20, 15)); // 5\nconsole.log(gcf(20, 20)); // 20\nconsole.log(gcf(",
+                    "answer": " \nfunction gcf(a, b) {\n    if (a === 0) {\n        return b;\n    } else if (b === 0) {\n        return a;\n    } else {\n        return gcf(b % a, a);\n    }\n}\n\nconsole.log(gcf(15, 20)); // 5\nconsole.log(gcf(20, 15)); // 5\nconsole.log(gcf(20, 20)); // 20\nconsole.log(gcf("
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 4/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == a\nPASS f.args[1].name == b\nPASS f.name == gcf\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'a is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(100,20) == 20 got {'error': 'a is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(5,0) == 5 got {'error': 'a is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(0,3) == 3 got {'error': 'a is not defined', 'exc_type': 'ReferenceError'}\nFAIL f.call(13,7) == 1 got {'error': 'a is not defined', 'exc_type': 'ReferenceError'}\n",
+                    "code": "function gcf (a,b){ \n    if (a % b == 0 && b % a == 0) { return true; } else {return false;}  \n}\nconsole.log(\"The GCF of \" + a +\"and \"+b+ \" is:\" +gcf(a,b)); // Outputs The GCF of 12 and 6 is:true\n// Outputs The GCF of 8 and 4 is:false",
+                    "answer": " \nfunction gcf (a,b){ \n    if (a % b == 0 && b % a == 0) { return true; } else {return false;}  \n}\nconsole.log(\"The GCF of \" + a +\"and \"+b+ \" is:\" +gcf(a,b)); // Outputs The GCF of 12 and 6 is:true\n// Outputs The GCF of 8 and 4 is:false\n\n"
+                }
+            },
+            "task": "Write a javascript function gcf(a, b) with two inputs a and b that returns the greatest common factor of a and b",
+            "language": "javascript"
+        },
+        "GCDMisnamed-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 3/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == x\nPASS f.args[1].name == banana\n",
+                    "failing_tests": "FAIL f.call(1,1) == 1 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(100,20) == 20 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(5,0) == 5 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(0,3) == 3 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(13,7) == 1 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.name == fofx got gcd\n",
+                    "code": "function gcd(x, banana) {\n    if (x > banana) {\n        return gcd(banana, x);\n    } else {\n        return gcd(x, banana);\n    }\n}\n\nconsole.log(gcd(5, 10)); // 5\nconsole.log(gcd(10, 5)); // 5\nconsole.log(gcd(5, 10)); // 5\nconsole.log(gcd(10, 5)); // 5\nconsole.log(g",
+                    "answer": " \nfunction gcd(x, banana) {\n    if (x > banana) {\n        return gcd(banana, x);\n    } else {\n        return gcd(x, banana);\n    }\n}\n\nconsole.log(gcd(5, 10)); // 5\nconsole.log(gcd(10, 5)); // 5\nconsole.log(gcd(5, 10)); // 5\nconsole.log(gcd(10, 5)); // 5\nconsole.log(g"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 7/9",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.call(1,1) == 1\nPASS f.call(100,20) == 20\nPASS f.call(5,0) == 5\nPASS f.call(0,3) == 3\nPASS f.call(13,7) == 1\nPASS f.args[0].name == x\n",
+                    "failing_tests": "FAIL f.args[1].name == banana got y\nFAIL f.name == fofx got gcd\n",
+                    "code": "function gcd(x, y){ \n    if (y === 0) return x;  \n    else return gcd(y, x % y); \n}\n\nfofx = function(x,banana){ \n    var result = gcd(x, banana); \n    console.log(\"The GCD is \" + result); \n};\n\nfofx(123456789, 123456789); // The GCD is 1",
+                    "answer": " \nfunction gcd(x, y){ \n    if (y === 0) return x;  \n    else return gcd(y, x % y); \n}\n\nfofx = function(x,banana){ \n    var result = gcd(x, banana); \n    console.log(\"The GCD is \" + result); \n};\n\nfofx(123456789, 123456789); // The GCD is 1\n```\n\n"
+                }
+            },
+            "task": "Write a javascript function fofx(x, banana) with two inputs x and banana that returns the greatest common denominator (gcd) of x and banana",
+            "language": "javascript"
+        },
+        "FactorialZeroShot-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  let result = 1;\n  for (let i = 1; i <= n; i++) {\n    result *= i;\n  }\n  return result;\n}\n\nconsole.log(factorial(5)); // 120\nconsole.log(factorial(0)); // 1\nconsole.log(factorial(1)); // 1\nconsole.log(factorial(2)); // 2\nconsole.log(factorial(3)); // 6\nconsole.log(factorial(4));",
+                    "answer": " \nfunction factorial(n) {\n  let result = 1;\n  for (let i = 1; i <= n; i++) {\n    result *= i;\n  }\n  return result;\n}\n\nconsole.log(factorial(5)); // 120\nconsole.log(factorial(0)); // 1\nconsole.log(factorial(1)); // 1\nconsole.log(factorial(2)); // 2\nconsole.log(factorial(3)); // 6\nconsole.log(factorial(4));"
+                },
+                "multinomial": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n){ \n    let result = 1;  \n    for (let i=2;i<=n;i++){ \n        result *= i; \n    } \n    return result; \n} \nconsole.log(factorial(5)); // 120 \n// Output: 120",
+                    "answer": " \nfunction factorial(n){ \n    let result = 1;  \n    for (let i=2;i<=n;i++){ \n        result *= i; \n    } \n    return result; \n} \nconsole.log(factorial(5)); // 120 \n// Output: 120\n\n"
+                }
+            },
+            "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using iteration",
+            "language": "javascript"
+        },
+        "FactorialRecursiveZeroShot-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n) {\n  if (n === 0) {\n    return 1;\n  }\n  return n * factorial(n - 1);\n}\n\nconsole.log(factorial(5)); // 120\nconsole.log(factorial(0)); // 1\nconsole.log(factorial(1)); // 1\nconsole.log(factorial(2)); // 2\nconsole.log(factorial(3)); // 6\nconsole.log(factorial(4)); // 24\nconsole.log",
+                    "answer": " \nfunction factorial(n) {\n  if (n === 0) {\n    return 1;\n  }\n  return n * factorial(n - 1);\n}\n\nconsole.log(factorial(5)); // 120\nconsole.log(factorial(0)); // 1\nconsole.log(factorial(1)); // 1\nconsole.log(factorial(2)); // 2\nconsole.log(factorial(3)); // 6\nconsole.log(factorial(4)); // 24\nconsole.log"
+                },
+                "multinomial": {
+                    "check_summary": "PASS correct 4/4",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(1),int) == True\nPASS f.call(1) == 1\nPASS f.call(5) == 120\n",
+                    "failing_tests": "",
+                    "code": "function factorial(n){ \n    if (n === 0 || n === 1) { return 1; } \n   else{ \n       return n * factorial(n-1); \n   } \n} \nconsole.log(factorial(5)); // Outputs 120",
+                    "answer": " \nfunction factorial(n){ \n    if (n === 0 || n === 1) { return 1; } \n   else{ \n       return n * factorial(n-1); \n   } \n} \nconsole.log(factorial(5)); // Outputs 120\n```\n\n"
+                }
+            },
+            "task": "Write a javascript function factorial(n) with input n that returns the factorial of n using recursion",
+            "language": "javascript"
+        },
+        "FactorialMisnamed-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) == True got False\nFAIL f.call(1) == 1 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(5) == 120 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\n",
+                    "code": "function glork(bork) {\n  return bork * glork(bork - 1);\n}\n\nconsole.log(glork(5)); // 120\nconsole.log(glork(4)); // 24\nconsole.log(glork(3)); // 6\nconsole.log(glork(2)); // 2\nconsole.log(glork(1)); // 1\nconsole.log(glork(0)); // 1\nconsole.log(glork(-1)); // 0\nconsole.log(glork",
+                    "answer": " \nfunction glork(bork) {\n  return bork * glork(bork - 1);\n}\n\nconsole.log(glork(5)); // 120\nconsole.log(glork(4)); // 24\nconsole.log(glork(3)); // 6\nconsole.log(glork(2)); // 2\nconsole.log(glork(1)); // 1\nconsole.log(glork(0)); // 1\nconsole.log(glork(-1)); // 0\nconsole.log(glork"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 3/6",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL isinstance(f.call(1),int) == True got False\nFAIL f.call(1) == 1 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\nFAIL f.call(5) == 120 got {'error': 'missing ) after argument list', 'exc_type': 'SyntaxError'}\n",
+                    "code": "function glork(bork){ \n    return (1 * bork);  \n}\nconsole.log(glork(5)); // Outputs 120\nconsole.log(glork(7)); // Outputs 5040\nconsole.log(glork(-3)); // Outputs NaN\nconsole.log(glork('hello')); // Outputs NaN\nconsole.log(glork({})); // Outputs NaN\nconsole.log(glork([])); // Outputs NaN\nconsole.log(glork()); // Outputs NaN\nconsole.log(glork(null)); // Outputs NaN\nconsole.log(glork(undefined)); // Outputs NaN\nconsole.log(glork(false)); // Outputs NaN\nconsole.log(glork(true)); // Outputs NaN\nconsole.log(glork(Infinity)); // Outputs Infinity\nconsole.log(glork(-Infinity)); // Outputs -Infinity\nconsole.log(glork(NaN)); // Outputs NaN\nconsole.log(glork(new Date())); // Outputs NaN\nconsole.log(glork(Math.PI)); // Outputs NaN\nconsole.log(glork(Math.E)); // Outputs NaN\nconsole.log(glork(Math.sqrt(2))); // Outputs NaN\nconsole.log(glork(Math.sin(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.cos(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.tan(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.exp(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.abs(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.pow(Math.PI, Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.random())); // Outputs NaN\nconsole.log(glork(Math.round(Math.PI*Math.random()))); // Outputs NaN\nconsole.log(glork(Math.floor(Math.PI*Math.random()))); // Outputs NaN\nconsole.log(glork(Math.ceil(Math.",
+                    "answer": " \nfunction glork(bork){ \n    return (1 * bork);  \n}\nconsole.log(glork(5)); // Outputs 120\nconsole.log(glork(7)); // Outputs 5040\nconsole.log(glork(-3)); // Outputs NaN\nconsole.log(glork('hello')); // Outputs NaN\nconsole.log(glork({})); // Outputs NaN\nconsole.log(glork([])); // Outputs NaN\nconsole.log(glork()); // Outputs NaN\nconsole.log(glork(null)); // Outputs NaN\nconsole.log(glork(undefined)); // Outputs NaN\nconsole.log(glork(false)); // Outputs NaN\nconsole.log(glork(true)); // Outputs NaN\nconsole.log(glork(Infinity)); // Outputs Infinity\nconsole.log(glork(-Infinity)); // Outputs -Infinity\nconsole.log(glork(NaN)); // Outputs NaN\nconsole.log(glork(new Date())); // Outputs NaN\nconsole.log(glork(Math.PI)); // Outputs NaN\nconsole.log(glork(Math.E)); // Outputs NaN\nconsole.log(glork(Math.sqrt(2))); // Outputs NaN\nconsole.log(glork(Math.sin(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.cos(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.tan(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.exp(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.abs(Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.pow(Math.PI, Math.PI/6))); // Outputs NaN\nconsole.log(glork(Math.random())); // Outputs NaN\nconsole.log(glork(Math.round(Math.PI*Math.random()))); // Outputs NaN\nconsole.log(glork(Math.floor(Math.PI*Math.random()))); // Outputs NaN\nconsole.log(glork(Math.ceil(Math."
+                }
+            },
+            "task": "Write a javascript function glork(bork) with input bork that returns the factorial of bork",
+            "language": "javascript"
+        },
+        "FibonacciZeroShot-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(1) == 1\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got 1\nFAIL f.call(2) == 1 got 2\nFAIL f.call(3) == 2 got 3\nFAIL f.call(5) == 5 got 8\n",
+                    "code": "function fib(n) {\n  let a = 0, b = 1;\n  for (let i = 0; i < n; i++) {\n    let result = a + b;\n    a = b;\n    b = result;\n  }\n  return b;\n}\n\nconsole.log(fib(5)); // 8\nconsole.log(fib(10)); // 55\nconsole.log(fib(20)); // 144\nconsole.log(fib(30)); // 23",
+                    "answer": " \nfunction fib(n) {\n  let a = 0, b = 1;\n  for (let i = 0; i < n; i++) {\n    let result = a + b;\n    a = b;\n    b = result;\n  }\n  return b;\n}\n\nconsole.log(fib(5)); // 8\nconsole.log(fib(10)); // 55\nconsole.log(fib(20)); // 144\nconsole.log(fib(30)); // 23"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 5/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(0) == 0\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(3) == 2 got 3\nFAIL f.call(5) == 5 got 21\n",
+                    "code": "function fib(n){ \n    if (n <= 1) return n; \n   else { \n       let x = 0, y = 1; \n        for (let i=2;i<=n;i++){ \n            x += y; \n            y += x; \n        } \n        return x; \n   } \n} \nconsole.log(fib(5)); // Outputs 8\nconsole.log(fib(-3)); // Outputs -4\nconsole.log(fib()); // Outputs 0\nconsole.log(fib(9)); // Outputs 76\nconsole.log(fib(10)); // Outputs 55\nconsole.log(fib(11)); // Outputs 89\nconsole.log(fib(12)); // Outputs 144\nconsole.log(fib(13)); // Outputs 233\nconsole.log(fib(14)); // Outputs 377\nconsole.log(fib(15)); // Outputs 610\nconsole.log(fib(16)); // Outputs 987\nconsole.log(fib(17)); // Outputs 1597\nconsole.log(fib(18)); // Outputs 2584\nconsole.log(fib(19)); // Outputs 4181\nconsole.log(fib(20)); // Outputs 6765\nconsole.log(fib(21)); // Outputs 10946\nconsole.log(fib(22)); // Outputs 17711\nconsole.log(fib(23)); // Outputs 28657\nconsole.log(fib(24)); // Outputs 46368\nconsole.log(fib(25)); // Outputs 75025\nconsole.log(fib(26)); // Outputs 121393\nconsole.log(fib(27)); // Outputs 196418\nconsole.log(fib(28)); // Outputs 317811\nconsole.log",
+                    "answer": " \nfunction fib(n){ \n    if (n <= 1) return n; \n   else { \n       let x = 0, y = 1; \n        for (let i=2;i<=n;i++){ \n            x += y; \n            y += x; \n        } \n        return x; \n   } \n} \nconsole.log(fib(5)); // Outputs 8\nconsole.log(fib(-3)); // Outputs -4\nconsole.log(fib()); // Outputs 0\nconsole.log(fib(9)); // Outputs 76\nconsole.log(fib(10)); // Outputs 55\nconsole.log(fib(11)); // Outputs 89\nconsole.log(fib(12)); // Outputs 144\nconsole.log(fib(13)); // Outputs 233\nconsole.log(fib(14)); // Outputs 377\nconsole.log(fib(15)); // Outputs 610\nconsole.log(fib(16)); // Outputs 987\nconsole.log(fib(17)); // Outputs 1597\nconsole.log(fib(18)); // Outputs 2584\nconsole.log(fib(19)); // Outputs 4181\nconsole.log(fib(20)); // Outputs 6765\nconsole.log(fib(21)); // Outputs 10946\nconsole.log(fib(22)); // Outputs 17711\nconsole.log(fib(23)); // Outputs 28657\nconsole.log(fib(24)); // Outputs 46368\nconsole.log(fib(25)); // Outputs 75025\nconsole.log(fib(26)); // Outputs 121393\nconsole.log(fib(27)); // Outputs 196418\nconsole.log(fib(28)); // Outputs 317811\nconsole.log"
+                }
+            },
+            "task": "Write a javascript function fib(n) with input element number n (0 based) that returns the `n`-th element of the fibonacci sequence",
+            "language": "javascript"
+        },
+        "FibonacciMisnamed-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 3/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got {'error': 'Unexpected identifier', 'exc_type': 'SyntaxError'}\nFAIL f.call(1) == 1 got {'error': 'Unexpected identifier', 'exc_type': 'SyntaxError'}\nFAIL f.call(2) == 1 got {'error': 'Unexpected identifier', 'exc_type': 'SyntaxError'}\nFAIL f.call(3) == 2 got {'error': 'Unexpected identifier', 'exc_type': 'SyntaxError'}\nFAIL f.call(5) == 5 got {'error': 'Unexpected identifier', 'exc_type': 'SyntaxError'}\n",
+                    "code": "function potato(g) {\n    let a = 0;\n    let b = 1;\n    for (let i = 0; i < g; i++) {\n        let c = a + b;\n        a = b;\n        b = c;\n    }\n    return b;\n}\n\nconsole.log(potato(2)); // 1\nconsole.log(potato(3)); // 2\nconsole.log(potato(4)); // 3\nconsole.log(potato(5)); // 5\nconsole.",
+                    "answer": " \nfunction potato(g) {\n    let a = 0;\n    let b = 1;\n    for (let i = 0; i < g; i++) {\n        let c = a + b;\n        a = b;\n        b = c;\n    }\n    return b;\n}\n\nconsole.log(potato(2)); // 1\nconsole.log(potato(3)); // 2\nconsole.log(potato(4)); // 3\nconsole.log(potato(5)); // 5\nconsole."
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 7/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS f.call(1) == 1\nPASS f.call(2) == 1\nPASS f.call(3) == 2\nPASS f.call(5) == 5\nPASS f.args[0].name == g\nPASS f.name == potato\n",
+                    "failing_tests": "FAIL f.call(0) == 0 got 1\n",
+                    "code": "function potato(g){ \n    let f1 = 0,f2=1;  \n    for(let i=0;i<g-1;i++){ \n        const temp = f1+f2; \n        f1 = f2; \n        f2 = temp; \n    } \n    return f2; \n} \nconsole.log(potato(3)); // prints 5\nconsole.log(potato(4)); // prints 8\nconsole.log(potato(6)); // prints 13\nconsole.log(potato(7)); // prints 21\nconsole.log(potato(9)); // prints 34\nconsole.log(potato(10)); // prints 55\nconsole.log(potato(11)); // prints 89\nconsole.log(potato(12)); // prints 144\nconsole.log(potato(13)); // prints 233\nconsole.log(potato(14)); // prints 377\nconsole.log(potato(15)); // prints 610\nconsole.log(potato(16)); // prints 987\nconsole.log(potato(17)); // prints 1597\nconsole.log(potato(18)); // prints 2584\nconsole.log(potato(19)); // prints 4181\nconsole.log(potato(20)); // prints 6765\nconsole.log(potato(21)); // prints 10946\nconsole.log(potato(22)); // prints 17711\nconsole.log(potato(23)); // prints 28657\nconsole.log(potato(24)); // prints 46368\nconsole.log(potato(25)); // prints 75025\nconsole.log(potato(26)); // prints 121393\nconsole.log(potato(27)); // prints 196418\nconsole.log(potato(28)); // prints 317811\nconsole.log(potato(29));",
+                    "answer": " \nfunction potato(g){ \n    let f1 = 0,f2=1;  \n    for(let i=0;i<g-1;i++){ \n        const temp = f1+f2; \n        f1 = f2; \n        f2 = temp; \n    } \n    return f2; \n} \nconsole.log(potato(3)); // prints 5\nconsole.log(potato(4)); // prints 8\nconsole.log(potato(6)); // prints 13\nconsole.log(potato(7)); // prints 21\nconsole.log(potato(9)); // prints 34\nconsole.log(potato(10)); // prints 55\nconsole.log(potato(11)); // prints 89\nconsole.log(potato(12)); // prints 144\nconsole.log(potato(13)); // prints 233\nconsole.log(potato(14)); // prints 377\nconsole.log(potato(15)); // prints 610\nconsole.log(potato(16)); // prints 987\nconsole.log(potato(17)); // prints 1597\nconsole.log(potato(18)); // prints 2584\nconsole.log(potato(19)); // prints 4181\nconsole.log(potato(20)); // prints 6765\nconsole.log(potato(21)); // prints 10946\nconsole.log(potato(22)); // prints 17711\nconsole.log(potato(23)); // prints 28657\nconsole.log(potato(24)); // prints 46368\nconsole.log(potato(25)); // prints 75025\nconsole.log(potato(26)); // prints 121393\nconsole.log(potato(27)); // prints 196418\nconsole.log(potato(28)); // prints 317811\nconsole.log(potato(29));"
+                }
+            },
+            "task": "Write a javascript function potato(g) with input element number g (0 based) that returns the `g`-th element of the fibonacci sequence",
+            "language": "javascript"
+        },
+        "FibonacciListZeroShot-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 5/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(1) == [0]\nPASS f.call(2) == [0, 1]\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(3) == [0, 1, 1] got [0, 1, 2]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, 1, 2, 4, 8]\n",
+                    "code": "function fib(n) {\n  let a = 0;\n  let b = 1;\n  let result = [];\n  for (let i = 0; i < n; i++) {\n    result.push(a);\n    a = b;\n    b = a + b;\n  }\n  return result;\n}\n\nconsole.log(fib(5)); // [0, 1, 1, 2, 3]\nconsole.log(fib(10)); // [0, 1, 1, 2",
+                    "answer": " \nfunction fib(n) {\n  let a = 0;\n  let b = 1;\n  let result = [];\n  for (let i = 0; i < n; i++) {\n    result.push(a);\n    a = b;\n    b = a + b;\n  }\n  return result;\n}\n\nconsole.log(fib(5)); // [0, 1, 1, 2, 3]\nconsole.log(fib(10)); // [0, 1, 1, 2"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == n\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got [0, 1, 1]\nFAIL f.call(3) == [0, 1, 1] got [0, 1, 1, 2]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, 1, 1, 2, 3, 5]\n",
+                    "code": "function fib(n){ \n    let arr = [0,1];  \n    for (let i=2;i<=n;i++){ \n        arr[i] = arr[i-1]+arr[i-2]; \n    } \n    return arr; \n} \nconsole.log(fib(5)); // Outputs [0,1,1,2,3]",
+                    "answer": " \nfunction fib(n){ \n    let arr = [0,1];  \n    for (let i=2;i<=n;i++){ \n        arr[i] = arr[i-1]+arr[i-2]; \n    } \n    return arr; \n} \nconsole.log(fib(5)); // Outputs [0,1,1,2,3]\n```\n\n"
+                }
+            },
+            "task": "Write a javascript function fib(n) with input length n that returns a list with the first `n` elements of the fibonacci sequence",
+            "language": "javascript"
+        },
+        "FibonacciListMisnamed-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 7/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.call(2) == [0, 1]\nPASS f.call(3) == [0, 1, 1]\nPASS f.call(5) == [0, 1, 1, 2, 3]\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\n",
+                    "code": "function glork(bork) {\n  let fib = [0, 1];\n  for (let i = 2; i < bork; i++) {\n    fib.push(fib[i - 1] + fib[i - 2]);\n  }\n  return fib;\n}\n\nconsole.log(glork(10)); // [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\nconsole.log(glork(20)); //",
+                    "answer": " \nfunction glork(bork) {\n  let fib = [0, 1];\n  for (let i = 2; i < bork; i++) {\n    fib.push(fib[i - 1] + fib[i - 2]);\n  }\n  return fib;\n}\n\nconsole.log(glork(10)); // [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\nconsole.log(glork(20)); //"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 4/8",
+                    "passing_tests": "PASS len(f.args) == 1\nPASS isinstance(f.call(0),list) == True\nPASS f.args[0].name == bork\nPASS f.name == glork\n",
+                    "failing_tests": "FAIL f.call(1) == [0] got [0, 1]\nFAIL f.call(2) == [0, 1] got [0, 1, 1]\nFAIL f.call(3) == [0, 1, 1] got [0, 1, 1, 2]\nFAIL f.call(5) == [0, 1, 1, 2, 3] got [0, 1, 1, 2, 3, 5]\n",
+                    "code": "function glork(bork){ \n    let arr = [0,1];  \n    for (let i=2;i<bork+1;i++){ \n        arr[i] = arr[i-1]+arr[i-2]; \n    } \n    return arr; \n} \nconsole.log(glork(5)); // Outputs [0,1,1,2,3]",
+                    "answer": " \nfunction glork(bork){ \n    let arr = [0,1];  \n    for (let i=2;i<bork+1;i++){ \n        arr[i] = arr[i-1]+arr[i-2]; \n    } \n    return arr; \n} \nconsole.log(glork(5)); // Outputs [0,1,1,2,3]\n```\n\n"
+                }
+            },
+            "task": "Write a javascript function glork(bork) with input length bork that returns a list with the first `bork` elements of the fibonacci sequence",
+            "language": "javascript"
+        },
+        "StringCountTokens-javascript": {
+            "results": {
+                "beamsearching": {
+                    "check_summary": "FAIL correct 3/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\n",
+                    "failing_tests": "FAIL f.name == substrcount got substrCount\nFAIL f.call('aaa','a') == 3 got {'error': 'Invalid or unexpected token', 'exc_type': 'SyntaxError'}\nFAIL f.call(\"babaab\",\"ab\") == 2 got {'error': 'Invalid or unexpected token', 'exc_type': 'SyntaxError'}\nFAIL f.call(\"abcabcefgabc\",\"abc\") == 3 got {'error': 'Invalid or unexpected token', 'exc_type': 'SyntaxError'}\n",
+                    "code": "function substrCount(str, substr) {\n    let count = 0;\n    for (let i = 0; i < str.length; i++) {\n        if (str[i] === substr) {\n            count++;\n        }\n    }\n    return count;\n}\n\nconsole.log(substrCount(\"Hello World\", \"World\")); // 4\nconsole.log(substrCount(\"Hello World\", \"Hello\")); // 1\nconsole.log(substrCount(\"Hello World\", \"H\")); // 0\nconsole.log(substrCount(\"Hello World",
+                    "answer": " \nfunction substrCount(str, substr) {\n    let count = 0;\n    for (let i = 0; i < str.length; i++) {\n        if (str[i] === substr) {\n            count++;\n        }\n    }\n    return count;\n}\n\nconsole.log(substrCount(\"Hello World\", \"World\")); // 4\nconsole.log(substrCount(\"Hello World\", \"Hello\")); // 1\nconsole.log(substrCount(\"Hello World\", \"H\")); // 0\nconsole.log(substrCount(\"Hello World"
+                },
+                "multinomial": {
+                    "check_summary": "FAIL correct 4/7",
+                    "passing_tests": "PASS len(f.args) == 2\nPASS f.args[0].name == str\nPASS f.args[1].name == substr\nPASS f.call('aaa','a') == 3\n",
+                    "failing_tests": "FAIL f.name == substrcount got substrCount\nFAIL f.call(\"babaab\",\"ab\") == 2 got 0\nFAIL f.call(\"abcabcefgabc\",\"abc\") == 3 got 0\n",
+                    "code": "function substrCount (str, substr){ \n    let count = 0;  \n    for (let i=0;i<str.length;i++){ \n        if (str[i] == substr){ \n            count++; \n        } \n    } \n    return count; \n} \nconsole.log(\"The substring 'abc' appears \" + substrCount('abcdef', 'abc')); // The substring 'abc' appears 2 times",
+                    "answer": " \nfunction substrCount (str, substr){ \n    let count = 0;  \n    for (let i=0;i<str.length;i++){ \n        if (str[i] == substr){ \n            count++; \n        } \n    } \n    return count; \n} \nconsole.log(\"The substring 'abc' appears \" + substrCount('abcdef', 'abc')); // The substring 'abc' appears 2 times\n```\n"
+                }
+            },
+            "task": "Write a javascript function substrcount(str, substr) with inputs `str` and `substr` that returns counts the number of times the sub-string `substr` occurs in `str`",
+            "language": "javascript"
+        }
+    },
+    "models": [
+        {
+            "prompt": "llama2-coder",
+            "short_name": "beamsearching",
+            "params": "llama2-coder",
+            "model": "mrm8488-llama-2-coder-7b-fp16",
+            "id": "beamsearching",
+            "idx": 0,
+            "passed": 53,
+            "total": 91
+        },
+        {
+            "prompt": "llama2-coder",
+            "short_name": "multinomial",
+            "params": "precise",
+            "model": "mrm8488-llama-2-coder-7b-fp16",
+            "id": "multinomial",
+            "idx": 1,
+            "passed": 59,
+            "total": 91
+        }
+    ],
+    "config": {
+        "title": "Llama2-Coder Beamsearch vs Multinomial (javascript)",
+        "models": [
+            {
+                "id": "beamsearching",
+                "eval": "llama2/eval_junior-v2_python-javascript_llama2-coder_none_llama2-coder_mrm8488-llama-2-coder-7b-fp16_1691526120.ndjson",
+                "short_name": "beamsearching"
+            },
+            {
+                "id": "multinomial",
+                "eval": "llama2/eval_junior-v2_python-javascript_llama2-coder_none_precise_mrm8488-llama-2-coder-7b-fp16_1691526744.ndjson",
+                "short_name": "multinomial"
+            }
+        ],
+        "language": "javascript"
+    },
+    "analyser": ""
+}

@@ -1,0 +1,8 @@
+title: Llama2-Coder Beamsearch vs Multinomial
+models:
+  - id: beamsearching
+    eval: llama2/eval_junior-v2_python-javascript_llama2-coder_none_llama2-coder_mrm8488-llama-2-coder-7b-fp16_1691526120.ndjson
+    short_name: beamsearching
+  - id: multinomial
+    eval: llama2/eval_junior-v2_python-javascript_llama2-coder_none_precise_mrm8488-llama-2-coder-7b-fp16_1691526744.ndjson
+    short_name: multinomial

@@ -111,6 +111,12 @@ def download_dolphin_llama2_7b_model():
 def download_wizardlm_uncencored_llama2_13b_model():
     download_model('ehartford/WizardLM-1.0-Uncensored-Llama2-13b')
 
+def download_nous_hermes_llama2_13b_model():
+    download_model('NousResearch/Nous-Hermes-Llama2-13b')
+
+def download_llama2_coder_7b_model():
+    download_model('mrm8488/llama-2-coder-7b', info = { 'generate_args': { 'stop_seq': ["###"] } })
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -148,15 +154,15 @@ image = (
                   "cd llm-awq/awq/kernels && python setup.py install"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_wizardlm_uncencored_llama2_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_llama2_coder_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
-RUNTIME = "vllm"
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"
@@ -164,8 +170,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
