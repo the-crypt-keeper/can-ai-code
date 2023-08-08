@@ -110,6 +110,53 @@ class InterviewTransformers:
 
         return answer, self.info
 
+###########################
+##  ctranslate2 Adapter  ##
+###########################
+class InterviewCtranslate2:
+    def __init__(self, model_name, model_info = {}, quant = QUANT_FP16, gpu_split = None):
+        self.model_name = model_name
+        self.info = model_info
+        self.quant = quant
+
+        self.batch = False
+
+    def load(self):
+        from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
+
+        print('Remote model', self.model_name, ' info', self.info)
+
+        t0 = time.time()
+        print('Loading model...')
+        self.model = GeneratorCT2fromHfHub(model_name_or_path=self.model_name, device="cuda", compute_type="int8_float16")
+
+        # if passed a path, take the last dir name otherwise replace / with -
+        if self.model_name[0] == '/':
+            self.info['model_name'] = self.model_name.split('/')[-1]
+        else:
+            self.info['model_name'] = self.model_name.replace('/','-')
+            
+        print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s")        
+
+    def generate(self, prompt, params):
+        model_params = {
+            'max_length': params.get('max_new_tokens', 512),
+            'sampling_temperature': params.get('temperature', 1.0),
+            'sampling_topk': params.get('topk', 50),
+            'sampling_topp': params.get('topp', 1.0),
+            'repetition_penalty': params.get('repetition_penalty', 1.0),
+            'num_hypotheses': params.get('num_beams', 1)
+        }
+        self.info['sampling_params'] = model_params
+        
+        answer = self.model.generate(
+            text=[prompt],
+            include_prompt_in_result=False,
+            **model_params
+        )
+
+        return answer[0], self.info
+    
 #########################
 ##  auto-gptq Adapter  ##
 #########################
@@ -510,6 +557,8 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         model = InterviewExllama(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'awq':
         model = InterviewAWQ(model_name, model_info, gpu_split=gpu_split)
+    elif runtime == 'ctranslate2':
+        model = InterviewCtranslate2(model_name, model_info, gpu_split=gpu_split)
     else:
         raise Exception('Unknown runtime '+runtime)
     

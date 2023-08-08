@@ -20,6 +20,7 @@ TheBloke-minotaur-15B-GPTQ: { name: "Minotaur-Code", size: "15B", tags: ["bigcod
 TheBloke-WizardCoder-Guanaco-15B-V1.1-GPTQ: { name: "WizardCoder-Guanaco", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
 openchat-opencoderplus-fp16: { name: "OpenCoderPlus", size: "15B", tags: ["bigcode"] }
 openchat-opencoderplus-ggml-q5-0: { name: "OpenCoderPlus", size: "15B", tags: ["bigcode"], quant: "GGML-q5_0", url: "https://huggingface.co/cooki3monster/openchat_opencoderplus-GGML" }
+michaelfeil-ct2fast-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "CT2-INT8" }
 
 Salesforce-codegen2-1B-fp16: { name: 'Codegen2', size: '1B', tags: ['salesforce'] }
 Salesforce-codegen2-3-7B-fp16: { name: 'Codegen2', size: '3.7B', tags: ['salesforce'], url: "https://huggingface.co/Salesforce/codegen2-3_7B" }

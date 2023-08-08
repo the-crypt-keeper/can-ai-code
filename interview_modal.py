@@ -117,6 +117,9 @@ def download_nous_hermes_llama2_13b_model():
 def download_llama2_coder_7b_model():
     download_model('mrm8488/llama-2-coder-7b', info = { 'generate_args': { 'stop_seq': ["###"] } })
 
+def download_wizardcoder_ct2_model():
+    download_model('michaelfeil/ct2fast-WizardCoder-15B-V1.0')
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -152,16 +155,18 @@ image = (
     .run_commands("git clone https://github.com/mit-han-lab/llm-awq",
                   "cd llm-awq && git checkout 71d8e68df78de6c0c817b029a568c064bf22132d && pip install -e .",
                   "cd llm-awq/awq/kernels && python setup.py install"
-    )    
+    )
+    .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_llama2_coder_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_wizardcoder_ct2_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
+RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
@@ -196,6 +201,8 @@ class ModalWrapper:
             else:
                 gpu_split = None
             self.wrapper = InterviewAWQ(self.info['model_name'], self.info, gpu_split=gpu_split)
+        elif RUNTIME == "ctranslate2":
+            self.wrapper = InterviewCtranslate2(self.info['model_name'], self.info)
         else:
             raise Exception("Unknown RUNTIME")
 
