@@ -22,7 +22,7 @@ def extract_code_markdown(answer):
     # Extract the text between the tokens
     code_text = answer[start_index + len(start_token):end_index].strip()
 
-    return code_text
+    return code_text if code_text.strip() else None
 
 def remove_indentation(code_block):
     lines = code_block.split('\n')
