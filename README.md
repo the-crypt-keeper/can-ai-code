@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/10** Evaluate MythoMix and Huginn-1.2 [gradient merged](https://github.com/Gryphe/BlockMerge_Gradient) models.
+
 **8/08** Added cformers2 support and evaluated michaelfeil/ct2fast-WizardCoder-15B-V1.0 it seems this runtime may have a problem with it's nucleus sampler, precise settings hurt the results far more then they should.
 
 **8/08** Evaluations of stablecode/instruct-alpha-3b, Nous-Hermes/Llama2-13b and mrm8488/llama-2-coder-7b performed.  stablecode-completion unfortunately does not seem to produce coherent results see [#61](https://github.com/the-crypt-keeper/can-ai-code/issues/61) for discussion.

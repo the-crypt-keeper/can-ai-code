@@ -81,6 +81,7 @@ Open-Orca-OpenOrcaxOpenChat-Preview2-13B: { name: "OpenOrcaxOpenChat-Preview2", 
 ehartford-dolphin-llama2-7b: { name: "Dolphin Llama-2", size: "13B", tags: ["llama2"] }
 ehartford-WizardLM-1.0-Uncensored-Llama2-13b: { name: "WizardLM-1.0-Uncensored-Llama2", size: "13B", tags: ["wizard","llama2"]}
 Gryphe-MythoMix-L2-13b: { "Gryphe-MythoMix-L2", size: "13B", tags: ["llama2"] }
+The-Face-Of-Goonery-Huginn-13b-v1.2: { "Huginn-1.2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/The-Face-Of-Goonery/Huginn-13b-v1.2"}
 
 llama-2-7b.ggmlv3.q5-0: { name: "Llama 2", size: "7B", quant: "GGML-q5_0", tags: ["llama2"], url: "https://huggingface.co/TheBloke/Llama-2-7B-GGML" }
 TheBloke-Llama-2-13B-GPTQ: { name: "Llama 2", size: "13B", quant: "GPTQ-4b", tags: ["llama2"] }
