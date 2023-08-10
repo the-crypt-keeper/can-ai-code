@@ -120,6 +120,9 @@ def download_llama2_coder_7b_model():
 def download_wizardcoder_ct2_model():
     download_model('michaelfeil/ct2fast-WizardCoder-15B-V1.0')
 
+def download_mythomix_l2_13b_model():
+    download_model('Gryphe/MythoMix-L2-13b')
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -158,7 +161,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_wizardcoder_ct2_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_mythomix_l2_13b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -166,8 +169,8 @@ stub = Stub(image=image)
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
-RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+#RUNTIME = "ctranslate2"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"
@@ -175,8 +178,8 @@ RUNTIME = "ctranslate2"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
