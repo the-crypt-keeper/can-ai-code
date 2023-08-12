@@ -224,7 +224,7 @@ class InterviewExllama:
 
     def load(self):
         import sys
-        sys.path.insert(0, "/repositories/exllama")
+        sys.path += ["/repositories/exllama","../exllama"]
         print('Starting up...')
         import torch
         from model import ExLlama, ExLlamaCache, ExLlamaConfig
@@ -239,11 +239,11 @@ class InterviewExllama:
         self.tokenizer = ExLlamaTokenizer(tokenizer_model_path)
 
         api = HfApi()
-        files = api.list_files_info(self.model_name)
+        files = api.list_files_info(self.model_name, revision=self.info.get('revision',None))
         model_path = None
         for file_info in files:
             if (file_info.rfilename.find(".safetensors") != -1):
-                model_path = hf_hub_download(repo_id=self.model_name, filename=file_info.rfilename)
+                model_path = hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename=file_info.rfilename)
                 break
         
         if model_path is None:
@@ -506,11 +506,11 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
 
     return results, model_info
 
-def download_safetensors(model_name):
+def download_safetensors(model_name, revision=None):
     from huggingface_hub import snapshot_download, HfApi
 
     api = HfApi()
-    files = api.list_files_info(model_name)
+    files = api.list_files_info(model_name, revision=revision)
     
     search_list = ["safetensors"]
     found_safetensors = False
@@ -526,11 +526,11 @@ def download_safetensors(model_name):
     if os.getenv('HF_HUB_ENABLE_HF_TRANSFER') != "1":
         print('WARING: You should set HF_HUB_ENABLE_HF_TRANSFER=1 and pip install hf-transfer for faster downloads')
     else:
-        print('FAST downloading', model_name, 'found_safetensors=',found_safetensors)
+        print('FAST downloading', model_name, 'revision=',revision, 'found_safetensors=',found_safetensors)
 
     while True:
         try:
-            snapshot_download(model_name, ignore_patterns=ignore_patterns, resume_download=True)
+            snapshot_download(model_name, ignore_patterns=ignore_patterns, resume_download=True, revision=revision)
         except KeyboardInterrupt:
             print('Download aborted')
             exit(1)
@@ -539,13 +539,14 @@ def download_safetensors(model_name):
             continue
         break
 
-def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, gpusplit: str = "", templateout: str = ""):
+def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, gpusplit: str = "", templateout: str = "", revision: str = ""):
     from prepare import save_interview
 
-    download_safetensors(model_name)
+    download_safetensors(model_name, revision if revision else None)
 
     gpu_split = gpusplit if gpusplit != '' else None
     model_info = json.loads(info) if isinstance(info, str) else info
+    if revision: model_info['revision'] = revision
 
     if runtime == 'transformers':
         model = InterviewTransformers(model_name, model_info, gpu_split=gpu_split)
