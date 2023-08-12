@@ -13,12 +13,14 @@ QUANT_FP32 = 0
 QUANT_FP16 = 1
 QUANT_INT8 = 10
 QUANT_FP4  = 20
+QUANT_NF4  = 21
 
 quant_suffix = {}
 quant_suffix[QUANT_FP32] = 'fp32'
 quant_suffix[QUANT_FP16] = 'fp16'
 quant_suffix[QUANT_INT8] = 'int8'
 quant_suffix[QUANT_FP4] = 'fp4'
+quant_suffix[QUANT_NF4] = 'nf4'
 
 class InterviewTransformers:
     def __init__(self, model_name, model_info = {}, quant = QUANT_FP16, gpu_split = None):
@@ -42,7 +44,7 @@ class InterviewTransformers:
         torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.float16
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
                                                 load_in_4bit = self.quant == QUANT_FP4,
-                                                bnb_4bit_quant_type = "fp4")
+                                                bnb_4bit_quant_type = "nf4" if self.quant == QUANT_NF4 else "fp4")
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, trust_remote_code=True)
         
         # if passed a path, take the last dir name otherwise replace / with -
@@ -539,7 +541,7 @@ def download_safetensors(model_name, revision=None):
             continue
         break
 
-def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, gpusplit: str = "", templateout: str = "", revision: str = ""):
+def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = ""):
     from prepare import save_interview
 
     download_safetensors(model_name, revision if revision else None)
@@ -549,7 +551,16 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
     if revision: model_info['revision'] = revision
 
     if runtime == 'transformers':
-        model = InterviewTransformers(model_name, model_info, gpu_split=gpu_split)
+        if quant:
+            quant_id = None
+            for k,v in quant_suffix.items():
+                if v == quant:
+                    quant_id = k
+            if not quant_id:
+                raise Exception("quant "+quant+" not found")
+        else:
+            quant_id = QUANT_FP16
+        model = InterviewTransformers(model_name, model_info, gpu_split=gpu_split, quant=quant_id)
     elif runtime == 'vllm':
         model = InterviewVLLM(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'autogptq':
