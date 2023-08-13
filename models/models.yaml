@@ -100,10 +100,15 @@ Panchovix-LLaMA-2-70B-GPTQ-transformers4.32.0.dev0: { name: "Llama 2", size: "70
 
 psmathur-orca-mini-v2-7b: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], alias: "psmathur-orca-mini-v2-7b-fp16" }
 TheBloke-orca-mini-v2-7B-GPTQ: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], quant: "GPTQ-4b" }
+TheBloke-orca-mini-v2-13b-GPTQ: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"], quant: "GPTQ-4b" }
 orca-mini-v2-7b.ggmlv3.q5-0: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/orca_mini_7B-GGML" }
 orca-mini-v2-7b.ggmlv3.q8-0: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], quant: "GGML-q8_0", url: "https://huggingface.co/TheBloke/orca_mini_7B-GGML" }
 psmathur-orca-mini-v2-13b: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"], alias: "psmathur-orca-mini-v2-13b-fp16" }
 orca-mini-v2-13b.ggmlv3.q5-0: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/orca_mini_13B-GGML" }
+
+TheBloke-orca-mini-v3-13B-GPTQ: { name: "Orca-Mini V3", size: "13B", tags: ["llama2","orca-mini"], quant: "GPTQ-4b" }
+psmathur-orca-mini-v3-7b-fp16: { name: "Orca-Mini V3", size: "7B", tags: ["llama","orca-mini"], url: "https://huggingface.co/psmathur/orca_mini_v3_7b" }
+psmathur-orca-mini-v3-13b: { name: "Orca-Mini V3", size: "13B", tags: ["llama","orca-mini"], url: "https://huggingface.co/psmathur/orca_mini_v3_13b" }
 
 airoboros-13b-gpt4.ggmlv3.q5: { name: "Airboros-1.0", size: "13B", tags: ["airoboros"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/airoboros-13b-gpt4-GGML" }
 TheBloke-airoboros-13B-gpt4-1.2-GPTQ: { name: "Airboros-1.2", size: "13B", tags: ["airoboros"], quant: "GPTQ-4b" }
