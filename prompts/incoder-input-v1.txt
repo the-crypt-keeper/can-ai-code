@@ -1,0 +1,7 @@
+{% if language == "python" %}# a function {{Input}} that returns {{Output}}{% if Fact %} given {{Fact}}{% endif %}
+def <|mask:0|>
+
+# another function{% endif %}{% if language == "javascript" %}// a function {{Input}} that returns {{Output}}{% if Fact %} given {{Fact}}{% endif %}
+function <|mask:0|>
+
+// another function{% endif %}<|/ file |><|mask:1|><|mask:0|>

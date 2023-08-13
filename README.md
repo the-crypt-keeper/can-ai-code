@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**8/12** Vicuna-1.5 7B bitsandbytes quants (INT8, FP4, NF4) results and compare are completed.  CodeGeeX2 evaluation complete.  Orca Mini V3 evaluation complete, along with some V2 quants.
+**8/12** Vicuna-1.5 7B bitsandbytes quants (INT8, FP4, NF4) results and compare are completed.  CodeGeeX2 evaluation complete.  Orca Mini V3 evaluation complete, along with some V2 quants.  Evaluate InCoder.
 
 **8/10** Evaluate MythoMix and Huginn-1.2 [gradient merged](https://github.com/Gryphe/BlockMerge_Gradient) models.
 

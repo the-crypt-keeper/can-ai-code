@@ -1,0 +1,6 @@
+{% if language == "python" %}
+def {{Answer}}
+{% endif %}
+{% if language == "javascript" %}
+function {{Answer}}
+{% endif %}
