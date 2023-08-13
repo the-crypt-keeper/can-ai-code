@@ -1,0 +1,10 @@
+title: Vicuna 1.5 FP16/INT8/FP4/NF
+models:
+  - id: FP16
+    eval: vicuna-1.5/eval_junior-v2_python-javascript_Vicuna-1p3-v2a_none_precise_lmsys-vicuna-7b-v1.5-fp16_1691852469.ndjson
+  - id: INT8
+    eval: vicuna-1.5/eval_junior-v2_python-javascript_Vicuna-1p3-v2a_none_precise_lmsys-vicuna-7b-v1.5-int8_1691852853.ndjson
+  - id: FP4
+    eval: vicuna-1.5/eval_junior-v2_python-javascript_Vicuna-1p3-v2a_none_precise_lmsys-vicuna-7b-v1.5-fp4_1691853031.ndjson
+  - id: NF4
+    eval: vicuna-1.5/eval_junior-v2_python-javascript_Vicuna-1p3-v2a_none_precise_lmsys-vicuna-7b-v1.5-nf4_1691855274.ndjson

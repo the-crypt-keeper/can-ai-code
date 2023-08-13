@@ -43,9 +43,9 @@ class InterviewTransformers:
         print('Loading model with accelerate...')
         torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.float16
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
-                                                load_in_4bit = self.quant == QUANT_FP4,
+                                                load_in_4bit = self.quant in [QUANT_FP4, QUANT_NF4],
                                                 bnb_4bit_quant_type = "nf4" if self.quant == QUANT_NF4 else "fp4")
-        self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, trust_remote_code=True)
+        self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), trust_remote_code=True)
         
         # if passed a path, take the last dir name otherwise replace / with -
         if self.model_name[0] == '/':
@@ -104,7 +104,7 @@ class InterviewTransformers:
         sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
         answer = self.tokenizer.decode(sample[0]).replace(prompt, '')
         
-        eos_list = [ '<|end|>', '<|endoftext|>', '</s>', '<s>']
+        eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>']
         if 'stopping_criteria' in generate_args: eos_list += generate_args['stopping_criteria'][0].stop_texts
         
         for eos in eos_list:
