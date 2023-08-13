@@ -126,6 +126,12 @@ def download_mythomix_l2_13b_model():
 def download_huginn_1p2_13b_model():
     download_model('The-Face-Of-Goonery/Huginn-13b-v1.2')
 
+def download_orca_mini_1p3_7b_gptq_model():
+    download_model('TheBloke/orca_mini_v3_13B-GPTQ', revision='gptq-4bit-32g-actorder_True')
+
+def download_orca_mini_13b_model():
+    download_model('psmathur/orca_mini_v3_13b')
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -164,7 +170,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_huginn_1p2_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_orca_mini_13b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -216,7 +222,6 @@ class ModalWrapper:
 
     @method()
     def generate(self, prompt, params):
-        #x
         return self.wrapper.generate(prompt, params)
 
 # For local testing, run `modal run -q interview_modal.py --input results/prepare.ndjson --params params/precise.json`
@@ -230,7 +235,8 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
     tasks = []
     for param_file in params.split(','):
         for input_file in input.split(','):
-            tasks.append((param_file, input_file))
+            if param_file != '' and input_file != '':
+                tasks.append((param_file, input_file))
 
     model = ModalWrapper()
 
