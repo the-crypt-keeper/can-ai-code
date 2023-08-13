@@ -21,7 +21,7 @@ def prepare(TEST_LANGUAGE, path, files):
         params = tags[5]
         model = tags[6]
 
-        models.append({'prompt': prompt, 'short_name': info['short_name'], 'params': params, 'model': model, 'id': id, 'idx': idx, 'passed': 0, 'total': 0})
+        models.append({'prompt': prompt, 'short_name': info.get('short_name',id), 'params': params, 'model': model, 'id': id, 'idx': idx, 'passed': 0, 'total': 0})
         results = [json.loads(line) for line in open(file)]
     
         for r in results:
