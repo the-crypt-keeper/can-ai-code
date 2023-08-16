@@ -4,50 +4,32 @@ import argparse
 import json
 from time import sleep
 from prepare import save_interview
+from langchain.llms import ChatLiteLLM
 
 def init_model(model, params):
     # LangChain did not bother to standardize the names of any of the parameters,
     # or even how to interact with them.  This is a hack to make things consistent.
 
-    if model == 'ai21/j2-jumbo-instruct':
-        from langchain.llms.ai21 import AI21PenaltyData
-        from langchain.llms import AI21
-
-        model_params = {
-            'temperature': params['temperature'],
-            'maxTokens': params['max_new_tokens'],
-            'topP': params['top_p'],
-            'presencePenalty': AI21PenaltyData()
-        }
-        model_params['presencePenalty'].scale = params['repetition_penalty'] - 1.0
-
-        return model_params, AI21(model='j2-jumbo-instruct', **model_params)
-
-    elif model == 'openai/chatgpt' or model == 'openai/gpt4':
-        from langchain.chat_models import ChatOpenAI
-
-        model_params = {
+    # integrating liteLLM to provide a standard I/O interface for every LLM
+    model_params = {
             'temperature': params['temperature'],
             'max_tokens': params['max_new_tokens'],
             'top_p': params['top_p'],
             'presence_penalty': params['repetition_penalty']
-        }
 
-        return model_params, ChatOpenAI(model_name='gpt-3.5-turbo' if model == 'openai/chatgpt' else 'gpt-4', **model_params)
+    }
+    if model == 'ai21/j2-jumbo-instruct':
+        model_name = "j2-jumbo-instruct"
+    elif model == 'openai/chatgpt':
+        model_name = "gpt-3.5-turbo"
+    elif model == 'openai/gpt4':
+        model_name = "gpt-4"
     elif model == 'cohere/command-nightly':
-        from langchain import Cohere
-
-        model_params = {
-            'temperature': params['temperature'],
-            'max_tokens': params['max_new_tokens'],
-            'p': params['top_p'],
-            'k': params['top_k'],
-            'frequency_penalty': params['repetition_penalty'] - 1.0
-        }
-
-        return model_params, Cohere(model='command-nightly', **model_params)
-    
-    raise Exception('Unsupported model/provider')
+        model_name = "command-nightly"
+    # [TODO] Add replicate, hugging face, VertexAI, see https://docs.litellm.ai/docs/completion/supported
+    else:
+        raise Exception('Unsupported model/provider')
+    return model_params, ChatLiteLLM(model=model_name, **model_params)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview executor for LangChain')
