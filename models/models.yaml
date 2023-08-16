@@ -10,6 +10,7 @@ bigcode-tiny-starcoder-py-fp16: { name: 'StarCoderTiny-Py', size: "164M", tags: 
 bigcode-starcoderplus: { name: 'StarCoderPlus', size: '15B', tags: ["bigcode"], alias: ["bigcode-tiny","bigcode-starcoderplus-fp16"] }
 bigcode-starcoder: { name: 'StarCoder', size: '15B', tags: ["bigcode"] }
 bigcode-gpt-bigcode-santacoder: { name: 'SantaCoder', size: '3B', tags: ["bigcode"], alias: "bigcode-gpt-bigcode-santacoder-fp16" }
+bigcode-octocoder: { name: 'OctoCoder', size: '15B', tags: ["bigcode"] }
 HuggingFaceH4-starchat-alpha: { name: "StarChat-Alpha", size: "15B", tags: ["bigcode"], alias: ["HuggingFaceH4-starchat-playground-hf-space-starchat-alpha","HuggingFaceH4-starchat-alpha-fp16"] }
 HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigcode"], alias: ["starchat-beta-gradio","HuggingFaceH4-starchat-beta-fp16","HuggingFaceH4-starchat-playground-hf-space-starchat-beta"] }
 WizardLM-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], alias: ["WizardLM-WizardCoder-15B-V1.0-fp16", "375cead61e4db124-gradio-app-wizardcoder-16b"] }

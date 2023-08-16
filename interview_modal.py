@@ -132,6 +132,12 @@ def download_orca_mini_1p3_7b_gptq_model():
 def download_orca_mini_13b_model():
     download_model('psmathur/orca_mini_v3_13b')
 
+def download_octogeex_model():
+    download_model('bigcode/octogeex')
+
+def download_octocoder_model():
+    download_model('bigcode/octocoder')
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -170,7 +176,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_orca_mini_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_octocoder_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -222,6 +228,7 @@ class ModalWrapper:
 
     @method()
     def generate(self, prompt, params):
+        #x
         return self.wrapper.generate(prompt, params)
 
 # For local testing, run `modal run -q interview_modal.py --input results/prepare.ndjson --params params/precise.json`
