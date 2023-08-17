@@ -138,6 +138,8 @@ def download_octogeex_model():
 def download_octocoder_model():
     download_model('bigcode/octocoder')
 
+def download_platypus2_model(): download_model('Open-Orca/OpenOrca-Platypus2-13B', info={"eos_token_id": 2 })
+
 image = (
     Image.from_dockerhub(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -176,7 +178,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_octocoder_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_platypus2_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
