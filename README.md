@@ -26,7 +26,7 @@ A self-evaluating interview for AI coding models.
 
 **8/10** Evaluate MythoMix and Huginn-1.2 [gradient merged](https://github.com/Gryphe/BlockMerge_Gradient) models.
 
-**8/08** Added cformers2 support and evaluated michaelfeil/ct2fast-WizardCoder-15B-V1.0 it seems this runtime may have a problem with it's nucleus sampler, precise settings hurt the results far more then they should.
+**8/08** Added ctranslate2 support and evaluated michaelfeil/ct2fast-WizardCoder-15B-V1.0 it seems this runtime may have a problem with it's nucleus sampler, precise settings hurt the results far more then they should.
 
 ## Test Suites
 
@@ -93,14 +93,14 @@ See https://github.com/my-other-github-account/llm-humaneval-benchmarks and http
 
 ## Interviewers
 
-|        Script            |     Runtime    | Models | Quants | Local/Remote |
-|--------------------------|----------------|--------|--------|--------------|
-| `interview_cuda.py` | awq | transformers, autogptq, exllama, vllm, awq | all | remote via modal `interview_modal.py` |
-| `interview-langchain.py` | langchain      | lots   | n/a    | remote      |
-| `interview-oobabooga.py` | oobabooga, koboldcpp | lots | n/a | remote      |
-| `interview-llamacpp.py`  | ggml, ggllm, llamacpp | lots | GGML | local + remote via ssh |
-| `interview-hfinference.py` | hf-inference-api | lots | n/a | remote |
-| `interview-gradio.py`    | gradio | lots | n/a | remote |
+|        Script            |     Runtime    | Quants | Local/Remote |
+|--------------------------|----------------|--------|--------------|
+| `interview_cuda.py`      | transformers, autogptq, exllama, vllm, awq, ctranslate2 | all | remote via modal `interview_modal.py` |
+| `interview-langchain.py` | langchain      | no    | remote      |
+| `interview-oobabooga.py` | oobabooga, koboldcpp | all | remote      |
+| `interview-llamacpp.py`  | ggml, ggllm, llamacpp | GGML | local + remote via ssh |
+| `interview-hfinference.py` | hf-inference-api | no | n/a | remote |
+| `interview-gradio.py`    | gradio | no | remote |
 
 ### Notes on adding new models
 
