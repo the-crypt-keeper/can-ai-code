@@ -139,6 +139,8 @@ def download_octocoder_model():
     download_model('bigcode/octocoder')
 
 def download_platypus2_model(): download_model('Open-Orca/OpenOrca-Platypus2-13B', info={"eos_token_id": 2 })
+def download_losslessmegacoder_7b_model(): download_model('rombodawg/LosslessMegaCoder-llama2-7b-mini')
+def download_losslessmegacoder_13b_model(): download_model('rombodawg/LosslessMegaCoder-llama2-13b-mini')
 
 image = (
     Image.from_dockerhub(
@@ -178,7 +180,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_platypus2_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_losslessmegacoder_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -195,7 +197,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=1)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
@@ -230,7 +232,6 @@ class ModalWrapper:
 
     @method()
     def generate(self, prompt, params):
-        #x
         return self.wrapper.generate(prompt, params)
 
 # For local testing, run `modal run -q interview_modal.py --input results/prepare.ndjson --params params/precise.json`

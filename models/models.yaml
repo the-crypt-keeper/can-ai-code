@@ -99,6 +99,8 @@ meta-llama-Llama-2-13b-hf-int8: { name: "Llama 2", size: "13B", quant: "INT8", u
 SLAM-group-NewHope: { name: "NewHope", size: "13B", tags: ["llama2"] }
 mrm8488-llama-2-coder-7b-fp16: { name: "Llama 2 Coder", "size": "7B", tags: ["llama2"] }
 NousResearch-Nous-Hermes-Llama2-13b: { name: "Nous-Hermes Llama2", "size": "13B", tags: ["llama2"] }
+rombodawg-LosslessMegaCoder-llama2-7b-mini: { name: "LosslessMegaCoder", "size": "7B", tags: ["llama2"] }
+rombodawg-LosslessMegaCoder-llama2-13b-mini: { name: "LosslessMegaCoder", "size": "13B", tags: ["llama2"] }
 
 Panchovix-LLaMA-2-70B-GPTQ-transformers4.32.0.dev0: { name: "Llama 2", size: "70B", quant: "GPTQ-4b", tags: ["llama2"], url: "https://huggingface.co/Panchovix/LLaMA-2-70B-GPTQ-transformers4.32.0.dev0" }
 

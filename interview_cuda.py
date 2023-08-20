@@ -343,6 +343,7 @@ class InterviewVLLM:
 
     def load(self):
         from vllm import LLM
+        from transformers import GenerationConfig
 
         print('Remote model', self.model_name, ' info', self.info)
 
@@ -354,11 +355,22 @@ class InterviewVLLM:
             print('Starting in single GPU mode..')
             self.llm = LLM(model=self.model_name)
 
-        eos_token_id = self.info.get('eos_token_id')
-        if eos_token_id:
-            self.llm.llm_engine.tokenizer.eos_token_id = int(eos_token_id)
+        eos_token_id = self.info.get('eos_token_id', None)
+        if eos_token_id is not None:
             print('Override generate_args.eos_token_id = ', eos_token_id)
+        else:
+            generation_config = None
+            try:
+                generation_config, unused_kwargs = GenerationConfig.from_pretrained(self.model_name, return_unused_kwargs=True)
+                if generation_config.eos_token_id is not None:
+                    eos_token_id = generation_config.eos_token_id
+                    print('Loaded eos_token_id from generation_config:', eos_token_id)
+            except Exception as e:
+                print('WARNING: generate config could not be auto-loaded from model:', str(e))
 
+        if eos_token_id is not None:
+            self.llm.llm_engine.tokenizer.eos_token_id = int(eos_token_id)
+        
         self.info['model_name'] = self.model_name
 
         print(f"Model loaded in {time.time() - t0:.2f}s")   

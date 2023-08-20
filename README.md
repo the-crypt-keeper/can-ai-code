@@ -18,15 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/20** Evaluation of LesslessMegaCoder completed which takes the honor of being the first 13B model to score a perfect 100% on the Python Test.
+
 **8/16** Evaluation of OpenOrca-Platypus2-13B completed.  Thanks to @ishaan-jaff for integrating [LiteLLM](https://github.com/BerriAI/litellm) into `interview-langchain.py` which cleans up the code and opens the way to cleanly support additional models.
 
 **8/15** Evalution of OctoCoder completed.  Having trouble getting OctoGeeX to work, so no results for that one yet.
 
 **8/12** Vicuna-1.5 7B bitsandbytes quants (INT8, FP4, NF4) results and compare are completed.  CodeGeeX2 evaluation complete.  Orca Mini V3 evaluation complete, along with some V2 quants.  Evaluate InCoder.
-
-**8/10** Evaluate MythoMix and Huginn-1.2 [gradient merged](https://github.com/Gryphe/BlockMerge_Gradient) models.
-
-**8/08** Added ctranslate2 support and evaluated michaelfeil/ct2fast-WizardCoder-15B-V1.0 it seems this runtime may have a problem with it's nucleus sampler, precise settings hurt the results far more then they should.
 
 ## Test Suites
 
