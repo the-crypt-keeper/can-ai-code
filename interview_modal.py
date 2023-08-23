@@ -81,8 +81,7 @@ def download_codeCherryPop_7b_model():
 def download_codeCherryPy_7b_model():
     download_model('TokenBender/codeCherryPy_7B_llama2')
 
-def download_tinycoderpy_model():
-    download_model("bigcode/tiny_starcoder_py", ignore_patterns=["*.bin"])
+def download_tinycoderpy_model(): download_model("bigcode/tiny_starcoder_py", ignore_patterns=["*.bin"])
 
 def download_wizardlm_13b_1p1_model():
     download_model("WizardLM/WizardLM-13B-V1.1")
@@ -141,6 +140,7 @@ def download_octocoder_model():
 def download_platypus2_model(): download_model('Open-Orca/OpenOrca-Platypus2-13B', info={"eos_token_id": 2 })
 def download_losslessmegacoder_7b_model(): download_model('rombodawg/LosslessMegaCoder-llama2-7b-mini')
 def download_losslessmegacoder_13b_model(): download_model('rombodawg/LosslessMegaCoder-llama2-13b-mini')
+def download_decicoder_1b_model(): download_model('Deci/DeciCoder-1b')
 
 image = (
     Image.from_dockerhub(
@@ -180,16 +180,16 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_losslessmegacoder_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_tinycoderpy_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"
