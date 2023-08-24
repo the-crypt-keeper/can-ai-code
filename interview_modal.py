@@ -141,6 +141,8 @@ def download_platypus2_model(): download_model('Open-Orca/OpenOrca-Platypus2-13B
 def download_losslessmegacoder_7b_model(): download_model('rombodawg/LosslessMegaCoder-llama2-7b-mini')
 def download_losslessmegacoder_13b_model(): download_model('rombodawg/LosslessMegaCoder-llama2-13b-mini')
 def download_decicoder_1b_model(): download_model('Deci/DeciCoder-1b')
+def download_stablecode_completion_alpha_3b_model(): download_model('stabilityai/stablecode-completion-alpha-3b')
+def download_codellama_instruct_7b_model(): download_model('TheBloke/CodeLlama-7B-Instruct-fp16')
 
 image = (
     Image.from_dockerhub(
@@ -180,7 +182,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_tinycoderpy_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_instruct_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)

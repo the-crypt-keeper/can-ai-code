@@ -1,0 +1,5 @@
+<s>[INST] <<SYS>>
+Provide answers in {% if language == "javascript" %}JavaScript{% endif %}{% if language == "python" %}Python{% endif %}
+<</SYS>>
+
+Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}. [/INST]
