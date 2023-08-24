@@ -13,7 +13,7 @@ def extract_code_markdown(answer):
         return None
     
     # codellama special
-    if answer[start_index + len(start_token) + 1: start_index + len(start_token) + 8] == 'python\n':
+    if answer[start_index + len(start_token) + 1: start_index + len(start_token) + 8] in ['python\n','Python\n']:
         start_index += 7
 
     # Find the index of the end token, starting from the end of the start token.

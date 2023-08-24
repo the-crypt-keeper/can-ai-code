@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/24** Evaluation of CodeLlama-Instruct 7B and 13B completed, a Compare is also available.
+
 **8/20** Evaluation of LesslessMegaCoder completed which takes the honor of being the first 13B model to score a perfect 100% on the Python Test.
 
 **8/16** Evaluation of OpenOrca-Platypus2-13B completed.  Thanks to @ishaan-jaff for integrating [LiteLLM](https://github.com/BerriAI/litellm) into `interview-langchain.py` which cleans up the code and opens the way to cleanly support additional models.

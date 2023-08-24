@@ -1,0 +1,10 @@
+title: CodeLlama 7B vs 13B
+models:
+  - id: 7B-v1
+    eval: codellama/eval_junior-v2_python-javascript_llama2-code-v1b_none_codellama_TheBloke-CodeLlama-7B-Instruct-fp16-fp16_1692908221.ndjson
+  - id: 7B-v2
+    eval: codellama/eval_junior-v2_python-javascript_llama2-code-v2b_none_codellama_TheBloke-CodeLlama-7B-Instruct-fp16-fp16_1692907638.ndjson
+  - id: 13B-v1
+    eval: codellama/eval_junior-v2_python-javascript_llama2-code-v1b_none_codellama_TheBloke-CodeLlama-13B-Instruct-fp16-fp16_1692910295.ndjson
+  - id: 13B-v2
+    eval: codellama/eval_junior-v2_python-javascript_llama2-code-v2b_none_codellama_TheBloke-CodeLlama-13B-Instruct-fp16-fp16_1692910610.ndjson
