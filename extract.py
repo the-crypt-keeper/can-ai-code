@@ -45,17 +45,28 @@ def extract_code_html(answer):
 
     return longest_code
 
+def extract_code_codellama_python(answer):
+    start_token = '[PYTHON]'
+    start_index = answer.find(start_token)
+
+    end_token = '[/PYTHON]'
+    end_index = answer.find(end_token, start_index + len(start_token) + 1)
+
+    code_text = answer[start_index + len(start_token):end_index]
+    return code_text if code_text.strip() else None
+
 # Fallback if the model forgot to use any quotes or used a single quote instead.
 def extract_code_fallback(answer):
     simple_answer = answer.replace('`','').strip()
     return simple_answer
-    
-    return None
 
 def extract_code(answer, stop_at_prefix=[]):
     code = None
 
-    if answer.find('<code>') != -1:
+    if answer.find('[PYTHON]') != -1:
+        code = extract_code_codellama_python(answer)
+
+    if code is None and answer.find('<code>') != -1:
         code = extract_code_html(answer)
     
     if code is None and answer.find('```') != -1:
