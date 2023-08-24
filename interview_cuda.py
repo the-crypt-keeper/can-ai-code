@@ -106,8 +106,9 @@ class InterviewTransformers:
             del generate_args['stop_seq']
             
         inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
+        input_len = inputs.size()[-1]
         sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
-        answer = self.tokenizer.decode(sample[0]).replace(prompt, '')
+        answer = self.tokenizer.decode(sample[0][input_len+1:])
         
         eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>']
         if 'stopping_criteria' in generate_args: eos_list += generate_args['stopping_criteria'][0].stop_texts
