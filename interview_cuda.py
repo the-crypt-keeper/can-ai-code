@@ -40,13 +40,18 @@ class InterviewTransformers:
         print('Loading tokenizer...')
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True, **self.info.get('tokenizer_args', {}))
 
-        print('Loading model with accelerate...')
         torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.float16
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
                                                 load_in_4bit = self.quant in [QUANT_FP4, QUANT_NF4],
                                                 bnb_4bit_quant_type = "nf4" if self.quant == QUANT_NF4 else "fp4")
-        self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), trust_remote_code=True)
-        
+        if self.info.get('accelerate', True):
+            print('Loading model with accelerate...')
+            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), trust_remote_code=True)
+        else:
+            print('Loading model ...')
+            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, trust_remote_code=True, torch_dtype="auto")
+            self.model.cuda()
+
         # if passed a path, take the last dir name otherwise replace / with -
         if self.model_name[0] == '/':
             self.info['model_name'] = self.model_name.split('/')[-1]
