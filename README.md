@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/25** Evaluation of CodeLlama and CodeLlama-Python 7B and 13B at code completion is available; performance is generally very good.
+
 **8/24** Evaluation of CodeLlama-Instruct 7B and 13B completed, a Compare is also available.
 
 **8/20** Evaluation of LesslessMegaCoder completed which takes the honor of being the first 13B model to score a perfect 100% on the Python Test.
