@@ -63,10 +63,12 @@ class InterviewTransformers:
 
         print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")        
 
-    def generate(self, prompt, params):
+    def generate(self, prompt, params, gen_args = {}):
         from transformers import GenerationConfig
 
         generate_args = copy(self.info['generate_args']) if 'generate_args' in self.info else {}
+        for k,v in gen_args.items():
+            generate_args[k] = v
 
         try:
             generation_config, unused_kwargs = GenerationConfig.from_pretrained(
@@ -110,7 +112,7 @@ class InterviewTransformers:
         sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
         answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False)
        
-        eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>']
+        eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>', '<EOT>']
         if 'stopping_criteria' in generate_args: eos_list += generate_args['stopping_criteria'][0].stop_texts
         
         for eos in eos_list:
