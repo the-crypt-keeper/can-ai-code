@@ -13,6 +13,7 @@ class InterviewLlamaCpp:
     def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
         self.model_name = Path(model_name).stem
         self.info = model_info
+        self.info['model_name'] = self.model_name
 
         self.batch = False
 
@@ -101,7 +102,7 @@ class InterviewLlamaCpp:
 
         # return result
         info_copy = copy(self.info)
-        info_copy['cmdline'] = cmdline
+        info_copy['sampling_params'] = cmdline
         return answer, info_copy
 
 def cli(input: str, model:str, params: str, templateout: str = "", iterations: int=1, info: str = "{}", main: str = "/llama/main", threads: int = 16, ssh: str = ""):
