@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**8/26** Evaluation of Phind-CodeLlama-34B GGUF completed.
+**8/26** Evaluation of Phind-CodeLlama-34B and WizardCoder-Python-34B-V1.0 at GGUF 4- and 6-bit completed.  Sweep of Codellama models at GGUF 4-bit completed.
 
 **8/25** Evaluation of CodeLlama and CodeLlama-Python 7B/13B at code completion, CodeLlama and CodeLlama-Instruct 7B/13B at FIM are now available, performance is generally pretty good.  34B evals are next up.
 
