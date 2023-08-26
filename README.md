@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/26** Evaluation of Phind-CodeLlama-34B GGUF completed.
+
 **8/25** Evaluation of CodeLlama and CodeLlama-Python 7B/13B at code completion, CodeLlama and CodeLlama-Instruct 7B/13B at FIM are now available, performance is generally pretty good.  34B evals are next up.
 
 **8/24** Evaluation of CodeLlama-Instruct 7B/13B completed, a Compare is also available.
