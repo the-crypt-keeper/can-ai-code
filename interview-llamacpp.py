@@ -1,77 +1,74 @@
 #!/usr/bin/env python3
-import argparse
 import json
 import tempfile
 from sys import exit
 from pathlib import Path
 from sbox.sandbox import run_shell_command
 from prepare import save_interview
+from jinja2 import Template
+from copy import copy
+from interview_cuda import interview_run
 
-parser = argparse.ArgumentParser(description='Interview executor for LlamaCpp')
-parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
-parser.add_argument('--model', type=str, required=True, help='path to model file to use')
-parser.add_argument('--params', type=str, required=True, help='parameter file to use')
+class InterviewLlamaCpp:
+    def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
+        self.model_name = Path(model_name).stem
+        self.info = model_info
 
-parser.add_argument('--main', type=str, default='~/ai/latest/main', help='path to llama.cpp main binary')
-parser.add_argument('--threads', type=int, default=4, help='number of threads to use')
-parser.add_argument('--args', type=str, default='--ctx_size 2048 --batch_size 1024', help='misc arguments to pass to main (ex gpu offload)')
-parser.add_argument('--ssh', type=str, help='(optional) ssh hostname for remote execution')
-args = parser.parse_args()
+        self.batch = False
 
-def build_llama_command(args, params):
-    param_map = {
-        'n_predict': 'max_new_tokens',
-        'temp': 'temperature',
-        'top_k': 'top_k',
-        'top_p': 'top_p',
-        'repeat_last_n': 'repeat_last_n',
-        'repeat_penalty': 'repetition_penalty',
-        'mirostat': 'mirostat',
-        'mirostat-lr': 'mirostat-lr',
-        'mirostat-ent': 'mirostat-ent'
-    }
+        self.model = model_name
+        self.threads = self.info.get('threads', 16)
+        self.main = self.info.get('main', '/llama/main')
+        self.args = self.info.get('args', '')
+        self.ssh = self.info.get('ssh', '')
 
-    if args.main.find('starcoder') > -1:
-        param_map['repeat-penalty'] = 'repetition_penalty'
-        param_map['repeat-last-n'] = 'repeat_last_n'
-        del param_map['repeat_last_n']
-        del param_map['repeat_penalty']
+        self.stop_seq = self.info.get('generate_args', {}).get('stop_seq', [])
+  
+    def load(self):
+        pass
 
-    llama_command = f"{args.main} {args.args} --threads {args.threads} --model {args.model}"
+    def build_llama_command(self, params):
+        param_map = {
+            'n_predict': 'max_new_tokens',
+            'temp': 'temperature',
+            'top_k': 'top_k',
+            'top_p': 'top_p',
+            'repeat_last_n': 'repeat_last_n',
+            'repeat_penalty': 'repetition_penalty',
+            'mirostat': 'mirostat',
+            'mirostat-lr': 'mirostat-lr',
+            'mirostat-ent': 'mirostat-ent'
+        }
 
-    for k,v in param_map.items():
-        if v in params:
-            llama_command += f' --{k} {params[v]}'
+        if self.main.find('starcoder') > -1:
+            param_map['repeat-penalty'] = 'repetition_penalty'
+            param_map['repeat-last-n'] = 'repeat_last_n'
+            del param_map['repeat_last_n']
+            del param_map['repeat_penalty']
 
-    return llama_command
+        llama_command = f"{self.main} {self.args} --threads {self.threads} --model {self.model}"
 
-model_name = Path(args.model).stem
+        for seq in self.stop_seq:
+            eseq = seq.replace('\n','\\n')
+            llama_command += f" -r $'{eseq}'"
 
-tasks = []
-for param_file in args.params.split(','):
-    for input_file in args.input.split(','):
-        tasks.append((param_file, input_file))
+        for k,v in param_map.items():
+            if v in params:
+                llama_command += f' --{k} {params[v]}'
 
-for param_file, input_file in tasks:
-    print('Executing',args.model,'with parameter file',param_file,'and input file',input_file)
-    
-    params_json = json.load(open(param_file))
-    llama_command = build_llama_command(args, params_json)
-    interview = [json.loads(line) for line in open(input_file)]
-    results = []
-    for idx, question in enumerate(interview):
-        answer = None
+        return llama_command
 
-        print(f"[{idx+1}/{len(interview)}] {question['language']} {question['name']}")
+    def generate(self, prompt, params):
+        llama_command = self.build_llama_command(params)
 
         prompt_file = tempfile.NamedTemporaryFile(mode='w', delete=False)
-        prompt_file.write(question['prompt'])
+        prompt_file.write(prompt)
         prompt_file.close()
 
         cmdline = llama_command + f' --file {prompt_file.name}'
 
-        if args.ssh:
-            scp_command = f"scp {prompt_file.name} {args.ssh}:{prompt_file.name}"
+        if self.ssh:
+            scp_command = f"scp {prompt_file.name} {self.ssh}:{prompt_file.name}"
             print('Copying to remote machine:', scp_command)
 
             output, rv = run_shell_command(scp_command)
@@ -79,7 +76,7 @@ for param_file, input_file in tasks:
                 print('Failed to copy to remote machine:', output)
                 exit(1)
 
-            cmdline = f"ssh {args.ssh} '{cmdline}'"
+            cmdline = f"ssh {self.ssh} '{cmdline}'"
 
         print('Executing llama.cpp: '+cmdline)
 
@@ -89,8 +86,8 @@ for param_file, input_file in tasks:
             exit(1)
 
         # remove prompt from answer
-        start_offset = max(answer.rfind(question['prompt']), 0)
-        start_offset += len(question['prompt'])
+        start_offset = max(answer.rfind(prompt), 0)
+        start_offset += len(prompt)
         answer = answer[start_offset:]
 
         # for starcoder remove the trailer
@@ -99,19 +96,43 @@ for param_file, input_file in tasks:
             answer = answer[:end_offset]
 
         # remove any eos/eot tokens
-        for eos in ['<|endoftext|>', '<|end|>', '<|end_of_turn|>']:
+        for eos in ['<|endoftext|>', '<|end|>', '<|end_of_turn|>', *self.stop_seq]:
             answer = answer.replace(eos, '')
 
-        print()
-        print(answer)
-        print()
+        # return result
+        info_copy = copy(self.info)
+        info_copy['cmdline'] = cmdline
+        return answer, info_copy
 
-        result = question.copy()
-        result['answer'] = answer
-        result['params'] = { 'cmdline': cmdline }
-        result['model'] = model_name
-        result['runtime'] = 'llamacpp'
+def cli(input: str, model:str, params: str, templateout: str = "", iterations: int=1, info: str = "{}", main: str = "/llama/main", threads: int = 16, ssh: str = ""):
 
-        results.append(result)
+    info_cmdline = json.loads(info) if isinstance(info, str) else info
+    info_cmdline['main'] = main
+    info_cmdline['threads'] = threads
+    info_cmdline['ssh'] = ssh
 
-    save_interview(input_file, 'none', param_file, model_name, results)
+    llama = InterviewLlamaCpp(model, info_cmdline)
+    llama.load()
+
+    tasks = []
+    for param_file in params.split(','):
+        for input_file in input.split(','):
+            tasks.append((param_file, input_file))
+
+    for param_file, input_pairs in tasks:
+      insplit = input_pairs.split(':')
+      input_file = insplit[0]
+      templateout_file = insplit[1] if len(insplit)>1 else templateout
+
+      interview = [json.loads(line) for line in open(input_file)]
+      output_template = Template(open(templateout_file).read()) if templateout_file else None
+      params_json = json.load(open(param_file,'r'))
+
+      for iter in range(iterations):
+        print("Starting", llama.model_name, "iter=", iter, "param_file=", param_file, "input_file=", input_file, "templateout_file=", templateout_file)
+        results, remote_info = interview_run("llamacpp", llama.generate, interview, params_json, output_template, batch=llama.batch)
+        save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
+
+if __name__ == "__main__":
+    import fire
+    fire.Fire(cli)
