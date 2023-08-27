@@ -149,6 +149,7 @@ def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', 
 def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_python_7b_model(): download_model('TheBloke/CodeLlama-7B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_python_13b_model(): download_model('TheBloke/CodeLlama-13B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+def download_codallama_instruct_7b_hf_model(): download_model('codellama/CodeLlama-7b-Instruct-hf')
 
 image = (
     Image.from_dockerhub(
@@ -156,10 +157,10 @@ image = (
         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"]
     )
     .pip_install(
-        "transformers==4.31",
+        "transformers==4.32",
         "tiktoken==0.4.0",
-        "bitsandbytes==0.40.1.post1",
-        "accelerate==0.21.0",
+        "bitsandbytes==0.41.1",
+        "accelerate==0.22.0",
         "einops==0.6.1",
         "sentencepiece==0.1.99",
         "hf-transfer~=0.1",
@@ -167,7 +168,7 @@ image = (
         extra_index_url="https://pypi.org/simple"
     )  
     .pip_install(
-        "vllm @ git+https://github.com/vllm-project/vllm.git@d7a1c6d614756b3072df3e8b52c0998035fb453f",
+        "vllm @ git+https://github.com/vllm-project/vllm.git@4b6f069b6fbb4f2ef7d4c6a62140229be61c5dd3",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )
@@ -180,15 +181,15 @@ image = (
         extra_index_url="https://pypi.org/simple"
     )
     .run_commands(
-        "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout cade9bc5576292056728cf55c0c9faf4adae62f8"
+        "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 21f4a12be5794692f66410ad4fb78ffaad508d00"
     )
     .run_commands("git clone https://github.com/mit-han-lab/llm-awq",
-                  "cd llm-awq && git checkout 71d8e68df78de6c0c817b029a568c064bf22132d && pip install -e .",
+                  "cd llm-awq && git checkout f3a90b77241d85369c589f92c59db61d056e7ee6 && pip install -e .",
                   "cd llm-awq/awq/kernels && python setup.py install"
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codellama_instruct_13b_ct2_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codallama_instruct_7b_hf_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -196,8 +197,8 @@ stub = Stub(image=image)
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
-RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+#RUNTIME = "ctranslate2"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"
@@ -249,6 +250,7 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = "", ba
     from interview_cuda import interview_run
 
     output_template = Template(open(templateout).read()) if templateout else None
+    batch = batch or (RUNTIME=='vllm')
 
     tasks = []
     for param_file in params.split(','):
