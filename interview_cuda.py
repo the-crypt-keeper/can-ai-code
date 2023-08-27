@@ -539,7 +539,7 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
 
         answer = answers[idx]
         if batch:
-            answer = output_template.render(**question, Answer=answer) if output_template else result
+            answer = output_template.render(**question, Answer=answer) if output_template else answer
             print()
             print(answer)
             print()        
