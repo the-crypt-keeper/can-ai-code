@@ -129,7 +129,7 @@ class InterviewCtranslate2:
         self.info = model_info
         self.quant = quant
 
-        self.batch = False
+        self.batch = True
 
     def load(self):
         from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
@@ -148,7 +148,7 @@ class InterviewCtranslate2:
             
         print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s")        
 
-    def generate(self, prompt, params):
+    def generate(self, prompts, params):
         model_params = {
             'max_length': params.get('max_new_tokens', 512),
             'sampling_temperature': params.get('temperature', 1.0),
@@ -158,14 +158,37 @@ class InterviewCtranslate2:
             'num_hypotheses': params.get('num_beams', 1)
         }
         self.info['sampling_params'] = model_params
+
+        if isinstance(prompts, list):
+            text=['<s>'+x for x in prompts]
+        else:
+            text=['<s>'+prompts]
+
+        token_streams = [[] for x in text]
+        stop_seqs = params.get('stop_seqs', [])
+        def callback(x):
+            stream = token_streams[x.batch_id]
+            stream += [x.token_id]
+
+            for stop_seq in stop_seqs:
+                if len(stream) < len(stop_seq):
+                    continue
+                if stream[len(stream)-len(stop_seq):] == stop_seq:
+                    print(f"Batch {x.batch_id} stop_seq terminated at step {x.step}")
+                    return True
+                
+            if x.is_last:
+                print(f"Batch {x.batch_id} completed at step {x.step}")
+            return False
         
-        answer = self.model.generate(
-            text=[prompt],
+        answers = self.model.generate(
+            text=text,
             include_prompt_in_result=False,
+            callback=callback,
             **model_params
         )
 
-        return answer[0], self.info
+        return answers if len(answers)>1 else answers[0], self.info
     
 #########################
 ##  auto-gptq Adapter  ##
@@ -514,13 +537,15 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
     results = []
     for idx, question in enumerate(interview):
 
+        answer = answers[idx]
         if batch:
+            answer = output_template.render(**question, Answer=answer) if output_template else result
             print()
-            print(answers[idx])
-            print()
+            print(answer)
+            print()        
 
         result = question.copy()
-        result['answer'] = answers[idx]
+        result['answer'] = answer
         result['params'] = model_info['sampling_params']
         result['model'] = model_info['model_name']
         result['runtime'] = runtime

@@ -144,6 +144,7 @@ def download_decicoder_1b_model(): download_model('Deci/DeciCoder-1b')
 def download_stablecode_completion_alpha_3b_model(): download_model('stabilityai/stablecode-completion-alpha-3b')
 def download_codellama_instruct_7b_model(): download_model('TheBloke/CodeLlama-7B-Instruct-fp16')
 def download_codellama_instruct_13b_model(): download_model('TheBloke/CodeLlama-13B-Instruct-fp16')
+def download_codellama_instruct_13b_ct2_model(): download_model('piratos/ct2fast-codellama-13b-instruct-hf')
 def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_python_7b_model(): download_model('TheBloke/CodeLlama-7B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
@@ -187,15 +188,15 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codellama_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_instruct_13b_ct2_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
-#RUNTIME = "ctranslate2"
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
+RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
@@ -204,8 +205,8 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=2)
-gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
@@ -243,7 +244,7 @@ class ModalWrapper:
 
 # For local testing, run `modal run -q interview_modal.py --input results/prepare.ndjson --params params/precise.json`
 @stub.local_entrypoint()
-def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
+def main(input: str, params: str, iterations: int = 1, templateout: str = "", batch: bool = False):
     from prepare import save_interview
     from interview_cuda import interview_run
 
@@ -263,5 +264,5 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = ""):
 
       for iter in range(iterations):
         print(f"Starting iteration {iter} of {param_file} {input_file}")
-        results, remote_info = interview_run(RUNTIME, model.generate.call, interview, params_json, output_template, batch=(RUNTIME=="vllm") )
+        results, remote_info = interview_run(RUNTIME, model.generate.call, interview, params_json, output_template, batch=batch )
         save_interview(input_file, templateout if templateout else 'none', param_file, remote_info['model_name'], results)
