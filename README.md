@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/27** ctranslate2 CodeLlama-Instruct-13B evaluation completed.
+
 **8/26** Evaluation of Phind-CodeLlama-34B and WizardCoder-Python-34B-V1.0 at GGUF 4- and 6-bit completed.  Sweep of Codellama models at GGUF 4-bit completed.
 
 **8/25** Evaluation of CodeLlama and CodeLlama-Python 7B/13B at code completion, CodeLlama and CodeLlama-Instruct 7B/13B at FIM are now available, performance is generally pretty good.  34B evals are next up.
@@ -25,12 +27,6 @@ A self-evaluating interview for AI coding models.
 **8/24** Evaluation of CodeLlama-Instruct 7B/13B completed, a Compare is also available.
 
 **8/20** Evaluation of LesslessMegaCoder completed which takes the honor of being the first 13B model to score a perfect 100% on the Python Test.
-
-**8/16** Evaluation of OpenOrca-Platypus2-13B completed.  Thanks to @ishaan-jaff for integrating [LiteLLM](https://github.com/BerriAI/litellm) into `interview-langchain.py` which cleans up the code and opens the way to cleanly support additional models.
-
-**8/15** Evalution of OctoCoder completed.  Having trouble getting OctoGeeX to work, so no results for that one yet.
-
-**8/12** Vicuna-1.5 7B bitsandbytes quants (INT8, FP4, NF4) results and compare are completed.  CodeGeeX2 evaluation complete.  Orca Mini V3 evaluation complete, along with some V2 quants.  Evaluate InCoder.
 
 ## Test Suites
 
