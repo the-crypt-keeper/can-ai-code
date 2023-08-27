@@ -113,6 +113,7 @@ codellama-7b-python.Q6-K: { name: "CodeLlama-Python", size: "7B", tags: ["llama2
 codellama-7b.Q4-K-M: { name: "CodeLlama", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-GGUF", quant: "GGUF-Q4KM" }
 codellama-13b.Q4-K-M: { name: "CodeLlama", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-GGUF", quant: "GGUF-Q4KM" }
 codellama-13b-python.Q4-K-M: { name: "CodeLlama-Python", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF", quant: "GGUF-Q4KM" }
+piratos-ct2fast-codellama-13b-instruct-hf: { name: "CodeLlama-Python", size: "13B", tags: ["llama2","codellama"], quant: "CT2" }
 
 TheBloke-CodeLlama-13B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Instruct-fp16" }
 TheBloke-CodeLlama-13B-fp16-fp16: { name: "CodeLlama", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-fp16" }
