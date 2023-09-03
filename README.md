@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**9/03** Evaluation of Undi95/Nous-Hermes-13B-Code completed.
+
 **8/27** ctranslate2 CodeLlama-Instruct-13B evaluation completed.
 
 **8/26** Evaluation of Phind-CodeLlama-34B and WizardCoder-Python-34B-V1.0 at GGUF 4- and 6-bit completed.  Sweep of Codellama models at GGUF 4-bit completed.
