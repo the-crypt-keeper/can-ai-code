@@ -103,6 +103,7 @@ mrm8488-llama-2-coder-7b-fp16: { name: "Llama 2 Coder", "size": "7B", tags: ["ll
 NousResearch-Nous-Hermes-Llama2-13b: { name: "Nous-Hermes Llama2", "size": "13B", tags: ["llama2"] }
 rombodawg-LosslessMegaCoder-llama2-7b-mini: { name: "LosslessMegaCoder", "size": "7B", tags: ["llama2"] }
 rombodawg-LosslessMegaCoder-llama2-13b-mini: { name: "LosslessMegaCoder", "size": "13B", tags: ["llama2"] }
+Undi95-Nous-Hermes-13B-Code-fp16: { name: "NH Llama2 x Airoboros 2.1 Coder", size: "13B", tags: ["llama2","airoboros"] }
 
 TheBloke-CodeLlama-7B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-fp16" }
 TheBloke-CodeLlama-7B-fp16-fp16: { name: "CodeLlama", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-fp16" }
