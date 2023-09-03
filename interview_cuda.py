@@ -37,8 +37,9 @@ class InterviewTransformers:
         print('Remote model', self.model_name, ' info', self.info)
 
         t0 = time.time()
-        print('Loading tokenizer...')
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name, trust_remote_code=True, **self.info.get('tokenizer_args', {}))
+        tokenizer_model = self.info.get('tokenizer', self.model_name)
+        print('Loading tokenizer',tokenizer_model)
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_model, trust_remote_code=True, **self.info.get('tokenizer_args', {}))
 
         torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.float16
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
