@@ -150,6 +150,7 @@ def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16'
 def download_codellama_python_7b_model(): download_model('TheBloke/CodeLlama-7B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_python_13b_model(): download_model('TheBloke/CodeLlama-13B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_nous_hermes_code_13b_model(): download_model('Undi95/Nous-Hermes-13B-Code', info = { 'tokenizer': 'NousResearch/Nous-Hermes-Llama2-13b' })
+def download_refact_1b_model(): download_model('smallcloudai/Refact-1_6B-fim')
 
 image = (
     Image.from_dockerhub(
@@ -189,14 +190,14 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_nous_hermes_code_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_refact_1b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
 RUNTIME = "transformers"
-QUANT = QUANT_FP16
+QUANT = QUANT_FP32
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
@@ -205,9 +206,9 @@ QUANT = QUANT_FP16
 #######################################
 
 ##### SELECT GPU HERE #################
-#gpu_request = gpu.T4(count=1)
+gpu_request = gpu.T4(count=1)
 #gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))

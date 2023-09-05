@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**9/05** Evaluation of smallcloudai/Refact-1_6B-fim completed, really strong performance for a small coding model.
+
 **9/03** Evaluation of Undi95/Nous-Hermes-13B-Code completed.
 
 **8/27** ctranslate2 CodeLlama-Instruct-13B evaluation completed.
@@ -25,10 +27,6 @@ A self-evaluating interview for AI coding models.
 **8/26** Evaluation of Phind-CodeLlama-34B and WizardCoder-Python-34B-V1.0 at GGUF 4- and 6-bit completed.  Sweep of Codellama models at GGUF 4-bit completed.
 
 **8/25** Evaluation of CodeLlama and CodeLlama-Python 7B/13B at code completion, CodeLlama and CodeLlama-Instruct 7B/13B at FIM are now available, performance is generally pretty good.  34B evals are next up.
-
-**8/24** Evaluation of CodeLlama-Instruct 7B/13B completed, a Compare is also available.
-
-**8/20** Evaluation of LesslessMegaCoder completed which takes the honor of being the first 13B model to score a perfect 100% on the Python Test.
 
 ## Test Suites
 
