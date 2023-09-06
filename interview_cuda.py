@@ -381,10 +381,10 @@ class InterviewVLLM:
         t0 = time.time()
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            self.llm = LLM(model=self.model_name, tensor_parallel_size=self.gpu_split)
+            self.llm = LLM(model=self.model_name, tensor_parallel_size=self.gpu_split, trust_remote_code=True)
         else:
             print('Starting in single GPU mode..')
-            self.llm = LLM(model=self.model_name)
+            self.llm = LLM(model=self.model_name, trust_remote_code=True)
 
         eos_token_id = self.info.get('eos_token_id', None)
         if eos_token_id is not None:

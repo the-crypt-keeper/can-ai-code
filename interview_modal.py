@@ -149,7 +149,7 @@ def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', 
 def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_python_7b_model(): download_model('TheBloke/CodeLlama-7B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_python_13b_model(): download_model('TheBloke/CodeLlama-13B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
-def download_codallama_instruct_7b_hf_model(): download_model('codellama/CodeLlama-7b-Instruct-hf')
+def download_codallama_instruct_7b_hf_model(): download_model('codellama/CodeLlama-7b-Instruct-hf', ignore_patterns=["*.safetensors"])
 
 image = (
     Image.from_dockerhub(
@@ -157,13 +157,15 @@ image = (
         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"]
     )
     .pip_install(
-        "transformers==4.32",
+        "transformers==4.33",
         "tiktoken==0.4.0",
         "bitsandbytes==0.41.1",
         "accelerate==0.22.0",
         "einops==0.6.1",
         "sentencepiece==0.1.99",
         "hf-transfer~=0.1",
+        "scipy",
+        "pyarrow",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )  
@@ -172,9 +174,9 @@ image = (
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
-    .pip_install("scipy", "pyarrow")
-    .env({"GITHUB_ACTIONS": "true", "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1",
+          "GITHUB_ACTIONS": "true",
+          "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
     .pip_install(
         "auto-gptq @ git+https://github.com/PanQiWei/AutoGPTQ@45576f0933f5e9ef7c1617006d5db359e1669155",
         index_url="https://download.pytorch.org/whl/cu118",
@@ -206,8 +208,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
