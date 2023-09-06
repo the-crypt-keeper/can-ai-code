@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**9/05** Evaluation of smallcloudai/Refact-1_6B-fim completed, really strong performance for a small coding model.
+**9/05** Evaluation of smallcloudai/Refact-1_6B-fim (really strong performance for a small coding model) and OpenAssistant CodeLlama (a perfect score on the Python test).
 
 **9/03** Evaluation of Undi95/Nous-Hermes-13B-Code completed.
 

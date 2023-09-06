@@ -151,6 +151,7 @@ def download_codellama_python_7b_model(): download_model('TheBloke/CodeLlama-7B-
 def download_codellama_python_13b_model(): download_model('TheBloke/CodeLlama-13B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_nous_hermes_code_13b_model(): download_model('Undi95/Nous-Hermes-13B-Code', info = { 'tokenizer': 'NousResearch/Nous-Hermes-Llama2-13b' })
 def download_refact_1b_model(): download_model('smallcloudai/Refact-1_6B-fim')
+def download_codellama_oasst_13b_model(): download_model('OpenAssistant/codellama-13b-oasst-sft-v10')
 
 image = (
     Image.from_dockerhub(
@@ -190,14 +191,14 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_refact_1b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_oasst_13b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
 RUNTIME = "transformers"
-QUANT = QUANT_FP32
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
@@ -206,8 +207,8 @@ QUANT = QUANT_FP32
 #######################################
 
 ##### SELECT GPU HERE #################
-gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.T4(count=1)
+gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
@@ -220,7 +221,7 @@ class ModalWrapper:
             self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
         elif RUNTIME == "vllm":
             gpu_split = 2 if gpu_request.count == 2 else None
-            #print(gpu_split)
+            print(gpu_split)
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
