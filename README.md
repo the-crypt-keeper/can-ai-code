@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**9/06** Evaluation of tiiuae/falcon-180B-chat completed (via gradio app) and its fairly disapointing. vLLM is finally working with codellama but not with TheBloke's version, so welcome CodeLlama-HF to the party.
+
 **9/05** Evaluation of smallcloudai/Refact-1_6B-fim (really strong performance for a small coding model) and OpenAssistant CodeLlama (a perfect score on the Python test).
 
 **9/03** Evaluation of Undi95/Nous-Hermes-13B-Code completed.
