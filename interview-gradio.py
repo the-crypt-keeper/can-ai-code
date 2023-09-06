@@ -63,7 +63,29 @@ def build_wizardcoder(prompt, params, **kwargs):
 	], 0
 
 def parse_wizardcoder(outputs, **kwargs):
-	return outputs[-1]
+	return None if len(outputs) == 0 else outputs[-1]
+
+def build_falcon(prompt, params, **kwargs):
+	"""
+	 - predict(message, optional_system_prompt, temperature, max_new_tokens, topp_nucleus_sampling, repetition_penalty, api_name="/chat") -> message
+    Parameters:
+     - [Textbox] message: str 
+     - [Textbox] optional_system_prompt: str 
+     - [Slider] temperature: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] max_new_tokens: int | float (numeric value between 0 and 8192) 
+     - [Slider] topp_nucleus_sampling: int | float (numeric value between 0.0 and 1) 
+     - [Slider] repetition_penalty: int | float (numeric value between 1.0 and 2.0) 
+    Returns:
+     - [Textbox] message: str 
+	"""
+	return [
+		kwargs.get('system',''),
+		prompt,
+		params['temperature'], # temperature
+		params['max_new_tokens'], # max_tokens
+		params['top_p'],
+		params.get('repetition_penalty',1.0)
+	], "/chat"
 
 configs = {
 	'starchat-alpha': {
@@ -72,13 +94,18 @@ configs = {
 		'parser': (parse_starchat, {})
 	},
 	'starchat-beta': {
-		'url': 'https://HuggingFaceH4-starchat-playground.hf.space/',
+		'url': '',
 		'builder': (build_starchat, { 'model': 'starchat-beta' }),
 		'parser': (parse_starchat, {})
 	},
 	'wizardcoder': {
 		'url': 'https://e5eaf7d09cc1521c.gradio.app/',
 		'builder': (build_wizardcoder, {}),
+		'parser': (parse_wizardcoder, {})
+	},
+	'falcon-180b': {
+		'url': 'https://tiiuae-falcon-180b-demo.hf.space/',
+		'builder': (build_falcon, {}),
 		'parser': (parse_wizardcoder, {})
 	}
 }
@@ -97,6 +124,10 @@ if __name__ == "__main__":
 		print(f"Invalid config: {args.config}")
 		print("Select one of",", ".join(configs.keys()))
 		exit(1) 
+
+	#client = Client(config['url'])
+	#print(client.view_api(all_endpoints=True))
+	#exit(0)
 	
 	raw_params = json.load(open(args.params))
 	interview = [json.loads(line) for line in open(args.input)]
@@ -106,12 +137,23 @@ if __name__ == "__main__":
 		print(f"{idx+1}/{len(interview)} {test['language']} {test['name']}")
 
 		payload, fn_index = config['builder'][0](test['prompt'], raw_params, **config['builder'][1])
-		client = Client(config['url'])
-		job = client.submit(*payload, fn_index=fn_index)
-		while not job.done():
-			time.sleep(2)
-			print(job.status())
-		answer = config['parser'][0](job.outputs(), **config['parser'][1])
+
+		while True:
+			client = Client(config['url'])
+			if isinstance(fn_index, int):
+				job = client.submit(*payload, fn_index=fn_index)
+			else:
+				job = client.submit(*payload, api_name=fn_index)
+
+			while not job.done():
+				time.sleep(2)
+				print(job.status())
+			
+			answer = config['parser'][0](job.outputs(), **config['parser'][1])
+			if answer is not None:
+				break
+			else:
+				print('ERROR: No answer provided by model, trying again.')
 
 		print()
 		print(answer)

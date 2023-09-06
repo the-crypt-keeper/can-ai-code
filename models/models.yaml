@@ -117,6 +117,7 @@ codellama-7b.Q4-K-M: { name: "CodeLlama", size: "7B", tags: ["llama2","codellama
 codellama-13b.Q4-K-M: { name: "CodeLlama", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-GGUF", quant: "GGUF-Q4KM" }
 codellama-13b-python.Q4-K-M: { name: "CodeLlama-Python", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Python-GGUF", quant: "GGUF-Q4KM" }
 piratos-ct2fast-codellama-13b-instruct-hf: { name: "CodeLlama-Python", size: "13B", tags: ["llama2","codellama"], quant: "CT2" }
+codellama-CodeLlama-7b-Instruct-hf: { name: "CodeLlama-HF-Instruct", size: "7B", tags: ["llama2","codellama"] }
 OpenAssistant-codellama-13b-oasst-sft-v10-fp16: { name: "OpenAssistant CodeLlama", size: "13B", tags: ["llama2","codellama"] }
 
 TheBloke-CodeLlama-13B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Instruct-fp16" }
@@ -180,6 +181,7 @@ falcon-40b-instruct.ggccv1.q2-k: { name: "Falcon Instruct", size: "40B", quant: 
 falcon-40b-instruct.ggccv1.q3-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q3_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
 falcon-40b-instruct.ggccv1.q4-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q4_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
 falcon-40b-instruct.ggccv1.q5-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q5_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
+falcon-180b-gradio: { name: "Falcon Chat", size: "180B", tags: ["falcon"], url: "https://huggingface.co/tiiuae/falcon-180B-chat" }
 
 stabilityai-stablecode-instruct-alpha-3b-fp16: { name: "StableCode Instruct Alpha", size: "3B", tags: ["stablecode"] }
 guanaco-7B.ggmlv3.q5: { name: "Guanaco", size: "7B", quant: "GGML-q5_0", tags: ["llama"], url: "https://huggingface.co/TheBloke/guanaco-7B-GGML" }
