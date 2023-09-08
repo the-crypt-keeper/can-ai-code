@@ -152,6 +152,7 @@ def download_codellama_python_13b_model(): download_model('TheBloke/CodeLlama-13
 def download_nous_hermes_code_13b_model(): download_model('Undi95/Nous-Hermes-13B-Code', info = { 'tokenizer': 'NousResearch/Nous-Hermes-Llama2-13b' })
 def download_refact_1b_model(): download_model('smallcloudai/Refact-1_6B-fim')
 def download_codellama_oasst_13b_model(): download_model('OpenAssistant/codellama-13b-oasst-sft-v10')
+def download_evol_replit_v1_model(): download_model('nickrosh/Evol-Replit-v1')
 
 image = (
     Image.from_dockerhub(
@@ -191,7 +192,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codellama_oasst_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_evol_replit_v1_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -208,7 +209,7 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=1)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
