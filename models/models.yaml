@@ -50,6 +50,9 @@ facebook-incoder-1B-fp16: { name: "InCoder", size: "1B", tags: ["incoder"] }
 facebook-incoder-6B-fp16: { name: "InCoder", size: "6B", tags: ["incoder"] }
 
 Deci-DeciCoder-1b-fp16: { name: "DeciCoder", size: "1B", tags: ["deci"] }
+Deci-DeciLM-6b-fp16: { name: "DeciLM", size: "6B", tags: ["deci"] }
+
+SkyWork-SkyCode-fp16: { name: "SkyWork-SkyCode-fp16", size: "2.6B", tags: ["skywork"] }
 
 smallcloudai-Refact-1-6B-fim-fp32: { name: "Refact", size: "1.6B", tags: ["refact"] }
 

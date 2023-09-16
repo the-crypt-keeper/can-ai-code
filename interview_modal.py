@@ -153,6 +153,8 @@ def download_nous_hermes_code_13b_model(): download_model('Undi95/Nous-Hermes-13
 def download_refact_1b_model(): download_model('smallcloudai/Refact-1_6B-fim')
 def download_codellama_oasst_13b_model(): download_model('OpenAssistant/codellama-13b-oasst-sft-v10')
 def download_evol_replit_v1_model(): download_model('nickrosh/Evol-Replit-v1')
+def download_decilm_6b_model(): download_model('Deci/DeciLM-6b')
+def download_skycode_model(): download_model('SkyWork/SkyCode')
 
 image = (
     Image.from_dockerhub(
@@ -192,7 +194,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_evol_replit_v1_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_skycode_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)

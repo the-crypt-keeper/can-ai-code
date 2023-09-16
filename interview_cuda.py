@@ -113,7 +113,7 @@ class InterviewTransformers:
         sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
         answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False)
        
-        eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>', '<EOT>', '<empty_output>', '<|im_end|>']
+        eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>', '<EOT>', '<empty_output>', '<|im_end|>', '[EOS]']
         if 'stopping_criteria' in generate_args: eos_list += generate_args['stopping_criteria'][0].stop_texts
         
         for eos in eos_list:
