@@ -18,19 +18,11 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**9/27** Pulled up transformers, autogptq, vLLM and AWQ to their latest versions. vLLM now supports "AutoAWQ" format models, with TheBloke-Phind-CodeLlama-34B-v2-AWQ being the first model evaluated like this (along with the GGUF 4- and 5- bit versions).  Note that it seems these new AutoAWQ models dont work with the old awq runtime, and only support the g128 flavor of the AWQ format.  For completeness we also evaluate TheBloke-Phind-CodeLlama-34B-v2-GPTQ but its very, very bad compared to both AWQ and GGUF, it gets stuck repeating tokens and cannot escape.
+
 **9/16** Evaluations of SkyWork/SkyCode and Deci/DeciLM-6b completed, neither is particularly interesting.
 
 **9/06** Evaluation of tiiuae/falcon-180B-chat completed (via gradio app) and its fairly disapointing. vLLM is finally working with codellama but not with TheBloke's version, so welcome CodeLlama-HF to the party.
-
-**9/05** Evaluation of smallcloudai/Refact-1_6B-fim (really strong performance for a small coding model) and OpenAssistant CodeLlama (a perfect score on the Python test).
-
-**9/03** Evaluation of Undi95/Nous-Hermes-13B-Code completed.
-
-**8/27** ctranslate2 CodeLlama-Instruct-13B evaluation completed.
-
-**8/26** Evaluation of Phind-CodeLlama-34B and WizardCoder-Python-34B-V1.0 at GGUF 4- and 6-bit completed.  Sweep of Codellama models at GGUF 4-bit completed.
-
-**8/25** Evaluation of CodeLlama and CodeLlama-Python 7B/13B at code completion, CodeLlama and CodeLlama-Instruct 7B/13B at FIM are now available, performance is generally pretty good.  34B evals are next up.
 
 ## Test Suites
 
