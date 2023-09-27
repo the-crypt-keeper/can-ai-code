@@ -164,6 +164,7 @@ image = (
     )
     .pip_install(
         "transformers==4.33.2",
+        "optimum==1.13.2",
         "tiktoken==0.4.0",
         "bitsandbytes==0.41.1",
         "accelerate==0.21.0",
