@@ -155,7 +155,7 @@ def download_codellama_oasst_13b_model(): download_model('OpenAssistant/codellam
 def download_evol_replit_v1_model(): download_model('nickrosh/Evol-Replit-v1')
 def download_decilm_6b_model(): download_model('Deci/DeciLM-6b')
 def download_skycode_model(): download_model('SkyWork/SkyCode')
-def download_codellama_phind_v2_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-AWQ')
+def download_codellama_phind_v2_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-AWQ', info = { 'big_model': True })
 
 image = (
     Image.from_dockerhub(
@@ -195,16 +195,16 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_skycode_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_phind_v2_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"
@@ -225,7 +225,7 @@ class ModalWrapper:
             self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
         elif RUNTIME == "vllm":
             gpu_split = 2 if gpu_request.count == 2 else None
-            print(gpu_split)
+            #print(gpu_split)
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
