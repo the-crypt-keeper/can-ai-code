@@ -380,12 +380,13 @@ class InterviewVLLM:
         print('Remote model', self.model_name, ' info', self.info)
 
         t0 = time.time()
+        quantization = 'awq' if 'awq' in self.model_name.lower() else None
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            self.llm = LLM(model=self.model_name, tensor_parallel_size=self.gpu_split)
+            self.llm = LLM(model=self.model_name, quantization=quantization, tensor_parallel_size=self.gpu_split)
         else:
             print('Starting in single GPU mode..')
-            self.llm = LLM(model=self.model_name)
+            self.llm = LLM(model=self.model_name, quantization=quantization)
 
         eos_token_id = self.info.get('eos_token_id', None)
         if eos_token_id is not None:
