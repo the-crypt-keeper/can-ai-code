@@ -376,17 +376,19 @@ class InterviewVLLM:
     def load(self):
         from vllm import LLM
         from transformers import GenerationConfig
+        import torch
 
         print('Remote model', self.model_name, ' info', self.info)
 
         t0 = time.time()
         quantization = 'awq' if 'awq' in self.model_name.lower() else None
+        dtype = 'float16' if quantization == 'awq' else 'bfloat16'
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            self.llm = LLM(model=self.model_name, quantization=quantization, tensor_parallel_size=self.gpu_split)
+            self.llm = LLM(model=self.model_name, quantization=quantization, dtype=dtype, tensor_parallel_size=self.gpu_split)
         else:
             print('Starting in single GPU mode..')
-            self.llm = LLM(model=self.model_name, quantization=quantization)
+            self.llm = LLM(model=self.model_name, quantization=quantization, dtype=dtype)
 
         eos_token_id = self.info.get('eos_token_id', None)
         if eos_token_id is not None:
@@ -480,7 +482,8 @@ class InterviewAWQ:
             device_map = infer_auto_device_map(model,
                                                no_split_module_classes=["DecoderLayer"],
                                                max_memory=max_memory)
-            if device_map['lm_head'] == 'cpu': device_map['lm_head'] = 0
+            if device_map.get('lm_head') == 'cpu': device_map['lm_head'] = 0
+            device_map = 'balanced'
             print(device_map)
         else:
             device_map = 'balanced'
