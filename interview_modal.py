@@ -155,6 +155,7 @@ def download_codellama_oasst_13b_model(): download_model('OpenAssistant/codellam
 def download_evol_replit_v1_model(): download_model('nickrosh/Evol-Replit-v1')
 def download_decilm_6b_model(): download_model('Deci/DeciLM-6b')
 def download_skycode_model(): download_model('SkyWork/SkyCode')
+def download_codellama_phind_v2_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-AWQ')
 
 image = (
     Image.from_dockerhub(
@@ -162,34 +163,33 @@ image = (
         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"]
     )
     .pip_install(
-        "transformers==4.31",
+        "transformers==4.33.2",
         "tiktoken==0.4.0",
-        "bitsandbytes==0.40.1.post1",
+        "bitsandbytes==0.41.1",
         "accelerate==0.21.0",
         "einops==0.6.1",
         "sentencepiece==0.1.99",
         "hf-transfer~=0.1",
+        "scipy==1.10.1",
+        "pyarrow==11.0.0",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )  
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "GITHUB_ACTIONS": "true", "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
     .pip_install(
-        "vllm @ git+https://github.com/vllm-project/vllm.git@d7a1c6d614756b3072df3e8b52c0998035fb453f",
+        "vllm @ git+https://github.com/vllm-project/vllm.git@03ffd0a02251e10c1aa14fca8cb0ab1e4e40b886",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
-    .pip_install("scipy", "pyarrow")
-    .env({"GITHUB_ACTIONS": "true", "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
     .pip_install(
-        "auto-gptq @ git+https://github.com/PanQiWei/AutoGPTQ@45576f0933f5e9ef7c1617006d5db359e1669155",
-        index_url="https://download.pytorch.org/whl/cu118",
-        extra_index_url="https://pypi.org/simple"
+        "auto-gptq",
+        extra_index_url="https://huggingface.github.io/autogptq-index/whl/cu118"
     )
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout cade9bc5576292056728cf55c0c9faf4adae62f8"
     )
     .run_commands("git clone https://github.com/mit-han-lab/llm-awq",
-                  "cd llm-awq && git checkout 71d8e68df78de6c0c817b029a568c064bf22132d && pip install -e .",
+                  "cd llm-awq && git checkout a095b3e041762e6dc05e119634106928055c6764 && pip install -e .",
                   "cd llm-awq/awq/kernels && python setup.py install"
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
