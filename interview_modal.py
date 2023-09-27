@@ -157,6 +157,8 @@ def download_decilm_6b_model(): download_model('Deci/DeciLM-6b')
 def download_skycode_model(): download_model('SkyWork/SkyCode')
 def download_codellama_phind_v2_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-AWQ', info = { 'big_model': True })
 def download_codellama_phind_v2_gptq_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-GPTQ', revision='gptq-4bit-32g-actorder_True')
+def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Instruct-v0.1')
+def download_mistral_base_model(): download_model('mistralai/Mistral-7B-v0.1')
 
 image = (
     Image.from_dockerhub(
@@ -196,7 +198,7 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codellama_phind_v2_gptq_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_mistral_base_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -213,8 +215,8 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=create_package_mounts(["interview_cuda"]))
@@ -226,7 +228,7 @@ class ModalWrapper:
             self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
         elif RUNTIME == "vllm":
             gpu_split = 2 if gpu_request.count == 2 else None
-            #print(gpu_split)
+            print(gpu_split)
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)

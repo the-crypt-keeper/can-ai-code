@@ -131,8 +131,12 @@ codellama-34b.Q4-K-M: { name: "CodeLlama", size: "34B", tags: ["codellama"], url
 codellama-34b-python.Q4-K-M: { name: "CodeLlama-Python", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/tree/main", quant: "GGUF-Q4KM" }
 codellama-34b-instruct.Q4-K-M: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF/tree/main", quant: "GGUF-Q4KM" }
 
-phind-codellama-34b-v1.Q4-K-M: { name: "Phind-CodeLlama", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q4KM" }
-phind-codellama-34b-v1.Q5-K-M: { name: "Phind-CodeLlama", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q5KM" }
+phind-codellama-34b-v1.Q4-K-M: { name: "Phind-CodeLlama v1", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q4KM" }
+phind-codellama-34b-v1.Q5-K-M: { name: "Phind-CodeLlama v1", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q5KM" }
+TheBloke-Phind-CodeLlama-34B-v2-AWQ: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-AWQ", quant: "AWQ" }
+phind-codellama-34b-v2.Q4-K-M: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GGUF", quant: "GGUF-Q4KM" }
+phind-codellama-34b-v2.Q5-K-M: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GGUF", quant: "GGUF-Q5KM" }
+TheBloke-Phind-CodeLlama-34B-v2-GPTQ: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GPTQ", quant: "GPTQ" }
 
 wizardcoder-python-34b-v1.0.Q4-K-M: { name: "WizardCoder-Python", size: "34B", tags: ["codellama","wizard"], url: "https://huggingface.co/TheBloke/WizardCoder-Python-34B-V1.0-GGUF", quant: "GGUF-Q4KM" }
 wizardcoder-python-34b-v1.0.Q6-K: { name: "WizardCoder-Python", size: "34B", tags: ["codellama","wizard"], url: "https://huggingface.co/TheBloke/WizardCoder-Python-34B-V1.0-GGUF", quant: "GGUF-Q6K" }
