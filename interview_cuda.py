@@ -31,10 +31,19 @@ class InterviewTransformers:
         self.batch = False
 
     def load(self):
-        from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+        from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, GPTQConfig
         import torch
 
-        print('Remote model', self.model_name, ' info', self.info)
+        # the gptq loader has a bug where it tries to re-download things if this is enabled
+        import os
+        os.environ['HF_HUB_ENABLE_HF_TRANSFER'] = '0'
+
+        # the gptq loader does not support accelerate, it uses optimum instead
+        use_accelerate = self.info.get('accelerate', True)
+        if 'gptq' in self.model_name.lower():
+            use_accelerate = False
+
+        print('Remote model', self.model_name, ' info', self.info, 'use_accelerate', use_accelerate)
 
         t0 = time.time()
         tokenizer_model = self.info.get('tokenizer', self.model_name)
@@ -45,7 +54,7 @@ class InterviewTransformers:
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
                                                 load_in_4bit = self.quant in [QUANT_FP4, QUANT_NF4],
                                                 bnb_4bit_quant_type = "nf4" if self.quant == QUANT_NF4 else "fp4")
-        if self.info.get('accelerate', True):
+        if use_accelerate:
             print('Loading model with accelerate...')
             self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), trust_remote_code=True)
         else:

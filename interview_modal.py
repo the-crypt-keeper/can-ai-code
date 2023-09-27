@@ -156,6 +156,7 @@ def download_evol_replit_v1_model(): download_model('nickrosh/Evol-Replit-v1')
 def download_decilm_6b_model(): download_model('Deci/DeciLM-6b')
 def download_skycode_model(): download_model('SkyWork/SkyCode')
 def download_codellama_phind_v2_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-AWQ', info = { 'big_model': True })
+def download_codellama_phind_v2_gptq_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-GPTQ', revision='gptq-4bit-32g-actorder_True')
 
 image = (
     Image.from_dockerhub(
@@ -195,16 +196,16 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codellama_phind_v2_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_phind_v2_gptq_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"
@@ -212,7 +213,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
