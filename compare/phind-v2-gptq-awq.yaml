@@ -1,0 +1,8 @@
+title: Phind V2 4bit GPTQ vs AWQ vs GGUF
+models:
+  - id: GPTQ
+    eval: codellama/eval_junior-v2_python-javascript_phind-code_none_precise_TheBloke-Phind-CodeLlama-34B-v2-GPTQ_1695840305.ndjson
+  - id: AWQ
+    eval: codellama/eval_junior-v2_python-javascript_phind-code_none_codellama_TheBloke-Phind-CodeLlama-34B-v2-AWQ_1695779154.ndjson
+  - id: GGUF-Q4
+    eval: codellama/eval_junior-v2_python-javascript_phind-code_none_codellama_phind-codellama-34b-v2.Q4-K-M_1695835359.ndjson
