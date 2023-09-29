@@ -127,6 +127,8 @@ TheBloke-CodeLlama-13B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "
 TheBloke-CodeLlama-13B-fp16-fp16: { name: "CodeLlama", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-fp16" }
 TheBloke-CodeLlama-13B-Python-fp16-fp16: { name: "CodeLlama-Python", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Python-fp16" }
 
+uukuguy-speechless-llama2-hermes-orca-platypus-wizardlm-13b: { name: "speechless-llama2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/uukuguy/speechless-llama2-hermes-orca-platypus-wizardlm-13b" }
+
 codellama-34b.Q4-K-M: { name: "CodeLlama", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-GGUF/tree/main", quant: "GGUF-Q4KM" }
 codellama-34b-python.Q4-K-M: { name: "CodeLlama-Python", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF/tree/main", quant: "GGUF-Q4KM" }
 codellama-34b-instruct.Q4-K-M: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF/tree/main", quant: "GGUF-Q4KM" }
