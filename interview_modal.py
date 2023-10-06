@@ -160,6 +160,7 @@ def download_codellama_phind_v2_gptq_model(): download_model('TheBloke/Phind-Cod
 def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Instruct-v0.1')
 def download_mistral_base_model(): download_model('mistralai/Mistral-7B-v0.1')
 def download_speechless_llama2_model(): download_model('uukuguy/speechless-llama2-hermes-orca-platypus-wizardlm-13b')
+def download_stablelm_3b_model(): download_model('stabilityai/stablelm-3b-4e1t')
 
 image = (
     Image.from_dockerhub(
@@ -199,16 +200,16 @@ image = (
     )
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_mistral_instruct_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_stablelm_3b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "awq"

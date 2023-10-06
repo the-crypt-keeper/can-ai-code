@@ -193,6 +193,8 @@ falcon-40b-instruct.ggccv1.q5-k: { name: "Falcon Instruct", size: "40B", quant: 
 falcon-180b-gradio: { name: "Falcon Chat", size: "180B", tags: ["falcon"], url: "https://huggingface.co/tiiuae/falcon-180B-chat" }
 
 stabilityai-stablecode-instruct-alpha-3b-fp16: { name: "StableCode Instruct Alpha", size: "3B", tags: ["stablecode"] }
+stabilityai-stablelm-3b-4e1t-fp16: { name: "StableLM-4e1t", size: "3B", tags: ["stablecode"], url: "https://huggingface.co/stabilityai/stablelm-3b-4e1t" }
+
 guanaco-7B.ggmlv3.q5: { name: "Guanaco", size: "7B", quant: "GGML-q5_0", tags: ["llama"], url: "https://huggingface.co/TheBloke/guanaco-7B-GGML" }
 guanaco-13B.ggmlv3.q5: { name: "Guanaco", size: "13B", quant: "GGML-q5_0", tags: ["llama"], url: "https://huggingface.co/TheBloke/guanaco-13B-GGML" }
 

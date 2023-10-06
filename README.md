@@ -18,15 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**10/06** Evaluate stabilityai/stablelm-3b-4e1t, not bad for a base model fine-tunes should be solid.
+
 **9/28** Upgrade vLLM to 0.2.0. Evaluate uukuguy/speechless-llama2-hermes-orca-platypus-wizardlm-13b.  Evaluate Mistral-0.1 family FP16 via vLLM.
 
 **9/27** Evaluate Mistral-0.1 family via GGUF, solid performance for 7B models they both pass in both languages.
 
 **9/27** Pulled up transformers, autogptq, vLLM and AWQ to their latest versions. vLLM now supports "AutoAWQ" format models, with TheBloke-Phind-CodeLlama-34B-v2-AWQ being the first model evaluated like this (along with the GGUF 4- and 5- bit versions).  Note that it seems these new AutoAWQ models dont work with the old awq runtime, and only support the g128 flavor of the AWQ format.  For completeness we also evaluate TheBloke-Phind-CodeLlama-34B-v2-GPTQ but its very, very bad compared to both AWQ and GGUF, it gets stuck repeating tokens and cannot escape.
-
-**9/16** Evaluations of SkyWork/SkyCode and Deci/DeciLM-6b completed, neither is particularly interesting.
-
-**9/06** Evaluation of tiiuae/falcon-180B-chat completed (via gradio app) and its fairly disapointing. vLLM is finally working with codellama but not with TheBloke's version, so welcome CodeLlama-HF to the party.
 
 ## Test Suites
 
