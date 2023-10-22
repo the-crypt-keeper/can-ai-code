@@ -205,6 +205,7 @@ mistralai-Mistral-7B-v0.1: { name: "Mistral-0.1", size: "7B", tags: ["mistral"] 
 mistral-7b-instruct-v0.1.Q8-0: { name: "Mistral-Instruct-0.1", size: "7B", quant: "GGUF-q8_0", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
 mistral-7b-instruct-v0.1.Q5-K-M: { name: "Mistral-Instruct-0.1", size: "7B", quant: "GGUF-q5_kM", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
 mistralai-Mistral-7B-Instruct-v0.1: { name: "Mistral-Instruct-0.1", size: "7B", tags: ["mistral"] }
+Open-Orca-Mistral-7B-OpenOrca: { name: "Open-Orca Mistral", size: "7B", tags: ["mistral"], url: "https://huggingface.co/Open-Orca/Mistral-7B-OpenOrca" }
 
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }

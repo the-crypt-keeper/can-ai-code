@@ -74,6 +74,7 @@ def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Inst
 def download_mistral_base_model(): download_model('mistralai/Mistral-7B-v0.1')
 def download_airoboros_m_7b_312_model(): download_model('jondurbin/airoboros-m-7b-3.1.2')
 def download_airoboros_m_7b_312_awq_model(): download_model('TheBloke/Airoboros-M-7B-3.1.2-AWQ')
+def download_openorca_mistral_7b_model(): download_model('Open-Orca/Mistral-7B-OpenOrca')
 
 image = (
     Image.from_registry(
@@ -113,7 +114,7 @@ image = (
     #)
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
     ##### SELECT MODEL HERE ##############
-    .run_function(download_airoboros_m_7b_312_awq_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_openorca_mistral_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)

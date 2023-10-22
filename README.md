@@ -18,7 +18,11 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**10/22** Update vLLM to 0.2.1-post1 and transformers to 4.34.1.  Deprecate original MIT llm-awq interviewer, replaced by vLLM/AutoAWQ.  Evaluate jondurbin/airoboros-m-7b-3.1.2 at fp16 and awq-4bit.
+**10/22** Evaluate Open-Orca/Mistral-7B-OpenOrca which seems to have a fine-tune problem (see [#103](https://github.com/the-crypt-keeper/can-ai-code/issues/103) ) and required a variant of the usual chatml prompt.
+
+**10/22** Evaluate jondurbin/airoboros-m-7b-3.1.2 at fp16 and awq-4bit.
+
+**10/22** Update vLLM to 0.2.1-post1 and transformers to 4.34.1.  Deprecate original MIT llm-awq interviewer, replaced by vLLM/AutoAWQ.
 
 **10/06** Evaluate stabilityai/stablelm-3b-4e1t, not bad for a base model fine-tunes should be solid.
 

@@ -1,0 +1,7 @@
+<|im_start|>system
+Write simple, concise code that does not rely on any library functions.  The code must start with ```{{language}} and end with ```.
+<|im_end|>
+<|im_start|>user
+Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}.
+<|im_end|>
+<|im_start|>assistant:
