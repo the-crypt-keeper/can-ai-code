@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**10/22** Update vLLM to 0.2.1-post1 and transformers to 4.34.1.  Deprecate original MIT llm-awq interviewer, replaced by vLLM/AutoAWQ.  Evaluate jondurbin/airoboros-m-7b-3.1.2 at fp16 and awq-4bit.
+
 **10/06** Evaluate stabilityai/stablelm-3b-4e1t, not bad for a base model fine-tunes should be solid.
 
 **9/28** Upgrade vLLM to 0.2.0. Evaluate uukuguy/speechless-llama2-hermes-orca-platypus-wizardlm-13b.  Evaluate Mistral-0.1 family FP16 via vLLM.
