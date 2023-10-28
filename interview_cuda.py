@@ -370,6 +370,81 @@ class InterviewExllama:
         print(f"Generated {num_res_tokens-prompt_ids.shape[-1]} tokens in {time.time()-t0:.2f}s")
         return answer, self.info
 
+########################
+##  exllama2 Adapter  ##
+########################
+class InterviewExllama2:
+    def __init__(self, model_name, model_info = {}, gpu_split=None):
+        self.model_name = model_name
+        self.gpu_split = gpu_split
+        self.info = model_info
+
+        self.tokenizer = None
+        self.model = None
+        self.cache = None
+
+        self.info['model_name'] = self.model_name + '-' + self.info.get('revision','main')
+
+    def load(self):
+        import sys
+        sys.path += ["/repositories/exllamav2","../exllamav2"]
+        from huggingface_hub import hf_hub_download
+        import os
+
+        from exllamav2 import (
+            ExLlamaV2,
+            ExLlamaV2Config,
+            ExLlamaV2Cache,
+            ExLlamaV2Tokenizer,
+        )
+
+        config_path = hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename="config.json")
+
+        config = ExLlamaV2Config()
+        config.model_dir = os.path.dirname(config_path)
+
+        print('Starting up...')
+        config.prepare()
+
+        print("Loading tokenizer...")
+        self.tokenizer = ExLlamaV2Tokenizer(config)
+
+        print("Loading model...")
+        self.model = ExLlamaV2(config)
+        self.cache = ExLlamaV2Cache(self.model, lazy=True)
+        self.model.load_autosplit(self.cache)
+
+    def generate(self, prompt, params):
+        from exllamav2.generator import (
+            ExLlamaV2BaseGenerator,
+            ExLlamaV2Sampler,
+        )
+
+        settings = ExLlamaV2Sampler.Settings()
+        settings.temperature = params.get('temperature', 1.0)
+        settings.top_k = params.get('top_k', 1000)
+        settings.top_p = params.get('top_p', 1.0)
+        settings.token_repetition_penalty = params.get('repetition_penalty', 1.0)
+        #settings.disallow_tokens(self.tokenizer, [self.tokenizer.eos_token_id])
+
+        self.info['sampling_params'] = str(settings.__dict__)
+
+        max_new_tokens = params.get('max_new_tokens', 512)
+
+        generator = ExLlamaV2BaseGenerator(self.model, self.cache, self.tokenizer)
+        generator.warmup()
+
+        time_begin = time.time()
+
+        output = generator.generate_simple(prompt, settings, max_new_tokens, seed = self.info.get('seed', 0), encode_special_tokens = False, decode_special_tokens = False)
+
+        time_end = time.time()
+        time_total = time_end - time_begin
+        
+        print(f"Response generated in {time_total:.2f} seconds, {max_new_tokens} tokens, {max_new_tokens / time_total:.2f} tokens/second")
+
+        return output, self.info
+
 ####################
 ##  vLLM Adapter  ##
 ####################
@@ -626,6 +701,8 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         model = InterviewAutoGPTQ(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'exllama':
         model = InterviewExllama(model_name, model_info, gpu_split=gpu_split)
+    elif runtime == 'exllama2':
+        model = InterviewExllama2(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'awq':
         model = InterviewAWQ(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'ctranslate2':
