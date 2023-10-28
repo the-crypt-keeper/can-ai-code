@@ -6,6 +6,7 @@ from jinja2 import Template
 from interview_cuda import *
 
 def download_model(name, info = {}, **kwargs):
+    for k,v in kwargs.items(): info[k] = v
     with open("./_info.json",'w') as f:
         json.dump({"model_name": name, **info}, f)
     snapshot_download(name, **kwargs)
@@ -60,8 +61,14 @@ def download_skycode_model(): download_model('SkyWork/SkyCode')
 def download_codellama_instruct_7b_model(): download_model('TheBloke/CodeLlama-7B-Instruct-fp16')
 def download_codellama_instruct_13b_model(): download_model('TheBloke/CodeLlama-13B-Instruct-fp16')
 def download_codellama_instruct_13b_ct2_model(): download_model('piratos/ct2fast-codellama-13b-instruct-hf')
+
+def download_codellama_instruct_13b_exl2_4p6bit_model(): download_model('turboderp/CodeLlama-13B-instruct-exl2', revision ='4.65bpw')
+def download_codellama_instruct_13b_exl2_3p5bit_model(): download_model('turboderp/CodeLlama-13B-instruct-exl2', revision ='3.5bpw')
+def download_codellama_instruct_13b_exl2_2p7bit_model(): download_model('turboderp/CodeLlama-13B-instruct-exl2', revision = '2.7bpw')
+
 def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+
 def download_codellama_python_7b_model(): download_model('TheBloke/CodeLlama-7B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_python_13b_model(): download_model('TheBloke/CodeLlama-13B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_nous_hermes_code_13b_model(): download_model('Undi95/Nous-Hermes-13B-Code', info = { 'tokenizer': 'NousResearch/Nous-Hermes-Llama2-13b' })
@@ -113,8 +120,11 @@ image = (
     #              "cd llm-awq/awq/kernels && python setup.py install"
     #)
     .pip_install('hf-hub-ctranslate2>=2.0.8','ctranslate2>=3.16.0')
+    .run_commands(
+        "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout d41a0d4fb526b7cf7f29aed98ce29a966fc3af45"
+    )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_openorca_mistral_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_instruct_13b_exl2_3p5bit_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -123,9 +133,10 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
+RUNTIME = "exllama2"
 #RUNTIME = "awq"
 #######################################
 
@@ -151,6 +162,8 @@ class ModalWrapper:
         elif RUNTIME == "exllama":
             gpu_split = '17,24' if gpu_request.count == 2 else None
             self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)
+        elif RUNTIME == "exllama2":
+            self.wrapper = InterviewExllama2(self.info['model_name'], self.info)
         elif RUNTIME == "awq":
             if self.info.get('big_model'):
                 gpu_split = '0,1' if gpu_request.count == 2 else '0,cpu'
