@@ -431,8 +431,7 @@ class InterviewExllama2:
                         encode_special_tokens = False,
                         decode_special_tokens = False,
                         loras = None,
-                        stop_token = -1,
-                        add_bos = False):
+                        stop_token = -1):
 
                     if stop_token == -1: stop_token = self.tokenizer.eos_token_id
                     #if loras is not None and isinstance(loras, ExLlamaV2Lora): loras = [loras]
@@ -440,8 +439,21 @@ class InterviewExllama2:
 
                     # Tokenize input and produce padding mask if needed
 
-                    batch_size = 1 if isinstance(prompt, str) else len(prompt)
+                    # Auto-detect BOS from prompt
+                    add_bos = False
+                    if isinstance(prompt, str):
+                        batch_size = 1
+                        if prompt[0:3] == '<s>': 
+                            add_bos = True
+                            prompt = prompt[3:]
+                    else:
+                        batch_size = len(prompt)                        
+                        if prompt[0][0:3] == '<s>': 
+                            add_bos = True
+                            prompt = [x[3:] for x in prompt]
+
                     ids = self.tokenizer.encode(prompt, encode_special_tokens = encode_special_tokens, add_bos = add_bos)
+                    self.prompt_ids = ids.clone()
 
                     overflow = ids.shape[-1] + num_tokens - self.model.config.max_seq_len
                     if overflow > 0: ids = ids[:, overflow:]
@@ -495,8 +507,10 @@ class InterviewExllama2:
                         if eos: break
 
                     # Decode
-
-                    text = self.tokenizer.decode(self.sequence_ids, decode_special_tokens = decode_special_tokens)
+                    text = []
+                    for i in range(batch_size):
+                        prompt_len = self.prompt_ids[i,:].shape[-1]
+                        text.append( self.tokenizer.decode(self.sequence_ids[i,prompt_len:], decode_special_tokens = decode_special_tokens) )
 
                     if isinstance(prompt, str): return text[0]
                     return text
@@ -518,12 +532,12 @@ class InterviewExllama2:
 
         time_begin = time.time()
 
-        output = generator.generate_simple(prompt, settings, max_new_tokens, seed = self.info.get('seed', 0), add_bos = True, encode_special_tokens = False, decode_special_tokens = False)
+        output = generator.generate_simple(prompt, settings, max_new_tokens, seed = self.info.get('seed', 0), encode_special_tokens = False, decode_special_tokens = False)
 
         time_end = time.time()
         time_total = time_end - time_begin
         
-        print(f"Response generated in {time_total:.2f} seconds, {max_new_tokens} tokens, {max_new_tokens / time_total:.2f} tokens/second")
+        #print(f"Response generated in {time_total:.2f} seconds")
 
         return output, self.info
 
