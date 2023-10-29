@@ -384,6 +384,7 @@ class InterviewExllama2:
         self.cache = None
 
         self.info['model_name'] = self.model_name + '-' + self.info.get('revision','main')
+        #if '70B' in model_name: self.info['low_mem'] = True
 
     def load(self):
         import sys
@@ -404,6 +405,7 @@ class InterviewExllama2:
         config.model_dir = os.path.dirname(config_path)
 
         print('Starting up...')
+        if self.info.get('low_mem', False): config.set_low_mem()
         config.prepare()
 
         print("Loading tokenizer...")
@@ -411,8 +413,11 @@ class InterviewExllama2:
 
         print("Loading model...")
         self.model = ExLlamaV2(config)
-        self.cache = ExLlamaV2Cache(self.model, lazy=True)
-        self.model.load_autosplit(self.cache)
+        self.cache = ExLlamaV2Cache(self.model, max_seq_len=2048, lazy=True)
+        if self.info.get('low_mem', False): 
+            self.model.load()
+        else:
+            self.model.load_autosplit(self.cache)
 
     def generate(self, prompt, params):
         from exllamav2.generator import (

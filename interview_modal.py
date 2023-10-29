@@ -66,6 +66,14 @@ def download_codellama_instruct_13b_exl2_4p6bit_model(): download_model('turbode
 def download_codellama_instruct_13b_exl2_3p5bit_model(): download_model('turboderp/CodeLlama-13B-instruct-exl2', revision ='3.5bpw')
 def download_codellama_instruct_13b_exl2_2p7bit_model(): download_model('turboderp/CodeLlama-13B-instruct-exl2', revision = '2.7bpw')
 
+def download_llama2_chat_70b_exl2_2p55_model(): download_model('turboderp/Llama2-70B-chat-exl2', revision = '2.55bpw')
+def download_llama2_chat_70b_exl2_2p4_model(): download_model('turboderp/Llama2-70B-chat-exl2', revision = '2.4bpw')
+def download_llama2_chat_70b_exl2_4p0_model(): download_model('turboderp/Llama2-70B-chat-exl2', revision = '4.0bpw')
+
+def download_codellama_instruct_34b_exl2_4p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '4.0bpw')
+def download_codellama_instruct_34b_exl2_3p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '3.0bpw')
+def download_codebooga_34b_exl2_4p25_model(): download_model('oobabooga/CodeBooga-34B-v0.1-EXL2-4.250b')
+
 def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 
@@ -124,7 +132,7 @@ image = (
         "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout d41a0d4fb526b7cf7f29aed98ce29a966fc3af45"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codellama_instruct_13b_exl2_3p5bit_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codebooga_34b_exl2_4p25_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)

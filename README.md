@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**10/29** Added support for Exllama2 backend.  Evaluate Llama2-Chat-70B, Codellama-13B, Codellama-34B with EXL2 at different sizes.
+
 **10/22** Evaluate Open-Orca/Mistral-7B-OpenOrca which seems to have a fine-tune problem (see [#103](https://github.com/the-crypt-keeper/can-ai-code/issues/103) ) and required a variant of the usual chatml prompt.
 
 **10/22** Evaluate jondurbin/airoboros-m-7b-3.1.2 at fp16 and awq-4bit.
@@ -25,12 +27,6 @@ A self-evaluating interview for AI coding models.
 **10/22** Update vLLM to 0.2.1-post1 and transformers to 4.34.1.  Deprecate original MIT llm-awq interviewer, replaced by vLLM/AutoAWQ.
 
 **10/06** Evaluate stabilityai/stablelm-3b-4e1t, not bad for a base model fine-tunes should be solid.
-
-**9/28** Upgrade vLLM to 0.2.0. Evaluate uukuguy/speechless-llama2-hermes-orca-platypus-wizardlm-13b.  Evaluate Mistral-0.1 family FP16 via vLLM.
-
-**9/27** Evaluate Mistral-0.1 family via GGUF, solid performance for 7B models they both pass in both languages.
-
-**9/27** Pulled up transformers, autogptq, vLLM and AWQ to their latest versions. vLLM now supports "AutoAWQ" format models, with TheBloke-Phind-CodeLlama-34B-v2-AWQ being the first model evaluated like this (along with the GGUF 4- and 5- bit versions).  Note that it seems these new AutoAWQ models dont work with the old awq runtime, and only support the g128 flavor of the AWQ format.  For completeness we also evaluate TheBloke-Phind-CodeLlama-34B-v2-GPTQ but its very, very bad compared to both AWQ and GGUF, it gets stuck repeating tokens and cannot escape.
 
 ## Test Suites
 
@@ -62,13 +58,7 @@ See https://github.com/my-other-github-account/llm-humaneval-benchmarks and http
 
 #### Prompts
 
-(WIP)
-
-`Vicuna-1p1.txt`
-
-`starcoder-fim*.txt`
-
-`Manticore-YearZero.txt` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
+See [prompts/](prompts/) for all prompts references in the leaderboard.
 
 ### Interview
 
@@ -77,11 +67,7 @@ See https://github.com/my-other-github-account/llm-humaneval-benchmarks and http
 
 #### Parameters
 
-(WIP)
-
-`precise.json`
-
-`mirostat.json` (from https://www.reddit.com/r/LocalLLaMA/comments/13yfask/manticore13bchatpygguanacoggmlq4_0_americas_next/)
+See [params/](params/) for all params references in the leaderboard.
 
 ### Evaluate
 
@@ -99,7 +85,7 @@ See https://github.com/my-other-github-account/llm-humaneval-benchmarks and http
 
 |        Script            |     Runtime    | Quants | Local/Remote |
 |--------------------------|----------------|--------|--------------|
-| `interview_cuda.py`      | transformers, autogptq, exllama, vllm, awq, ctranslate2 | all | remote via modal `interview_modal.py` |
+| `interview_cuda.py`      | transformers, autogptq, exllama, exllama2, vllm, awq, ctranslate2 | all | remote via modal `interview_modal.py` |
 | `interview-langchain.py` | langchain      | no    | remote      |
 | `interview-oobabooga.py` | oobabooga, koboldcpp | all | remote      |
 | `interview-llamacpp.py`  | ggml, ggllm, llamacpp | GGML | local + remote via ssh |
