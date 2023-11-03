@@ -56,6 +56,8 @@ SkyWork-SkyCode-fp16: { name: "SkyWork-SkyCode-fp16", size: "2.6B", tags: ["skyw
 
 smallcloudai-Refact-1-6B-fim-fp32: { name: "Refact", size: "1.6B", tags: ["refact"] }
 
+WisdomShell-CodeShell-7B-fp16: { name: "CodeShell", size: "7B", tags: ["wisdomshell"] }
+
 lmsys-vicuna-7b-v1.1: { name: "Vicuna-1.1", size: "7B", tags: ["vicuna"], alias: "lmsys-vicuna-7b-v1.1-fp16" }
 lmsys-vicuna-7b-v1.3: { name: "Vicuna-1.3", size: "7B", tags: ["vicuna"], alias: "lmsys-vicuna-7b-v1.3-fp16" }
 lmsys-vicuna-7b-v1.3-fp4: { name: "Vicuna-1.3", size: "7B", tags: ["vicuna"], quant: "FP4", url: "https://huggingface.co/lmsys/vicuna-7b-v1.3" }
@@ -129,24 +131,23 @@ TheBloke-CodeLlama-13B-Python-fp16-fp16: { name: "CodeLlama-Python", size: "13B"
 
 turboderp-CodeLlama-13B-instruct-exl2-2.7bpw: { name: "CodeLlama-Instruct", size: "13B", quant: "EXL2-2.7", tags: ["llama2","codellama"], url: "https://huggingface.co/turboderp/CodeLlama-13B-instruct-exl2" }
 turboderp-CodeLlama-13B-instruct-exl2-4.65bpw: { name: "CodeLlama-Instruct", size: "13B", quant: "EXL2-4.65", tags: ["llama2","codellama"], url: "https://huggingface.co/turboderp/CodeLlama-13B-instruct-exl2" }
+turboderp-CodeLlama-13B-instruct-exl2-3.5bpw: { name: "CodeLlama-Instruct", size: "13B", quant: "EXL2-3.5", tags: ["llama2","codellama"], url: "https://huggingface.co/turboderp/CodeLlama-13B-instruct-exl2" }
 
 uukuguy-speechless-llama2-hermes-orca-platypus-wizardlm-13b: { name: "speechless-llama2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/uukuguy/speechless-llama2-hermes-orca-platypus-wizardlm-13b" }
 
 codellama-34b.Q4-K-M: { name: "CodeLlama", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-GGUF", quant: "GGUF-Q4KM" }
 codellama-34b-python.Q4-K-M: { name: "CodeLlama-Python", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q4KM" }
 codellama-34b-instruct.Q4-K-M: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF", quant: "GGUF-Q4KM" }
-
 oobabooga-CodeBooga-34B-v0.1-EXL2-4.250b-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/oobabooga/CodeBooga-34B-v0.1-EXL2-4.250b", quant: "EXL2-4.25" }
-
 turboderp-CodeLlama-34B-instruct-exl2-4.0bpw: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/turboderp/CodeLlama-34B-instruct-exl2", quant: "EXL2-4.0" }
 turboderp-CodeLlama-34B-instruct-exl2-3.0bpw: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/turboderp/CodeLlama-34B-instruct-exl2", quant: "EXL2-3.0" }
-
 phind-codellama-34b-v1.Q4-K-M: { name: "Phind-CodeLlama v1", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q4KM" }
 phind-codellama-34b-v1.Q5-K-M: { name: "Phind-CodeLlama v1", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q5KM" }
 TheBloke-Phind-CodeLlama-34B-v2-AWQ: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-AWQ", quant: "AWQ" }
 phind-codellama-34b-v2.Q4-K-M: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GGUF", quant: "GGUF-Q4KM" }
 phind-codellama-34b-v2.Q5-K-M: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GGUF", quant: "GGUF-Q5KM" }
 TheBloke-Phind-CodeLlama-34B-v2-GPTQ: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GPTQ", quant: "GPTQ" }
+TheBloke-speechless-codellama-34b-v2.0-AWQ: { name: "Speechless CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/speechless-codellama-34b-v2.0-AWQ", quant: "AWQ" }
 
 wizardcoder-python-34b-v1.0.Q4-K-M: { name: "WizardCoder-Python", size: "34B", tags: ["codellama","wizard"], url: "https://huggingface.co/TheBloke/WizardCoder-Python-34B-V1.0-GGUF", quant: "GGUF-Q4KM" }
 wizardcoder-python-34b-v1.0.Q6-K: { name: "WizardCoder-Python", size: "34B", tags: ["codellama","wizard"], url: "https://huggingface.co/TheBloke/WizardCoder-Python-34B-V1.0-GGUF", quant: "GGUF-Q6K" }
@@ -216,6 +217,8 @@ mistral-7b-instruct-v0.1.Q8-0: { name: "Mistral-Instruct-0.1", size: "7B", quant
 mistral-7b-instruct-v0.1.Q5-K-M: { name: "Mistral-Instruct-0.1", size: "7B", quant: "GGUF-q5_kM", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
 mistralai-Mistral-7B-Instruct-v0.1: { name: "Mistral-Instruct-0.1", size: "7B", tags: ["mistral"] }
 Open-Orca-Mistral-7B-OpenOrca: { name: "Open-Orca Mistral", size: "7B", tags: ["mistral"], url: "https://huggingface.co/Open-Orca/Mistral-7B-OpenOrca" }
+uukuguy-speechless-code-mistral-7b-v1.0: { name: "Speechless Code Mistral", size: "7B", tags: ["mistral"], url: "https://huggingface.co/uukuguy/speechless-code-mistral-7b-v1.0" }
+teknium-OpenHermes-2.5-Mistral-7B: { name: "OpenHermes 2.5 Mistral", size: "7B", tags: ["mistral"], url: "https://huggingface.co/teknium/OpenHermes-2.5-Mistral-7B" }
 
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
@@ -231,3 +234,9 @@ Neko-Institute-of-Science-LLaMA-65B-4bit-128g: { name: "Llama", size: "65B", qua
 llama-deus-7b-v3.ggmlv3.q5: { name: "Llama Deus", size: "7B", quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/llama-deus-7b-v3-GGML" }
 Wizard-Vicuna-13B-Uncensored.ggmlv3.q5: { name: "WizardVicuna-Uncensored", tags: ["vicuna","wizard"], size: "13B", quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML"}
 open-llama-7b-open-instruct-hf-16bit: { name: "OpenLLaMa Instruct", size: "7B", url: "https://huggingface.co/VMware/open-llama-7b-open-instruct" }
+
+oobabooga-Xwin-LM-70B-V0.1-EXL2-2.500b-main: { name: "Xwin-LM-V0.1", size: "70B", tags: ["xwin"], url: "https://huggingface.co/oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b", quant: "EXL2-2.5" }
+firelzrd-Xwin-LM-70B-V0.1-exl2-4-5-bpw: { name: "Xwin-LM-V0.1", size: "70B", tags: ["xwin"], url: "https://huggingface.co/firelzrd/Xwin-LM-70B-V0.1-exl2", quant: "EXL2-4.5" }
+LoneStriker-Xwin-LM-70B-V0.1-4.65bpw-h6-exl2-main: { name: "Xwin-LM-V0.1", size: "70B", tags: ["xwin"], url: "https://huggingface.co/LoneStriker/Xwin-LM-70B-V0.1-4.65bpw-h6-exl2", quant: "EXL2-4.65" }
+Xwin-LM-Xwin-LM-7B-V0.2: { name: "Xwin-LM-V0.2", size: "7B", tags: ["xwin"], url: "https://huggingface.co/Xwin-LM/Xwin-LM-7B-V0.2" }
+Xwin-LM-Xwin-LM-13B-V0.2: { name: "Xwin-LM-V0.1", size: "13B", tags: ["xwin"], url: "https://huggingface.co/Xwin-LM/Xwin-LM-13B-V0.2" }

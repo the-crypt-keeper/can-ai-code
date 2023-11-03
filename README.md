@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**11/03** Evaluate two new Mistral (speechless-code-mistral-7b, OpenHermes-2.5-Mistral-7B) and a CodeLlama-34B (speechless-codellama-34b-v2.0) finetune.  Evaluate new model and architecture WisdomShell/CodeShell-7B.  Evaluate Xwin-LM/Xwin-LM-70B-V0.1 and some smaller models from the Xwin-LM family.
+
 **10/29** Added support for Exllama2 backend.  Evaluate Llama2-Chat-70B, Codellama-13B, Codellama-34B with EXL2 at different sizes.  Evaluate CodaBooga-34B, fantastic performance.
 
 **10/22** Evaluate Open-Orca/Mistral-7B-OpenOrca which seems to have a fine-tune problem (see [#103](https://github.com/the-crypt-keeper/can-ai-code/issues/103) ) and required a variant of the usual chatml prompt.

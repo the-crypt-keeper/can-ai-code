@@ -570,10 +570,10 @@ class InterviewVLLM:
         dtype = 'float16' if quantization == 'awq' else 'bfloat16'
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            self.llm = LLM(model=self.model_name, quantization=quantization, dtype=dtype, max_model_len=4096, tensor_parallel_size=self.gpu_split)
+            self.llm = LLM(model=self.model_name, quantization=quantization, dtype=dtype, max_model_len=4096, tensor_parallel_size=self.gpu_split, trust_remote_code=True)
         else:
             print('Starting in single GPU mode..')
-            self.llm = LLM(model=self.model_name, quantization=quantization, dtype=dtype, max_model_len=4096)
+            self.llm = LLM(model=self.model_name, quantization=quantization, dtype=dtype, max_model_len=4096, trust_remote_code=True)
 
         eos_token_id = self.info.get('eos_token_id', None)
         if eos_token_id is not None:

@@ -73,6 +73,7 @@ def download_llama2_chat_70b_exl2_4p0_model(): download_model('turboderp/Llama2-
 def download_codellama_instruct_34b_exl2_4p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '4.0bpw')
 def download_codellama_instruct_34b_exl2_3p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '3.0bpw')
 def download_codebooga_34b_exl2_4p25_model(): download_model('oobabooga/CodeBooga-34B-v0.1-EXL2-4.250b')
+def download_speechless_codellama_34b_model(): download_model('TheBloke/speechless-codellama-34b-v2.0-AWQ')
 
 def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
@@ -90,6 +91,16 @@ def download_mistral_base_model(): download_model('mistralai/Mistral-7B-v0.1')
 def download_airoboros_m_7b_312_model(): download_model('jondurbin/airoboros-m-7b-3.1.2')
 def download_airoboros_m_7b_312_awq_model(): download_model('TheBloke/Airoboros-M-7B-3.1.2-AWQ')
 def download_openorca_mistral_7b_model(): download_model('Open-Orca/Mistral-7B-OpenOrca')
+def download_speechless_code_mistral_7b_model(): download_model('uukuguy/speechless-code-mistral-7b-v1.0')
+def download_codeshell_7b_model(): download_model('WisdomShell/CodeShell-7B', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+def download_openhermes_mistral_7b_modal(): download_model('teknium/OpenHermes-2.5-Mistral-7B')
+
+def download_xwin_lm_70b_ooba_exl2_model(): download_model('oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b')
+def download_xwin_lm_70b_firelzrd_exl2_model(): download_model('firelzrd/Xwin-LM-70B-V0.1-exl2', revision='4_5-bpw')
+def download_xwin_lm_70b_matatonic_exl2_model(): download_model('matatonic/Xwin-LM-70B-V0.1-exl2-4.800b')
+def download_xwin_lm_70b_lonestriker_exl2_model(): download_model('LoneStriker/Xwin-LM-70B-V0.1-4.65bpw-h6-exl2')
+def download_xwin_lm_7b_v2_model(): download_model('Xwin-LM/Xwin-LM-7B-V0.2')
+def download_xwin_lm_13b_v2_model(): download_model('Xwin-LM/Xwin-LM-13B-V0.2')
 
 image = (
     Image.from_registry(
@@ -132,7 +143,7 @@ image = (
         "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout d41a0d4fb526b7cf7f29aed98ce29a966fc3af45"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codebooga_34b_exl2_4p25_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_xwin_lm_70b_matatonic_exl2_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -150,8 +161,8 @@ RUNTIME = "exllama2"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A100(count=2)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
@@ -171,6 +182,7 @@ class ModalWrapper:
             gpu_split = '17,24' if gpu_request.count == 2 else None
             self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "exllama2":
+            #
             self.wrapper = InterviewExllama2(self.info['model_name'], self.info)
         elif RUNTIME == "awq":
             if self.info.get('big_model'):
