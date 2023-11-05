@@ -240,3 +240,11 @@ firelzrd-Xwin-LM-70B-V0.1-exl2-4-5-bpw: { name: "Xwin-LM-V0.1", size: "70B", tag
 LoneStriker-Xwin-LM-70B-V0.1-4.65bpw-h6-exl2-main: { name: "Xwin-LM-V0.1", size: "70B", tags: ["xwin"], url: "https://huggingface.co/LoneStriker/Xwin-LM-70B-V0.1-4.65bpw-h6-exl2", quant: "EXL2-4.65" }
 Xwin-LM-Xwin-LM-7B-V0.2: { name: "Xwin-LM-V0.2", size: "7B", tags: ["xwin"], url: "https://huggingface.co/Xwin-LM/Xwin-LM-7B-V0.2" }
 Xwin-LM-Xwin-LM-13B-V0.2: { name: "Xwin-LM-V0.1", size: "13B", tags: ["xwin"], url: "https://huggingface.co/Xwin-LM/Xwin-LM-13B-V0.2" }
+
+deepseek-ai-deepseek-coder-1.3b-instruct-fp16: { name: "DeepSeek Coder Instruct", size: "1.3B", tags: ["deepseek"], url: "https://huggingface.co/deepseek-ai/deepseek-coder-1.3b-instruct" }
+deepseek-ai-deepseek-coder-1.3b-instruct: { name: "DeepSeek Coder Instruct", size: "1.3B", tags: ["deepseek"], url: "https://huggingface.co/deepseek-ai/deepseek-coder-1.3b-instruct" }
+TheBloke-deepseek-coder-1.3b-instruct-AWQ: { name: "DeepSeek Coder Instruct", size: "1.3B", tags: ["deepseek"], quant: "AWQ-4b", url: "https://huggingface.co/TheBloke/deepseek-coder-1.3b-instruct-AWQ" }
+deepseek-ai-deepseek-coder-6.7b-instruct: { name: "DeepSeek Coder Instruct", size: "6.7B", tags: ["deepseek"], url: "https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct" }
+deepseek-ai-deepseek-coder-6.7b-instruct-fp16: { name: "DeepSeek Coder Instruct", size: "6.7B", tags: ["deepseek"], url: "https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct" }
+TheBloke-deepseek-coder-6.7B-instruct-AWQ: { name: "DeepSeek Coder Instruct", size: "6.7B", tags: ["deepseek"], quant: "AWQ-4b", url: "https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ" }
+TheBloke-deepseek-coder-33B-instruct-AWQ: { name: "DeepSeek Coder Instruct", size: "33B", tags: ["deepseek"], quant: "AWQ-4b", url: "https://huggingface.co/TheBloke/deepseek-coder-33B-instruct-AWQ" }

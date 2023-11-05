@@ -102,6 +102,12 @@ def download_xwin_lm_70b_lonestriker_exl2_model(): download_model('LoneStriker/X
 def download_xwin_lm_7b_v2_model(): download_model('Xwin-LM/Xwin-LM-7B-V0.2')
 def download_xwin_lm_13b_v2_model(): download_model('Xwin-LM/Xwin-LM-13B-V0.2')
 
+def download_deepseek_6p7_instruct_model(): download_model('deepseek-ai/deepseek-coder-6.7b-instruct', info={'eos_token_id':32021})
+def download_deepseek_6p7_awq_instruct_model(): download_model('TheBloke/deepseek-coder-6.7B-instruct-AWQ', info={'eos_token_id':32021})
+def download_deepseek_1p3_instruct_model(): download_model('deepseek-ai/deepseek-coder-1.3b-instruct', info={'eos_token_id':32021})
+def download_deepseek_1p3_awq_instruct_model(): download_model('TheBloke/deepseek-coder-1.3b-instruct-AWQ', info={'eos_token_id':32021})
+def download_deepseek_33_awq_instruct_model(): download_model('TheBloke/deepseek-coder-33B-instruct-AWQ', info={'eos_token_id':32021})
+
 image = (
     Image.from_registry(
         "nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -143,26 +149,26 @@ image = (
         "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout d41a0d4fb526b7cf7f29aed98ce29a966fc3af45"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_xwin_lm_70b_matatonic_exl2_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_deepseek_6p7_instruct_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2"
+#RUNTIME = "exllama2"
 #RUNTIME = "awq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=2)
-gpu_request = gpu.A100(count=2)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
