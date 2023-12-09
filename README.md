@@ -83,24 +83,39 @@ See [params/](params/) for all params references in the leaderboard.
 * `compare/*.yaml` - Compare configurations
 * `compare/*.json` - Compare results
 
-## Interviewers
+## Interviewers: API
 
-|        Script            |     Runtime    | Quants | Local/Remote |
-|--------------------------|----------------|--------|--------------|
-| `interview_cuda.py`      | transformers, autogptq, exllama, exllama2, vllm, awq, ctranslate2 | all | remote via modal `interview_modal.py` |
-| `interview-langchain.py` | langchain      | no    | remote      |
-| `interview-oobabooga.py` | oobabooga, koboldcpp | all | remote      |
-| `interview-llamacpp.py`  | ggml, ggllm, llamacpp | GGML | local + remote via ssh |
-| `interview-hfinference.py` | hf-inference-api | no | n/a | remote |
-| `interview-gradio.py`    | gradio | no | remote |
+| API Runtime              | Script         |
+|--------------------------|----------------|
+| LangChain/LiteLLM        | `interview-langchain.py` |
+| OobaBooga                | `interview-oobabooga.py` |
+| Huggingface Inference    | `interview-hfinference.py` |
+| Gradio (HF Spaces)       | `interview-gradio.py` |
 
-### Notes on adding new models
+## Interviewers: CUDA (Local)
 
-* LangChain: To add a new model, update `init_model` to add parameter mappings and adapter instance.
+| Quantization Type        | Script                  | Dependency              |
+|--------------------------|-------------------------|-------------------------|
+| GGUF                     | `interview-llamacpp.py` | llamacpp or ggml binary |
+| GPTQ (AutoGptQ)          | `interview-cuda.py`     | auto-gptq==0.5.1        |
+| GPTQ (ExLlama)           | `interview-cuda.py`     | exllama @ 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d |
+| EXL2, GPTQ (ExLlama2)    | `interview-cuda.py`     | exllamav2 @ 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7 |
+| AWQ, FP16 (vLLM)         | `interview-cuda.py`     | vllm==0.2.3             |
+| CTranslate2              | `interview-cuda.py`     | ctranslate2>=3.16.0     |
+| bitsandbytes             | `interview-cuda.py`     | bitsandbytes==0.41.3    |
+| FP16 (Transformers)      | `interview-cuda.py`     | transformers==4.35.2    |
 
-* `interview_modal`:   The nature of Modal does not allow command-line selection of LLM model.  In order to select models, you'll have to open the script and uncomment the `.run_function(download...)` line of choice.  Note that only one model can be selected at a time.   To add a new model, implement a new `download...` function.
+### Running on Modal
 
-### Notes on llamacpp
+The recommended modal wrapper is `interview_modal_cuda11.py` which builds a CUDA11.8 based container with all the above dependencies working. An `interview_modal_cuda12.py` is also provided, but AutoGPTQ and CTranslate2 are not compatible.
+
+Unfortunately the nature of Modal does not allow command-line selection of eitehr LLM model or runtime engine.
+
+To select models, open the script and uncomment the `.run_function(download...)` line of choice.  Note that only one model can be selected at a time.   To add a new model, implement a new `download...` function.
+
+To select runtime, open the script and uncomment one of the `RUNTIME` options. Note that for `transformers` you must also specify `QUANT`.
+
+### Notes on GGUF/llamacpp
 
 For llama (https://github.com/ggerganov/llama.cpp): --main main --args=""
 
