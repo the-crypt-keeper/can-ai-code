@@ -20,7 +20,7 @@ A self-evaluating interview for AI coding models.
 
 **12/10** Evaluated all 3 available versions of gpt-3.5-turbo with `gpt-3.5-turbo-1106` the new king achieving a perfect 100% on both tests :trophy: gpt-4 also evaluated but it actually does less well (has trouble following variable naming instrutions).
 
-**12/10** Evaluated microsoft/Orvs-2-13B, it's awful.
+**12/10** Evaluated microsoft/Orca-2-13B, it's awful.
 
 **12/09** Pull up to CUDA 12.1 and vllm 0.2.3, this seems to break auto-gptq but exllama/exllama2 both work fine.  Evaluate Nondzu/Mistral-7B-code-16k-qlora at FP16, AWQ and GPTQ and it does very well across the board.
 
