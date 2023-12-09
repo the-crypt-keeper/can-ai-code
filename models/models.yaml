@@ -219,6 +219,10 @@ mistralai-Mistral-7B-Instruct-v0.1: { name: "Mistral-Instruct-0.1", size: "7B", 
 Open-Orca-Mistral-7B-OpenOrca: { name: "Open-Orca Mistral", size: "7B", tags: ["mistral"], url: "https://huggingface.co/Open-Orca/Mistral-7B-OpenOrca" }
 uukuguy-speechless-code-mistral-7b-v1.0: { name: "Speechless Code Mistral", size: "7B", tags: ["mistral"], url: "https://huggingface.co/uukuguy/speechless-code-mistral-7b-v1.0" }
 teknium-OpenHermes-2.5-Mistral-7B: { name: "OpenHermes 2.5 Mistral", size: "7B", tags: ["mistral"], url: "https://huggingface.co/teknium/OpenHermes-2.5-Mistral-7B" }
+Nondzu-Mistral-7B-code-16k-qlora: { name: "Mistral-7B-code-16k-qlora", size: "7B", tags: ["mistral"], url: "https://huggingface.co/Nondzu/Mistral-7B-code-16k-qlora" }
+TheBloke-Mistral-7B-Code-16K-qlora-GPTQ: { name: "Mistral-7B-code-16k-qlora", size: "7B", quant: "GPTQ-4b32g", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Code-16K-qlora-GPTQ" }
+TheBloke-Mistral-7B-Code-16K-qlora-GPTQ-gptq-4bit-32g-actorder-True: { name: "Mistral-7B-code-16k-qlora", size: "7B", quant: "GPTQ-4b32g", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Code-16K-qlora-GPTQ" }
+TheBloke-Mistral-7B-Code-16K-qlora-AWQ: { name: "Mistral-7B-code-16k-qlora", size: "7B", quant: "AWQ-4b", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Code-16K-qlora-AWQ" }
 
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
