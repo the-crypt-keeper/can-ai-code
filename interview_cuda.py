@@ -573,6 +573,9 @@ class InterviewVLLM:
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
+            import ray, torch
+            ray.shutdown()
+            ray.init(num_gpus=torch.cuda.device_count())
             self.llm = LLM(model=self.model_name, quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=4096, tensor_parallel_size=self.gpu_split, trust_remote_code=True)
         else:
             print('Starting in single GPU mode..')
