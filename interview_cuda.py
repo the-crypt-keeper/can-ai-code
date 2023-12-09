@@ -231,7 +231,7 @@ class InterviewAutoGPTQ:
         #quantize_config.group = self.info['model_group']
 
         print('Loading model with autogptq...')        
-        self.model = AutoGPTQForCausalLM.from_quantized(self.model_name, device_map="auto", use_triton=False, use_safetensors=self.info.get('model_safetensors', True), torch_dtype=torch.float32, trust_remote_code=True)
+        self.model = AutoGPTQForCausalLM.from_quantized(self.model_name, device_map="auto", use_triton=False, revision=self.info.get('revision',None), use_safetensors=self.info.get('model_safetensors', True), trust_remote_code=True)
     
         # if passed a path, take the last dir name otherwise replace / with -
         if self.model_name[0] == '/':
