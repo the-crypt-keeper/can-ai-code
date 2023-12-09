@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/10** Bring back a CUDA 11.8 based enviroment since autogptq and ctranslate2 both struggle with CUDA 12.1.  Evaluated the 4 models in the MagiCoder family, the S variants in particular are very good.
+
 **12/10** Evaluated all 3 available versions of gpt-3.5-turbo with `gpt-3.5-turbo-1106` the new king achieving a perfect 100% on both tests :trophy: gpt-4 also evaluated but it actually does less well (has trouble following variable naming instrutions).
 
 **12/10** Evaluated microsoft/Orca-2-13B, it's awful.
