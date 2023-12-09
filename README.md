@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**12/10** Evaluated all 3 available versions of gpt-3.5-turbo with `gpt-3.5-turbo-1106`` achieving a full 100% on both tests :trophy: gpt-4 also evaluated but it actually does less well (has trouble following variable naming instrutions).
+**12/10** Evaluated all 3 available versions of gpt-3.5-turbo with `gpt-3.5-turbo-1106` the new king achieving a perfect 100% on both tests :trophy: gpt-4 also evaluated but it actually does less well (has trouble following variable naming instrutions).
 
 **12/10** Evaluated microsoft/Orvs-2-13B, it's awful.
 
