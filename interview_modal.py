@@ -96,7 +96,7 @@ def download_speechless_code_mistral_7b_model(): download_model('uukuguy/speechl
 def download_codeshell_7b_model(): download_model('WisdomShell/CodeShell-7B', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_openhermes_mistral_7b_modal(): download_model('teknium/OpenHermes-2.5-Mistral-7B')
 def download_mistral_7b_code_16k_model(): download_model('Nondzu/Mistral-7B-code-16k-qlora', ignore_patterns=["*.bin"])
-def download_mistral_7b_code_16k_awq_model(): download_model('TheBloke/Mistral-7B-Code-16K-qlora-AWQ')
+def download_mistral_7b_code_16k_awq_model(): download_model('TheBloke/Mistral-7B-Code-16K-qlora-AWQ', info = { 'tokenizer_mode': 'slow' })
 def download_mistral_7b_code_16k_gptq_model(): download_model('TheBloke/Mistral-7B-Code-16K-qlora-GPTQ', revision='gptq-4bit-32g-actorder_True')
 
 def download_xwin_lm_70b_ooba_exl2_model(): download_model('oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b')
@@ -158,7 +158,7 @@ image = (
         "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout d41a0d4fb526b7cf7f29aed98ce29a966fc3af45"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_orca2_13b_awq_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_mistral_7b_code_16k_awq_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
