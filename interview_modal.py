@@ -33,6 +33,7 @@ def download_llama2_chat_7b_model(): download_model("meta-llama/Llama-2-7b-chat-
 def download_llama2_chat_13b_model(): download_model("meta-llama/Llama-2-13b-chat-hf", ignore_patterns=["*.bin"])
 def download_llama2_chat_7b_awq_model(): download_model("abhinavkulkarni/meta-llama-Llama-2-7b-chat-hf-w4-g128-awq")
 def download_orca2_13b_awq_model(): download_model('TheBloke/Orca-2-13B-AWQ')
+def download_orca2_13b_model(): download_model('microsoft/Orca-2-13b', ignore_patterns=["*.safetensors"])
 
 def download_dolphin_llama2_7b_model(): download_model('ehartford/dolphin-llama2-7b')
 def download_wizardlm_uncencored_llama2_13b_model(): download_model('ehartford/WizardLM-1.0-Uncensored-Llama2-13b')
@@ -113,11 +114,7 @@ def download_deepseek_1p3_awq_instruct_model(): download_model('TheBloke/deepsee
 def download_deepseek_33_awq_instruct_model(): download_model('TheBloke/deepseek-coder-33B-instruct-AWQ', info={'eos_token_id':32021})
 
 image = (
-    Image.from_registry(
-        "nvcr.io/nvidia/pytorch:23.06-py3"
-        #"nvidia/cuda:11.8.0-devel-ubuntu22.04",
-        #setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"]
-    )
+    Image.from_registry("nvcr.io/nvidia/pytorch:23.06-py3")
     .pip_install(
         "transformers==4.35.2",
         "optimum==1.15.0",
@@ -131,34 +128,20 @@ image = (
         "pyarrow==11.0.0",
         "hf-hub-ctranslate2>=2.0.8",
         "ctranslate2>=3.16.0",
-        #index_url="https://download.pytorch.org/whl/cu118",
-        #extra_index_url="https://pypi.org/simple"
     )  
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "GITHUB_ACTIONS": "true", "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
-    # .pip_install(
-    #     "vllm @ git+https://github.com/vllm-project/vllm.git@v0.2.1.post1",
-    #     index_url="https://download.pytorch.org/whl/cu118",
-    #     extra_index_url="https://pypi.org/simple"
-    # )
     .pip_install(
-        "vllm==0.2.3"
-    )
-    .pip_install(
+        "vllm==0.2.3",
         "auto-gptq==0.5.1",
-    #    extra_index_url="https://huggingface.github.io/autogptq-index/whl/cu118"
     )
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
-    #.run_commands("git clone https://github.com/mit-han-lab/llm-awq",
-    #              "cd llm-awq && git checkout a095b3e041762e6dc05e119634106928055c6764 && pip install -e .",
-    #              "cd llm-awq/awq/kernels && python setup.py install"
-    #)
     .run_commands(
-        "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout d41a0d4fb526b7cf7f29aed98ce29a966fc3af45"
+        "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7"
     )    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_mistral_7b_code_16k_awq_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_orca2_13b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -176,7 +159,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
