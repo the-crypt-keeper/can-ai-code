@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/15** Evaluate togethercomputer/StripedHyena-Nous-7B - very promising results for a new architecture!
+
 **12/15** Evaluate LLM360/CrystalCoder and Mistral-Tiny/Small/Medium via API.
 
 **12/10** Bring back a CUDA 11.8 based enviroment since autogptq and ctranslate2 both struggle with CUDA 12.1.  Evaluated the 4 models in the MagiCoder family, the S variants in particular are very good.

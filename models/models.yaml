@@ -269,3 +269,5 @@ ise-uiuc-Magicoder-S-DS-6.7B: { name: "Magicoder-S-DS", size: "6.7B", tags: ["ma
 ise-uiuc-Magicoder-DS-6.7B: { name: "Magicoder-DS", size: "6.7B", tags: ["magicoder","deepseek"], url: "https://huggingface.co/ise-uiuc/Magicoder-DS-6.7B" }
 ise-uiuc-Magicoder-CL-7B: { name: "Magicoder-CL", size: "7B", tags: ["magicoder","llama2"], url: "https://huggingface.co/ise-uiuc/Magicoder-CL-7B" }
 ise-uiuc-Magicoder-S-CL-7B: { name: "Magicoder-S-CL", size: "7B", tags: ["magicoder","llama2"], url: "https://huggingface.co/ise-uiuc/Magicoder-S-CL-7B" }
+
+togethercomputer-StripedHyena-Nous-7B-fp16: { name: "StripedHyena-Nous", size: "7B", tags: ["together"], url: "https://huggingface.co/togethercomputer/StripedHyena-Nous-7B" }

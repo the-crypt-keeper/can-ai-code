@@ -120,6 +120,11 @@ def download_magicoder_cl_7b_model(): download_model('ise-uiuc/Magicoder-CL-7B')
 
 def download_llm360_crystalcoder_7b_model(): download_model('LLM360/CrystalCoder', info={'max_model_len': 2048, 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 
+# NOTE: the stripedhyna arhitecture has two additional dependnencies
+#    .pip_install("git+https://github.com/HazyResearch/flash-attention.git#subdirectory=csrc/layer_norm")
+#    .pip_install("flash-attn >= 2.0.0")
+def download_togethercomputer_stripedhyena_nous_7b_model(): download_model('togethercomputer/StripedHyena-Nous-7B', ignore_patterns=["*.bin"])
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -157,9 +162,11 @@ image = (
     .run_commands(
         "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7"
     )    
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_llm360_crystalcoder_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_togethercomputer_stripedhyena_nous_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .pip_install("git+https://github.com/HazyResearch/flash-attention.git#subdirectory=csrc/layer_norm")
+    .pip_install("flash-attn >= 2.0.0")
     ######################################
 )
 stub = Stub(image=image)
