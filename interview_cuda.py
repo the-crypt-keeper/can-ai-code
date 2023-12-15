@@ -571,15 +571,16 @@ class InterviewVLLM:
         quantization = 'awq' if 'awq' in self.model_name.lower() else None
         dtype = 'float16' if quantization == 'awq' else 'bfloat16'
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
+        max_model_len = self.info.get('max_model_len', 4096)
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
             import ray, torch
             ray.shutdown()
             ray.init(num_gpus=torch.cuda.device_count())
-            self.llm = LLM(model=self.model_name, quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=4096, tensor_parallel_size=self.gpu_split, trust_remote_code=True)
+            self.llm = LLM(model=self.model_name, quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, tensor_parallel_size=self.gpu_split, trust_remote_code=True)
         else:
             print('Starting in single GPU mode..')
-            self.llm = LLM(model=self.model_name, quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=4096, trust_remote_code=True)
+            self.llm = LLM(model=self.model_name, quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, trust_remote_code=True)
 
         eos_token_id = self.info.get('eos_token_id', None)
         if eos_token_id is not None:

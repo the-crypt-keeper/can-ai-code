@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/15** Evaluate LLM360/CrystalCoder and Mistral-Tiny/Small/Medium via API.
+
 **12/10** Bring back a CUDA 11.8 based enviroment since autogptq and ctranslate2 both struggle with CUDA 12.1.  Evaluated the 4 models in the MagiCoder family, the S variants in particular are very good.
 
 **12/10** Evaluated all 3 available versions of gpt-3.5-turbo with `gpt-3.5-turbo-1106` the new king achieving a perfect 100% on both tests :trophy: gpt-4 also evaluated but it actually does less well (has trouble following variable naming instrutions).
@@ -27,10 +29,6 @@ A self-evaluating interview for AI coding models.
 **12/09** Pull up to CUDA 12.1 and vllm 0.2.3, this seems to break auto-gptq but exllama/exllama2 both work fine.  Evaluate Nondzu/Mistral-7B-code-16k-qlora at FP16, AWQ and GPTQ and it does very well across the board.
 
 **11/05** Evaluate DeepSeek Coder Instruct family 1.3B, 6.7B and 33B at fp16 (via transformers, vllm) and AWQ (via vllm).
-
-**11/03** Evaluate two new Mistral (speechless-code-mistral-7b, OpenHermes-2.5-Mistral-7B) and a CodeLlama-34B (speechless-codellama-34b-v2.0) finetune.  Evaluate new model and architecture WisdomShell/CodeShell-7B.  Evaluate Xwin-LM/Xwin-LM-70B-V0.1 and some smaller models from the Xwin-LM family.
-
-**10/29** Added support for Exllama2 backend.  Evaluate Llama2-Chat-70B, Codellama-13B, Codellama-34B with EXL2 at different sizes.  Evaluate CodaBooga-34B, fantastic performance.
 
 ## Test Suites
 

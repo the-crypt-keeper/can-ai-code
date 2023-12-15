@@ -50,8 +50,9 @@ def load_models():
 
     model_list = []
     for id, model in models.items():
-
-        if model['size'][-1] == 'M':
+        if not 'size'in model:
+            model['size'] = None
+        elif model['size'][-1] == 'M':
             model['size'] = str(int(model['size'][:-1])/1000)
         elif model['size'][-1] == 'B':
             model['size'] = model['size'][:-1]

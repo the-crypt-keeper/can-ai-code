@@ -118,6 +118,8 @@ def download_magicoder_ds_6p7b_model(): download_model('ise-uiuc/Magicoder-DS-6.
 def download_magicoder_s_cl_7b_model(): download_model('ise-uiuc/Magicoder-S-CL-7B')
 def download_magicoder_cl_7b_model(): download_model('ise-uiuc/Magicoder-CL-7B')
 
+def download_llm360_crystalcoder_7b_model(): download_model('LLM360/CrystalCoder', info={'max_model_len': 2048, 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -157,16 +159,16 @@ image = (
     )    
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############
-    .run_function(download_magicoder_cl_7b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_llm360_crystalcoder_7b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
@@ -174,8 +176,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])

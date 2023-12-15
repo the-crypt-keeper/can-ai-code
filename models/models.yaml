@@ -1,10 +1,14 @@
 openai-gpt-3.5-turbo-0301: { name: "OpenAI gpt-3.5-turbo-0301", size: "170B", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-3.5-turbo-0613: { name: "OpenAI gpt-3.5-turbo-0613", size: "170B", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-3.5-turbo-1106: { name: "OpenAI gpt-3.5-turbo-1106", size: "170B", url: "https://openai.com/", tags: ["commercial"] }
-openai-gpt-4-0613: { name: "OpenAI gpt-4-0613", size: "1000B", url: "https://openai.com/", tags: ["commercial"] }
-openai-gpt-4-1106-preview: { name: "OpenAI gpt-4-1106-preview", size: "1000B", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4-0613: { name: "OpenAI gpt-4-0613", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4-1106-preview: { name: "OpenAI gpt-4-1106-preview", url: "https://openai.com/", tags: ["commercial"] }
 ai21-j2-jumbo-instruct: { name: "AI21 J2", size: "178B", url: "https://www.ai21.com/", tags: ["commercial"] }
 cohere-command-nightly: { name: "Cohere Command", size: "52B", url: "https://cohere.ai/", tags: ["commercial"] }
+
+mistral-mistral-tiny: { name: "Mistral-Tiny", size: "7B", url: "https://mistral.ai/", tags: ["commercial"] }
+mistral-mistral-small: { name: "Mistral-Small", size: "56B", url: "https://mistral.ai/", tags: ["commercial"] }
+mistral-mistral-medium: { name: "Mistral-Medium", url: "https://mistral.ai/", tags: ["commercial"] }
 
 bigcode-starcoderbase-1b-fp16: { name: 'StarCoderBase', size: '1B', tags: ["bigcode"] }
 bigcode-starcoderbase-3b-fp16: { name: 'StarCoderBase', size: '3B', tags: ["bigcode"] }
@@ -117,6 +121,8 @@ rombodawg-LosslessMegaCoder-llama2-13b-mini: { name: "LosslessMegaCoder", "size"
 Undi95-Nous-Hermes-13B-Code-fp16: { name: "NH Llama2 x Airoboros 2.1 Coder", size: "13B", tags: ["llama2","airoboros"] }
 microsoft-Orca-2-13b: { name: "Orca 2", size: "13B", tags: ["llama2"] }
 TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: ["llama2"] }
+
+LLM360-CrystalCoder-fp16: { name: "LLM360 CrystalCoder", size: "7B", tags: ["llm360"] }
 
 TheBloke-CodeLlama-7B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-fp16" }
 TheBloke-CodeLlama-7B-fp16-fp16: { name: "CodeLlama", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-fp16" }
