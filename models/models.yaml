@@ -6,9 +6,9 @@ openai-gpt-4-1106-preview: { name: "OpenAI gpt-4-1106-preview", url: "https://op
 ai21-j2-jumbo-instruct: { name: "AI21 J2", size: "178B", url: "https://www.ai21.com/", tags: ["commercial"] }
 cohere-command-nightly: { name: "Cohere Command", size: "52B", url: "https://cohere.ai/", tags: ["commercial"] }
 
-mistral-mistral-tiny: { name: "Mistral-Tiny", size: "7B", url: "https://mistral.ai/", tags: ["commercial"] }
-mistral-mistral-small: { name: "Mistral-Small", size: "56B", url: "https://mistral.ai/", tags: ["commercial"] }
-mistral-mistral-medium: { name: "Mistral-Medium", url: "https://mistral.ai/", tags: ["commercial"] }
+mistral-mistral-tiny: { name: "Mistral-Tiny", size: "7B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-small: { name: "Mistral-Small", size: "56B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-medium: { name: "Mistral-Medium", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 
 bigcode-starcoderbase-1b-fp16: { name: 'StarCoderBase', size: '1B', tags: ["bigcode"] }
 bigcode-starcoderbase-3b-fp16: { name: 'StarCoderBase', size: '3B', tags: ["bigcode"] }
@@ -119,8 +119,6 @@ NousResearch-Nous-Hermes-Llama2-13b: { name: "Nous-Hermes Llama2", "size": "13B"
 rombodawg-LosslessMegaCoder-llama2-7b-mini: { name: "LosslessMegaCoder", "size": "7B", tags: ["llama2"] }
 rombodawg-LosslessMegaCoder-llama2-13b-mini: { name: "LosslessMegaCoder", "size": "13B", tags: ["llama2"] }
 Undi95-Nous-Hermes-13B-Code-fp16: { name: "NH Llama2 x Airoboros 2.1 Coder", size: "13B", tags: ["llama2","airoboros"] }
-microsoft-Orca-2-13b: { name: "Orca 2", size: "13B", tags: ["llama2"] }
-TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: ["llama2"] }
 
 LLM360-CrystalCoder-fp16: { name: "LLM360 CrystalCoder", size: "7B", tags: ["llm360"] }
 
@@ -225,6 +223,7 @@ guanaco-13B.ggmlv3.q5: { name: "Guanaco", size: "13B", quant: "GGML-q5_0", tags:
 
 mistral-7b-v0.1.Q8-0: { name: "Mistral-0.1", size: "7B", quant: "GGUF-q8_0", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF" }
 mistralai-Mistral-7B-v0.1: { name: "Mistral-0.1", size: "7B", tags: ["mistral"] }
+mistralai-Mistral-7B-Instruct-v0.2: { name: "Mistral-Instruct-0.2", size: "7B", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
 mistral-7b-instruct-v0.1.Q8-0: { name: "Mistral-Instruct-0.1", size: "7B", quant: "GGUF-q8_0", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
 mistral-7b-instruct-v0.1.Q5-K-M: { name: "Mistral-Instruct-0.1", size: "7B", quant: "GGUF-q5_kM", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
 mistralai-Mistral-7B-Instruct-v0.1: { name: "Mistral-Instruct-0.1", size: "7B", tags: ["mistral"] }
@@ -235,6 +234,9 @@ Nondzu-Mistral-7B-code-16k-qlora: { name: "Mistral-7B-code-16k-qlora", size: "7B
 TheBloke-Mistral-7B-Code-16K-qlora-GPTQ: { name: "Mistral-7B-code-16k-qlora", size: "7B", quant: "GPTQ-4b32g", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Code-16K-qlora-GPTQ" }
 TheBloke-Mistral-7B-Code-16K-qlora-GPTQ-gptq-4bit-32g-actorder-True: { name: "Mistral-7B-code-16k-qlora", size: "7B", quant: "GPTQ-4b32g", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Code-16K-qlora-GPTQ" }
 TheBloke-Mistral-7B-Code-16K-qlora-AWQ: { name: "Mistral-7B-code-16k-qlora", size: "7B", quant: "AWQ-4b", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Code-16K-qlora-AWQ" }
+turboderp-Mixtral-8x7B-instruct-exl2-3.5bpw: { name: "Mixtral-8x7B", size: "56B", tags: ["mistral"], quant: "EXL2-3.5", url: "https://huggingface.co/turboderp/Mixtral-8x7B-instruct-exl2" }
+intervitens-Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-main: { name: "Mixtral-8x7B", size: "56B", tags: ["mistral"], quant: "EXL2-3.5", url: "https://huggingface.co/intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2" }
+intervitens-Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-rpcal-main: { name: "Mixtral-8x7B", size: "56B", tags: ["mistral"], quant: "EXL2-3.5", url: "https://huggingface.co/intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-rpcal" }
 
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
@@ -271,3 +273,7 @@ ise-uiuc-Magicoder-CL-7B: { name: "Magicoder-CL", size: "7B", tags: ["magicoder"
 ise-uiuc-Magicoder-S-CL-7B: { name: "Magicoder-S-CL", size: "7B", tags: ["magicoder","llama2"], url: "https://huggingface.co/ise-uiuc/Magicoder-S-CL-7B" }
 
 togethercomputer-StripedHyena-Nous-7B-fp16: { name: "StripedHyena-Nous", size: "7B", tags: ["together"], url: "https://huggingface.co/togethercomputer/StripedHyena-Nous-7B" }
+
+microsoft-phi-2-fp16: { name: "Phi-2", size: "2.7B", tags: ["microsoft"] }
+microsoft-Orca-2-13b: { name: "Orca 2", size: "13B", tags: ["llama2","microsoft"] }
+TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: ["llama2","microsoft"] }

@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/17** Pull up vllm to 0.2.5 and exllama2 to 0.11. Evaluate microsoft/phi-2, mistral-instruct-0.2 and a whole bunch of Mixtral-8x7B EXL2 quants.  No luck yet with Mixtral via GPTQ, the model loading is timing out for me.
+
 **12/15** Evaluate togethercomputer/StripedHyena-Nous-7B - very promising results for a new architecture!
 
 **12/15** Evaluate LLM360/CrystalCoder and Mistral-Tiny/Small/Medium via API.

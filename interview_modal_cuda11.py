@@ -89,6 +89,7 @@ def download_codellama_phind_v2_gptq_model(): download_model('TheBloke/Phind-Cod
 def download_speechless_llama2_model(): download_model('uukuguy/speechless-llama2-hermes-orca-platypus-wizardlm-13b')
 
 def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Instruct-v0.1')
+def download_mistral_instruct_0p2_model(): download_model('mistralai/Mistral-7B-Instruct-v0.2')
 def download_mistral_base_model(): download_model('mistralai/Mistral-7B-v0.1')
 def download_airoboros_m_7b_312_model(): download_model('jondurbin/airoboros-m-7b-3.1.2')
 def download_airoboros_m_7b_312_awq_model(): download_model('TheBloke/Airoboros-M-7B-3.1.2-AWQ')
@@ -99,6 +100,12 @@ def download_openhermes_mistral_7b_modal(): download_model('teknium/OpenHermes-2
 def download_mistral_7b_code_16k_model(): download_model('Nondzu/Mistral-7B-code-16k-qlora', ignore_patterns=["*.bin"])
 def download_mistral_7b_code_16k_awq_model(): download_model('TheBloke/Mistral-7B-Code-16K-qlora-AWQ', info = { 'tokenizer_mode': 'slow' })
 def download_mistral_7b_code_16k_gptq_model(): download_model('TheBloke/Mistral-7B-Code-16K-qlora-GPTQ', revision='gptq-4bit-32g-actorder_True')
+def download_mixtral_intervitens_exl2_35bpw_model(): download_model('intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-rpcal')
+def download_mixtral_turboderp_exl2_35bpw_model(): download_model('turboderp/Mixtral-8x7B-instruct-exl2', revision='3.5bpw')
+def download_mixtral_intervitens_exl2_35bpw_norpcal_model(): download_model('intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2')
+def download_mixtral_gptq_model(): download_model('TheBloke/Mixtral-8x7B-v0.1-GPTQ', revision='gptq-4bit-32g-actorder_True')
+def download_mixtral_instruct_gptq_model(): download_model('TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ', revision='gptq-4bit-32g-actorder_True')
+def download_dolphin_mixtral_exl2_4bpw_model(): download_model('LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2')
 
 def download_xwin_lm_70b_ooba_exl2_model(): download_model('oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b')
 def download_xwin_lm_70b_firelzrd_exl2_model(): download_model('firelzrd/Xwin-LM-70B-V0.1-exl2', revision='4_5-bpw')
@@ -125,6 +132,8 @@ def download_llm360_crystalcoder_7b_model(): download_model('LLM360/CrystalCoder
 #    .pip_install("flash-attn >= 2.0.0")
 def download_togethercomputer_stripedhyena_nous_7b_model(): download_model('togethercomputer/StripedHyena-Nous-7B', ignore_patterns=["*.bin"])
 
+def download_microsoft_phi2_model(): download_model('microsoft/phi-2')
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -142,49 +151,50 @@ image = (
         "pyarrow==11.0.0",
         "hf-hub-ctranslate2>=2.0.8",
         "ctranslate2>=3.16.0",
+        "xformers==0.0.23+cu118",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )  
     .pip_install(
-        "https://github.com/vllm-project/vllm/releases/download/v0.2.3/vllm-0.2.3+cu118-cp310-cp310-manylinux1_x86_64.whl"
+        "https://github.com/vllm-project/vllm/releases/download/v0.2.5/vllm-0.2.5+cu118-cp310-cp310-manylinux1_x86_64.whl"
     )
     .pip_install(
         "auto-gptq",
         extra_index_url="https://huggingface.github.io/autogptq-index/whl/cu118/"
     )
-    .pip_install(
-        "xformers==0.0.23+cu118",
-        index_url="https://download.pytorch.org/whl/cu118"
-    )
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
-    .run_commands(
-        "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7"
-    )    
+    #.run_commands(
+    #    "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7"
+    #)    
+    .pip_install(
+        "https://github.com/turboderp/exllamav2/releases/download/v0.0.11/exllamav2-0.0.11+cu118-cp310-cp310-linux_x86_64.whl"
+    )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})    
     ##### SELECT MODEL HERE ##############
-    .run_function(download_togethercomputer_stripedhyena_nous_7b_model, secret=Secret.from_name("my-huggingface-secret"))
-    .pip_install("git+https://github.com/HazyResearch/flash-attention.git#subdirectory=csrc/layer_norm")
-    .pip_install("flash-attn >= 2.0.0")
+    .run_function(download_mixtral_gptq_model, secret=Secret.from_name("my-huggingface-secret"))
+    .pip_install(
+        "git+https://github.com/huggingface/transformers.git"
+    )
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
-#RUNTIME = "autogptq"
+RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
