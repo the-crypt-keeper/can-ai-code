@@ -106,6 +106,7 @@ def download_mixtral_intervitens_exl2_35bpw_norpcal_model(): download_model('int
 def download_mixtral_gptq_model(): download_model('TheBloke/Mixtral-8x7B-v0.1-GPTQ', revision='gptq-4bit-32g-actorder_True')
 def download_mixtral_instruct_gptq_model(): download_model('TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ', revision='gptq-4bit-32g-actorder_True')
 def download_dolphin_mixtral_exl2_4bpw_model(): download_model('LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2')
+def download_dolphin_mistral_gptq_model(): download_model('TheBloke/dolphin-2.5-mixtral-8x7b-GPTQ')
 
 def download_xwin_lm_70b_ooba_exl2_model(): download_model('oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b')
 def download_xwin_lm_70b_firelzrd_exl2_model(): download_model('firelzrd/Xwin-LM-70B-V0.1-exl2', revision='4_5-bpw')
@@ -138,8 +139,8 @@ image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "torch==2.1.1",
-        "transformers==4.35.2",
+        "torch==2.1.2",
+        "transformers==4.36.1",
         "optimum==1.15.0",
         "tiktoken==0.5.2",
         "bitsandbytes==0.41.3",
@@ -151,32 +152,25 @@ image = (
         "pyarrow==11.0.0",
         "hf-hub-ctranslate2>=2.0.8",
         "ctranslate2>=3.16.0",
-        "xformers==0.0.23+cu118",
+        "xformers==0.0.23.post1+cu118",
+        "https://github.com/vllm-project/vllm/releases/download/v0.2.6/vllm-0.2.6+cu118-cp310-cp310-manylinux1_x86_64.whl",
+        "https://github.com/turboderp/exllamav2/releases/download/v0.0.11/exllamav2-0.0.11+cu118-cp310-cp310-linux_x86_64.whl",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )  
     .pip_install(
-        "https://github.com/vllm-project/vllm/releases/download/v0.2.5/vllm-0.2.5+cu118-cp310-cp310-manylinux1_x86_64.whl"
-    )
-    .pip_install(
-        "auto-gptq",
+        "auto-gptq==0.6.0",
         extra_index_url="https://huggingface.github.io/autogptq-index/whl/cu118/"
     )
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
-    #.run_commands(
-    #    "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7"
-    #)    
-    .pip_install(
-        "https://github.com/turboderp/exllamav2/releases/download/v0.0.11/exllamav2-0.0.11+cu118-cp310-cp310-linux_x86_64.whl"
-    )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})    
+    # .pip_install(
+    #     "git+https://github.com/huggingface/transformers.git"
+    # )
     ##### SELECT MODEL HERE ##############
-    .run_function(download_mixtral_gptq_model, secret=Secret.from_name("my-huggingface-secret"))
-    .pip_install(
-        "git+https://github.com/huggingface/transformers.git"
-    )
+    .run_function(download_dolphin_mixtral_exl2_4bpw_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -186,14 +180,14 @@ stub = Stub(image=image)
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
-RUNTIME = "autogptq"
+#RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-#RUNTIME = "exllama2"
+RUNTIME = "exllama2"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A10G(count=2)
 gpu_request = gpu.A100(count=1)
 #######################################
 

@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/18** Pull up vllm to 0.2.6 but still no luck on any Mixtral GPTQ.  Evaluate ehartford/dolphin-2.5-mixtral-8x7b EXL2.
+
 **12/17** Pull up vllm to 0.2.5 and exllama2 to 0.11. Evaluate microsoft/phi-2, mistral-instruct-0.2 and a whole bunch of Mixtral-8x7B EXL2 quants.  No luck yet with Mixtral via GPTQ, the model loading is timing out for me.
 
 **12/15** Evaluate togethercomputer/StripedHyena-Nous-7B - very promising results for a new architecture!
@@ -31,8 +33,6 @@ A self-evaluating interview for AI coding models.
 **12/10** Evaluated microsoft/Orca-2-13B, it's awful.
 
 **12/09** Pull up to CUDA 12.1 and vllm 0.2.3, this seems to break auto-gptq but exllama/exllama2 both work fine.  Evaluate Nondzu/Mistral-7B-code-16k-qlora at FP16, AWQ and GPTQ and it does very well across the board.
-
-**11/05** Evaluate DeepSeek Coder Instruct family 1.3B, 6.7B and 33B at fp16 (via transformers, vllm) and AWQ (via vllm).
 
 ## Test Suites
 
