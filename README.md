@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/23** Re-valuate CodeBooga EXL2 at 3,4,5bpw beause original 4.25bpw model is gone.
+
 **12/18** Pull up vllm to 0.2.6 but still no luck on any Mixtral GPTQ.  Evaluate ehartford/dolphin-2.5-mixtral-8x7b EXL2.
 
 **12/17** Pull up vllm to 0.2.5 and exllama2 to 0.11. Evaluate microsoft/phi-2, mistral-instruct-0.2 and a whole bunch of Mixtral-8x7B EXL2 quants.  No luck yet with Mixtral via GPTQ, the model loading is timing out for me.
@@ -29,10 +31,6 @@ A self-evaluating interview for AI coding models.
 **12/10** Bring back a CUDA 11.8 based enviroment since autogptq and ctranslate2 both struggle with CUDA 12.1.  Evaluated the 4 models in the MagiCoder family, the S variants in particular are very good.
 
 **12/10** Evaluated all 3 available versions of gpt-3.5-turbo with `gpt-3.5-turbo-1106` the new king achieving a perfect 100% on both tests :trophy: gpt-4 also evaluated but it actually does less well (has trouble following variable naming instrutions).
-
-**12/10** Evaluated microsoft/Orca-2-13B, it's awful.
-
-**12/09** Pull up to CUDA 12.1 and vllm 0.2.3, this seems to break auto-gptq but exllama/exllama2 both work fine.  Evaluate Nondzu/Mistral-7B-code-16k-qlora at FP16, AWQ and GPTQ and it does very well across the board.
 
 ## Test Suites
 
