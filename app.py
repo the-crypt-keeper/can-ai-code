@@ -103,7 +103,7 @@ def load_and_prepare_data():
     if len(sys.argv) > 1:
         paths = [sys.argv[1]]
     else:
-        paths = ['results/**/eval*.ndjson', 'results-v1/**/eval*.ndjson']
+        paths = ['results/**/eval*.ndjson']
     data = load_data(paths)
     summary = calculate_summary(data)
     return data, summary
@@ -165,7 +165,7 @@ def main():
             with mode_col:
                 mode = st.radio(label='View', options=['Side by Side','Python','JavaScript'], label_visibility='collapsed')
             with note_col:
-                best_of = st.checkbox(label='Summarize Results', value=True)
+                best_of = st.checkbox(label='Best Result Only', value=True)
                 st.write('🔍 The language-specific views have additional columns.')
 
         with interview_col:
