@@ -148,7 +148,10 @@ uukuguy-speechless-llama2-hermes-orca-platypus-wizardlm-13b: { name: "speechless
 codellama-34b.Q4-K-M: { name: "CodeLlama", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-GGUF", quant: "GGUF-Q4KM" }
 codellama-34b-python.Q4-K-M: { name: "CodeLlama-Python", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q4KM" }
 codellama-34b-instruct.Q4-K-M: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF", quant: "GGUF-Q4KM" }
-oobabooga-CodeBooga-34B-v0.1-EXL2-4.250b-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/oobabooga/CodeBooga-34B-v0.1-EXL2-4.250b", quant: "EXL2-4.25" }
+LoneStriker-CodeBooga-34B-v0.1-3.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-3.0bpw-h6-exl2", quant: "EXL2-3.0" }
+LoneStriker-CodeBooga-34B-v0.1-4.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-4.0bpw-h6-exl2", quant: "EXL2-4.0" }
+LoneStriker-CodeBooga-34B-v0.1-5.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-5.0bpw-h6-exl2", quant: "EXL2-5.0" }
+
 turboderp-CodeLlama-34B-instruct-exl2-4.0bpw: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/turboderp/CodeLlama-34B-instruct-exl2", quant: "EXL2-4.0" }
 turboderp-CodeLlama-34B-instruct-exl2-3.0bpw: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/turboderp/CodeLlama-34B-instruct-exl2", quant: "EXL2-3.0" }
 phind-codellama-34b-v1.Q4-K-M: { name: "Phind-CodeLlama v1", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q4KM" }

@@ -75,6 +75,9 @@ def download_llama2_chat_70b_exl2_4p0_model(): download_model('turboderp/Llama2-
 def download_codellama_instruct_34b_exl2_4p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '4.0bpw')
 def download_codellama_instruct_34b_exl2_3p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '3.0bpw')
 def download_codebooga_34b_exl2_4p25_model(): download_model('oobabooga/CodeBooga-34B-v0.1-EXL2-4.250b')
+def download_codebooga_34b_exl2_3p0_model(): download_model('LoneStriker/CodeBooga-34B-v0.1-3.0bpw-h6-exl2')
+def download_codebooga_34b_exl2_4p0_model(): download_model('LoneStriker/CodeBooga-34B-v0.1-4.0bpw-h6-exl2')
+def download_codebooga_34b_exl2_5p0_model(): download_model('LoneStriker/CodeBooga-34B-v0.1-5.0bpw-h6-exl2')
 def download_speechless_codellama_34b_model(): download_model('TheBloke/speechless-codellama-34b-v2.0-AWQ')
 
 def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
@@ -170,7 +173,7 @@ image = (
     #     "git+https://github.com/huggingface/transformers.git"
     # )
     ##### SELECT MODEL HERE ##############
-    .run_function(download_dolphin_mixtral_exl2_4bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codebooga_34b_exl2_3p0_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -187,8 +190,8 @@ RUNTIME = "exllama2"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=2)
-gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
