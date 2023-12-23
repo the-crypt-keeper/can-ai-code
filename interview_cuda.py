@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import time
 import json
+import os
+from huggingface_hub import hf_hub_download, HfApi
 from jinja2 import Template
 from typing import List
 from copy import copy
@@ -273,8 +275,7 @@ class InterviewExllama:
         print('Starting up...')
         import torch
         from model import ExLlama, ExLlamaCache, ExLlamaConfig
-        from tokenizer import ExLlamaTokenizer
-        from huggingface_hub import hf_hub_download, HfApi
+        from tokenizer import ExLlamaTokenizer        
 
         torch.set_grad_enabled(False)
         torch.cuda._lazy_init()
@@ -391,7 +392,6 @@ class InterviewExllama2:
     def load(self):
         import sys
         sys.path += ["/repositories/exllamav2","../exllamav2"]
-        from huggingface_hub import hf_hub_download
         import os
 
         from exllamav2 import (
@@ -643,7 +643,6 @@ class InterviewAWQ:
         from awq.quantize.quantizer import real_quantize_model_weight
         from transformers import AutoModelForCausalLM, AutoConfig, AutoTokenizer
         from accelerate import init_empty_weights, load_checkpoint_and_dispatch, infer_auto_device_map
-        from huggingface_hub import hf_hub_download, HfApi
 
         # Config
         print('Starting up...')
@@ -705,6 +704,46 @@ class InterviewAWQ:
         answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
         return answer, self.info
 
+###################
+##  HQQ Adapter  ##
+###################
+class InterviewHQQ:
+    def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
+        self.model_name = model_name
+        self.info = model_info
+        self.quant = quant
+        self.gpu_split = gpu_split
+
+        self.batch = False
+
+    def load(self):
+        import torch
+        from hqq.engine.hf import HQQModelForCausalLM, AutoTokenizer
+
+        #Optional
+        # from hqq.core.quantize import HQQLinear, HQQBackend
+        # HQQLinear.set_backend(HQQBackend.PYTORCH_COMPILE) 
+
+        # Config
+        print('Starting up...')
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        
+        # Model        
+        model_path = os.path.dirname(hf_hub_download(repo_id=self.model_name, filename='qmodel.pt'))
+                
+        print('Loading model...')
+        t0 = time.time()
+        self.model     = HQQModelForCausalLM.from_quantized(model_path)
+        self.info['model_name'] = self.model_name
+        print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
+
+    def generate(self, prompt, params):
+        inputs = self.tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
+        sample = self.model.generate(eos_token_id=self.tokenizer.eos_token_id, max_new_tokens=params.get('max_new_tokens', 512), **(inputs.to('cuda')))
+        self.info['sampling_params'] = {}
+        answer = self.tokenizer.decode(sample[0][len(inputs[0]):], skip_special_tokens=True)
+        return answer, self.info
+    
 def interview_run(runtime, generate, interview, params_json, output_template, batch = False):
     if batch:
         print(f"Running batch of {len(interview)} prompts")
@@ -815,6 +854,8 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         model = InterviewExllama2(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'awq':
         model = InterviewAWQ(model_name, model_info, gpu_split=gpu_split)
+    elif runtime == 'hqq':
+        model = InterviewHQQ(model_name, model_info, gpu_split=gpu_split)        
     elif runtime == 'ctranslate2':
         model = InterviewCtranslate2(model_name, model_info, gpu_split=gpu_split)
     else:

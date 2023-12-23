@@ -110,6 +110,8 @@ def download_mixtral_gptq_model(): download_model('TheBloke/Mixtral-8x7B-v0.1-GP
 def download_mixtral_instruct_gptq_model(): download_model('TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ', revision='gptq-4bit-32g-actorder_True')
 def download_dolphin_mixtral_exl2_4bpw_model(): download_model('LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2')
 def download_dolphin_mistral_gptq_model(): download_model('TheBloke/dolphin-2.5-mixtral-8x7b-GPTQ')
+def download_mixtral_hqq_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-2bit_g16_s128-HQQ')
+def download_mixtral_hqq_moe_2bpw_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ')
 
 def download_xwin_lm_70b_ooba_exl2_model(): download_model('oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b')
 def download_xwin_lm_70b_firelzrd_exl2_model(): download_model('firelzrd/Xwin-LM-70B-V0.1-exl2', revision='4_5-bpw')
@@ -168,12 +170,13 @@ image = (
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})    
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     # .pip_install(
     #     "git+https://github.com/huggingface/transformers.git"
     # )
     ##### SELECT MODEL HERE ##############
-    .run_function(download_codebooga_34b_exl2_3p0_model, secret=Secret.from_name("my-huggingface-secret"))
+    .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
+    .run_function(download_mixtral_hqq_moe_2bpw_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -185,16 +188,17 @@ stub = Stub(image=image)
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2"
+#RUNTIME = "exllama2"
+RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1)
 #######################################
 
-@stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
+@stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
 class ModalWrapper:
     def __enter__(self):
         self.info = json.load(open('./_info.json'))
@@ -207,6 +211,8 @@ class ModalWrapper:
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
+        elif RUNTIME == "hqq":
+            self.wrapper = InterviewHQQ(self.info['model_name'], self.info)
         elif RUNTIME == "exllama":
             gpu_split = '17,24' if gpu_request.count == 2 else None
             self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)

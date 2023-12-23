@@ -241,6 +241,7 @@ turboderp-Mixtral-8x7B-instruct-exl2-3.5bpw: { name: "Mixtral-8x7B", size: "56B"
 intervitens-Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-main: { name: "Mixtral-8x7B", size: "56B", tags: ["mistral"], quant: "EXL2-3.5", url: "https://huggingface.co/intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2" }
 intervitens-Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-rpcal-main: { name: "Mixtral-8x7B", size: "56B", tags: ["mistral"], quant: "EXL2-3.5", url: "https://huggingface.co/intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-rpcal" }
 LoneStriker-dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2-main: { name: "Dolphin-2.5-Mixtral-8x7B", size: "56B", tags: ["mistral"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2" }
+mobiuslabsgmbh-Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ: { name: "Mixtral-8x7B", size: "56B", tags: ["mistral"], quant: "HQQ-2.0-moe", url: "https://huggingface.co/mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ" }
 
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
