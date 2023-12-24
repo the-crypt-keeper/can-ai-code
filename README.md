@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/24** Evaluate openchat-openchat-3.5-1210, CodeNinja-1.0-OpenChat-7B and Mixtral-7Bx2-MoE.
+
 **12/24** Merry christmas! Implemented [HQQ](https://github.com/mobiusml/hqq) quantization in `interview_cuda.py` and evaluate mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ.
 
 **12/23** Re-valuate CodeBooga EXL2 at 3,4,5bpw beause original 4.25bpw model is gone.

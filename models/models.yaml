@@ -242,6 +242,9 @@ intervitens-Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-main: { name: "Mixtral-8x7
 intervitens-Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-rpcal-main: { name: "Mixtral-8x7B-Instruct", size: "56B", tags: ["mistral"], quant: "EXL2-3.5", url: "https://huggingface.co/intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-rpcal" }
 LoneStriker-dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2-main: { name: "Dolphin-2.5-Mixtral-8x7B", size: "56B", tags: ["mistral"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2" }
 mobiuslabsgmbh-Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ: { name: "Mixtral-8x7B-Instruct", size: "56B", tags: ["mistral"], quant: "HQQ-2.0-moe", url: "https://huggingface.co/mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ" }
+openchat-openchat-3.5-1210: { name: "OpenChat-1210", size: "7B", tags: ["mistral"] }
+beowolx-CodeNinja-1.0-OpenChat-7B: { name: "CodeNinja-1.0", size: "7B", tags: ["mistral"] }
+cloudyu-Mixtral-7Bx2-MoE-fp16: { name: "Mixtral-7Bx2-MoE", size: "7B", tags: ["mistral"], url: "https://huggingface.co/cloudyu/Mixtral_7Bx2_MoE" }
 
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }

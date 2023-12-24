@@ -112,6 +112,9 @@ def download_dolphin_mixtral_exl2_4bpw_model(): download_model('LoneStriker/dolp
 def download_dolphin_mistral_gptq_model(): download_model('TheBloke/dolphin-2.5-mixtral-8x7b-GPTQ')
 def download_mixtral_hqq_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-2bit_g16_s128-HQQ')
 def download_mixtral_hqq_moe_2bpw_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ')
+def download_mixtralx2_model(): download_model('cloudyu/Mixtral_7Bx2_MoE')
+def download_codeninja_1p0_model(): download_model('beowolx/CodeNinja-1.0-OpenChat-7B')
+def download_openchat_1210_model(): download_model('openchat/openchat-3.5-1210')
 
 def download_xwin_lm_70b_ooba_exl2_model(): download_model('oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b')
 def download_xwin_lm_70b_firelzrd_exl2_model(): download_model('firelzrd/Xwin-LM-70B-V0.1-exl2', revision='4_5-bpw')
@@ -171,12 +174,12 @@ image = (
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
+    .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     # .pip_install(
     #     "git+https://github.com/huggingface/transformers.git"
     # )
-    ##### SELECT MODEL HERE ##############
-    .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
-    .run_function(download_mixtral_hqq_moe_2bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    ##### SELECT MODEL HERE ##############    
+    .run_function(download_openchat_1210_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -185,17 +188,17 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
-RUNTIME = "hqq"
+#RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
