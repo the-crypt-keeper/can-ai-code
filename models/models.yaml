@@ -14,10 +14,10 @@ bigcode-starcoderbase-1b-fp16: { name: 'StarCoderBase', size: '1B', tags: ["bigc
 bigcode-starcoderbase-3b-fp16: { name: 'StarCoderBase', size: '3B', tags: ["bigcode"] }
 bigcode-starcoderbase-7b-fp16: { name: 'StarCoderBase', size: '7B', tags: ["bigcode"] }
 bigcode-starcoderbase-fp16: { name: 'StarCoderBase', size: '15B', tags: ["bigcode"] }
-bigcode-tiny-starcoder-py-fp16: { name: 'StarCoderTiny-Py', size: "164M", tags: ["bigcode"] }
+bigcode-tiny-starcoder-py-fp16: { name: 'StarCoderTiny-Py', size: "164M", tags: ["bigcode"], url: "https://huggingface.co/bigcode/tiny_starcoder_py" }
 bigcode-starcoderplus: { name: 'StarCoderPlus', size: '15B', tags: ["bigcode"], alias: ["bigcode-tiny","bigcode-starcoderplus-fp16"] }
 bigcode-starcoder: { name: 'StarCoder', size: '15B', tags: ["bigcode"] }
-bigcode-gpt-bigcode-santacoder: { name: 'SantaCoder', size: '3B', tags: ["bigcode"], alias: "bigcode-gpt-bigcode-santacoder-fp16" }
+bigcode-gpt-bigcode-santacoder: { name: 'SantaCoder', size: '3B', tags: ["bigcode"], alias: "bigcode-gpt-bigcode-santacoder-fp16", url: "https://huggingface.co/bigcode/gpt_bigcode-santacoder" }
 bigcode-octocoder: { name: 'OctoCoder', size: '15B', tags: ["bigcode"] }
 HuggingFaceH4-starchat-alpha: { name: "StarChat-Alpha", size: "15B", tags: ["bigcode"], alias: ["HuggingFaceH4-starchat-playground-hf-space-starchat-alpha","HuggingFaceH4-starchat-alpha-fp16"] }
 HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigcode"], alias: ["starchat-beta-gradio","HuggingFaceH4-starchat-beta-fp16","HuggingFaceH4-starchat-playground-hf-space-starchat-beta"] }
@@ -62,7 +62,7 @@ Deci-DeciLM-6b-fp16: { name: "DeciLM", size: "6B", tags: ["deci"] }
 
 SkyWork-SkyCode-fp16: { name: "SkyWork-SkyCode-fp16", size: "2.6B", tags: ["skywork"] }
 
-smallcloudai-Refact-1-6B-fim-fp32: { name: "Refact", size: "1.6B", tags: ["refact"] }
+smallcloudai-Refact-1-6B-fim-fp32: { name: "Refact", size: "1.6B", tags: ["refact"], url: "https://huggingface.co/smallcloudai/Refact-1_6B-fim" }
 
 WisdomShell-CodeShell-7B-fp16: { name: "CodeShell", size: "7B", tags: ["wisdomshell"] }
 
@@ -97,7 +97,7 @@ TheBloke-VicUnlocked-30B-LoRA-GPTQ: { name: "VicUnlocked", size: "33B", tags: ["
 meta-llama-Llama-2-7b-chat-hf: { name: "Llama 2 Chat", size: "7B", tags: ["llama2"], alias: "meta-llama-Llama-2-7b-hf-fp16", url: "https://huggingface.co/meta-llama/Llama-2-7b-chat-hf" }
 llama-2-7b-chat.ggmlv3.q5-0: { name: "Llama 2 Chat", size: "7B", tags: ["llama2"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Llama-2-7B-chat-GGML" }
 TokenBender-llama2-7b-chat-hf-codeCherryPop-qLoRA-merged-fp16: { name: "codeCherryPop", size: "7B", tags: ["llama2"] }
-TokenBender-codeCherryPy-7B-llama2: { name: "codeCherryPy", size: "7B", tags: ["llama2"] }
+TokenBender-codeCherryPy-7B-llama2: { name: "codeCherryPy", size: "7B", tags: ["llama2"], url: "https://huggingface.co/TokenBender/codeCherryPy_7B_llama2" }
 TheBloke-llama2-7b-chat-codeCherryPop-qLoRA-GPTQ: { name: "codeCherryPop", size: "7B", quant: "GPTQ-4b", tags: ["llama2"] }
 meta-llama-Llama-2-13b-chat-hf: { name: "Llama 2 Chat", size: "13B", tags: ["llama2"], url: "https://huggingface.co/meta-llama/Llama-2-13b-chat-hf" }
 llama-2-13b-chat.ggmlv3.q5-0: { name: "Llama 2 Chat", size: "13B", tags: ["llama2"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML" }
@@ -113,7 +113,6 @@ llama-2-7b.ggmlv3.q5-0: { name: "Llama 2", size: "7B", quant: "GGML-q5_0", tags:
 TheBloke-Llama-2-13B-GPTQ: { name: "Llama 2", size: "13B", quant: "GPTQ-4b", tags: ["llama2"] }
 llama-2-13b.ggmlv3.q5-0: { name: "Llama 2", size: "13B", quant: "GGML-q5_0", tags: ["llama2"], url: "https://huggingface.co/TheBloke/Llama-2-13B-GGML" }
 meta-llama-Llama-2-13b-hf-int8: { name: "Llama 2", size: "13B", quant: "INT8", url: "https://huggingface.co/meta-llama/Llama-2-13b-hf", tags: ["llama2"] }
-SLAM-group-NewHope: { name: "NewHope", size: "13B", tags: ["llama2"] }
 mrm8488-llama-2-coder-7b-fp16: { name: "Llama 2 Coder", "size": "7B", tags: ["llama2"] }
 NousResearch-Nous-Hermes-Llama2-13b: { name: "Nous-Hermes Llama2", "size": "13B", tags: ["llama2"] }
 rombodawg-LosslessMegaCoder-llama2-7b-mini: { name: "LosslessMegaCoder", "size": "7B", tags: ["llama2"] }
@@ -169,17 +168,17 @@ turboderp-Llama2-70B-chat-exl2-2.4bpw: { name: "Llama 2 Chat", size: "70B", quan
 turboderp-Llama2-70B-chat-exl2-4.0bpw: { name: "Llama 2 Chat", size: "70B", quant: "EXL2-4.0", tags: ["llama2"], url: "https://huggingface.co/turboderp/Llama2-70B-chat-exl2" }
 Panchovix-LLaMA-2-70B-GPTQ-transformers4.32.0.dev0: { name: "Llama 2", size: "70B", quant: "GPTQ-4b", tags: ["llama2"], url: "https://huggingface.co/Panchovix/LLaMA-2-70B-GPTQ-transformers4.32.0.dev0" }
 
-psmathur-orca-mini-v2-7b: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], alias: "psmathur-orca-mini-v2-7b-fp16" }
-TheBloke-orca-mini-v2-7B-GPTQ: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], quant: "GPTQ-4b" }
-TheBloke-orca-mini-v2-13b-GPTQ: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"], quant: "GPTQ-4b" }
+psmathur-orca-mini-v2-7b: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], alias: "psmathur-orca-mini-v2-7b-fp16", url: "https://huggingface.co/pankajmathur/orca_mini_v2_7b" }
+TheBloke-orca-mini-v2-7B-GPTQ: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], quant: "GPTQ-4b", url: "https://huggingface.co/TheBloke/orca_mini_v2_7B-GPTQ" }
+TheBloke-orca-mini-v2-13b-GPTQ: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"], quant: "GPTQ-4b", url: "https://huggingface.co/TheBloke/orca_mini_v2_13b-GPTQ" }
 orca-mini-v2-7b.ggmlv3.q5-0: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/orca_mini_7B-GGML" }
 orca-mini-v2-7b.ggmlv3.q8-0: { name: "Orca-Mini V2", size: "7B", tags: ["llama","orca-mini"], quant: "GGML-q8_0", url: "https://huggingface.co/TheBloke/orca_mini_7B-GGML" }
-psmathur-orca-mini-v2-13b: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"], alias: "psmathur-orca-mini-v2-13b-fp16" }
+psmathur-orca-mini-v2-13b: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"], alias: "psmathur-orca-mini-v2-13b-fp16", url: "https://huggingface.co/pankajmathur/orca_mini_v2_13b" }
 orca-mini-v2-13b.ggmlv3.q5-0: { name: "Orca-Mini V2", size: "13B", tags: ["llama","orca-mini"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/orca_mini_13B-GGML" }
 
-TheBloke-orca-mini-v3-13B-GPTQ: { name: "Orca-Mini V3", size: "13B", tags: ["llama2","orca-mini"], quant: "GPTQ-4b" }
-psmathur-orca-mini-v3-7b-fp16: { name: "Orca-Mini V3", size: "7B", tags: ["llama","orca-mini"], url: "https://huggingface.co/psmathur/orca_mini_v3_7b" }
-psmathur-orca-mini-v3-13b: { name: "Orca-Mini V3", size: "13B", tags: ["llama","orca-mini"], url: "https://huggingface.co/psmathur/orca_mini_v3_13b" }
+TheBloke-orca-mini-v3-13B-GPTQ: { name: "Orca-Mini V3", size: "13B", tags: ["llama2","orca-mini"], quant: "GPTQ-4b", url: "https://huggingface.co/TheBloke/orca_mini_v3_13B-GPTQ" }
+psmathur-orca-mini-v3-7b-fp16: { name: "Orca-Mini V3", size: "7B", tags: ["llama","orca-mini"], url: "https://huggingface.co/pankajmathur/orca_mini_v3_7b" }
+psmathur-orca-mini-v3-13b: { name: "Orca-Mini V3", size: "13B", tags: ["llama","orca-mini"], url: "https://huggingface.co/pankajmathur/orca_mini_v3_13b" }
 
 airoboros-13b-gpt4.ggmlv3.q5: { name: "Airboros-1.0", size: "13B", tags: ["airoboros"], quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/airoboros-13b-gpt4-GGML" }
 TheBloke-airoboros-13B-gpt4-1.2-GPTQ: { name: "Airboros-1.2", size: "13B", tags: ["airoboros"], quant: "GPTQ-4b" }
@@ -261,9 +260,9 @@ llama-deus-7b-v3.ggmlv3.q5: { name: "Llama Deus", size: "7B", quant: "GGML-q5_0"
 Wizard-Vicuna-13B-Uncensored.ggmlv3.q5: { name: "WizardVicuna-Uncensored", tags: ["vicuna","wizard"], size: "13B", quant: "GGML-q5_0", url: "https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML"}
 open-llama-7b-open-instruct-hf-16bit: { name: "OpenLLaMa Instruct", size: "7B", url: "https://huggingface.co/VMware/open-llama-7b-open-instruct" }
 
-oobabooga-Xwin-LM-70B-V0.1-EXL2-2.500b-main: { name: "Xwin-LM-V0.1", size: "70B", tags: ["xwin"], url: "https://huggingface.co/oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b", quant: "EXL2-2.5" }
 firelzrd-Xwin-LM-70B-V0.1-exl2-4-5-bpw: { name: "Xwin-LM-V0.1", size: "70B", tags: ["xwin"], url: "https://huggingface.co/firelzrd/Xwin-LM-70B-V0.1-exl2", quant: "EXL2-4.5" }
 LoneStriker-Xwin-LM-70B-V0.1-4.65bpw-h6-exl2-main: { name: "Xwin-LM-V0.1", size: "70B", tags: ["xwin"], url: "https://huggingface.co/LoneStriker/Xwin-LM-70B-V0.1-4.65bpw-h6-exl2", quant: "EXL2-4.65" }
+LoneStriker-Xwin-LM-70B-V0.1-2.4bpw-h6-exl2-main: { name: "Xwin-LM-V0.1", size: "70B", tags: ["xwin"], url: "https://huggingface.co/LoneStriker/Xwin-LM-70B-V0.1-2.4bpw-h6-exl2", quant: "EXL2-2.4" }
 Xwin-LM-Xwin-LM-7B-V0.2: { name: "Xwin-LM-V0.2", size: "7B", tags: ["xwin"], url: "https://huggingface.co/Xwin-LM/Xwin-LM-7B-V0.2" }
 Xwin-LM-Xwin-LM-13B-V0.2: { name: "Xwin-LM-V0.1", size: "13B", tags: ["xwin"], url: "https://huggingface.co/Xwin-LM/Xwin-LM-13B-V0.2" }
 

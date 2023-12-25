@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/25** Fix up all urls, remove SLAM-group/NewHope (model no longer available) and update some EXL2 results.
+
 **12/24** Evaluate openchat-openchat-3.5-1210, CodeNinja-1.0-OpenChat-7B and Mixtral-7Bx2-MoE.
 
 **12/24** Merry christmas! Implemented [HQQ](https://github.com/mobiusml/hqq) quantization in `interview_cuda.py` and evaluate mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ.

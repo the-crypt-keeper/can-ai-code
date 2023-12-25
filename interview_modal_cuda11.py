@@ -116,10 +116,10 @@ def download_mixtralx2_model(): download_model('cloudyu/Mixtral_7Bx2_MoE')
 def download_codeninja_1p0_model(): download_model('beowolx/CodeNinja-1.0-OpenChat-7B')
 def download_openchat_1210_model(): download_model('openchat/openchat-3.5-1210')
 
-def download_xwin_lm_70b_ooba_exl2_model(): download_model('oobabooga/Xwin-LM-70B-V0.1-EXL2-2.500b')
 def download_xwin_lm_70b_firelzrd_exl2_model(): download_model('firelzrd/Xwin-LM-70B-V0.1-exl2', revision='4_5-bpw')
 def download_xwin_lm_70b_matatonic_exl2_model(): download_model('matatonic/Xwin-LM-70B-V0.1-exl2-4.800b')
 def download_xwin_lm_70b_lonestriker_exl2_model(): download_model('LoneStriker/Xwin-LM-70B-V0.1-4.65bpw-h6-exl2')
+def download_xwin_lm_70b_lonestriker_2p4_exl2_model(): download_model('LoneStriker/Xwin-LM-70B-V0.1-2.4bpw-h6-exl2')
 def download_xwin_lm_7b_v2_model(): download_model('Xwin-LM/Xwin-LM-7B-V0.2')
 def download_xwin_lm_13b_v2_model(): download_model('Xwin-LM/Xwin-LM-13B-V0.2')
 
@@ -179,7 +179,7 @@ image = (
     #     "git+https://github.com/huggingface/transformers.git"
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_openchat_1210_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_xwin_lm_70b_lonestriker_2p4_exl2_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -188,17 +188,17 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-#RUNTIME = "exllama2"
+RUNTIME = "exllama2"
 #RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
