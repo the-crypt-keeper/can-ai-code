@@ -271,4 +271,7 @@ def main():
     #    st.dataframe(results, use_container_width=True, hide_index=True)
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == '--verify':
+        verify_urls()
+    else:
+        main()
