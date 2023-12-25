@@ -5,6 +5,7 @@ import json
 import os
 import sys
 import yaml
+import requests
 from copy import copy
 
 def read_ndjson(file):
@@ -78,6 +79,16 @@ def load_models():
 
     model_df = pd.DataFrame(model_list)
     return model_df
+
+def verify_urls():
+    models = load_models()
+    for _, model in models.iterrows():
+        try:
+            response = requests.head(model['url'], allow_redirects=True)
+            if response.status_code != 200:
+                print(f"Broken URL for model {model['id']}: {model['url']} (Status code: {response.status_code})")
+        except requests.RequestException as e:
+            print(f"Request failed for model {model['id']}: {model['url']} (Error: {e})")
 
 def calculate_summary(data):
     summary = []
