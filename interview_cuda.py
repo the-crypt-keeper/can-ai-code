@@ -61,7 +61,7 @@ class InterviewTransformers:
             self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), trust_remote_code=True)
         else:
             print('Loading model ...')
-            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, trust_remote_code=True, torch_dtype="auto")
+            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, trust_remote_code=True, revision=self.info.get('revision',None), torch_dtype="auto")
             self.model.cuda()
 
         # if passed a path, take the last dir name otherwise replace / with -
@@ -233,7 +233,7 @@ class InterviewAutoGPTQ:
         #quantize_config.group = self.info['model_group']
 
         print('Loading model with autogptq...')        
-        self.model = AutoGPTQForCausalLM.from_quantized(self.model_name, device_map="auto", use_triton=False, revision=self.info.get('revision',None), use_safetensors=self.info.get('model_safetensors', True), trust_remote_code=True)
+        self.model = AutoGPTQForCausalLM.from_quantized(self.model_name, device="cuda:0", use_triton=False, revision=self.info.get('revision',None), use_safetensors=self.info.get('model_safetensors', True), trust_remote_code=True)
     
         # if passed a path, take the last dir name otherwise replace / with -
         if self.model_name[0] == '/':

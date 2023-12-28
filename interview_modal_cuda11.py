@@ -105,9 +105,12 @@ def download_mistral_7b_code_16k_awq_model(): download_model('TheBloke/Mistral-7
 def download_mistral_7b_code_16k_gptq_model(): download_model('TheBloke/Mistral-7B-Code-16K-qlora-GPTQ', revision='gptq-4bit-32g-actorder_True')
 def download_mixtral_intervitens_exl2_35bpw_model(): download_model('intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2-rpcal')
 def download_mixtral_turboderp_exl2_35bpw_model(): download_model('turboderp/Mixtral-8x7B-instruct-exl2', revision='3.5bpw')
+def download_mixtral_turboderp_exl2_30bpw_model(): download_model('turboderp/Mixtral-8x7B-instruct-exl2', revision='3.0bpw')
+def download_mixtral_turboderp_exl2_27bpw_model(): download_model('turboderp/Mixtral-8x7B-instruct-exl2', revision='2.7bpw')
+def download_mixtral_turboderp_exl2_25bpw_model(): download_model('turboderp/Mixtral-8x7B-instruct-exl2', revision='2.5bpw')
 def download_mixtral_intervitens_exl2_35bpw_norpcal_model(): download_model('intervitens/Mixtral-8x7B-Instruct-v0.1-3.5bpw-h6-exl2')
-def download_mixtral_gptq_model(): download_model('TheBloke/Mixtral-8x7B-v0.1-GPTQ', revision='gptq-4bit-32g-actorder_True')
 def download_mixtral_instruct_gptq_model(): download_model('TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ', revision='gptq-4bit-32g-actorder_True')
+def download_mixtral_instruct_gptq_3bit_model(): download_model('TheBloke/Mixtral-8x7B-v0.1-GPTQ', revision='gptq-3bit-128g-actorder_True')
 def download_dolphin_mixtral_exl2_4bpw_model(): download_model('LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2')
 def download_dolphin_mistral_gptq_model(): download_model('TheBloke/dolphin-2.5-mixtral-8x7b-GPTQ')
 def download_mixtral_hqq_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-2bit_g16_s128-HQQ')
@@ -115,6 +118,9 @@ def download_mixtral_hqq_moe_2bpw_model(): download_model('mobiuslabsgmbh/Mixtra
 def download_mixtralx2_model(): download_model('cloudyu/Mixtral_7Bx2_MoE')
 def download_codeninja_1p0_model(): download_model('beowolx/CodeNinja-1.0-OpenChat-7B')
 def download_openchat_1210_model(): download_model('openchat/openchat-3.5-1210')
+def download_mixtral_exl2_2p4bpw_model(): download_model('LoneStriker/Mixtral-8x7B-Instruct-v0.1-2.4bpw-h6-exl2')
+def download_mixtral_exl2_3p0bpw_model(): download_model('LoneStriker/Mixtral-8x7B-Instruct-v0.1-3.0bpw-h6-exl2')
+def download_mixtral_instruct_awq_model(): download_model('TheBloke/Mixtral-8x7B-Instruct-v0.1-AWQ')
 
 def download_xwin_lm_70b_firelzrd_exl2_model(): download_model('firelzrd/Xwin-LM-70B-V0.1-exl2', revision='4_5-bpw')
 def download_xwin_lm_70b_matatonic_exl2_model(): download_model('matatonic/Xwin-LM-70B-V0.1-exl2-4.800b')
@@ -142,6 +148,9 @@ def download_llm360_crystalcoder_7b_model(): download_model('LLM360/CrystalCoder
 def download_togethercomputer_stripedhyena_nous_7b_model(): download_model('togethercomputer/StripedHyena-Nous-7B', ignore_patterns=["*.bin"])
 
 def download_microsoft_phi2_model(): download_model('microsoft/phi-2')
+
+def download_nous_hermes_2_yi_model(): download_model('LoneStriker/Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2')
+def download_nous_hermes_2_yi_4bpw_model(): download_model('LoneStriker/Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2')
 
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -175,11 +184,9 @@ image = (
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
-    # .pip_install(
-    #     "git+https://github.com/huggingface/transformers.git"
-    # )
+    #.pip_install("git+https://github.com/huggingface/transformers.git")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_xwin_lm_70b_lonestriker_2p4_exl2_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_nous_hermes_2_yi_4bpw_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -197,8 +204,8 @@ RUNTIME = "exllama2"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
