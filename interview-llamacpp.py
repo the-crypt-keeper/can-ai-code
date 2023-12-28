@@ -19,8 +19,8 @@ class InterviewLlamaCpp:
 
         self.model = model_name
         self.threads = self.info.get('threads', 16)
-        self.main = self.info.get('main', '/llama/main')
-        self.args = self.info.get('args', '')
+        self.main = self.info.get('main', '~/llama.cpp/main')
+        self.args = self.info.get('args', '-ngl 99')
         self.ssh = self.info.get('ssh', '')
 
         self.stop_seq = self.info.get('generate_args', {}).get('stop_seq', [])
@@ -105,7 +105,7 @@ class InterviewLlamaCpp:
         info_copy['sampling_params'] = cmdline
         return answer, info_copy
 
-def cli(input: str, model:str, params: str, templateout: str = "", iterations: int=1, info: str = "{}", main: str = "/llama/main", threads: int = 16, ssh: str = ""):
+def cli(input: str, model:str, params: str, templateout: str = "", iterations: int=1, info: str = "{}", main: str = "~/llama.cpp/main", threads: int = 16, ssh: str = ""):
 
     info_cmdline = json.loads(info) if isinstance(info, str) else info
     info_cmdline['main'] = main

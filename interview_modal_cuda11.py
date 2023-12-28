@@ -151,6 +151,8 @@ def download_microsoft_phi2_model(): download_model('microsoft/phi-2')
 
 def download_nous_hermes_2_yi_model(): download_model('LoneStriker/Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2')
 def download_nous_hermes_2_yi_4bpw_model(): download_model('LoneStriker/Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2')
+def download_nous_hermes_2_yi_gptq_model(): download_model('TheBloke/Nous-Hermes-2-Yi-34B-GPTQ', info = {'eos_token_id': 7})
+def download_nous_hermes_2_yi_awq_model(): download_model('TheBloke/Nous-Hermes-2-Yi-34B-AWQ', info = {'eos_token_id': 7})
 
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -186,7 +188,7 @@ image = (
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     #.pip_install("git+https://github.com/huggingface/transformers.git")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_nous_hermes_2_yi_4bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_nous_hermes_2_yi_gptq_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -195,17 +197,17 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2"
+#RUNTIME = "exllama2"
 #RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1, memory=40)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])

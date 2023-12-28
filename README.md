@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/28** Evaluate Nous Hermes 2 Yi 34B quants, great model but recommend to avoid the 3bit EXL2.
+
 **12/28** Split up mixtral and mistral, evaluate a wide array of mixtral instruct quants.
 
 **12/25** Fix up all urls, remove SLAM-group/NewHope (model no longer available) and update some EXL2 results.
@@ -27,18 +29,6 @@ A self-evaluating interview for AI coding models.
 **12/24** Merry christmas! Implemented [HQQ](https://github.com/mobiusml/hqq) quantization in `interview_cuda.py` and evaluate mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ.
 
 **12/23** Re-valuate CodeBooga EXL2 at 3,4,5bpw beause original 4.25bpw model is gone.
-
-**12/18** Pull up vllm to 0.2.6 but still no luck on any Mixtral GPTQ.  Evaluate ehartford/dolphin-2.5-mixtral-8x7b EXL2.
-
-**12/17** Pull up vllm to 0.2.5 and exllama2 to 0.11. Evaluate microsoft/phi-2, mistral-instruct-0.2 and a whole bunch of Mixtral-8x7B EXL2 quants.  No luck yet with Mixtral via GPTQ, the model loading is timing out for me.
-
-**12/15** Evaluate togethercomputer/StripedHyena-Nous-7B - very promising results for a new architecture!
-
-**12/15** Evaluate LLM360/CrystalCoder and Mistral-Tiny/Small/Medium via API.
-
-**12/10** Bring back a CUDA 11.8 based enviroment since autogptq and ctranslate2 both struggle with CUDA 12.1.  Evaluated the 4 models in the MagiCoder family, the S variants in particular are very good.
-
-**12/10** Evaluated all 3 available versions of gpt-3.5-turbo with `gpt-3.5-turbo-1106` the new king achieving a perfect 100% on both tests :trophy: gpt-4 also evaluated but it actually does less well (has trouble following variable naming instrutions).
 
 ## Test Suites
 
