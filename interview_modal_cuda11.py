@@ -19,6 +19,7 @@ def download_codegen_2_7b_multi_model(): download_model("Salesforce/codegen2-7B"
 
 def download_replit_code_instruct_3b_model(): download_model("sahil2801/replit-code-instruct-glaive", info={"eos_token_id": 1 })
 def download_replit_code_v1_3b_model(): download_model("replit/replit-code-v1-3b", info={"generate_args": { "stop_seq": ["###"]}})
+def download_replit_code_v1p5_3b_model(): download_model("replit/replit-code-v1_5-3b", info={"generate_args": { "stop_seq": ["#","//"]}})
 def download_replit_codeinstruct_v2_3b_model(): download_model("teknium/Replit-v2-CodeInstruct-3B", info={"eos_token_id": 1 })
 
 def download_falcon_instruct_7b_model(): download_model("tiiuae/falcon-7b-instruct", allow_patterns=["*.json","*.model","pytorch*.bin"])
@@ -187,9 +188,9 @@ image = (
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
-    #.pip_install("git+https://github.com/huggingface/transformers.git")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_dolphin_2p6_phi2_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_replit_code_v1p5_3b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .pip_install("transformers==4.34.1")
     ######################################
 )
 stub = Stub(image=image)

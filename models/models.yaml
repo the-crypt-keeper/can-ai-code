@@ -52,6 +52,7 @@ TheBloke-WizardLM-30B-Uncensored-GPTQ: { name: 'WizardLM-Uncensored v1.0', size:
 teknium-Replit-v2-CodeInstruct-3B-fp16: { name: "Replit-v2-CodeInstruct", size: "3B", tags: ["replit"] }
 sahil2801-replit-code-instruct-glaive-fp16: { name: "replit-code-instruct-glaive", size: "3B", tags: ["replit"] }
 replit-replit-code-v1-3b-fp16: { name: "replit-code-v1", size: "3B", tags: ["replit"] }
+replit-replit-code-v1-5-3b-fp16: { name: "replit-code-v1-5", size: "3B", tags: ["replit"] }
 nickrosh-Evol-Replit-v1-fp16: { name: "Evol-Replit-v1", size: "3B", tags: ["replit"] }
 
 THUDM-codegeex2-6b-fp16: { name: "CodeGeeX2", size: "6B", tags: ["codegeex"] }

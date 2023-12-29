@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**12/29** Evaluate dolphin-2.5-phi, re-evaluate Falcon and WizardCoder-15B via GGUF and remove all old GGML quants.
+**12/29** Evaluate dolphin-2.5-phi, re-evaluate Falcon and WizardCoder-15B via GGUF and remove all old GGML quants. Evaluate replit/replit-code-v1_5-3b.
 
 **12/28** Evaluate Nous Hermes 2 Yi 34B quants, great model but recommend to avoid the 3bit EXL2.
 
