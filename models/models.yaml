@@ -21,13 +21,20 @@ bigcode-gpt-bigcode-santacoder: { name: 'SantaCoder', size: '3B', tags: ["bigcod
 bigcode-octocoder: { name: 'OctoCoder', size: '15B', tags: ["bigcode"] }
 HuggingFaceH4-starchat-alpha: { name: "StarChat-Alpha", size: "15B", tags: ["bigcode"], alias: ["HuggingFaceH4-starchat-playground-hf-space-starchat-alpha","HuggingFaceH4-starchat-alpha-fp16"] }
 HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigcode"], alias: ["starchat-beta-gradio","HuggingFaceH4-starchat-beta-fp16","HuggingFaceH4-starchat-playground-hf-space-starchat-beta"] }
-WizardLM-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], alias: ["WizardLM-WizardCoder-15B-V1.0-fp16", "375cead61e4db124-gradio-app-wizardcoder-16b"] }
-TheBloke-WizardCoder-15B-1.0-GPTQ: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GPTQ-4b" }
 openaccess-ai-collective-minotaur-15b: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], alias: "openaccess-ai-collective-minotaur-15b-fp16", url: "https://huggingface.co/openaccess-ai-collective/minotaur-15b" }
 TheBloke-minotaur-15B-GPTQ: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
-TheBloke-WizardCoder-Guanaco-15B-V1.1-GPTQ: { name: "WizardCoder-Guanaco", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
 openchat-opencoderplus-fp16: { name: "OpenCoderPlus", size: "15B", tags: ["bigcode"] }
+
 michaelfeil-ct2fast-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "CT2-INT8" }
+WizardLM-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], alias: ["WizardLM-WizardCoder-15B-V1.0-fp16", "375cead61e4db124-gradio-app-wizardcoder-16b"] }
+TheBloke-WizardCoder-15B-1.0-GPTQ: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GPTQ-4b" }
+TheBloke-WizardCoder-Guanaco-15B-V1.1-GPTQ: { name: "WizardCoder-Guanaco", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
+WizardCoder-15B-V1.0.Q4-0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q4_0", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
+WizardCoder-15B-V1.0.Q4-1: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q4_1", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
+WizardCoder-15B-V1.0.Q5-0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q5_0", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
+WizardCoder-15B-V1.0.Q5-1: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q5_1", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
+WizardCoder-15B-V1.0.Q8-0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q8_0", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
+
 
 Salesforce-codegen2-1B-fp16: { name: 'Codegen2', size: '1B', tags: ['salesforce'] }
 Salesforce-codegen2-3-7B-fp16: { name: 'Codegen2', size: '3.7B', tags: ['salesforce'], url: "https://huggingface.co/Salesforce/codegen2-3_7B" }
@@ -92,7 +99,7 @@ meta-llama-Llama-2-13b-chat-hf: { name: "Llama 2 Chat", size: "13B", tags: ["lla
 NousResearch-Redmond-Puffin-13B-fp16: { name: "Redmond-Puffin", size: "13B", tags: ["llama2"] }
 deepse-CodeUp-Llama-2-13b-chat-hf: { name: "CodeUp-Llama-2", size: "13B", tags: ["llama2"] }
 Open-Orca-OpenOrcaxOpenChat-Preview2-13B: { name: "OpenOrcaxOpenChat-Preview2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/Open-Orca/OpenOrcaxOpenChat-Preview2-13B" }
-ehartford-dolphin-llama2-7b: { name: "Dolphin Llama-2", size: "13B", tags: ["llama2"] }
+ehartford-dolphin-llama2-7b: { name: "Dolphin Llama-2", size: "13B", tags: ["llama2","dolphin"] }
 ehartford-WizardLM-1.0-Uncensored-Llama2-13b: { name: "WizardLM-1.0-Uncensored-Llama2", size: "13B", tags: ["wizard","llama2"]}
 Gryphe-MythoMix-L2-13b: { "Gryphe-MythoMix-L2", size: "13B", tags: ["llama2"] }
 The-Face-Of-Goonery-Huginn-13b-v1.2: { "Huginn-1.2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/The-Face-Of-Goonery/Huginn-13b-v1.2"}
@@ -187,13 +194,17 @@ TheBloke-Airoboros-M-7B-3.1.2-AWQ: { name: "Airboros-m-7b-3.1.2", size: "7B", qu
 tiiuae-falcon-7b-instruct-fp16: { name: "Falcon Instruct", size: "7B", tags: ["falcon"] }
 TheBloke-falcon-7b-instruct-GPTQ: { name: "Falcon Instruct", size: "7B", quant: "GPTQ-4b", tags: ["falcon"] }
 abhinavkulkarni-falcon-7b-instruct-w4-g64-awq: { name: "Falcon Instruct", size: "7B", quant: "AWQ-4b", tags: ["falcon"], alias: "abhinavkulkarni-tiiuae-falcon-7b-instruct-w4-g64-awq" }
-falcon-7b-instruct.ggccv1.q5-0: { name: "Falcon Instruct", size: "7B", quant: "GGML-q5_0", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-7b-instruct-GGML" }
 TheBloke-falcon-40b-instruct-GPTQ: { name: "Falcon Instruct", size: "40B", quant: "GPTQ-4b", tags: ["falcon"] }
 abhinavkulkarni-tiiuae-falcon-40b-instruct-w4-g128-awq: { name: "Falcon Instruct", size: "40B", quant: "AWQ-4b", tags: ["falcon"] }
-falcon-40b-instruct.ggccv1.q2-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q2_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
-falcon-40b-instruct.ggccv1.q3-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q3_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
-falcon-40b-instruct.ggccv1.q4-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q4_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
-falcon-40b-instruct.ggccv1.q5-k: { name: "Falcon Instruct", size: "40B", quant: "GGML-q5_k", tags: ["falcon"], url: "https://huggingface.co/TheBloke/falcon-40b-instruct-GGML" }
+
+tiiuae-falcon-40b-instruct-Q4-1: { name: "Falcon Instruct", size: "40B", quant: "GGUF-Q4_1", tags: ["falcon"], url: "https://huggingface.co/maddes8cht/tiiuae-falcon-40b-instruct-gguf" }
+tiiuae-falcon-40b-instruct-Q3-K-M: { name: "Falcon Instruct", size: "40B", quant: "GGUF-Q3_K_M", tags: ["falcon"], url: "https://huggingface.co/maddes8cht/tiiuae-falcon-40b-instruct-gguf" }
+tiiuae-falcon-40b-instruct-Q4-K-M: { name: "Falcon Instruct", size: "40B", quant: "GGUF-Q4_K_M", tags: ["falcon"], url: "https://huggingface.co/maddes8cht/tiiuae-falcon-40b-instruct-gguf" }
+tiiuae-falcon-40b-instruct-Q5-K-M: { name: "Falcon Instruct", size: "40B", quant: "GGUF-Q5_K_M", tags: ["falcon"], url: "https://huggingface.co/maddes8cht/tiiuae-falcon-40b-instruct-gguf" }
+ggml-tiiuae-falcon-7b-instruct-Q5-0: { name: "Falcon Instruct", size: "7B", quant: "GGUF-Q5_0", tags: ["falcon"], url: "https://huggingface.co/maddes8cht/tiiuae-falcon-7b-instruct-gguf" }
+ggml-tiiuae-falcon-7b-instruct-Q5-1: { name: "Falcon Instruct", size: "7B", quant: "GGUF-Q5_1", tags: ["falcon"], url: "https://huggingface.co/maddes8cht/tiiuae-falcon-7b-instruct-gguf" }
+tiiuae-falcon-7b-instruct-Q5-K-M: { name: "Falcon Instruct", size: "7B", quant: "GGUF-Q5_K_M", tags: ["falcon"], url: "https://huggingface.co/maddes8cht/tiiuae-falcon-7b-instruct-gguf" }
+
 falcon-180b-gradio: { name: "Falcon Chat", size: "180B", tags: ["falcon"], url: "https://huggingface.co/tiiuae/falcon-180B-chat" }
 
 stabilityai-stablecode-instruct-alpha-3b-fp16: { name: "StableCode Instruct Alpha", size: "3B", tags: ["stablecode"] }
@@ -227,7 +238,7 @@ LoneStriker-Mixtral-8x7B-Instruct-v0.1-2.4bpw-h6-exl2-main: { name: "Mixtral-8x7
 LoneStriker-Mixtral-8x7B-Instruct-v0.1-3.0bpw-h6-exl2-main: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "EXL2-3.0", url: "https://huggingface.co/LoneStriker/Mixtral-8x7B-Instruct-v0.1-3.0bpw-h6-exl2" }
 TheBloke-Mixtral-8x7B-Instruct-v0.1-GPTQ: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GPTQ-4b" }
 
-LoneStriker-dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2-main: { name: "Dolphin-2.5-Mixtral-8x7B", size: "46B", tags: ["mistral"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2" }
+LoneStriker-dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2-main: { name: "Dolphin-2.5-Mixtral-8x7B", size: "46B", tags: ["mistral","dolphin"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2" }
 openchat-openchat-3.5-1210: { name: "OpenChat-1210", size: "7B", tags: ["mistral"] }
 beowolx-CodeNinja-1.0-OpenChat-7B: { name: "CodeNinja-1.0", size: "7B", tags: ["mistral"] }
 cloudyu-Mixtral-7Bx2-MoE-fp16: { name: "Mixtral-7Bx2-MoE", size: "7B", tags: ["mistral"], url: "https://huggingface.co/cloudyu/Mixtral_7Bx2_MoE" }
@@ -263,6 +274,7 @@ ise-uiuc-Magicoder-S-CL-7B: { name: "Magicoder-S-CL", size: "7B", tags: ["magico
 togethercomputer-StripedHyena-Nous-7B-fp16: { name: "StripedHyena-Nous", size: "7B", tags: ["together"], url: "https://huggingface.co/togethercomputer/StripedHyena-Nous-7B" }
 
 microsoft-phi-2-fp16: { name: "Phi-2", size: "2.7B", tags: ["microsoft"] }
+cognitivecomputations-dolphin-2-6-phi-2-fp16: { name: "Dolphin 2.6 Phi-2", size: "2.7B", tags: ["microsoft","dolphin"], url: "https://huggingface.co/cognitivecomputations/dolphin-2_6-phi-2" }
 microsoft-Orca-2-13b: { name: "Orca 2", size: "13B", tags: ["llama2","microsoft"] }
 TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: ["llama2","microsoft"] }
 
