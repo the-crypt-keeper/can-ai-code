@@ -273,10 +273,10 @@ ise-uiuc-Magicoder-S-CL-7B: { name: "Magicoder-S-CL", size: "7B", tags: ["magico
 
 togethercomputer-StripedHyena-Nous-7B-fp16: { name: "StripedHyena-Nous", size: "7B", tags: ["together"], url: "https://huggingface.co/togethercomputer/StripedHyena-Nous-7B" }
 
-microsoft-phi-2-fp16: { name: "Phi-2", size: "2.7B", tags: ["microsoft"] }
-cognitivecomputations-dolphin-2-6-phi-2-fp16: { name: "Dolphin 2.6 Phi-2", size: "2.7B", tags: ["microsoft","dolphin"], url: "https://huggingface.co/cognitivecomputations/dolphin-2_6-phi-2" }
-microsoft-Orca-2-13b: { name: "Orca 2", size: "13B", tags: ["llama2","microsoft"] }
-TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: ["llama2","microsoft"] }
+microsoft-phi-2-fp16: { name: "Phi-2", size: "2.7B", tags: ["phi"] }
+cognitivecomputations-dolphin-2-6-phi-2-fp16: { name: "Dolphin 2.6 Phi-2", size: "2.7B", tags: ["phi","dolphin"], url: "https://huggingface.co/cognitivecomputations/dolphin-2_6-phi-2" }
+microsoft-Orca-2-13b: { name: "Orca 2", size: "13B", tags: ["llama2"] }
+TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: ["llama2"] }
 
 TheBloke-Nous-Hermes-2-Yi-34B-GPTQ: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GPTQ-4b", tags: ["yi"], alias: ["TheBloke-Nous-Hermes-2-Yi-34B-GPTQ-main"] }
 TheBloke-Nous-Hermes-2-Yi-34B-AWQ: { name: "Nous Hermes 2 Yi", size: "34B", quant: "AWQ-4b", tags: ["yi"] }

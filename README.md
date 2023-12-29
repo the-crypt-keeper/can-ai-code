@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/29** Evaluate dolphin-2.5-phi, re-evaluate Falcon and WizardCoder-15B via GGUF and remove all old GGML quants.
+
 **12/28** Evaluate Nous Hermes 2 Yi 34B quants, great model but recommend to avoid the 3bit EXL2.
 
 **12/28** Split up mixtral and mistral, evaluate a wide array of mixtral instruct quants.
@@ -27,8 +29,6 @@ A self-evaluating interview for AI coding models.
 **12/24** Evaluate openchat-openchat-3.5-1210, CodeNinja-1.0-OpenChat-7B and Mixtral-7Bx2-MoE.
 
 **12/24** Merry christmas! Implemented [HQQ](https://github.com/mobiusml/hqq) quantization in `interview_cuda.py` and evaluate mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ.
-
-**12/23** Re-valuate CodeBooga EXL2 at 3,4,5bpw beause original 4.25bpw model is gone.
 
 ## Test Suites
 
