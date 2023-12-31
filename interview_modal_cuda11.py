@@ -156,6 +156,8 @@ def download_nous_hermes_2_yi_4bpw_model(): download_model('LoneStriker/Nous-Her
 def download_nous_hermes_2_yi_gptq_model(): download_model('TheBloke/Nous-Hermes-2-Yi-34B-GPTQ', info = {'eos_token_id': 7})
 def download_nous_hermes_2_yi_awq_model(): download_model('TheBloke/Nous-Hermes-2-Yi-34B-AWQ', info = {'eos_token_id': 7})
 
+def download_tinyllama_chat_model(): download_model('TinyLlama/TinyLlama-1.1B-Chat-v1.0', info = { 'max_model_len': 2048 })
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -189,8 +191,7 @@ image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_replit_code_v1p5_3b_model, secret=Secret.from_name("my-huggingface-secret"))
-    .pip_install("transformers==4.34.1")
+    .run_function(download_tinyllama_chat_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)

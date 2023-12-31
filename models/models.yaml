@@ -284,3 +284,5 @@ TheBloke-Nous-Hermes-2-Yi-34B-AWQ: { name: "Nous Hermes 2 Yi", size: "34B", quan
 LoneStriker-Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi", size: "34B", quant: "EXL-3bpw", tags: ["yi"], url: "https://huggingface.co/LoneStriker/Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2" }
 LoneStriker-Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi", size: "34B", quant: "EXL-4bpw", tags: ["yi"], url: "https://huggingface.co/LoneStriker/Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2" }
 nous-hermes-2-yi-34b.Q4-K-M: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GGUF-Q4KM", tags: ["yi"], url: "https://huggingface.co/TheBloke/Nous-Hermes-2-Yi-34B-GGUF" }
+
+TinyLlama-TinyLlama-1.1B-Chat-v1.0: { name: "TinyLlama v1.0 Chat", size: "1.1B", alias: ["TinyLlama-TinyLlama-1.1B-Chat-v1.0-fp16"] }
