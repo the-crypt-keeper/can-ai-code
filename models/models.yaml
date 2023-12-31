@@ -286,3 +286,7 @@ LoneStriker-Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi"
 nous-hermes-2-yi-34b.Q4-K-M: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GGUF-Q4KM", tags: ["yi"], url: "https://huggingface.co/TheBloke/Nous-Hermes-2-Yi-34B-GGUF" }
 
 TinyLlama-TinyLlama-1.1B-Chat-v1.0: { name: "TinyLlama v1.0 Chat", size: "1.1B", alias: ["TinyLlama-TinyLlama-1.1B-Chat-v1.0-fp16"] }
+
+VMware-open-llama-7b-v2-open-instruct-fp16: { name: "OpenLlama v2 Open-Instruct", size: "7B", url: "https://huggingface.co/VMware/open-llama-7b-v2-open-instruct" }
+openlm-research-open-llama-7b-v2-fp16: { name: "OpenLlama v2", size: "7B", url: "https://huggingface.co/openlm-research/open_llama_7b_v2" }
+openlm-research-open-llama-3b-v2-fp16: { name: "OpenLlama v2", size: "3B", url: "https://huggingface.co/openlm-research/open_llama_3b_v2" }

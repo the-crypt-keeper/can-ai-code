@@ -157,6 +157,9 @@ def download_nous_hermes_2_yi_gptq_model(): download_model('TheBloke/Nous-Hermes
 def download_nous_hermes_2_yi_awq_model(): download_model('TheBloke/Nous-Hermes-2-Yi-34B-AWQ', info = {'eos_token_id': 7})
 
 def download_tinyllama_chat_model(): download_model('TinyLlama/TinyLlama-1.1B-Chat-v1.0', info = { 'max_model_len': 2048 })
+def download_openllamav2_3b_model(): download_model('openlm-research/open_llama_3b_v2', info = { 'max_model_len': 2048, 'tokenizer_args': { 'use_fast': False }, 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+def download_openllamav2_7b_model(): download_model('openlm-research/open_llama_7b_v2', info = { 'max_model_len': 2048, 'tokenizer_args': { 'use_fast': False }, 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+def download_openllamav2_instruct_7b_model(): download_model('VMware/open-llama-7b-v2-open-instruct', info = { 'max_model_len': 2048, 'tokenizer_args': { 'use_fast': False }, 'generate_args': { 'stop_seq': ["\n#","\n//"] }})
 
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -191,7 +194,7 @@ image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_tinyllama_chat_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_openllamav2_3b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)

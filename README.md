@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**12/31** Happy new year!  Evaluated TinyLlama 1.1B, it unfortunately fails.
+**12/31** Happy new year!  Evaluated TinyLlama 1.1B, it unfortunately fails.  OpenLlama v2 also awful (but it's very old, so that's not unexpected).
 
 **12/29** Evaluate dolphin-2.5-phi, re-evaluate Falcon and WizardCoder-15B via GGUF and remove all old GGML quants. Evaluate replit/replit-code-v1_5-3b.
 
