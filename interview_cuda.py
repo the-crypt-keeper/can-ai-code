@@ -746,6 +746,59 @@ class InterviewHQQ:
         self.info['sampling_params'] = {}
         answer = self.tokenizer.decode(sample[0][len(inputs[0]):], skip_special_tokens=True)
         return answer, self.info
+
+#########################
+##  QuipSharp Adapter  ##
+#########################
+class InterviewQuipSharp:
+    def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
+        self.model_name = model_name
+        self.info = model_info
+        self.quant = quant
+        self.gpu_split = gpu_split
+
+        self.batch = False
+
+    def load(self):
+        import sys
+        sys.path += ["/repositories/quip-sharp","../quip-sharp"]
+        
+        import transformer_engine
+        import transformer_engine_extensions
+        
+        import torch
+        from transformers import AutoTokenizer
+        from lib.utils.unsafe_import import model_from_hf_path
+
+        print('Starting up...')
+        
+        torch.set_grad_enabled(False)
+        torch.manual_seed(0)
+        
+        model_path = os.path.dirname(hf_hub_download(repo_id=self.model_name, filename='model.safetensors'))
+
+        print('Loading model...')
+        t0 = time.time()        
+        self.model, model_str = model_from_hf_path(model_path, use_cuda_graph=self.info.get('use_cuda_graph', False), use_flash_attn=self.info.get('use_flash_attn', False))
+        self.tokenizer = AutoTokenizer.from_pretrained(model_str)
+        self.tokenizer.pad_token = self.tokenizer.eos_token
+        print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
+
+        self.info['model_name'] = self.model_name       
+
+    def generate(self, prompt, params):
+        inputs = self.tokenizer(prompt, return_tensors="pt")
+        sample = self.model.generate(input_ids=inputs['input_ids'].cuda(),
+                                 attention_mask=inputs['attention_mask'].cuda(),
+                                 max_length=2048,
+                                 penalty_alpha=0.6,
+                                 top_k=1,
+                                 use_cache=True,
+                                 return_dict_in_generate=True).sequences[0]
+        
+        self.info['sampling_params'] = {}       
+        answer = self.tokenizer.decode(sample[0][len(inputs[0]):], skip_special_tokens=True)
+        return answer, self.info
     
 def interview_run(runtime, generate, interview, params_json, output_template, batch = False):
     if batch:
