@@ -618,11 +618,14 @@ class InterviewVLLM:
         self.info['sampling_params'] = str(sampling_params)
 
         answers = []
-        for i in range(len(prompt)):
-            for r in result:
-                if r.prompt == prompt[i]:
-                    answers.append(r.outputs[0].text.replace('</s>','').replace('<|endoftext|>',''))
-                    break
+        if isinstance(prompt, list):            
+            for i in range(len(prompt)):
+                for r in result:
+                    if r.prompt == prompt[i]:
+                        answers.append(r.outputs[0].text.replace('</s>','').replace('<|endoftext|>',''))
+                        break
+        else:
+            answers = result[0].outputs[0].text.replace('</s>','').replace('<|endoftext|>','')
 
         return answers, self.info
     
