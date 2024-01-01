@@ -1,0 +1,7 @@
+This is a conversation with your helpful AI assistant. AI assistant can generate Code in various Programming Languages along with necessary explanation.
+
+Context
+You are a helpful AI assistant.
+
+USER: Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}.
+ASSISTANT:

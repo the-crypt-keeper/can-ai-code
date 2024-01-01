@@ -290,3 +290,8 @@ TinyLlama-TinyLlama-1.1B-Chat-v1.0: { name: "TinyLlama v1.0 Chat", size: "1.1B",
 VMware-open-llama-7b-v2-open-instruct-fp16: { name: "OpenLlama v2 Open-Instruct", size: "7B", url: "https://huggingface.co/VMware/open-llama-7b-v2-open-instruct" }
 openlm-research-open-llama-7b-v2-fp16: { name: "OpenLlama v2", size: "7B", url: "https://huggingface.co/openlm-research/open_llama_7b_v2" }
 openlm-research-open-llama-3b-v2-fp16: { name: "OpenLlama v2", size: "3B", url: "https://huggingface.co/openlm-research/open_llama_3b_v2" }
+
+ajibawa-2023-Code-13B: { name: "ajibawa-2023-Code", size: "13B", url: "https://huggingface.co/ajibawa-2023/Code-13B"}
+ajibawa-2023-Python-Code-13B: { name: "ajibawa-2023-Python-Code", size: "13B", url: "https://huggingface.co/ajibawa-2023/Python-Code-13B"}
+ajibawa-2023-Code-33B: { name: "ajibawa-2023-Code", size: "33B", url: "https://huggingface.co/ajibawa-2023/Code-33B"}
+ajibawa-2023-Python-Code-33B: { name: "ajibawa-2023-Python-Code", size: "33B", url: "https://huggingface.co/ajibawa-2023/Python-Code-33B"}

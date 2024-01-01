@@ -573,7 +573,7 @@ class InterviewVLLM:
         if 'gptq' in self.model_name.lower(): quantization = 'gptq'
         dtype = 'bfloat16' if quantization is None else 'float16'
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
-        max_model_len = self.info.get('max_model_len', 4096)
+        max_model_len = self.info.get('max_model_len', 2048)
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
             import ray, torch

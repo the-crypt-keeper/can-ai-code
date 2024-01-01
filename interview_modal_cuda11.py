@@ -29,6 +29,11 @@ def download_vicuna_1p1_13b_model(): download_model("lmsys/vicuna-13b-v1.1")
 def download_vicuna_1p3_7b_model(): download_model("lmsys/vicuna-7b-v1.3")
 def download_vicuna_1p3_13b_model(): download_model("lmsys/vicuna-13b-v1.3")
 
+def download_ajibwa_code_13b_model(): download_model('ajibawa-2023/Code-13B')
+def download_ajibwa_code_33b_model(): download_model('ajibawa-2023/Code-33B')
+def download_ajibwa_python_code_13b_model(): download_model('ajibawa-2023/Python-Code-13B')
+def download_ajibwa_python_code_33b_model(): download_model('ajibawa-2023/Python-Code-33B')
+
 def download_llama2_7b_model(): download_model("meta-llama/Llama-2-7b-hf", ignore_patterns=["*.bin"])
 def download_llama2_chat_7b_model(): download_model("meta-llama/Llama-2-7b-chat-hf", ignore_patterns=["*.bin"])
 def download_llama2_chat_13b_model(): download_model("meta-llama/Llama-2-13b-chat-hf", ignore_patterns=["*.bin"])
@@ -194,16 +199,16 @@ image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_openllamav2_3b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_ajibwa_python_code_33b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
@@ -212,8 +217,8 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1, memory=40)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
