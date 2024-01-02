@@ -173,6 +173,8 @@ def download_openllamav2_3b_model(): download_model('openlm-research/open_llama_
 def download_openllamav2_7b_model(): download_model('openlm-research/open_llama_7b_v2', info = { 'max_model_len': 2048, 'tokenizer_args': { 'use_fast': False }, 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_openllamav2_instruct_7b_model(): download_model('VMware/open-llama-7b-v2-open-instruct', info = { 'max_model_len': 2048, 'tokenizer_args': { 'use_fast': False }, 'generate_args': { 'stop_seq': ["\n#","\n//"] }})
 
+def download_nous_hermes_2_solar_model(): download_model('NousResearch/Nous-Hermes-2-SOLAR-10.7B', info={"eos_token_id": 32000 })
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -206,7 +208,7 @@ image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codebooga_34b_fp16_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_nous_hermes_2_solar_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -225,7 +227,7 @@ RUNTIME = "vllm"
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
 #gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1, memory=80)
+gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])

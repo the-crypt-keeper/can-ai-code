@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**1/2** Evaluate NousResearch/Nous-Hermes-2-SOLAR-10.7B.
+
 **1/1** Evaluate ajibawa-2023/Code family (all good except Python-33B potentially has some issue).
 
 **12/31** Happy new year!  Evaluated TinyLlama 1.1B, it unfortunately fails.  OpenLlama v2 also awful (but it's very old, so that's not unexpected).
