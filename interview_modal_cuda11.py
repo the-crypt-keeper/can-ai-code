@@ -95,7 +95,11 @@ def download_nous_hermes_code_13b_model(): download_model('Undi95/Nous-Hermes-13
 def download_codellama_oasst_13b_model(): download_model('OpenAssistant/codellama-13b-oasst-sft-v10')
 def download_codellama_phind_v2_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-AWQ', info = { 'big_model': True })
 def download_codellama_phind_v2_gptq_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-GPTQ', revision='gptq-4bit-32g-actorder_True')
+def download_codellama_phind_v2_fp16_model(): download_model('Phind/Phind-CodeLlama-34B-v2')
 def download_speechless_llama2_model(): download_model('uukuguy/speechless-llama2-hermes-orca-platypus-wizardlm-13b')
+def download_codellama_instruct_34b_fp16_model(): download_model('TheBloke/CodeLlama-34B-Instruct-fp16')
+def download_wizardcoder_python_34b_fp16_model(): download_model('WizardLM/WizardCoder-Python-34B-V1.0')
+def download_codebooga_34b_fp16_model(): download_model('oobabooga/CodeBooga-34B-v0.1')
 
 def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Instruct-v0.1')
 def download_mistral_instruct_0p2_model(): download_model('mistralai/Mistral-7B-Instruct-v0.2')
@@ -119,6 +123,9 @@ def download_mixtral_instruct_gptq_model(): download_model('TheBloke/Mixtral-8x7
 def download_mixtral_instruct_gptq_3bit_model(): download_model('TheBloke/Mixtral-8x7B-v0.1-GPTQ', revision='gptq-3bit-128g-actorder_True')
 def download_dolphin_mixtral_exl2_4bpw_model(): download_model('LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2')
 def download_dolphin_mistral_gptq_model(): download_model('TheBloke/dolphin-2.5-mixtral-8x7b-GPTQ')
+
+def download_dolphin_mistral_2p7_model(): download_model('cognitivecomputations/dolphin-2.7-mixtral-8x7b')
+
 def download_mixtral_hqq_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-2bit_g16_s128-HQQ')
 def download_mixtral_hqq_moe_2bpw_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ')
 def download_mixtralx2_model(): download_model('cloudyu/Mixtral_7Bx2_MoE')
@@ -199,7 +206,7 @@ image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_ajibwa_python_code_33b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codebooga_34b_fp16_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)

@@ -27,6 +27,7 @@ openchat-opencoderplus-fp16: { name: "OpenCoderPlus", size: "15B", tags: ["bigco
 
 michaelfeil-ct2fast-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "CT2-INT8" }
 WizardLM-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], alias: ["WizardLM-WizardCoder-15B-V1.0-fp16", "375cead61e4db124-gradio-app-wizardcoder-16b"] }
+WizardLM-WizardCoder-Python-34B-V1.0: { name: "WizardCoder-Python", size: "34B", tags: ["bigcode","wizard"] }
 TheBloke-WizardCoder-15B-1.0-GPTQ: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GPTQ-4b" }
 TheBloke-WizardCoder-Guanaco-15B-V1.1-GPTQ: { name: "WizardCoder-Guanaco", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
 WizardCoder-15B-V1.0.Q4-0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q4_0", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
@@ -141,9 +142,11 @@ uukuguy-speechless-llama2-hermes-orca-platypus-wizardlm-13b: { name: "speechless
 codellama-34b.Q4-K-M: { name: "CodeLlama", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-GGUF", quant: "GGUF-Q4KM" }
 codellama-34b-python.Q4-K-M: { name: "CodeLlama-Python", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q4KM" }
 codellama-34b-instruct.Q4-K-M: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF", quant: "GGUF-Q4KM" }
+TheBloke-CodeLlama-34B-Instruct-fp16: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"] }
 LoneStriker-CodeBooga-34B-v0.1-3.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-3.0bpw-h6-exl2", quant: "EXL2-3.0" }
 LoneStriker-CodeBooga-34B-v0.1-4.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-4.0bpw-h6-exl2", quant: "EXL2-4.0" }
 LoneStriker-CodeBooga-34B-v0.1-5.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-5.0bpw-h6-exl2", quant: "EXL2-5.0" }
+oobabooga-CodeBooga-34B-v0.1: { name: "CodeBooga", size: "34B", tags: ["codellama"] }
 
 turboderp-CodeLlama-34B-instruct-exl2-4.0bpw: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/turboderp/CodeLlama-34B-instruct-exl2", quant: "EXL2-4.0" }
 turboderp-CodeLlama-34B-instruct-exl2-3.0bpw: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/turboderp/CodeLlama-34B-instruct-exl2", quant: "EXL2-3.0" }
@@ -154,6 +157,7 @@ phind-codellama-34b-v2.Q4-K-M: { name: "Phind-CodeLlama v2", size: "34B", tags: 
 phind-codellama-34b-v2.Q5-K-M: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GGUF", quant: "GGUF-Q5KM" }
 TheBloke-Phind-CodeLlama-34B-v2-GPTQ: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GPTQ", quant: "GPTQ" }
 TheBloke-speechless-codellama-34b-v2.0-AWQ: { name: "Speechless CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/speechless-codellama-34b-v2.0-AWQ", quant: "AWQ" }
+Phind-Phind-CodeLlama-34B-v2: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"] }
 
 wizardcoder-python-34b-v1.0.Q4-K-M: { name: "WizardCoder-Python", size: "34B", tags: ["codellama","wizard"], url: "https://huggingface.co/TheBloke/WizardCoder-Python-34B-V1.0-GGUF", quant: "GGUF-Q4KM" }
 wizardcoder-python-34b-v1.0.Q6-K: { name: "WizardCoder-Python", size: "34B", tags: ["codellama","wizard"], url: "https://huggingface.co/TheBloke/WizardCoder-Python-34B-V1.0-GGUF", quant: "GGUF-Q6K" }
