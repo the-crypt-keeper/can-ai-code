@@ -35,7 +35,7 @@ WizardCoder-15B-V1.0.Q4-1: { name: "WizardCoder", size: "15B", tags: ["bigcode",
 WizardCoder-15B-V1.0.Q5-0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q5_0", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
 WizardCoder-15B-V1.0.Q5-1: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q5_1", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
 WizardCoder-15B-V1.0.Q8-0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q8_0", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
-
+WizardLM-WizardCoder-33B-V1.1: { name: "WizardCoder v1.1", size: "33B", tags: ["deepseek","wizard"] }
 
 Salesforce-codegen2-1B-fp16: { name: 'Codegen2', size: '1B', tags: ['salesforce'] }
 Salesforce-codegen2-3-7B-fp16: { name: 'Codegen2', size: '3.7B', tags: ['salesforce'], url: "https://huggingface.co/Salesforce/codegen2-3_7B" }
@@ -53,7 +53,7 @@ TheBloke-WizardLM-30B-Uncensored-GPTQ: { name: 'WizardLM-Uncensored v1.0', size:
 teknium-Replit-v2-CodeInstruct-3B-fp16: { name: "Replit-v2-CodeInstruct", size: "3B", tags: ["replit"] }
 sahil2801-replit-code-instruct-glaive-fp16: { name: "replit-code-instruct-glaive", size: "3B", tags: ["replit"] }
 replit-replit-code-v1-3b-fp16: { name: "replit-code-v1", size: "3B", tags: ["replit"] }
-replit-replit-code-v1-5-3b-fp16: { name: "replit-code-v1-5", size: "3B", tags: ["replit"] }
+replit-replit-code-v1-5-3b-fp16: { name: "replit-code-v1-5", size: "3B", tags: ["replit"], url: "https://huggingface.co/replit/replit-code-v1_5-3b" }
 nickrosh-Evol-Replit-v1-fp16: { name: "Evol-Replit-v1", size: "3B", tags: ["replit"] }
 
 THUDM-codegeex2-6b-fp16: { name: "CodeGeeX2", size: "6B", tags: ["codegeex"] }
@@ -103,8 +103,8 @@ deepse-CodeUp-Llama-2-13b-chat-hf: { name: "CodeUp-Llama-2", size: "13B", tags: 
 Open-Orca-OpenOrcaxOpenChat-Preview2-13B: { name: "OpenOrcaxOpenChat-Preview2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/Open-Orca/OpenOrcaxOpenChat-Preview2-13B" }
 ehartford-dolphin-llama2-7b: { name: "Dolphin Llama-2", size: "13B", tags: ["llama2","dolphin"] }
 ehartford-WizardLM-1.0-Uncensored-Llama2-13b: { name: "WizardLM-1.0-Uncensored-Llama2", size: "13B", tags: ["wizard","llama2"]}
-Gryphe-MythoMix-L2-13b: { "Gryphe-MythoMix-L2", size: "13B", tags: ["llama2"] }
-The-Face-Of-Goonery-Huginn-13b-v1.2: { "Huginn-1.2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/The-Face-Of-Goonery/Huginn-13b-v1.2"}
+Gryphe-MythoMix-L2-13b: { name: "Gryphe-MythoMix-L2", size: "13B", tags: ["llama2"] }
+The-Face-Of-Goonery-Huginn-13b-v1.2: { name: "Huginn-1.2", size: "13B", tags: ["llama2"], url: "https://huggingface.co/The-Face-Of-Goonery/Huginn-13b-v1.2"}
 Open-Orca-OpenOrca-Platypus2-13B: { name: "OpenOrca-Platypus2-13B", size: "13B", tags: ["llama2"], url: "https://huggingface.co/Open-Orca/OpenOrca-Platypus2-13B"}
 TheBloke-Llama-2-13B-GPTQ: { name: "Llama 2", size: "13B", quant: "GPTQ-4b", tags: ["llama2"] }
 meta-llama-Llama-2-13b-hf-int8: { name: "Llama 2", size: "13B", quant: "INT8", url: "https://huggingface.co/meta-llama/Llama-2-13b-hf", tags: ["llama2"] }
@@ -142,7 +142,7 @@ uukuguy-speechless-llama2-hermes-orca-platypus-wizardlm-13b: { name: "speechless
 codellama-34b.Q4-K-M: { name: "CodeLlama", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-GGUF", quant: "GGUF-Q4KM" }
 codellama-34b-python.Q4-K-M: { name: "CodeLlama-Python", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Python-GGUF", quant: "GGUF-Q4KM" }
 codellama-34b-instruct.Q4-K-M: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF", quant: "GGUF-Q4KM" }
-TheBloke-CodeLlama-34B-Instruct-fp16: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"] }
+TheBloke-CodeLlama-34B-Instruct-fp16: { name: "CodeLlama-Instruct", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-fp16" }
 LoneStriker-CodeBooga-34B-v0.1-3.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-3.0bpw-h6-exl2", quant: "EXL2-3.0" }
 LoneStriker-CodeBooga-34B-v0.1-4.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-4.0bpw-h6-exl2", quant: "EXL2-4.0" }
 LoneStriker-CodeBooga-34B-v0.1-5.0bpw-h6-exl2-main: { name: "CodeBooga", size: "34B", tags: ["codellama"], url: "https://huggingface.co/LoneStriker/CodeBooga-34B-v0.1-5.0bpw-h6-exl2", quant: "EXL2-5.0" }
@@ -196,6 +196,9 @@ jondurbin-airoboros-33b-gpt4-m2.0: { name: "Airboros-m2.0", size: "33B", tags: [
 jondurbin-airoboros-m-7b-3.1.2: { name: "Airboros-m-7b-3.1.2", size: "7B", tags: ["airoboros","mistral"] }
 TheBloke-Airoboros-M-7B-3.1.2-AWQ: { name: "Airboros-m-7b-3.1.2", size: "7B", quant: "AWQ-4b", tags: ["airoboros","mistral"] }
 
+budecosystem-code-millenials-13b: { name: "Code Millenials", size: "13B", tags: ["llama2"] }
+budecosystem-code-millenials-34b: { name: "Code Millenials", size: "34B", tags: ["codellama"] }
+
 tiiuae-falcon-7b-instruct-fp16: { name: "Falcon Instruct", size: "7B", tags: ["falcon"] }
 TheBloke-falcon-7b-instruct-GPTQ: { name: "Falcon Instruct", size: "7B", quant: "GPTQ-4b", tags: ["falcon"] }
 abhinavkulkarni-falcon-7b-instruct-w4-g64-awq: { name: "Falcon Instruct", size: "7B", quant: "AWQ-4b", tags: ["falcon"], alias: "abhinavkulkarni-tiiuae-falcon-7b-instruct-w4-g64-awq" }
@@ -244,6 +247,8 @@ LoneStriker-Mixtral-8x7B-Instruct-v0.1-3.0bpw-h6-exl2-main: { name: "Mixtral-8x7
 TheBloke-Mixtral-8x7B-Instruct-v0.1-GPTQ: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GPTQ-4b" }
 
 LoneStriker-dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2-main: { name: "Dolphin-2.5-Mixtral-8x7B", size: "46B", tags: ["mistral","dolphin"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2" }
+LoneStriker-dolphin-2.7-mixtral-8x7b-3.0bpw-h6-exl2-main: { name: "Dolphin-2.7-Mixtral-8x7B", size: "46B", tags: ["mistral","dolphin"], quant: "EXL2-3.0", url: "https://huggingface.co/LoneStriker/dolphin-2.7-mixtral-8x7b-3.0bpw-h6-exl2" }
+LoneStriker-dolphin-2.7-mixtral-8x7b-4.0bpw-h6-exl2-main: { name: "Dolphin-2.7-Mixtral-8x7B", size: "46B", tags: ["mistral","dolphin"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.7-mixtral-8x7b-4.0bpw-h6-exl2" }
 openchat-openchat-3.5-1210: { name: "OpenChat-1210", size: "7B", tags: ["mistral"] }
 beowolx-CodeNinja-1.0-OpenChat-7B: { name: "CodeNinja-1.0", size: "7B", tags: ["mistral"] }
 cloudyu-Mixtral-7Bx2-MoE-fp16: { name: "Mixtral-7Bx2-MoE", size: "7B", tags: ["mistral"], url: "https://huggingface.co/cloudyu/Mixtral_7Bx2_MoE" }

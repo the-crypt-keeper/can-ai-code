@@ -119,6 +119,13 @@ def load_and_prepare_data():
     summary = calculate_summary(data)
     return data, summary
 
+def dump_csv():
+    paths = ['results/**/eval*.ndjson']
+    data = load_data(paths)
+    summary = calculate_summary(data)
+    summary.to_csv('can-ai-code-results.csv')
+    print(f'Wrote {len(summary)} rows to can-ai-code-results.csv')
+        
 def main():
     st.set_page_config(page_title='CanAiCode Explorer', layout="wide")
     st.markdown("""
@@ -273,5 +280,7 @@ def main():
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == '--verify':
         verify_urls()
+    elif len(sys.argv) > 1 and sys.argv[1] == '--csv':
+        dump_csv()
     else:
         main()

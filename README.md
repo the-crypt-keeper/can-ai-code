@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**1/4** Evaluate WizardLM/WizardCoder-33B-V1.1 (FP16), dolphin-2.7-mixtral-8x7b (EXL2 3 and 4 bits), budecosystem/code-millenials-13b and 34b (both at FP16).
+
 **1/2** Evaluate NousResearch/Nous-Hermes-2-SOLAR-10.7B.
 
 **1/1** Evaluate ajibawa-2023/Code family (all good except Python-33B potentially has some issue).
@@ -29,12 +31,6 @@ A self-evaluating interview for AI coding models.
 **12/28** Evaluate Nous Hermes 2 Yi 34B quants, great model but recommend to avoid the 3bit EXL2.
 
 **12/28** Split up mixtral and mistral, evaluate a wide array of mixtral instruct quants.
-
-**12/25** Fix up all urls, remove SLAM-group/NewHope (model no longer available) and update some EXL2 results.
-
-**12/24** Evaluate openchat-openchat-3.5-1210, CodeNinja-1.0-OpenChat-7B and Mixtral-7Bx2-MoE.
-
-**12/24** Merry christmas! Implemented [HQQ](https://github.com/mobiusml/hqq) quantization in `interview_cuda.py` and evaluate mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ.
 
 ## Test Suites
 
