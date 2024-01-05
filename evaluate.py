@@ -5,9 +5,10 @@ import argparse
 import json
 import os
 from extract import extract_code
+from termcolor import colored
 
 def evaluation(test, language, code):
-    total = len(test['Checks'].keys())
+    total = sum([check.get('weight',1) for _, check in test['Checks'].items()])
     passed = 0
     checks = []
 
@@ -34,16 +35,20 @@ def evaluation(test, language, code):
         check['got'] = test_value
 
         test_result = (test_value in check['eq-any']) if ('eq-any' in check) else (test_value == check['eq'])           
+        weight = check.get('weight', 1)
+        check_val = check.get('eq', check.get('eq-any'))
+        
         if (test_result):
-            passed += 1
+            passed += weight
             check['status'] = 1
-            print('   ',check_name, "passed", test_value,
-                    'inside' if 'eq-any' in check else '==', check.get('eq', check.get('eq-any')))
+            check_result = 'pass'
+            check_op = 'inside' if 'eq-any' in check else '=='            
         else:
             check['status'] = 0
-            print('   ',check_name, "failed", check['assert'], 'got', test_value,
-                    'not inside' if 'eq-any' in check else '!=', check.get('eq', check.get('eq-any')))
-            
+            check_result = 'FAIL'
+            check_op = 'not inside' if 'eq-any' in check else '!='
+
+        print(colored(f'   [{weight}] {check_result:4} {check_name:20} {test_value} {check_op} {check_val}', 'red' if check['status'] == 0 else 'green'))
         checks.append(check)
 
     return total,passed,checks,"PASS" if (total==passed) else "FAIL"
