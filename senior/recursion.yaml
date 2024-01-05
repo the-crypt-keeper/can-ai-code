@@ -5,8 +5,8 @@ FlattenZeroShot:
       returns a flat version of obj according to the following rules:
 
       - Keys who's values are simple types are left unmodified
-      - Keys that are objects are merged into the parent, their names seperated with a .
-      - Keys that are lists are merged into the parent, their names suffixed with . and the entry number
+      - Keys that are objects are merged into the parent, their names joined with a .
+      - Keys that are lists are merged into the parent, the names suffixed with . and the entry number (zero-indexed)
 
       Apply these rules recursively, the output object should contain only primitive types at the end.
     Description: "Check if the model is capable of implementing a recursive algorithm."
