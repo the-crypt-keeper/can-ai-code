@@ -20,6 +20,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview executor for LiteLLM')
     parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
     parser.add_argument('--model', type=str, default='openai/chatgpt', help='model to use')
+    parser.add_argument('--seed', type=int, default=42, help='random seed to use (helps determinism)')
     parser.add_argument('--params', type=str, required=True, help='parameter file to use')
     parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
     args = parser.parse_args()
@@ -34,7 +35,7 @@ if __name__ == '__main__':
     for idx, challenge in enumerate(interview):
         print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
         messages = [{'role': 'user', 'content': challenge['prompt']}]
-        response = completion(model=args.model, messages=messages, **params)
+        response = completion(model=args.model, messages=messages, seed=args.seed, **params)
         answer = response.choices[0].message.content
 
         print()
