@@ -11,7 +11,7 @@ FlattenZeroShot:
       Apply these rules recursively, the output object should contain only primitive types at the end.
     Description: "Check if the model is capable of implementing a recursive algorithm."
     Checks:
-        two_arguments:
+        one_argument:
             assert: "len(f.args)"
             eq: 1
         function_name:

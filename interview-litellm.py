@@ -3,7 +3,7 @@ import argparse
 import json
 from time import sleep
 from prepare import save_interview
-from litellm import completion
+import litellm
 
 def convert_params(params):
     # integrating liteLLM to provide a standard I/O interface for every LLM
@@ -27,6 +27,7 @@ if __name__ == '__main__':
 
     # Load params and init model
     params = convert_params(json.load(open(args.params)))
+    litellm.drop_params=True
 
     # Load interview
     interview = [json.loads(line) for line in open(args.input)]
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     for idx, challenge in enumerate(interview):
         print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
         messages = [{'role': 'user', 'content': challenge['prompt']}]
-        response = completion(model=args.model, messages=messages, seed=args.seed, **params)
+        response = litellm.completion(model=args.model, messages=messages, seed=args.seed, **params)
         answer = response.choices[0].message.content
 
         print()
