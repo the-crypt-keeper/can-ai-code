@@ -1,0 +1,28 @@
+FlattenZeroShot:
+    Signature: "flatten(obj)"
+    Input: "with an object `obj` input"
+    Output: |-
+      returns a flat version of obj according to the following rules:
+
+      - Keys who's values are simple types are left unmodified
+      - Keys that are objects are merged into the parent, their names seperated with a .
+      - Keys that are lists are merged into the parent, their names suffixed with . and the entry number
+
+      Apply these rules recursively, the output object should contain only primitive types at the end.
+    Description: "Check if the model is capable of implementing a recursive algorithm."
+    Checks:
+        two_arguments:
+            assert: "len(f.args)"
+            eq: 1
+        function_name:
+            assert: "f.name"
+            eq: "flatten"
+        input_name_0:
+            assert: "f.args[0].name"
+            eq: "obj"
+        test_nested_dict:
+            assert: f.call({'a':1,'b':{'c':2}})
+            eq: {'a':1,'b.c':2}
+        test_nested_list:
+            assert: f.call({'a':1,'b':[2,3,5]})
+            eq: {'a':1,'b.0':2,'b.1':3,'b.2':5}
