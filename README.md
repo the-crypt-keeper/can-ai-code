@@ -93,7 +93,7 @@ See [params/](params/) for all params references in the leaderboard.
 
 | API Runtime              | Script         |
 |--------------------------|----------------|
-| LiteLLM                  | `interview-litellm.py` |
+| LiteLLM (OpenAI, etc..)  | `interview-litellm.py` |
 | OobaBooga/KoboldCpp      | `interview-oobabooga.py` |
 | Huggingface Inference    | `interview-hfinference.py` |
 | Gradio (HF Spaces)       | `interview-gradio.py` |
@@ -107,10 +107,10 @@ See [params/](params/) for all params references in the leaderboard.
 | GPTQ (ExLlama)           | `interview-cuda.py`     | exllama @ 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d |
 | EXL2, GPTQ (ExLlama2)    | `interview-cuda.py`     | exllamav2 @ 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7 |
 | HQQ                      | `interview-cuda.py`     | hqq @ 0.1.1             |
-| AWQ, FP16 (vLLM)         | `interview-cuda.py`     | vllm==0.2.3             |
+| AWQ, FP16 (vLLM)         | `interview-cuda.py`     | vllm==0.2.6             |
 | CTranslate2              | `interview-cuda.py`     | ctranslate2>=3.16.0     |
 | bitsandbytes             | `interview-cuda.py`     | bitsandbytes==0.41.3    |
-| FP16 (Transformers)      | `interview-cuda.py`     | transformers==4.35.2    |
+| FP16 (Transformers)      | `interview-cuda.py`     | transformers==4.36.1    |
 
 ### Running on Modal
 
@@ -202,6 +202,5 @@ Fields:
 
 # Roadmap / Future Work
 
-* See all open [Model Request](https://github.com/the-crypt-keeper/can-ai-code/labels/model%20request) issues
-* If the models are offered error messages or failing test results, could they produce better code?
-* [Can tweaking prompts improve performance?](https://github.com/the-crypt-keeper/can-ai-code/issues/37)
+* [Development of a Senior coder test suite](https://github.com/the-crypt-keeper/can-ai-code/issues/141)
+* Open [Model Request](https://github.com/the-crypt-keeper/can-ai-code/labels/model%20request) issues
