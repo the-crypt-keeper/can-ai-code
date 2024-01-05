@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo -e "$WRAPPER_SOURCE" > /wrapper
-echo -e "$ANSWER_SOURCE" > /answer
+echo -e "$WRAPPER_SOURCE" | base64 -d > /wrapper
+echo -e "$ANSWER_SOURCE" | base64 -d > /answer
 
 timeout --foreground 5 $@
 CODE="$?"

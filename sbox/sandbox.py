@@ -1,3 +1,4 @@
+import base64
 import re
 import tempfile
 import subprocess
@@ -122,24 +123,15 @@ class FunctionSandbox:
         with open(module_dir+'/eval.'+self.language+'.tpl') as f:
             template = Template(f.read())
 
-        # Create a temporary file
-        with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
-            script_file = temp_file.name
-            script = template.render(call=self.name+'('+self.build_args(args)+')')
-            temp_file.write(script)
-
-        with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
-            answer_file = temp_file.name
-            temp_file.write(self.code)
-
         script = template.render(call=self.name+'('+self.build_args(args)+')')
-        script_json = json.dumps(script)
-        answer_json = json.dumps(self.code)
+        
+        script_b64 = base64.b64encode(script.encode('utf-8')).decode('utf-8')
+        answer_b64 = base64.b64encode(self.code.encode('utf-8')).decode('utf-8')
 
         if self.language == "python":
-            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-python /timeout.sh python /wrapper", stdout_only=True)
+            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} sandbox-python /timeout.sh python /wrapper", stdout_only=True)
         elif self.language == "javascript":
-            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_json} -e ANSWER_SOURCE={answer_json} sandbox-javascript /timeout.sh node /wrapper", stdout_only=True)
+            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} sandbox-javascript /timeout.sh node /wrapper", stdout_only=True)
        
         start_index = output.find("###")
         if start_index == -1:
