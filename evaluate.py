@@ -33,13 +33,69 @@ def evaluation(test, language, code):
             test_value = str(e)
 
         check['got'] = test_value
-
-        test_result = (test_value in check['eq-any']) if ('eq-any' in check) else (test_value == check['eq'])           
-        weight = check.get('weight', 1)
         check_val = check.get('eq', check.get('eq-any'))
+        weight = check.get('weight', 1)
+        max_weight = weight
+                
+        if check.get('eq-any'):
+            test_result = test_value in check['eq-any']
+            if not test_result: weight = 0
+        elif isinstance(check_val, str) or isinstance(check_val, int):
+            test_result = test_value == check['eq']
+            if not test_result: weight = 0
+        elif isinstance(check_val, dict):
+            if not isinstance(test_value, dict):
+                errors, ratio = 1, 0
+            else:
+                errors, good = 0,0
+                for key, value in check_val.items():
+                    if test_value.get(key) != value: 
+                        errors += 1
+                    else:
+                        good += 1
+                ratio = good/(good+errors)
+                
+        elif isinstance(check_val, list):
+
+            def compare_lists(l1, l2):
+                bad, good = 0, 0
+                for idx in range(max(len(l1),len(l2))):
+                    item1 = l1[idx] if idx<len(l1) else None
+                    item2 = l2[idx] if idx<len(l2) else None
+                    if item1 != item2:
+                        bad += 1
+                    else:
+                        good += 1
+                return bad, good/(bad+good)
+            
+            # lists are same size
+            if len(check_val) == len(test_value):
+                errors, ratio = compare_lists(check_val, test_value)
+            else:
+                # try to gracefully handle off-by-ones without failing the whole list
+                if not isinstance(test_value, list):
+                    errors, ratio = 1, 0
+                elif len(check_val) > len(test_value):
+                    # more check values then test values, pad test
+                    errors, ratio = compare_lists(check_val, test_value+[None])
+                    errors_pre, ratio_pre = compare_lists(check_val, [None]+test_value)
+                    if errors_pre > errors: 
+                        errors = errors_pre
+                        ratio = ratio_pre
+                else:
+                    # more test values then check values, pad check
+                    errors, ratio = compare_lists(check_val+[None], test_value)
+                    errors_pre, ratio_pre = compare_lists([None]+check_val, test_value)
+                    if errors_pre > errors: 
+                        errors = errors_pre
+                        ratio = ratio_pre
+                    
+            test_result = (errors == 0)
+            if errors != 0:
+                weight = int(weight * ratio)            
         
+        passed += weight
         if (test_result):
-            passed += weight
             check['status'] = 1
             check_result = 'pass'
             check_op = 'inside' if 'eq-any' in check else '=='            
@@ -48,7 +104,7 @@ def evaluation(test, language, code):
             check_result = 'FAIL'
             check_op = 'not inside' if 'eq-any' in check else '!='
 
-        print(colored(f'   [{weight}] {check_result:4} {check_name:20} {test_value} {check_op} {check_val}', 'red' if check['status'] == 0 else 'green'))
+        print(colored(f'  [{weight}/{max_weight}] {check_result:4} {check_name:20} {test_value} {check_op} {check_val}', 'red' if check['status'] == 0 else 'green'))
         checks.append(check)
 
     return total,passed,checks,"PASS" if (total==passed) else "FAIL"
