@@ -114,14 +114,8 @@ class FunctionSandbox:
         for i, arg in enumerate(args):
             if i != 0:
                 return_args += ','
-            if isinstance(arg, dict):
-                return_args += json.dumps(arg)
-            elif isinstance(arg, int):
-                return_args += str(arg)
-            elif isinstance(arg, str):
-                return_args += '"'+arg+'"'
-            else:
-                return_args += str(arg)
+            return_args += json.dumps(arg)
+            
         return return_args
 
     def call(self, *args, **kwargs):
