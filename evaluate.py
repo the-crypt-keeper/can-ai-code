@@ -77,14 +77,14 @@ def evaluation(test, language, code):
                     # more check values then test values, pad test
                     errors, ratio = compare_lists(check_val, test_value+[None])
                     errors_pre, ratio_pre = compare_lists(check_val, [None]+test_value)
-                    if errors_pre > errors: 
+                    if errors_pre < errors: 
                         errors = errors_pre
                         ratio = ratio_pre
                 else:
                     # more test values then check values, pad check
                     errors, ratio = compare_lists(check_val+[None], test_value)
                     errors_pre, ratio_pre = compare_lists([None]+check_val, test_value)
-                    if errors_pre > errors: 
+                    if errors_pre < errors: 
                         errors = errors_pre
                         ratio = ratio_pre
        
