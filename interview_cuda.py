@@ -83,12 +83,13 @@ class InterviewTransformers:
             generate_args[k] = v
 
         try:
+            if not params.get('do_sample'): params['do_sample'] = True
             generation_config, unused_kwargs = GenerationConfig.from_pretrained(
-                self.model_name, do_sample = True, **params, return_unused_kwargs=True
+                self.model_name, **params, return_unused_kwargs=True
             )
         except Exception as e:
             print('WARNING: generate config could not be auto-loaded from model:', str(e))
-            generation_config = GenerationConfig(do_sample = True, **params)
+            generation_config = GenerationConfig(do_sample = False, **params)
 
         if not generation_config.eos_token_id:
             generation_config.eos_token_id = self.info.get('eos_token_id', self.tokenizer.eos_token_id)
