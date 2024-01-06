@@ -59,9 +59,9 @@ def extract_code_codellama_python(answer):
     code_text = answer[start_index + len(start_token):end_index]
     return code_text if code_text.strip() else None
 
-# Fallback if the model forgot to use any quotes or used a single quote instead.
+# Fallback if the model forgot to use any quotes
 def extract_code_fallback(answer):
-    simple_answer = answer.replace('`','').strip()
+    simple_answer = answer.strip()
     return simple_answer
 
 def extract_code(answer, stop_at_prefix=[]):
