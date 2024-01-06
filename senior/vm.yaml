@@ -1,3 +1,42 @@
+.SimpleChecks: &SimpleChecks
+    one_argument:
+        assert: "len(f.args)"
+        eq: 1
+    function_name:
+        assert: "f.name"
+        eq: "assemble"
+    input_name_0:
+        assert: "f.args[0].name"
+        eq: "program"
+    test_halt:
+        assert: f.call(["CONTROL 42", "CONTROL", "CONTROL -1"])
+        eq: [0,42,0,0,0,255]
+        weight: 6
+    test_comments:
+        assert: |-
+          f.call(["CONTROL 1 #comment"])
+        eq: [0,1]
+        weight: 2
+    test_loads_swaps:
+        assert: |-
+          f.call([
+            "LOAD 4",
+            "SWP",
+            "LOAD -1"
+          ])
+        eq: [4,4,8,0,4,255]
+        weight: 6
+    test_push_pop:
+        assert: |-
+          f.call([
+            "PUSH 0",
+            "POP 1",
+            "PUSH 1",
+            "POP"
+          ])
+        eq: [32,0,33,1,32,1,33,0]
+        weight: 8
+
 VMAssembler:
     Signature: "assemble(program)"
     Input: "with a list input `program` each entry representing one line of program text"
@@ -22,7 +61,7 @@ VMAssembler:
       
       The valid OPCODE and their byte values and explanations of their arguments are:
 
-      - HALT=0 stops the program and return the stack when argument byte is 255, otherwise NO-OP.
+      - CONTROL=0 run control - halts the program and return the stack when argument byte is 255, otherwise does nothing.
       - COND=128 conditional - skip the next instruction (program counter +4 instead of the usual +2) if R0 is less then or equal to argument byte
       - JMPA=64 absolute jump - set program counter to 2*argument
       - JMPR=65 relative jump - add 2*argument to program counter
@@ -38,44 +77,17 @@ VMAssembler:
 
     Description: "See if the model is capable of implementing a complex text to numeric transformation."
     Checks:
-        one_argument:
-            assert: "len(f.args)"
-            eq: 1
-        function_name:
-            assert: "f.name"
-            eq: "assemble"
-        input_name_0:
-            assert: "f.args[0].name"
-            eq: "program"
-        test_halt:
-            assert: f.call(["HALT 42", "HALT", "HALT -1"])
-            eq: [0,42,0,0,0,255]
-            weight: 6
-        test_comments:
-            assert: |-
-              f.call(["HALT 1 #comment"])
-            eq: [0,1]
-            weight: 2
-        test_loads_swaps:
+        <<: *SimpleChecks
+        test_labels:
             assert: |-
               f.call([
                 "LOAD 4",
-                "SWP",
-                "LOAD -1"
+                "label1: SWP 0",
+                "label2: LOAD 6"
               ])
-            eq: [4,4,8,0,4,255]
-            weight: 6
-        test_push_pop:
-            assert: |-
-              f.call([
-                "PUSH 0",
-                "POP 1",
-                "PUSH 1",
-                "POP"
-              ])
-            eq: [32,0,33,1,32,1,33,0]
+            eq: [4,4,8,0,4,6]
             weight: 8
-        test_labels:
+        test_jmpa:
             assert: |-
               f.call([
                 "LOAD 4",
@@ -85,3 +97,32 @@ VMAssembler:
               ])
             eq: [4,4,8,0,4,6,64,2]
             weight: 8
+
+VMAssemblerSimple:
+    Signature: "assemble(program)"
+    Input: "with a list input `program` each entry representing one line of program text"
+    Output: |-
+      returns a list of uint8 representing bytes of VM CPU instructions.
+
+      The assembler syntax is one instruction per line in the following form:
+
+      ```OPCODE [argument] [# comment]```
+
+      - Required OPCODE (see OPCODE table below)
+      - Optional argument an uint8 immediate value. Convert negative argument values to unit8 (twos complement). Assume 0 if no argument is specified. 
+      - Optional comment prefixed by `#` that should be ignored
+
+      The valid OPCODE, their byte values and explanations of their arguments are:
+
+      - CONTROL=0 run control - halts the program and return the stack when argument byte is 255, otherwise does nothing.
+      - COND=128 conditional - skip the next instruction (program counter +4 instead of the usual +2) if R0 is less then or equal to argument byte
+      - LOAD=4 load - loads the argument byte into R0
+      - SWP=8 swap - swaps R0 and R1, ignores argument byte
+      - PUSH=32 push - pushes to stack (output), R0 if argument is 0 otherwise R1
+      - POP=33 pop - pops R0 from stack, R0 if argument is 0 otherwise R1
+
+      Important details: The return value should be a list of uint8 values in the range [0,255]
+
+    Description: "See if the model is capable of implementing a complex text to numeric transformation."
+    Checks:
+        <<: *SimpleChecks
