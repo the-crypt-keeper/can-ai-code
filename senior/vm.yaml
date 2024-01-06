@@ -14,9 +14,9 @@
         weight: 6
     test_comments:
         assert: |-
-          f.call(["CONTROL 1 #comment"])
-        eq: [0,1]
-        weight: 2
+          f.call(["CONTROL 1 #comment", "SWP # comment"])
+        eq: [0,1,8,0]
+        weight: 4
     test_loads_swaps:
         assert: |-
           f.call([
@@ -37,72 +37,11 @@
         eq: [32,0,33,1,32,1,33,0]
         weight: 8
 
-VMAssembler:
-    Signature: "assemble(program)"
-    Input: "with a list input `program` each entry representing one line of program text"
-    Output: |-
-      returns a list of uint8 representing bytes of VM CPU instructions.
-
-      The VM is very simple:
-            
-      - instructions are always 2 bytes and aligned
-      - there are two working registers called R0, R1
-      - the only data type is uint8: unsigned 8-bit integers
-      - an infinite stack is both working memory and output
-
-      The assembler syntax is also simple:
-
-      ```[:label] OPCODE [argument] [# comment]```
-
-      - Optional label prefixed by `:` used to specify jump targets
-      - Required OPCODE (see OPCODE table below)
-      - Optional argument either a uint8 immediate value or "@target" which means a label offset.
-      - Optional comment prefixed by `#` that should be ignored
-      
-      The valid OPCODE and their byte values and explanations of their arguments are:
-
-      - CONTROL=0 run control - halts the program and return the stack when argument byte is 255, otherwise does nothing.
-      - COND=128 conditional - skip the next instruction (program counter +4 instead of the usual +2) if R0 is less then or equal to argument byte
-      - JMPA=64 absolute jump - set program counter to 2*argument
-      - JMPR=65 relative jump - add 2*argument to program counter
-      - LOAD=4 load - loads the argument byte into R0
-      - SWP=8 swap - swaps R0 and R1, ignores argument byte
-      - PUSH=32 push - pushes to stack (output), R0 if argument is 0 otherwise R1
-      - POP=33 pop - pops R0 from stack, R0 if argument is 0 otherwise R1
-
-      Important details: 
-      - Convert any negative argument values to unit8 (twos complement). Assume 0 if no argument is specified.
-      - JMPA and JMPR opcodes take a @target label as the argument, remember to divide by 2 (since opcodes are always 2 byte aligned, we dont need to send LSB) and compute either relative or absolute address of the target depending on the opcode. 
-      - Return value should be a list of uint8 values in the range [0,255]
-
-    Description: "See if the model is capable of implementing a complex text to numeric transformation."
-    Checks:
-        <<: *SimpleChecks
-        test_labels:
-            assert: |-
-              f.call([
-                "LOAD 4",
-                "label1: SWP 0",
-                "label2: LOAD 6"
-              ])
-            eq: [4,4,8,0,4,6]
-            weight: 8
-        test_jmpa:
-            assert: |-
-              f.call([
-                "LOAD 4",
-                "SWP 0",
-                "label1: LOAD 6",
-                "JMPA @label1"
-              ])
-            eq: [4,4,8,0,4,6,64,2]
-            weight: 8
-
 VMAssemblerSimple:
     Signature: "assemble(program)"
     Input: "with a list input `program` each entry representing one line of program text"
     Output: |-
-      returns a list of uint8 representing bytes of VM CPU instructions.
+      a list of numbers representing bytes of VM CPU instructions.
 
       The assembler syntax is one instruction per line in the following form:
 
@@ -125,6 +64,31 @@ VMAssemblerSimple:
 
       Important details: 
       - Return value should be a list of uint8 byte values in the range [0,255]
+
+    Description: "See if the model is capable of implementing a complex text to numeric transformation."
+    Checks:
+        <<: *SimpleChecks
+
+VMAssemblerSimple2:
+    Signature: "assemble(program)"
+    Input: "with a single input `program`, a list of strings with each entry representing one line of program text"
+    Output: |-
+      the compiled program as a list of numbers representing uint8 bytes of VM CPU instructions.
+
+      Each line of program text starts with an OPCODE followed by an optional argument and an optional comment: OPCODE [argument] [# comment]
+
+      Each OPCODE should then be encoded as 2 bytes: [command_byte] [argument_byte]
+
+      The OPCODE=>command_byte mappings are:
+
+      - CONTROL=>0 run control - halts the program and return the stack when argument is 255, otherwise does nothing.
+      - COND=>128 conditional - skip the next instruction (program counter +4 instead of the usual +2) if R0 is less then or equal to argument byte
+      - LOAD=>4 load - loads the argument byte into R0
+      - SWP=>8 swap - swaps R0 and R1, ignores argument
+      - PUSH=>32 push - pushes to stack, R0 if argument is 0 otherwise R1
+      - POP=>33 pop - pops R0 from stack, R0 if argument is 0 otherwise R1
+
+      If no argument is provided, default to argument_byte to 0.  Convert negative argument values to unit8 (twos complement).
 
     Description: "See if the model is capable of implementing a complex text to numeric transformation."
     Checks:
