@@ -8,12 +8,11 @@ import litellm
 def convert_params(params):
     # integrating liteLLM to provide a standard I/O interface for every LLM
     # see https://docs.litellm.ai/docs/providers for list of supported providers
-    model_params = {
-            'temperature': params['temperature'],
-            'max_tokens': params['max_new_tokens'],
-            'top_p': params['top_p'],
-            'presence_penalty': params.get('repetition_penalty', 1.0)
-    }
+    remap = { 'max_new_tokens': 'max_tokens', 'repetition_penalty': 'presence_penalty'}
+    model_params = {}
+    for k,v in params.items():
+        if remap.get(k): k=remap[k]
+        model_params[k] = v
     return model_params
 
 if __name__ == '__main__':

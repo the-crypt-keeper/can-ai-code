@@ -2,7 +2,7 @@ FlattenZeroShot:
     Signature: "flatten(obj)"
     Input: "with an object `obj` input"
     Output: |-
-      returns a flat version of obj according to the following rules:
+      a flat version of obj according to the following rules:
 
       - Keys who's values are simple types are left unmodified
       - Keys that are objects are merged into the parent, their names joined with a .
