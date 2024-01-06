@@ -113,6 +113,7 @@ if __name__ == '__main__':
     parser.add_argument('--input', type=str, required=True, help='path to interview*.ndjson')
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
     parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')
+    parser.add_argument('--persist_sandbox', action='store_true', help='(optional) leave sandbox running')
     args = parser.parse_args()
 
     all_total = { 'javascript': 0, 'python': 0 }
@@ -155,7 +156,8 @@ if __name__ == '__main__':
         print(row['name'], test['language'], row['status'])
         print()
 
-    FunctionSandbox.stopall()
+    if not args.persist_sandbox:
+        FunctionSandbox.stopall()
 
     if not args.test:
         output_filename = args.input.replace('interview','eval')
