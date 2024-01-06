@@ -109,19 +109,22 @@ VMAssemblerSimple:
       ```OPCODE [argument] [# comment]```
 
       - Required OPCODE (see OPCODE table below)
-      - Optional argument an uint8 immediate value. Convert negative argument values to unit8 (twos complement). Assume 0 if no argument is specified. 
+      - Optional argument, an integer immediate value (default 0). Convert negative argument values to unit8 (twos complement).
       - Optional comment prefixed by `#` that should be ignored
 
-      The valid OPCODE, their byte values and explanations of their arguments are:
+      Instructions are always 2 encoded as bytes: [command_byte] [argument_byte]
+      
+      The valid OPCODE values, their corresponding command_byte values and explanations of their arguments are:
 
-      - CONTROL=0 run control - halts the program and return the stack when argument byte is 255, otherwise does nothing.
-      - COND=128 conditional - skip the next instruction (program counter +4 instead of the usual +2) if R0 is less then or equal to argument byte
-      - LOAD=4 load - loads the argument byte into R0
-      - SWP=8 swap - swaps R0 and R1, ignores argument byte
-      - PUSH=32 push - pushes to stack (output), R0 if argument is 0 otherwise R1
-      - POP=33 pop - pops R0 from stack, R0 if argument is 0 otherwise R1
+      - CONTROL (command_byte=0) run control - halts the program and return the stack when argument is 255, otherwise does nothing.
+      - COND (command_byte=128) conditional - skip the next instruction (program counter +4 instead of the usual +2) if R0 is less then or equal to argument byte
+      - LOAD (command_byte=4) load - loads the argument byte into R0
+      - SWP (command_byte=8) swap - swaps R0 and R1, ignores argument
+      - PUSH (command_byte=32) push - pushes to stack, R0 if argument is 0 otherwise R1
+      - POP (command_byte=33) pop - pops R0 from stack, R0 if argument is 0 otherwise R1
 
-      Important details: The return value should be a list of uint8 values in the range [0,255]
+      Important details: 
+      - Return value should be a list of uint8 byte values in the range [0,255]
 
     Description: "See if the model is capable of implementing a complex text to numeric transformation."
     Checks:
