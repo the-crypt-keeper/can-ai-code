@@ -188,7 +188,8 @@ def main():
 
         with interview_col:
             interview_list = sorted(summary['Interview'].unique())
-            selected_interview = st.selectbox('Interview', interview_list, index=interview_list.index('junior-v2'))
+            default_interview = interview_list.index('junior-v2') if 'junior-v2' in interview_list else 0
+            selected_interview = st.selectbox('Interview', interview_list, index=default_interview)
             filtered = summary[ summary['Interview'] == selected_interview ]
 
         with model_col:

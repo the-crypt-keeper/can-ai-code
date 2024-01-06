@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**1/6** Fixed a number of bugs in the evaluation and extraction scripts, re-run all evaluations (scores generally go up a little bit).  Introduce the `senior` interview, still a work in progress trying to tune the difficulty level.
+
 **1/4** Evaluate WizardLM/WizardCoder-33B-V1.1 (FP16), dolphin-2.7-mixtral-8x7b (EXL2 3 and 4 bits), budecosystem/code-millenials-13b and 34b (both at FP16).
 
 **1/2** Evaluate NousResearch/Nous-Hermes-2-SOLAR-10.7B.
