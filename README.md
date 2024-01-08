@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**1/8** Evaluate bagel-34b-v0.2, LLaMA-Pro-8B-Instruct, SqueezeLLM quant of Mistral-Instruct and fix minor tag bug in the leaderboard app.
+
 **1/6** Fixed a number of bugs in the evaluation and extraction scripts, re-run all evaluations (scores generally go up a little bit).  Introduce the `senior` interview, still a work in progress trying to tune the difficulty level.
 
 **1/4** Evaluate WizardLM/WizardCoder-33B-V1.1 (FP16), dolphin-2.7-mixtral-8x7b (EXL2 3 and 4 bits), budecosystem/code-millenials-13b and 34b (both at FP16).
@@ -25,14 +27,6 @@ A self-evaluating interview for AI coding models.
 **1/2** Evaluate NousResearch/Nous-Hermes-2-SOLAR-10.7B.
 
 **1/1** Evaluate ajibawa-2023/Code family (all good except Python-33B potentially has some issue).
-
-**12/31** Happy new year!  Evaluated TinyLlama 1.1B, it unfortunately fails.  OpenLlama v2 also awful (but it's very old, so that's not unexpected).
-
-**12/29** Evaluate dolphin-2.5-phi, re-evaluate Falcon and WizardCoder-15B via GGUF and remove all old GGML quants. Evaluate replit/replit-code-v1_5-3b.
-
-**12/28** Evaluate Nous Hermes 2 Yi 34B quants, great model but recommend to avoid the 3bit EXL2.
-
-**12/28** Split up mixtral and mistral, evaluate a wide array of mixtral instruct quants.
 
 ## Test Suites
 
