@@ -13,6 +13,7 @@ def read_ndjson(file):
         data = [json.loads(line) for line in f]
     return data
 
+@st.cache_data
 def load_data(paths):
     files = []
     for path in paths:
@@ -32,16 +33,12 @@ def load_data(paths):
             continue
 
         results = read_ndjson(file)
-
-        langs = tags[2].split('-')
-        for lang in langs:
-            new_tags = tags.copy()
-            new_tags[2] = lang
-            data[file+'-'+lang] = {
-                'tags': new_tags,
-                'results': list(filter(lambda x: x.get('language') == lang, results)),
-                'runtime': results[0].get('runtime')
-            }
+                
+        data[file] = {
+            'tags': tags,
+            'results': results,
+            'runtime': results[0].get('runtime')
+        }
 
     return data
 
@@ -93,15 +90,16 @@ def verify_urls():
         except requests.RequestException as e:
             print(f"Request failed for model {model['id']}: {model['url']} (Error: {e})")
 
-def calculate_summary(data):
+def calculate_summary(data, language = None):
     summary = []
     for file, info in data.items():
         res = info['results']
-        passed = sum(x['passed'] for x in res)
-        total = sum(x['total'] for x in res)
+        passed = sum(x['passed'] for x in res if language is None or x['language'] == language)
+        total = sum(x['total'] for x in res if language is None or x['language'] == language)
+        if total == 0: continue
         summary.append(info['tags'] + [passed, total] + [info['runtime']])
     sumdf = pd.DataFrame(summary, columns=['Eval', 'Interview', 'Languages', 'Template', 'TemplateOut', 'Params', 'Model', 'Timestamp', 'Passed', 'Total', 'Runtime'])
-    sumdf = sumdf[['Interview','Languages','Model','Params','Template','Runtime','Passed','Total']]
+    sumdf = sumdf[['Interview','Model','Params','Template','Runtime','Passed','Total']]
     sumdf['Score'] = sumdf['Passed'] / sumdf['Total']
     sumdf.drop('Total', axis=1, inplace=True)
 
@@ -112,15 +110,13 @@ def calculate_summary(data):
 
     return merged_df
 
-@st.cache_data
 def load_and_prepare_data():
     if len(sys.argv) > 1:
         paths = [sys.argv[1]]
     else:
         paths = ['results/**/eval*.ndjson']
-    data = load_data(paths)
-    summary = calculate_summary(data)
-    return data, summary
+    data = load_data(paths)    
+    return data
 
 def dump_csv():
     paths = ['results/**/eval*.ndjson']
@@ -145,7 +141,7 @@ def main():
             </style>
             """, unsafe_allow_html=True)
     
-    data, summary = load_and_prepare_data()
+    data = load_and_prepare_data()    
 
     lb_tab, faq_tab, explore_tab = st.tabs(['Leaderboard 🏆', 'FAQ ❓', 'Explore 🔍'])
 
@@ -184,10 +180,12 @@ def main():
         with view_col:            
             mode_col, note_col = st.columns(2)
             with mode_col:
-                mode = st.radio(label='View', options=['Side by Side','Python','JavaScript'], label_visibility='collapsed')
+                mode = st.radio(label='View', options=['Both','Python','JavaScript'], label_visibility='collapsed')
             with note_col:
                 best_of = st.checkbox(label='Best Result Only', value=True)
-                st.write('🔍 The language-specific views have additional columns.')
+        
+        mode_to_language={ 'Both': None, 'Python': 'python', 'JavaScript': 'javascript' }
+        summary = calculate_summary(data, mode_to_language[mode])
 
         with interview_col:
             interview_list = sorted(summary['Interview'].unique())
@@ -212,7 +210,7 @@ def main():
                 filtered = filtered[filtered['size'] == selected_size]
 
         if best_of:
-            idx = filtered.groupby(['name','size','Languages'])['Score'].idxmax()
+            idx = filtered.groupby(['name','size'])['Score'].idxmax()
             filtered = filtered.loc[idx]
 
         filtered = filtered.sort_values(by='Passed', ascending=False)
@@ -227,37 +225,27 @@ def main():
             ),
             "url": st.column_config.LinkColumn(
                 label="URL",
-                width=50
+                width=200
             ),
             "quant": st.column_config.TextColumn(
                 label="Quant",
                 width=30
             ),
+            "params": st.column_config.TextColumn(
+                label="Params",
+                width=30
+            ),            
             "size": st.column_config.NumberColumn(
                 label="Size",
                 format="%fB",
                 width=30
             )  
         }
-        column_order=("name", "size", "url", "Params", "Template", "Score")
         column_order_detail=("name", "size", "quant", "url", "Params", "Template", "Runtime", "Passed", "Score")
         
-        if mode == 'Side by Side':
-            pyct, jsct = st.columns(2)
-        else:
-            pyct = st.container() if mode == 'Python' else None
-            jsct = st.container() if mode == 'JavaScript' else None
-            column_config['url']['width'] = 300
+        st.subheader("Python + JavaScript" if mode == "Both" else mode)
+        st.dataframe(filtered, use_container_width=True, column_config=column_config, column_order=column_order_detail, hide_index=True, height=700)
 
-        if pyct is not None:
-            with pyct:
-                st.subheader('Python')
-                st.dataframe(filtered[filtered['Languages'] == 'python'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
-
-        if jsct is not None:
-            with jsct:
-                st.subheader('JavaScript')
-                st.dataframe(filtered[filtered['Languages'] == 'javascript'], use_container_width=True, column_config=column_config, column_order=column_order if mode == 'Side by Side' else column_order_detail, hide_index=True, height=700)
 
     #elif selected_tab == 'Compare':
     #    st.title('🚧 CanAiCode Compare')

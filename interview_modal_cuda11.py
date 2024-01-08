@@ -219,7 +219,7 @@ image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_llama2_pro_instruct_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_mixtral_turboderp_exl2_30bpw_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -228,17 +228,17 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-#RUNTIME = "exllama2"
+RUNTIME = "exllama2"
 #RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1, memory=80)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])

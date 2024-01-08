@@ -246,6 +246,9 @@ mixtral-8x7b-instruct-v0.1.Q3-K-M: { name: "Mixtral-8x7B-Instruct", size: "46B",
 LoneStriker-Mixtral-8x7B-Instruct-v0.1-2.4bpw-h6-exl2-main: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "EXL2-2.4", url: "https://huggingface.co/LoneStriker/Mixtral-8x7B-Instruct-v0.1-2.4bpw-h6-exl2" }
 LoneStriker-Mixtral-8x7B-Instruct-v0.1-3.0bpw-h6-exl2-main: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "EXL2-3.0", url: "https://huggingface.co/LoneStriker/Mixtral-8x7B-Instruct-v0.1-3.0bpw-h6-exl2" }
 TheBloke-Mixtral-8x7B-Instruct-v0.1-GPTQ: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GPTQ-4b" }
+mixtral-instruct-8x7b-2.10bpw: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GGUF-2.1b", url: "https://huggingface.co/ikawrakow/various-2bit-sota-gguf" }
+mixtral-instruct-8x7b-q2k: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GGUF-Q2_K-new", url: "https://huggingface.co/ikawrakow/mixtral-instruct-8x7b-quantized-gguf" }
+mixtral-instruct-8x7b-q3k-small: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GGUF-Q3_K_S-new", url: "https://huggingface.co/ikawrakow/mixtral-instruct-8x7b-quantized-gguf" }
 
 LoneStriker-dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2-main: { name: "Dolphin-2.5-Mixtral-8x7B", size: "46B", tags: ["mistral","dolphin"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2" }
 LoneStriker-dolphin-2.7-mixtral-8x7b-3.0bpw-h6-exl2-main: { name: "Dolphin-2.7-Mixtral-8x7B", size: "46B", tags: ["mistral","dolphin"], quant: "EXL2-3.0", url: "https://huggingface.co/LoneStriker/dolphin-2.7-mixtral-8x7b-3.0bpw-h6-exl2" }
