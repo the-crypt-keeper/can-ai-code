@@ -78,6 +78,8 @@ def download_llama2_chat_70b_exl2_2p55_model(): download_model('turboderp/Llama2
 def download_llama2_chat_70b_exl2_2p4_model(): download_model('turboderp/Llama2-70B-chat-exl2', revision = '2.4bpw')
 def download_llama2_chat_70b_exl2_4p0_model(): download_model('turboderp/Llama2-70B-chat-exl2', revision = '4.0bpw')
 
+def download_llama2_pro_instruct_model(): download_model('TencentARC/LLaMA-Pro-8B-Instruct')
+
 def download_codellama_instruct_34b_exl2_4p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '4.0bpw')
 def download_codellama_instruct_34b_exl2_3p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '3.0bpw')
 def download_codebooga_34b_exl2_4p25_model(): download_model('oobabooga/CodeBooga-34B-v0.1-EXL2-4.250b')
@@ -124,6 +126,7 @@ def download_mixtral_instruct_gptq_model(): download_model('TheBloke/Mixtral-8x7
 def download_mixtral_instruct_gptq_3bit_model(): download_model('TheBloke/Mixtral-8x7B-v0.1-GPTQ', revision='gptq-3bit-128g-actorder_True')
 def download_dolphin_mixtral_exl2_4bpw_model(): download_model('LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2')
 def download_dolphin_mistral_gptq_model(): download_model('TheBloke/dolphin-2.5-mixtral-8x7b-GPTQ')
+def download_mistral_instruct_squeezelm_4bpw_model(): download_model('squeeze-ai-lab/sq-mistral-7b-instruct-w4-s0')
 
 def download_dolphin_mistral_2p7_model(): download_model('cognitivecomputations/dolphin-2.7-mixtral-8x7b')
 def download_dolphin_mistral_2p7_exl2_3bpw_model(): download_model('LoneStriker/dolphin-2.7-mixtral-8x7b-3.0bpw-h6-exl2')
@@ -181,6 +184,8 @@ def download_nous_hermes_2_solar_model(): download_model('NousResearch/Nous-Herm
 def download_code_millenials_13b_model(): download_model('budecosystem/code-millenials-13b')
 def download_code_millenials_34b_model(): download_model('budecosystem/code-millenials-34b')
 
+def download_bagel_34b_0p2_model(): download_model('jondurbin/bagel-34b-v0.2')
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -214,7 +219,7 @@ image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_dolphin_mistral_2p7_exl2_3bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_llama2_pro_instruct_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -223,10 +228,10 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2"
+#RUNTIME = "exllama2"
 #RUNTIME = "hqq"
 #######################################
 

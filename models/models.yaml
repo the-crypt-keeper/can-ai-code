@@ -221,6 +221,7 @@ stabilityai-stablelm-3b-4e1t-fp16: { name: "StableLM-4e1t", size: "3B", tags: ["
 mistral-7b-v0.1.Q8-0: { name: "Mistral-0.1", size: "7B", quant: "GGUF-q8_0", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF" }
 mistralai-Mistral-7B-v0.1: { name: "Mistral-0.1", size: "7B", tags: ["mistral"] }
 mistralai-Mistral-7B-Instruct-v0.2: { name: "Mistral-Instruct-0.2", size: "7B", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
+squeeze-ai-lab-sq-mistral-7b-instruct-w4-s0: { name: "Mistral-Instruct-0.1", size: "7B", tags: ["mistral"], quant: "SQLM-4bpw", url: "https://huggingface.co/squeeze-ai-lab/sq-mistral-7b-instruct-w3-s0" }
 mistral-7b-instruct-v0.1.Q8-0: { name: "Mistral-Instruct-0.1", size: "7B", quant: "GGUF-q8_0", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
 mistral-7b-instruct-v0.1.Q5-K-M: { name: "Mistral-Instruct-0.1", size: "7B", quant: "GGUF-q5_kM", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF" }
 mistralai-Mistral-7B-Instruct-v0.1: { name: "Mistral-Instruct-0.1", size: "7B", tags: ["mistral"] }
@@ -293,6 +294,7 @@ TheBloke-Nous-Hermes-2-Yi-34B-AWQ: { name: "Nous Hermes 2 Yi", size: "34B", quan
 LoneStriker-Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi", size: "34B", quant: "EXL-3bpw", tags: ["yi"], url: "https://huggingface.co/LoneStriker/Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2" }
 LoneStriker-Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi", size: "34B", quant: "EXL-4bpw", tags: ["yi"], url: "https://huggingface.co/LoneStriker/Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2" }
 nous-hermes-2-yi-34b.Q4-K-M: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GGUF-Q4KM", tags: ["yi"], url: "https://huggingface.co/TheBloke/Nous-Hermes-2-Yi-34B-GGUF" }
+jondurbin-bagel-34b-v0.2: { name: "Bagel v0.2", size: "34B", tags: ["yi"] }
 
 TinyLlama-TinyLlama-1.1B-Chat-v1.0: { name: "TinyLlama v1.0 Chat", size: "1.1B", alias: ["TinyLlama-TinyLlama-1.1B-Chat-v1.0-fp16"] }
 
@@ -306,3 +308,5 @@ ajibawa-2023-Code-33B: { name: "ajibawa-2023-Code", size: "33B", url: "https://h
 ajibawa-2023-Python-Code-33B: { name: "ajibawa-2023-Python-Code", size: "33B", url: "https://huggingface.co/ajibawa-2023/Python-Code-33B"}
 
 NousResearch-Nous-Hermes-2-SOLAR-10.7B: { name: "Nous-Hermes-2-SOLAR", size: "10.7B", tags: ["solar"] }
+
+TencentARC-LLaMA-Pro-8B-Instruct: { name: "LLaMA Pro Instruct", size: "8B", tags: ["llama2"] }

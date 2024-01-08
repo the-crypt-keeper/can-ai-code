@@ -572,6 +572,8 @@ class InterviewVLLM:
         quantization = None
         if 'awq' in self.model_name.lower(): quantization = 'awq'
         if 'gptq' in self.model_name.lower(): quantization = 'gptq'
+        if 'sq-' in self.model_name.lower(): quantization = 'squeezellm'
+        
         dtype = 'bfloat16' if quantization is None else 'float16'
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         max_model_len = self.info.get('max_model_len', 2048)

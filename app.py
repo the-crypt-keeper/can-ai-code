@@ -62,6 +62,9 @@ def load_models():
         
         if not 'url' in model:
             model['url'] = 'https://huggingface.co/' + id.replace('-','/',1).replace('-fp16','')
+            
+        if not 'tags' in model:
+            model['tags'] = []
 
         model['id'] = id
         if 'alias' in model:
