@@ -103,6 +103,10 @@ def download_codellama_instruct_34b_fp16_model(): download_model('TheBloke/CodeL
 def download_wizardcoder_python_34b_fp16_model(): download_model('WizardLM/WizardCoder-Python-34B-V1.0')
 def download_codebooga_34b_fp16_model(): download_model('oobabooga/CodeBooga-34B-v0.1')
 def download_wizardcoder_33b_1p1_34b_fp16_model(): download_model('WizardLM/WizardCoder-33B-V1.1')
+def download_wizardcoder_1b_fp16_model(): download_model('WizardLM/WizardCoder-1B-V1.0') 
+def download_wizardcoder_3b_fp16_model(): download_model('WizardLM/WizardCoder-3B-V1.0') 
+def download_wizardcoder_python_7b_fp16_model(): download_model('WizardLM/WizardCoder-Python-7B-V1.0')
+def download_wizardcoder_python_13b_fp16_model(): download_model('WizardLM/WizardCoder-Python-13B-V1.0')
 
 def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Instruct-v0.1')
 def download_mistral_instruct_0p2_model(): download_model('mistralai/Mistral-7B-Instruct-v0.2')
@@ -186,6 +190,8 @@ def download_code_millenials_34b_model(): download_model('budecosystem/code-mill
 
 def download_bagel_34b_0p2_model(): download_model('jondurbin/bagel-34b-v0.2')
 
+def download_deepseek_moe_16b_chat_model(): download_model('deepseek-ai/deepseek-moe-16b-chat')
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -218,8 +224,9 @@ image = (
     )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
+    .pip_install('flash-attn==2.4.2')
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_mixtral_turboderp_exl2_30bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_wizardcoder_python_7b_fp16_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -228,10 +235,10 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2"
+#RUNTIME = "exllama2"
 #RUNTIME = "hqq"
 #######################################
 

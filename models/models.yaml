@@ -36,6 +36,10 @@ WizardCoder-15B-V1.0.Q5-0: { name: "WizardCoder", size: "15B", tags: ["bigcode",
 WizardCoder-15B-V1.0.Q5-1: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q5_1", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
 WizardCoder-15B-V1.0.Q8-0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "GGUF-Q8_0", url: "https://huggingface.co/mike-ravkine/WizardCoder-15B-V1.0-GGUF" }
 WizardLM-WizardCoder-33B-V1.1: { name: "WizardCoder v1.1", size: "33B", tags: ["deepseek","wizard"] }
+WizardLM-WizardCoder-Python-7B-V1.0: { name: "WizardCoder-Python", size: "7B", tags: ["bigcode","wizard"] }
+WizardLM-WizardCoder-Python-13B-V1.0: { name: "WizardCoder-Python", size: "13B", tags: ["bigcode","wizard"] }
+WizardLM-WizardCoder-1B-V1.0: { name: "WizardCoder", size: "1B", tags: ["bigcode","wizard"] }
+WizardLM-WizardCoder-3B-V1.0: { name: "WizardCoder", size: "3B", tags: ["bigcode","wizard"] }
 
 Salesforce-codegen2-1B-fp16: { name: 'Codegen2', size: '1B', tags: ['salesforce'] }
 Salesforce-codegen2-3-7B-fp16: { name: 'Codegen2', size: '3.7B', tags: ['salesforce'], url: "https://huggingface.co/Salesforce/codegen2-3_7B" }
@@ -279,6 +283,7 @@ deepseek-ai-deepseek-coder-6.7b-instruct: { name: "DeepSeek Coder Instruct", siz
 deepseek-ai-deepseek-coder-6.7b-instruct-fp16: { name: "DeepSeek Coder Instruct", size: "6.7B", tags: ["deepseek"], url: "https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-instruct" }
 TheBloke-deepseek-coder-6.7B-instruct-AWQ: { name: "DeepSeek Coder Instruct", size: "6.7B", tags: ["deepseek"], quant: "AWQ-4b", url: "https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ" }
 TheBloke-deepseek-coder-33B-instruct-AWQ: { name: "DeepSeek Coder Instruct", size: "33B", tags: ["deepseek"], quant: "AWQ-4b", url: "https://huggingface.co/TheBloke/deepseek-coder-33B-instruct-AWQ" }
+deepseek-ai-deepseek-moe-16b-chat-fp16: { name: "DeepSeek MoE Chat", size: "16B", tags: ["deepseek"], url: "https://huggingface.co/deepseek-ai/deepseek-moe-16b-chat" }
 
 ise-uiuc-Magicoder-S-DS-6.7B: { name: "Magicoder-S-DS", size: "6.7B", tags: ["magicoder","deepseek"], url: "https://huggingface.co/ise-uiuc/Magicoder-S-DS-6.7B" }
 ise-uiuc-Magicoder-DS-6.7B: { name: "Magicoder-DS", size: "6.7B", tags: ["magicoder","deepseek"], url: "https://huggingface.co/ise-uiuc/Magicoder-DS-6.7B" }

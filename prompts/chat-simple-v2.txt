@@ -1,0 +1,1 @@
+Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}. The code must start with ```{{language}} and end with ```. {% if language == "javascript" %} Do not return any HTML elements, only pure JS that can be run with NodeJS.{% endif %}
