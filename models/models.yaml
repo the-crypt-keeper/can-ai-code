@@ -200,8 +200,10 @@ jondurbin-airoboros-33b-gpt4-m2.0: { name: "Airboros-m2.0", size: "33B", tags: [
 jondurbin-airoboros-m-7b-3.1.2: { name: "Airboros-m-7b-3.1.2", size: "7B", tags: ["airoboros","mistral"] }
 TheBloke-Airoboros-M-7B-3.1.2-AWQ: { name: "Airboros-m-7b-3.1.2", size: "7B", quant: "AWQ-4b", tags: ["airoboros","mistral"] }
 
-budecosystem-code-millenials-13b: { name: "Code Millenials", size: "13B", tags: ["llama2"] }
-budecosystem-code-millenials-34b: { name: "Code Millenials", size: "34B", tags: ["codellama"] }
+budecosystem-code-millenials-1b-fp16: { name: "Code Millenials", size: "1B", tags: ["codemillenials"]  }
+budecosystem-code-millenials-3b-fp16: { name: "Code Millenials", size: "3B", tags: ["codemillenials"]  }
+budecosystem-code-millenials-13b: { name: "Code Millenials", size: "13B", tags: ["codellama","codemillenials"] }
+budecosystem-code-millenials-34b: { name: "Code Millenials", size: "34B", tags: ["codellama","codemillenials"] }
 
 tiiuae-falcon-7b-instruct-fp16: { name: "Falcon Instruct", size: "7B", tags: ["falcon"] }
 TheBloke-falcon-7b-instruct-GPTQ: { name: "Falcon Instruct", size: "7B", quant: "GPTQ-4b", tags: ["falcon"] }
