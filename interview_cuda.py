@@ -589,6 +589,8 @@ class InterviewVLLM:
         dtype = 'bfloat16' if quantization is None else 'float16'
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         max_model_len = self.info.get('max_model_len', 2048)
+        enforce_eager = self.info.get('enforce_eager', False)
+        
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
             import ray, torch
@@ -597,7 +599,7 @@ class InterviewVLLM:
             self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, tensor_parallel_size=self.gpu_split, trust_remote_code=True)
         else:
             print('Starting in single GPU mode..')
-            self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, trust_remote_code=True)
+            self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, trust_remote_code=True, enforce_eager=enforce_eager)
 
         eos_token_id = self.info.get('eos_token_id', None)
         if eos_token_id is not None:

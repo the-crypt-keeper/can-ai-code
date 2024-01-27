@@ -195,6 +195,7 @@ def download_bagel_34b_0p2_model(): download_model('jondurbin/bagel-34b-v0.2')
 def download_deepseek_moe_16b_chat_model(): download_model('deepseek-ai/deepseek-moe-16b-chat')
 
 def download_beyonder_4x7b_model(): download_model('mlabonne/Beyonder-4x7B-v2')
+def download_beyonder_4x7b_awq_model(): download_model('TheBloke/Beyonder-4x7B-v2-AWQ', info={ 'enforce_eager': True })
 
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -230,17 +231,16 @@ image = (
     .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
     .pip_install('flash-attn==2.4.2')
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_code_millenials_3b_model, secret=Secret.from_name("my-huggingface-secret"))
-    .pip_install('transformers==4.33')
+    .run_function(download_beyonder_4x7b_awq_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
@@ -249,8 +249,8 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1, memory=80)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])

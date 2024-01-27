@@ -7,7 +7,6 @@ import time
 import os
 from jinja2 import Template
 from pathlib import Path
-from transformers import AutoTokenizer
 
 def load_questions(interview='junior-v2'):
     module_dir = os.path.dirname(os.path.abspath(__file__))
@@ -46,6 +45,7 @@ if __name__ == "__main__":
     template = Template(open(args.template).read())
     
     if args.chat:
+        from transformers import AutoTokenizer
         template_name = 'chat-'+args.chat.replace('/','-').replace('_','-')
         tokenizer = AutoTokenizer.from_pretrained(args.chat)
     else:
