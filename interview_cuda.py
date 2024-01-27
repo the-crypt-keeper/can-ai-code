@@ -33,7 +33,7 @@ class InterviewTransformers:
         self.batch = False
 
     def load(self):
-        from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, GPTQConfig
+        from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, GPTQConfig, pipeline
         import torch
 
         # the gptq loader has a bug where it tries to re-download things if this is enabled
@@ -44,8 +44,9 @@ class InterviewTransformers:
         use_accelerate = self.info.get('accelerate', True)
         if 'gptq' in self.model_name.lower():
             use_accelerate = False
+        use_pipeline = self.info.get('pipeline', False)
 
-        print('Remote model', self.model_name, ' info', self.info, 'use_accelerate', use_accelerate)
+        print('Remote model', self.model_name, ' info', self.info, 'use_accelerate', use_accelerate, 'use_pipeline', use_pipeline)
 
         t0 = time.time()
         tokenizer_model = self.info.get('tokenizer', self.model_name)
@@ -56,13 +57,21 @@ class InterviewTransformers:
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
                                                 load_in_4bit = self.quant in [QUANT_FP4, QUANT_NF4],
                                                 bnb_4bit_quant_type = "nf4" if self.quant == QUANT_NF4 else "fp4")
-        if use_accelerate:
+               
+        if use_pipeline:
+            print('Loading model with pipeline...')
+            self.pipeline = pipeline("text-generation", model=self.model_name, model_kwargs={"torch_dtype": torch.float16 })
+            self.model = None
+            mem_usage = self.pipeline.model.get_memory_footprint()
+        elif use_accelerate:
             print('Loading model with accelerate...')
             self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), trust_remote_code=True)
+            mem_usage = self.model.get_memory_footprint()
         else:
             print('Loading model ...')
             self.model = AutoModelForCausalLM.from_pretrained(self.model_name, trust_remote_code=True, revision=self.info.get('revision',None), torch_dtype="auto")
             self.model.cuda()
+            mem_usage = self.model.get_memory_footprint()
 
         # if passed a path, take the last dir name otherwise replace / with -
         if self.model_name[0] == '/':
@@ -73,7 +82,7 @@ class InterviewTransformers:
         if self.quant in quant_suffix:
             self.info['model_name'] += '-' + quant_suffix[self.quant]
 
-        print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")        
+        print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s used {mem_usage/1024/1024:.2f}MB of memory")        
 
     def generate(self, prompt, params, gen_args = {}):
         from transformers import GenerationConfig
@@ -120,10 +129,13 @@ class InterviewTransformers:
             generate_args['stopping_criteria'] = StoppingCriteriaList([StopSequenceCriteria(self.tokenizer, generate_args['stop_seq'])])
             del generate_args['stop_seq']
             
-        inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
-        input_len = inputs.size()[-1]
-        sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
-        answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False)
+        if self.model is None:           
+            answer = self.pipeline(prompt, **params)
+        else:
+            inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
+            input_len = inputs.size()[-1]
+            sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
+            answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False)
        
         eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>', '<EOT>', '<empty_output>', '<|im_end|>', '[EOS]' ]
         eos_token = self.tokenizer.decode([generation_config.eos_token_id])
