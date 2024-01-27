@@ -18,17 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**1/22** Re-evaluate budecosystem/code-millenials family (1B, 3B, 13B, 34B) with corrected prompts.
+
 **1/12** Evaluate deepseek-ai/deepseek-moe-16b-chat and some older WizardCoder models.
 
 **1/8** Evaluate bagel-34b-v0.2, LLaMA-Pro-8B-Instruct, SqueezeLLM quant of Mistral-Instruct and fix minor tag bug in the leaderboard app.  Evaluated new GGUF quants of Mixtral including the 2.1bit quip-sharp inspired one, it does quite well on `junior-v2` but falls apart on `senior` compared to q2k.
 
 **1/6** Fixed a number of bugs in the evaluation and extraction scripts, re-run all evaluations (scores generally go up a little bit).  Introduce the `senior` interview, still a work in progress trying to tune the difficulty level.
-
-**1/4** Evaluate WizardLM/WizardCoder-33B-V1.1 (FP16), dolphin-2.7-mixtral-8x7b (EXL2 3 and 4 bits), budecosystem/code-millenials-13b and 34b (both at FP16).
-
-**1/2** Evaluate NousResearch/Nous-Hermes-2-SOLAR-10.7B.
-
-**1/1** Evaluate ajibawa-2023/Code family (all good except Python-33B potentially has some issue).
 
 ## Test Suites
 
