@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**2/01** Evaluate cognitivecomputations/dolphin-2.6-mistral-7b-dpo-laser.
+
 **1/23** Evaluate mlabonne/Beyonder-4x7B-v2 (AWQ only, FP16 was mega slow).
 
 **1/22** Re-evaluate budecosystem/code-millenials family (1B, 3B, 13B, 34B) with corrected prompts.
