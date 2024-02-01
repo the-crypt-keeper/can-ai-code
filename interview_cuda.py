@@ -614,8 +614,7 @@ class InterviewVLLM:
             except Exception as e:
                 print('WARNING: generate config could not be auto-loaded from model:', str(e))
 
-        if eos_token_id is not None:
-            self.llm.llm_engine.tokenizer.eos_token_id = int(eos_token_id)
+        self.stop_token_ids = [int(eos_token_id)] if eos_token_id is not None else []
         
         self.info['model_name'] = self.model_name
 
@@ -625,6 +624,7 @@ class InterviewVLLM:
         from vllm import SamplingParams
 
         sampling_params = SamplingParams(
+            stop_token_ids=self.stop_token_ids,
             temperature=params.get('temperature', 1.0),
             top_k=params.get('top_k', 1000),
             top_p=params.get('top_p', 1.0),

@@ -87,10 +87,8 @@ def download_codebooga_34b_exl2_3p0_model(): download_model('LoneStriker/CodeBoo
 def download_codebooga_34b_exl2_4p0_model(): download_model('LoneStriker/CodeBooga-34B-v0.1-4.0bpw-h6-exl2')
 def download_codebooga_34b_exl2_5p0_model(): download_model('LoneStriker/CodeBooga-34B-v0.1-5.0bpw-h6-exl2')
 def download_speechless_codellama_34b_model(): download_model('TheBloke/speechless-codellama-34b-v2.0-AWQ')
-
 def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
-
 def download_codellama_python_7b_model(): download_model('TheBloke/CodeLlama-7B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_codellama_python_13b_model(): download_model('TheBloke/CodeLlama-13B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_nous_hermes_code_13b_model(): download_model('Undi95/Nous-Hermes-13B-Code', info = { 'tokenizer': 'NousResearch/Nous-Hermes-Llama2-13b' })
@@ -107,6 +105,8 @@ def download_wizardcoder_1b_fp16_model(): download_model('WizardLM/WizardCoder-1
 def download_wizardcoder_3b_fp16_model(): download_model('WizardLM/WizardCoder-3B-V1.0') 
 def download_wizardcoder_python_7b_fp16_model(): download_model('WizardLM/WizardCoder-Python-7B-V1.0')
 def download_wizardcoder_python_13b_fp16_model(): download_model('WizardLM/WizardCoder-Python-13B-V1.0')
+def download_codellama_instruct_70b_awq_model(): download_model('TheBloke/CodeLlama-70B-Instruct-AWQ', info={"eos_token_id": 32015 })
+def download_codellama_instruct_70b_gptq_model(): download_model('TheBloke/CodeLlama-70B-Instruct-GPTQ', info={"eos_token_id": 32015 })
 
 def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Instruct-v0.1')
 def download_mistral_instruct_0p2_model(): download_model('mistralai/Mistral-7B-Instruct-v0.2')
@@ -135,6 +135,8 @@ def download_mistral_instruct_squeezelm_4bpw_model(): download_model('squeeze-ai
 def download_dolphin_mistral_2p7_model(): download_model('cognitivecomputations/dolphin-2.7-mixtral-8x7b')
 def download_dolphin_mistral_2p7_exl2_3bpw_model(): download_model('LoneStriker/dolphin-2.7-mixtral-8x7b-3.0bpw-h6-exl2')
 def download_dolphin_mistral_2p7_exl2_4bpw_model(): download_model('LoneStriker/dolphin-2.7-mixtral-8x7b-4.0bpw-h6-exl2')
+
+def download_dolphin_mistral_2p6_dpo_laser_model(): download_model('cognitivecomputations/dolphin-2.6-mistral-7b-dpo-laser')
 
 def download_mixtral_hqq_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-2bit_g16_s128-HQQ')
 def download_mixtral_hqq_moe_2bpw_model(): download_model('mobiuslabsgmbh/Mixtral-8x7B-Instruct-v0.1-hf-attn-4bit-moe-2bit-HQQ')
@@ -202,7 +204,7 @@ image = (
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
         "torch==2.1.2",
-        "transformers==4.36.1",
+        "transformers==4.37.2",
         "optimum==1.15.0",
         "tiktoken==0.5.2",
         "bitsandbytes==0.41.3",
@@ -215,23 +217,32 @@ image = (
         "hf-hub-ctranslate2>=2.0.8",
         "ctranslate2>=3.16.0",
         "xformers==0.0.23.post1+cu118",
-        "https://github.com/vllm-project/vllm/releases/download/v0.2.6/vllm-0.2.6+cu118-cp310-cp310-manylinux1_x86_64.whl",
-        "https://github.com/turboderp/exllamav2/releases/download/v0.0.11/exllamav2-0.0.11+cu118-cp310-cp310-linux_x86_64.whl",
+        #"https://github.com/vllm-project/vllm/releases/download/v0.3.0/vllm-0.3.0+cu118-cp310-cp310-manylinux1_x86_64.whl",
+        "https://github.com/turboderp/exllamav2/releases/download/v0.0.12/exllamav2-0.0.12+cu118-cp310-cp310-linux_x86_64.whl",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )  
     .pip_install(
         "auto-gptq==0.6.0",
+        "flash-attn==2.4.2",        
         extra_index_url="https://huggingface.github.io/autogptq-index/whl/cu118/"
+    )
+    .pip_install(
+        "git+https://github.com/vllm-project/vllm.git@v0.3.0",
+        index_url="https://download.pytorch.org/whl/cu118",
+        extra_index_url="https://pypi.org/simple"
     )
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
-    .pip_install("git+https://github.com/mobiusml/hqq.git@0.1.1")
-    .pip_install('flash-attn==2.4.2')
+    # .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
+    # .pip_install(
+    #     "git+https://github.com/mobiusml/hqq.git@0.1.1",
+    #     index_url="https://download.pytorch.org/whl/cu118",
+    #     extra_index_url="https://pypi.org/simple"        
+    # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_beyonder_4x7b_awq_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_instruct_70b_gptq_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -250,7 +261,7 @@ RUNTIME = "vllm"
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
 #gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1, memory=40)
+gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
