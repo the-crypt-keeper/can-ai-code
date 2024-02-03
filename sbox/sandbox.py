@@ -42,13 +42,15 @@ def extract_function_info(language, input_string):
 def run_shell_command(command, stdout_only = False):
     try:
         # Run the shell command and capture its output
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        result = subprocess.run(command, shell=True, capture_output=True)     
+        stdout_utf8 = result.stdout.decode('utf-8', 'ignore')
+        stderr_utf8 = result.stderr.decode('utf-8', 'ignore')
 
         # Get the captured output
-        output = result.stdout.strip()
+        output = stdout_utf8.strip()
 
         if not stdout_only and (output == '' or result != 0):
-            output += result.stderr.strip()
+            output += stderr_utf8.strip()
 
         # Get the return value
         return_value = result.returncode
