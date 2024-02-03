@@ -107,6 +107,10 @@ def download_wizardcoder_python_7b_fp16_model(): download_model('WizardLM/Wizard
 def download_wizardcoder_python_13b_fp16_model(): download_model('WizardLM/WizardCoder-Python-13B-V1.0')
 def download_codellama_instruct_70b_awq_model(): download_model('TheBloke/CodeLlama-70B-Instruct-AWQ', info={"eos_token_id": 32015 })
 def download_codellama_instruct_70b_gptq_model(): download_model('TheBloke/CodeLlama-70B-Instruct-GPTQ', info={"eos_token_id": 32015 })
+def download_codellama_instruct_70b_exl2_2p65bpw_model(): download_model('LoneStriker/CodeLlama-70b-Instruct-hf-2.65bpw-h6-exl2', info={"eos_token_id": 32015})
+def download_codellama_instruct_70b_exl2_3p5bpw_model(): download_model('LoneStriker/CodeLlama-70b-Instruct-hf-3.5bpw-h6-exl2', info={"eos_token_id": 32015})
+def download_codellama_instruct_70b_exl2_4p0bpw_model(): download_model('LoneStriker/CodeLlama-70b-Instruct-hf-4.0bpw-h6-exl2', info={"eos_token_id": 32015})
+def download_codellama_instruct_70b_exl2_5p0bpw_model(): download_model('LoneStriker/CodeLlama-70b-Instruct-hf-5.0bpw-h6-exl2', info={"eos_token_id": 32015})
 
 def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Instruct-v0.1')
 def download_mistral_instruct_0p2_model(): download_model('mistralai/Mistral-7B-Instruct-v0.2')
@@ -242,7 +246,7 @@ image = (
     #     extra_index_url="https://pypi.org/simple"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codellama_instruct_70b_gptq_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_instruct_70b_exl2_4p0bpw_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -251,10 +255,10 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-#RUNTIME = "exllama2"
+RUNTIME = "exllama2"
 #RUNTIME = "hqq"
 #######################################
 
