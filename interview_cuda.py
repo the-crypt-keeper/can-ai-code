@@ -395,7 +395,7 @@ class InterviewExllama2:
         self.gpu_split = gpu_split
         self.info = model_info
         
-        self.batch_size = self.info.get('batch_size', 4)
+        self.batch_size = self.info.get('batch_size', 1)
 
         self.tokenizer = None
         self.model = None

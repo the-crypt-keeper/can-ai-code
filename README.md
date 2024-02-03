@@ -101,14 +101,14 @@ See [params/](params/) for all params references in the leaderboard.
 | Quantization Type        | Script                  | Dependency              |
 |--------------------------|-------------------------|-------------------------|
 | GGUF                     | `interview-llamacpp.py` | llamacpp or ggml binary |
-| GPTQ (AutoGptQ)          | `interview-cuda.py`     | auto-gptq==0.5.1        |
+| GPTQ (AutoGptQ)          | `interview-cuda.py`     | auto-gptq==0.6.0        |
 | GPTQ (ExLlama)           | `interview-cuda.py`     | exllama @ 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d |
-| EXL2, GPTQ (ExLlama2)    | `interview-cuda.py`     | exllamav2 @ 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7 |
+| EXL2, GPTQ (ExLlama2)    | `interview-cuda.py`     | exllamav2 @ 0.0.12 |
 | HQQ                      | `interview-cuda.py`     | hqq @ 0.1.1             |
-| AWQ, FP16 (vLLM)         | `interview-cuda.py`     | vllm==0.2.6             |
+| AWQ, FP16 (vLLM)         | `interview-cuda.py`     | vllm==0.3.0             |
 | CTranslate2              | `interview-cuda.py`     | ctranslate2>=3.16.0     |
 | bitsandbytes             | `interview-cuda.py`     | bitsandbytes==0.41.3    |
-| FP16 (Transformers)      | `interview-cuda.py`     | transformers==4.36.1    |
+| FP16 (Transformers)      | `interview-cuda.py`     | transformers==4.37.2    |
 
 ### Running on Modal
 

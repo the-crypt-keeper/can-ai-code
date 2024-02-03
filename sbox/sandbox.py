@@ -49,7 +49,7 @@ def run_shell_command(command, stdout_only = False):
         # Get the captured output
         output = stdout_utf8.strip()
 
-        if not stdout_only and (output == '' or result != 0):
+        if not stdout_only or (result != 0 and output == ''):
             output += stderr_utf8.strip()
 
         # Get the return value

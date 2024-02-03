@@ -84,7 +84,7 @@ class InterviewLlamaCpp:
 
         answer, rv = run_shell_command(cmdline, stdout_only=True)
         if rv != 0:
-            print('Failed to execute:', output)
+            print('Failed to execute:', answer)
             exit(1)
 
         # remove prompt from answer
