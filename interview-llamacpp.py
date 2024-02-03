@@ -18,7 +18,7 @@ class InterviewLlamaCpp:
         self.batch = False
 
         self.model = model_name
-        self.threads = self.info.get('threads', 16)
+        self.threads = self.info.get('threads', 14)
         self.main = self.info.get('main', '~/llama.cpp/main')
         self.args = self.info.get('args', '-ngl 99')
         self.ssh = self.info.get('ssh', '')
@@ -34,6 +34,7 @@ class InterviewLlamaCpp:
             'temp': 'temperature',
             'top_k': 'top_k',
             'top_p': 'top_p',
+            'min_p': 'min_p',
             'repeat_last_n': 'repeat_last_n',
             'repeat_penalty': 'repetition_penalty',
             'mirostat': 'mirostat',
@@ -87,9 +88,10 @@ class InterviewLlamaCpp:
             exit(1)
 
         # remove prompt from answer
-        start_offset = max(answer.rfind(prompt), 0)
-        start_offset += len(prompt)
-        answer = answer[start_offset:]
+        if answer.rfind(prompt) > -1:
+            start_offset = answer.rfind(prompt)
+            start_offset += len(prompt)
+            answer = answer[start_offset:]
 
         # for starcoder remove the trailer
         end_offset = answer.find('\nmain: mem per token =')
@@ -105,7 +107,7 @@ class InterviewLlamaCpp:
         info_copy['sampling_params'] = cmdline
         return answer, info_copy
 
-def cli(input: str, model:str, params: str, templateout: str = "", iterations: int=1, info: str = "{}", main: str = "~/llama.cpp/main", threads: int = 16, ssh: str = ""):
+def cli(input: str, model:str, params: str, templateout: str = "", iterations: int=1, info: str = "{}", main: str = "~/llama.cpp/main", threads: int = 14, ssh: str = ""):
 
     info_cmdline = json.loads(info) if isinstance(info, str) else info
     info_cmdline['main'] = main
