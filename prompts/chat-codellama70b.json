@@ -1,0 +1,4 @@
+[
+    {"role": "system", "content": "You are a helpful and honest code assistant expert in {{language}}. Please, provide all answers to programming questions in {{language}}"},
+    {"role": "user", "content": "Write a function {{Signature}} {{Input}} that returns {{Output}}."}
+]

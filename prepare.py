@@ -39,14 +39,19 @@ if __name__ == "__main__":
     parser.add_argument('--chat',type=str, help='outer chat prompt huggingface model name')
     args = parser.parse_args()
     
-    if args.chat and not args.template: args.template = default='prompts/chat-simple.txt'
+    if args.chat and not args.template: args.template = 'prompts/chat-simple.txt'
     assert(args.template)
-
-    template = Template(open(args.template).read())
+    
+    template_text = open(args.template).read()
+    if 'json' in args.template:
+        message_template = json.loads(template_text)
+    else:
+        message_template = [{'role': 'user', 'content': template_text}]
+    for msg in message_template: msg['content'] = Template(msg['content'])
     
     if args.chat:
         from transformers import AutoTokenizer
-        template_name = 'chat-'+args.chat.replace('/','-').replace('_','-')
+        template_name = Path(args.template).stem+'-'+args.chat.replace('/','-').replace('_','-')
         tokenizer = AutoTokenizer.from_pretrained(args.chat)
     else:
         template_name = Path(args.template).stem
@@ -56,9 +61,15 @@ if __name__ == "__main__":
     outputs = []
     for test in load_questions(interview=args.interview):
         for language in args.language.split(','):
-            prompt = template.render({'language': language, **test})
+            messages = []
+            for msg in message_template:
+                content = msg['content'].render({'language': language, **test})
+                messages.append({'role': msg['role'], 'content': content})
+            
             if tokenizer:
-                prompt = tokenizer.apply_chat_template([{'role': 'user', 'content': prompt}], tokenize=False, add_generation_prompt=True)
+                prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+            else:
+                prompt = '\n'.join([msg['content'] for msg in messages])
             
             output = test.copy()
             del output['Checks']
