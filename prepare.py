@@ -37,6 +37,7 @@ if __name__ == "__main__":
     parser.add_argument('--interview', type=str, default='junior-v2', help='interview to prepare')
     parser.add_argument('--template', type=str, help='prompt template file')
     parser.add_argument('--chat',type=str, help='outer chat prompt huggingface model name')
+    parser.add_argument('--fixtsp', action='store_true', help='fix trailing spaces in prompt')
     args = parser.parse_args()
     
     if args.chat and not args.template: args.template = 'prompts/chat-simple.txt'
@@ -56,6 +57,9 @@ if __name__ == "__main__":
     else:
         template_name = Path(args.template).stem
         tokenizer = None
+        
+    if args.fixtsp:
+        template_name += '-fixtsp'
 
     output_filename = f"results/prepare_{args.interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
     outputs = []
@@ -70,6 +74,9 @@ if __name__ == "__main__":
                 prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
             else:
                 prompt = '\n'.join([msg['content'] for msg in messages])
+                
+            if args.fixtsp and prompt[-1] == ' ':
+                prompt = prompt[:-1]
             
             output = test.copy()
             del output['Checks']
