@@ -390,11 +390,13 @@ class InterviewExllama:
 ##  exllama2 Adapter  ##
 ########################
 class InterviewExllama2:
-    def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False):
+    def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False, cache_8bit = False):
         self.model_name = model_name
         self.gpu_split = gpu_split
         self.info = model_info
+        
         self.token_healing = token_healing
+        self.cache_8bit = cache_8bit
         
         self.batch_size = self.info.get('batch_size', 1)
 
@@ -425,6 +427,7 @@ class InterviewExllama2:
             ExLlamaV2,
             ExLlamaV2Config,
             ExLlamaV2Cache,
+            ExLlamaV2Cache_8bit,
             ExLlamaV2Tokenizer,
         )
 
@@ -442,7 +445,11 @@ class InterviewExllama2:
 
         print("Loading model...")
         self.model = ExLlamaV2(config)
-        self.cache = ExLlamaV2Cache(self.model, max_seq_len=2048, lazy=True, batch_size = self.batch_size)
+        if self.cache_8bit:
+            print("Using 8-bit KV cache...")
+            self.cache = ExLlamaV2Cache_8bit(self.model, max_seq_len=2048, lazy=True, batch_size = self.batch_size)
+        else:
+            self.cache = ExLlamaV2Cache(self.model, max_seq_len=2048, lazy=True, batch_size = self.batch_size)
         if self.info.get('low_mem', False): 
             self.model.load()
         else:

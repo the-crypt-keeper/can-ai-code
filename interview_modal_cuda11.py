@@ -246,7 +246,7 @@ image = (
     #     extra_index_url="https://pypi.org/simple"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codellama_instruct_70b_exl2_4p0bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_instruct_70b_exl2_5p0bpw_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -260,6 +260,7 @@ stub = Stub(image=image)
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
 RUNTIME = "exllama2-th"
+#RUNTIME = "exllama2-8b-th"
 #RUNTIME = "hqq"
 #######################################
 
@@ -288,8 +289,9 @@ class ModalWrapper:
             gpu_split = '17,24' if gpu_request.count == 2 else None
             self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME[0:8] == "exllama2":
-            token_healing = '-th' in RUNTIME            
-            self.wrapper = InterviewExllama2(self.info['model_name'], self.info, token_healing=token_healing)
+            token_healing = '-th' in RUNTIME
+            cache_8bit = '8b' in RUNTIME
+            self.wrapper = InterviewExllama2(self.info['model_name'], self.info, token_healing=token_healing, cache_8bit=cache_8bit)
         elif RUNTIME == "awq":
             if self.info.get('big_model'):
                 gpu_split = '0,1' if gpu_request.count == 2 else '0,cpu'
