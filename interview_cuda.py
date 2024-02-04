@@ -390,10 +390,11 @@ class InterviewExllama:
 ##  exllama2 Adapter  ##
 ########################
 class InterviewExllama2:
-    def __init__(self, model_name, model_info = {}, gpu_split=None):
+    def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False):
         self.model_name = model_name
         self.gpu_split = gpu_split
         self.info = model_info
+        self.token_healing = token_healing
         
         self.batch_size = self.info.get('batch_size', 1)
 
@@ -408,6 +409,17 @@ class InterviewExllama2:
         import sys
         sys.path += ["/repositories/exllamav2","../exllamav2"]
         import os
+        
+        # monkey-patch a fix for https://github.com/the-crypt-keeper/can-ai-code/issues/114
+        from exllamav2 import compat
+        original_test_gpu_peer_copy = compat.test_gpu_peer_copy
+        def safe_test_gpu_peer_copy(x,y):
+            try:
+                return original_test_gpu_peer_copy(x,y)
+            except Exception as e:
+                print('test_gpu_peer_copy() failed: ', str(e))
+                return False
+        compat.test_gpu_peer_copy = safe_test_gpu_peer_copy        
 
         from exllamav2 import (
             ExLlamaV2,
@@ -568,7 +580,14 @@ class InterviewExllama2:
         collected_outputs = []
         for b, batch in enumerate(batches):
             if len(batches) > 1: print(f"Batch {b + 1} of {len(batches)}...")
-            outputs = generator.generate_simple(batch, settings, max_new_tokens, seed = self.info.get('seed', 0), encode_special_tokens=True, decode_special_tokens=True, stop_text=stop_text)
+            outputs = generator.generate_simple(batch,
+                                                settings,
+                                                max_new_tokens,
+                                                seed = self.info.get('seed', 0),
+                                                encode_special_tokens=True,
+                                                decode_special_tokens=True,
+                                                token_healing=self.token_healing,
+                                                stop_text=stop_text)
 
             trimmed_outputs = [o[len(p):] for p, o in zip(batch, outputs)]
             collected_outputs += trimmed_outputs      
@@ -945,8 +964,9 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         model = InterviewAutoGPTQ(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'exllama':
         model = InterviewExllama(model_name, model_info, gpu_split=gpu_split)
-    elif runtime == 'exllama2':
-        model = InterviewExllama2(model_name, model_info, gpu_split=gpu_split)
+    elif runtime[0:8] == 'exllama2':
+        token_healing = '-th' in runtime
+        model = InterviewExllama2(model_name, model_info, gpu_split=gpu_split, token_healing=token_healing)
     elif runtime == 'awq':
         model = InterviewAWQ(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'hqq':

@@ -246,7 +246,7 @@ image = (
     #     extra_index_url="https://pypi.org/simple"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codellama_instruct_70b_exl2_3p5bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_instruct_70b_exl2_4p0bpw_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -258,14 +258,15 @@ stub = Stub(image=image)
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2"
+#RUNTIME = "exllama2"
+RUNTIME = "exllama2-th"
 #RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1, memory=80)
+gpu_request = gpu.A10G(count=2)
+#gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
@@ -286,9 +287,9 @@ class ModalWrapper:
         elif RUNTIME == "exllama":
             gpu_split = '17,24' if gpu_request.count == 2 else None
             self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)
-        elif RUNTIME == "exllama2":
-            #
-            self.wrapper = InterviewExllama2(self.info['model_name'], self.info)
+        elif RUNTIME[0:8] == "exllama2":
+            token_healing = '-th' in RUNTIME            
+            self.wrapper = InterviewExllama2(self.info['model_name'], self.info, token_healing=token_healing)
         elif RUNTIME == "awq":
             if self.info.get('big_model'):
                 gpu_split = '0,1' if gpu_request.count == 2 else '0,cpu'
