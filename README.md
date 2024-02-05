@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**2/05** Improve exllamav2 integration (support token healing and 8bit cache). Evaluate stabilityai/stable-code-3b at completion and fim tasks.  Working on a big CodeLlama-70b eval, stay tuned!
+
 **2/01** Evaluate cognitivecomputations/dolphin-2.6-mistral-7b-dpo-laser.
 
 **1/23** Evaluate mlabonne/Beyonder-4x7B-v2 (AWQ only, FP16 was mega slow).

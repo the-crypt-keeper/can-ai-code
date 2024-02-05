@@ -223,6 +223,7 @@ falcon-180b-gradio: { name: "Falcon Chat", size: "180B", tags: ["falcon"], url: 
 
 stabilityai-stablecode-instruct-alpha-3b-fp16: { name: "StableCode Instruct Alpha", size: "3B", tags: ["stablecode"] }
 stabilityai-stablelm-3b-4e1t-fp16: { name: "StableLM-4e1t", size: "3B", tags: ["stablecode"], url: "https://huggingface.co/stabilityai/stablelm-3b-4e1t" }
+stabilityai-stable-code-3b-fp16: { name: "StableCode", size: "3B", tags: ["stablecode"], url: "https://huggingface.co/stabilityai/stable-code-3b" }
 
 mistral-7b-v0.1.Q8-0: { name: "Mistral-0.1", size: "7B", quant: "GGUF-q8_0", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF" }
 mistralai-Mistral-7B-v0.1: { name: "Mistral-0.1", size: "7B", tags: ["mistral"] }

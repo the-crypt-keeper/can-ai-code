@@ -59,6 +59,7 @@ def download_losslessmegacoder_7b_model(): download_model('rombodawg/LosslessMeg
 def download_losslessmegacoder_13b_model(): download_model('rombodawg/LosslessMegaCoder-llama2-13b-mini')
 def download_decicoder_1b_model(): download_model('Deci/DeciCoder-1b')
 def download_stablecode_completion_alpha_3b_model(): download_model('stabilityai/stablecode-completion-alpha-3b')
+def download_stablecode_3b_model(): download_model('stabilityai/stable-code-3b', ignore_patterns=["*.gguf"], info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_stablelm_3b_model(): download_model('stabilityai/stablelm-3b-4e1t')
 
 def download_refact_1b_model(): download_model('smallcloudai/Refact-1_6B-fim')
@@ -246,31 +247,32 @@ image = (
     #     extra_index_url="https://pypi.org/simple"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codellama_instruct_70b_exl2_5p0bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_stablecode_3b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
-RUNTIME = "exllama2-th"
+#RUNTIME = "exllama2-th"
 #RUNTIME = "exllama2-8b-th"
 #RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
-#gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.T4(count=1)
+#gpu_request = gpu.L4(count=2)
+#gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
-@stub.cls(gpu=gpu_request, cpu=8, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
+@stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
 class ModalWrapper:
     def __enter__(self):
         self.info = json.load(open('./_info.json'))
