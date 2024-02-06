@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**2/06** Evaluate upstage/SOLAR-10.7B-Instruct-v1.0.
+
 **2/06** Evaluate CodeLlama-Instruct-70B AWQ, GPTQ and EXL2.  GGUF quants seem to perform very poorly and suspect something may be wrong with my GGUF test harness, so holding off on publishing those results.  Update leaderboard app to show all quants seperately by default.
 
 **2/05** Improve exllamav2 integration (support token healing and 8bit cache). Evaluate stabilityai/stable-code-3b at completion and fim tasks.  Working on a big CodeLlama-70b eval, stay tuned!

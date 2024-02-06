@@ -191,6 +191,7 @@ def download_openllamav2_3b_model(): download_model('openlm-research/open_llama_
 def download_openllamav2_7b_model(): download_model('openlm-research/open_llama_7b_v2', info = { 'max_model_len': 2048, 'tokenizer_args': { 'use_fast': False }, 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_openllamav2_instruct_7b_model(): download_model('VMware/open-llama-7b-v2-open-instruct', info = { 'max_model_len': 2048, 'tokenizer_args': { 'use_fast': False }, 'generate_args': { 'stop_seq': ["\n#","\n//"] }})
 
+def download_solar_instruct_model(): download_model('upstage/SOLAR-10.7B-Instruct-v1.0')
 def download_nous_hermes_2_solar_model(): download_model('NousResearch/Nous-Hermes-2-SOLAR-10.7B', info={"eos_token_id": 32000 })
 
 def download_code_millenials_13b_model(): download_model('budecosystem/code-millenials-13b')
@@ -248,7 +249,7 @@ image = (
     #     extra_index_url="https://pypi.org/simple"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codellama_instruct_70b_exl2_3p0bpw_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_solar_instruct_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -257,11 +258,11 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
-RUNTIME = "exllama2-th"
+#RUNTIME = "exllama2-th"
 #RUNTIME = "exllama2-8b-th"
 #RUNTIME = "hqq"
 #######################################
@@ -269,8 +270,8 @@ RUNTIME = "exllama2-th"
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
 #gpu_request = gpu.L4(count=2)
-gpu_request = gpu.A10G(count=2)
-#gpu_request = gpu.A100(count=1, memory=80)
+#gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])

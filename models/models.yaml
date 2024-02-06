@@ -330,5 +330,6 @@ ajibawa-2023-Code-33B: { name: "ajibawa-2023-Code", size: "33B", url: "https://h
 ajibawa-2023-Python-Code-33B: { name: "ajibawa-2023-Python-Code", size: "33B", url: "https://huggingface.co/ajibawa-2023/Python-Code-33B"}
 
 NousResearch-Nous-Hermes-2-SOLAR-10.7B: { name: "Nous-Hermes-2-SOLAR", size: "10.7B", tags: ["solar"] }
+upstage-SOLAR-10.7B-Instruct-v1.0: { name: "SOLAR-Instruct", size: "10.7B", tags: ["solar"] }
 
 TencentARC-LLaMA-Pro-8B-Instruct: { name: "LLaMA Pro Instruct", size: "8B", tags: ["llama2"] }
