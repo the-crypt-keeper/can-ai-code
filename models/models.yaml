@@ -163,6 +163,14 @@ TheBloke-Phind-CodeLlama-34B-v2-GPTQ: { name: "Phind-CodeLlama v2", size: "34B",
 TheBloke-speechless-codellama-34b-v2.0-AWQ: { name: "Speechless CodeLlama v2", size: "34B", tags: ["codellama"], url: "https://huggingface.co/TheBloke/speechless-codellama-34b-v2.0-AWQ", quant: "AWQ" }
 Phind-Phind-CodeLlama-34B-v2: { name: "Phind-CodeLlama v2", size: "34B", tags: ["codellama"] }
 
+TheBloke-CodeLlama-70B-Instruct-GPTQ: { name: "CodeLlama-Instruct", size: "70B", tags: ["codellama"], quant: "GPTQ-4b" }
+TheBloke-CodeLlama-70B-Instruct-AWQ: { name: "CodeLlama-Instruct", size: "70B", tags: ["codellama"], quant: "AWQ-4b" }
+LoneStriker-CodeLlama-70b-Instruct-hf-2.65bpw-h6-exl2-main: { name: "CodeLlama-Instruct", size: "70B", tags: ["codellama"], quant: "EXL2-2.65" }
+LoneStriker-CodeLlama-70b-Instruct-hf-3.0bpw-h6-exl2-main: { name: "CodeLlama-Instruct", size: "70B", tags: ["codellama"], quant: "EXL2-3.0" }
+LoneStriker-CodeLlama-70b-Instruct-hf-3.5bpw-h6-exl2-main: { name: "CodeLlama-Instruct", size: "70B", tags: ["codellama"], quant: "EXL2-3.5" }
+LoneStriker-CodeLlama-70b-Instruct-hf-4.0bpw-h6-exl2-main: { name: "CodeLlama-Instruct", size: "70B", tags: ["codellama"], quant: "EXL2-4.0" }
+LoneStriker-CodeLlama-70b-Instruct-hf-5.0bpw-h6-exl2-main: { name: "CodeLlama-Instruct", size: "70B", tags: ["codellama"], quant: "EXL2-5.0" }
+
 wizardcoder-python-34b-v1.0.Q4-K-M: { name: "WizardCoder-Python", size: "34B", tags: ["codellama","wizard"], url: "https://huggingface.co/TheBloke/WizardCoder-Python-34B-V1.0-GGUF", quant: "GGUF-Q4KM" }
 wizardcoder-python-34b-v1.0.Q6-K: { name: "WizardCoder-Python", size: "34B", tags: ["codellama","wizard"], url: "https://huggingface.co/TheBloke/WizardCoder-Python-34B-V1.0-GGUF", quant: "GGUF-Q6K" }
 

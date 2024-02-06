@@ -58,7 +58,7 @@ def load_models():
             raise Exception('bad model size '+model['size'])
         
         if not 'url' in model:
-            model['url'] = 'https://huggingface.co/' + id.replace('-','/',1).replace('-fp16','')
+            model['url'] = 'https://huggingface.co/' + id.replace('-','/',1).replace('-fp16','').replace('-main','')
             
         if not 'tags' in model:
             model['tags'] = []
@@ -183,6 +183,7 @@ def main():
                 mode = st.radio(label='View', options=['Both','Python','JavaScript'], label_visibility='collapsed')
             with note_col:
                 best_of = st.checkbox(label='Best Result Only', value=True)
+                show_quants = st.checkbox(label='Show All Quants', value=True, disabled=not best_of)
         
         mode_to_language={ 'Both': None, 'Python': 'python', 'JavaScript': 'javascript' }
         summary = calculate_summary(data, mode_to_language[mode])
@@ -210,7 +211,10 @@ def main():
                 filtered = filtered[filtered['size'] == selected_size]
 
         if best_of:
-            idx = filtered.groupby(['name','size'])['Score'].idxmax()
+            if not show_quants:
+                idx = filtered.groupby(['name','size'], dropna=False)['Score'].idxmax()
+            else:
+                idx = filtered.groupby(['name','size','quant'], dropna=False)['Score'].idxmax()
             filtered = filtered.loc[idx]
 
         filtered = filtered.sort_values(by='Passed', ascending=False)
