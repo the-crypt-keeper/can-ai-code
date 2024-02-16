@@ -206,6 +206,11 @@ def download_deepseek_moe_16b_chat_model(): download_model('deepseek-ai/deepseek
 def download_beyonder_4x7b_model(): download_model('mlabonne/Beyonder-4x7B-v2')
 def download_beyonder_4x7b_awq_model(): download_model('TheBloke/Beyonder-4x7B-v2-AWQ', info={ 'enforce_eager': True })
 
+def download_qwen_1p5_72b_awq_chat_model(): download_model('Qwen/Qwen1.5-72B-Chat-AWQ')
+def download_qwen_1p5_14b_chat_model(): download_model('Qwen/Qwen1.5-14B-Chat')
+def download_qwen_1p5_7b_chat_model(): download_model('Qwen/Qwen1.5-7B-Chat')
+def download_qwen_1p5_4b_chat_model(): download_model('Qwen/Qwen1.5-4B-Chat')
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -232,7 +237,8 @@ image = (
     .pip_install(
         "auto-gptq==0.6.0",
         "flash-attn==2.4.2",        
-        extra_index_url="https://huggingface.github.io/autogptq-index/whl/cu118/"
+        index_url="https://huggingface.github.io/autogptq-index/whl/cu118/",
+        extra_index_url="https://pypi.org/simple"
     )
     .pip_install(
         "git+https://github.com/vllm-project/vllm.git@v0.3.0",
@@ -249,7 +255,7 @@ image = (
     #     extra_index_url="https://pypi.org/simple"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_solar_instruct_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_qwen_1p5_72b_awq_chat_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -261,17 +267,17 @@ stub = Stub(image=image)
 RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-#RUNTIME = "exllama2"
-#RUNTIME = "exllama2-th"
-#RUNTIME = "exllama2-8b-th"
+#RUNTIME = "exllama2"          # no token healing
+#RUNTIME = "exllama2-th"       # token healing (recommended)
+#RUNTIME = "exllama2-8b-th"    # token healing, 8bit kv cache
 #RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
-#gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.L4(count=2)
-#gpu_request = gpu.A10G(count=2)
-gpu_request = gpu.A100(count=1, memory=40)
+#gpu_request = gpu.T4(count=1)              # 16GB
+#gpu_request = gpu.A10G(count=1)            # 24GB
+#gpu_request = gpu.A10G(count=2)            # 48GB
+gpu_request = gpu.A100(count=1, memory=80) # 80GB
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])

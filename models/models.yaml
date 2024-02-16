@@ -333,3 +333,8 @@ NousResearch-Nous-Hermes-2-SOLAR-10.7B: { name: "Nous-Hermes-2-SOLAR", size: "10
 upstage-SOLAR-10.7B-Instruct-v1.0: { name: "SOLAR-Instruct", size: "10.7B", tags: ["solar"] }
 
 TencentARC-LLaMA-Pro-8B-Instruct: { name: "LLaMA Pro Instruct", size: "8B", tags: ["llama2"] }
+
+Qwen-Qwen1.5-4B-Chat: { name: "Qwen1.5-Chat", size: "4B", tags: ["qwen"] }
+Qwen-Qwen1.5-7B-Chat: { name: "Qwen1.5-Chat", size: "7B", tags: ["qwen"] }
+Qwen-Qwen1.5-14B-Chat: { name: "Qwen1.5-Chat", size: "14B", tags: ["qwen"] }
+Qwen-Qwen1.5-72B-Chat-AWQ: { name: "Qwen1.5-Chat", size: "72B", quant: "AWQ-4b", tags: ["qwen"] }

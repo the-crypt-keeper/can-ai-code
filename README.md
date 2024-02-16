@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**2/15** Evaluate top end of the Qwen1.5 family (4B, 7B, 14B, 72B).
+
 **2/06** Evaluate upstage/SOLAR-10.7B-Instruct-v1.0.
 
 **2/06** Evaluate CodeLlama-Instruct-70B AWQ, GPTQ and EXL2.  GGUF quants seem to perform very poorly and suspect something may be wrong with my GGUF test harness, so holding off on publishing those results.  Update leaderboard app to show all quants seperately by default.

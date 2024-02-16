@@ -44,6 +44,9 @@ class InterviewTransformers:
         use_accelerate = self.info.get('accelerate', True)
         if 'gptq' in self.model_name.lower():
             use_accelerate = False
+        # aqlm doesn't use accelerate either
+        if 'aqlm' in self.model_name.lower():
+            use_accelerate = False
         use_pipeline = self.info.get('pipeline', False)
 
         print('Remote model', self.model_name, ' info', self.info, 'use_accelerate', use_accelerate, 'use_pipeline', use_pipeline)
@@ -662,7 +665,12 @@ class InterviewVLLM:
             except Exception as e:
                 print('WARNING: generate config could not be auto-loaded from model:', str(e))
 
-        self.stop_token_ids = [int(eos_token_id)] if eos_token_id is not None else []
+        if eos_token_id is None:
+            self.stop_token_ids = []
+        elif isinstance(eos_token_id,list):
+            self.stop_token_ids = [int(x) for x in eos_token_id]
+        else:
+            self.stop_token_ids = [int(eos_token_id)]
         
         self.info['model_name'] = self.model_name
 
