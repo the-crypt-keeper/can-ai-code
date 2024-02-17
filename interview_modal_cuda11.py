@@ -229,7 +229,7 @@ image = (
         "hf-hub-ctranslate2>=2.0.8",
         "ctranslate2>=3.16.0",
         "xformers==0.0.23.post1+cu118",
-        #"https://github.com/vllm-project/vllm/releases/download/v0.3.0/vllm-0.3.0+cu118-cp310-cp310-manylinux1_x86_64.whl",
+        "https://github.com/vllm-project/vllm/releases/download/v0.3.1/vllm-0.3.1+cu118-cp310-cp310-manylinux1_x86_64.whl",
         "https://github.com/turboderp/exllamav2/releases/download/v0.0.12/exllamav2-0.0.12+cu118-cp310-cp310-linux_x86_64.whl",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
@@ -240,22 +240,17 @@ image = (
         index_url="https://huggingface.github.io/autogptq-index/whl/cu118/",
         extra_index_url="https://pypi.org/simple"
     )
-    .pip_install(
-        "git+https://github.com/vllm-project/vllm.git@v0.3.0",
-        index_url="https://download.pytorch.org/whl/cu118",
-        extra_index_url="https://pypi.org/simple"
-    )
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
-    # .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
     # .pip_install(
     #     "git+https://github.com/mobiusml/hqq.git@0.1.1",
     #     index_url="https://download.pytorch.org/whl/cu118",
     #     extra_index_url="https://pypi.org/simple"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_qwen_1p5_72b_awq_chat_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_qwen_1p5_4b_chat_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -275,9 +270,9 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)              # 16GB
-#gpu_request = gpu.A10G(count=1)            # 24GB
+gpu_request = gpu.A10G(count=1)            # 24GB
 #gpu_request = gpu.A10G(count=2)            # 48GB
-gpu_request = gpu.A100(count=1, memory=80) # 80GB
+#gpu_request = gpu.A100(count=1, memory=80) # 80GB
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
