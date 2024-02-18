@@ -122,6 +122,7 @@ def download_airoboros_m_7b_312_awq_model(): download_model('TheBloke/Airoboros-
 def download_openorca_mistral_7b_model(): download_model('Open-Orca/Mistral-7B-OpenOrca')
 def download_speechless_code_mistral_7b_model(): download_model('uukuguy/speechless-code-mistral-7b-v1.0')
 def download_codeshell_7b_model(): download_model('WisdomShell/CodeShell-7B', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+def download_codeshell_chat_7b_model(): download_model('WisdomShell/CodeShell-7B-Chat')
 def download_openhermes_mistral_7b_modal(): download_model('teknium/OpenHermes-2.5-Mistral-7B')
 def download_mistral_7b_code_16k_model(): download_model('Nondzu/Mistral-7B-code-16k-qlora', ignore_patterns=["*.bin"])
 def download_mistral_7b_code_16k_awq_model(): download_model('TheBloke/Mistral-7B-Code-16K-qlora-AWQ', info = { 'tokenizer_mode': 'slow' })
@@ -211,6 +212,9 @@ def download_qwen_1p5_14b_chat_model(): download_model('Qwen/Qwen1.5-14B-Chat')
 def download_qwen_1p5_7b_chat_model(): download_model('Qwen/Qwen1.5-7B-Chat')
 def download_qwen_1p5_4b_chat_model(): download_model('Qwen/Qwen1.5-4B-Chat')
 
+def download_llama2_7b_aqlm_model(): download_model('BlackSamorez/Llama-2-7b-AQLM-2Bit-1x16-hf', info = { 'generate_args': { 'stop_seq': ["\n###"] } })
+def download_mixtral_instruct_aqlm_model(): download_model('BlackSamorez/Mixtral-8x7B-Instruct-v0.1-AQLM-2Bit-1x16-hf')
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -249,17 +253,20 @@ image = (
     #     index_url="https://download.pytorch.org/whl/cu118",
     #     extra_index_url="https://pypi.org/simple"        
     # )
+    .pip_install(
+        "aqlm[gpu]"        
+    )    
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_qwen_1p5_4b_chat_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_llama2_7b_aqlm_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"          # no token healing
