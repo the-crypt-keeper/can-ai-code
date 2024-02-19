@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**2/18** Re-evaluate Speechless-Codallama-v2.0 with better prompt.
+
 **2/15** Evaluate top end of the Qwen1.5 family (4B, 7B, 14B, 72B).
 
 **2/06** Evaluate upstage/SOLAR-10.7B-Instruct-v1.0.
@@ -25,18 +27,6 @@ A self-evaluating interview for AI coding models.
 **2/06** Evaluate CodeLlama-Instruct-70B AWQ, GPTQ and EXL2.  GGUF quants seem to perform very poorly and suspect something may be wrong with my GGUF test harness, so holding off on publishing those results.  Update leaderboard app to show all quants seperately by default.
 
 **2/05** Improve exllamav2 integration (support token healing and 8bit cache). Evaluate stabilityai/stable-code-3b at completion and fim tasks.  Working on a big CodeLlama-70b eval, stay tuned!
-
-**2/01** Evaluate cognitivecomputations/dolphin-2.6-mistral-7b-dpo-laser.
-
-**1/23** Evaluate mlabonne/Beyonder-4x7B-v2 (AWQ only, FP16 was mega slow).
-
-**1/22** Re-evaluate budecosystem/code-millenials family (1B, 3B, 13B, 34B) with corrected prompts.
-
-**1/12** Evaluate deepseek-ai/deepseek-moe-16b-chat and some older WizardCoder models.
-
-**1/8** Evaluate bagel-34b-v0.2, LLaMA-Pro-8B-Instruct, SqueezeLLM quant of Mistral-Instruct and fix minor tag bug in the leaderboard app.  Evaluated new GGUF quants of Mixtral including the 2.1bit quip-sharp inspired one, it does quite well on `junior-v2` but falls apart on `senior` compared to q2k.
-
-**1/6** Fixed a number of bugs in the evaluation and extraction scripts, re-run all evaluations (scores generally go up a little bit).  Introduce the `senior` interview, still a work in progress trying to tune the difficulty level.
 
 ## Test Suites
 

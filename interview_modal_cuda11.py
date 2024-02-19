@@ -255,18 +255,21 @@ image = (
     # )
     .pip_install(
         "aqlm[gpu]"        
-    )    
+    )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_llama2_7b_aqlm_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_speechless_codellama_34b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_commands(
+        "pip uninstall -y cupy-cuda12x && pip install cupy-cuda11x==12.1.0"
+    )    
     ######################################
 )
 stub = Stub(image=image)
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"          # no token healing
@@ -277,8 +280,8 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)              # 16GB
-gpu_request = gpu.A10G(count=1)            # 24GB
-#gpu_request = gpu.A10G(count=2)            # 48GB
+#gpu_request = gpu.A10G(count=1)            # 24GB
+gpu_request = gpu.A10G(count=2)            # 48GB
 #gpu_request = gpu.A100(count=1, memory=80) # 80GB
 #######################################
 
