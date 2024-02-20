@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**2/19** Evaluate ajibawa-2023/Code-290k-13B.
+
 **2/18** Re-evaluate Speechless-Codallama-v2.0 with better prompt.
 
 **2/15** Evaluate top end of the Qwen1.5 family (4B, 7B, 14B, 72B).

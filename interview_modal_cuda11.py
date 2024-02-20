@@ -33,6 +33,7 @@ def download_ajibwa_code_13b_model(): download_model('ajibawa-2023/Code-13B')
 def download_ajibwa_code_33b_model(): download_model('ajibawa-2023/Code-33B')
 def download_ajibwa_python_code_13b_model(): download_model('ajibawa-2023/Python-Code-13B')
 def download_ajibwa_python_code_33b_model(): download_model('ajibawa-2023/Python-Code-33B')
+def download_ajibwa_code_290k_13b_model(): download_model('ajibawa-2023/Code-290k-13B')
 
 def download_llama2_7b_model(): download_model("meta-llama/Llama-2-7b-hf", ignore_patterns=["*.bin"])
 def download_llama2_chat_7b_model(): download_model("meta-llama/Llama-2-7b-chat-hf", ignore_patterns=["*.bin"])
@@ -247,20 +248,23 @@ image = (
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
+    # vllm 0.3.1 cu18 wheel installs the wrong cupy package. watch version, 13 doesnt work.
+    .run_commands(
+        "pip uninstall -y cupy-cuda12x && pip install cupy-cuda11x==12.1.0"
+    )
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "OMP_NUM_THREADS": "8"})
+    #--- HQQ
     # .pip_install(
     #     "git+https://github.com/mobiusml/hqq.git@0.1.1",
     #     index_url="https://download.pytorch.org/whl/cu118",
     #     extra_index_url="https://pypi.org/simple"        
     # )
-    .pip_install(
-        "aqlm[gpu]"        
-    )
+    #--- AQLM
+    # .pip_install(
+    #     "aqlm[gpu]"        
+    # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_speechless_codellama_34b_model, secret=Secret.from_name("my-huggingface-secret"))
-    .run_commands(
-        "pip uninstall -y cupy-cuda12x && pip install cupy-cuda11x==12.1.0"
-    )    
+    .run_function(download_ajibwa_code_290k_13b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
