@@ -216,6 +216,10 @@ def download_qwen_1p5_4b_chat_model(): download_model('Qwen/Qwen1.5-4B-Chat')
 def download_llama2_7b_aqlm_model(): download_model('BlackSamorez/Llama-2-7b-AQLM-2Bit-1x16-hf', info = { 'generate_args': { 'stop_seq': ["\n###"] } })
 def download_mixtral_instruct_aqlm_model(): download_model('BlackSamorez/Mixtral-8x7B-Instruct-v0.1-AQLM-2Bit-1x16-hf')
 
+def download_internlm_1p8b_chat_model(): download_model('internlm/internlm2-chat-1_8b', info = { 'eos_token_id': 92542 } )
+def download_internlm_7b_chat_model(): download_model('internlm/internlm2-chat-7b', info = { 'eos_token_id': 92542 } )
+def download_internlm_20b_chat_model(): download_model('internlm/internlm2-chat-20b', info = { 'eos_token_id': 92542 } )
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
@@ -264,7 +268,7 @@ image = (
     #     "aqlm[gpu]"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_ajibwa_code_290k_13b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_internlm_20b_chat_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
