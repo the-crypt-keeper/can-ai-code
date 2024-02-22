@@ -343,3 +343,6 @@ Qwen-Qwen1.5-72B-Chat-AWQ: { name: "Qwen1.5-Chat", size: "72B", quant: "AWQ-4b",
 internlm-internlm2-chat-1-8b: { name: "InternLM2-Chat", size: "1.8B", tags: ["internlm2"], url: "https://huggingface.co/internlm/internlm2-chat-1_8b" }
 internlm-internlm2-chat-7b: { name: "InternLM2-Chat", size: "7B", tags: ["internlm2"] }
 internlm-internlm2-chat-20b: { name: "InternLM2-Chat", size: "20B", tags: ["internlm2"] }
+
+google-gemma-7b-it: { name: "Gemma-IT", size: "7B", tags: ["gemma"] }
+google-gemma-2b-it: { name: "Gemma-IT", size: "2B", tags: ["gemma"] }

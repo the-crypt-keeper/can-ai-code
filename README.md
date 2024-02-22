@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**2/22** Evaluate google/gemma-it family (neither model can pass junior, senior is a write-off).
+
 **2/19** Evaluate ajibawa-2023/Code-290k-13B. Evaluate internlm/internlm2-chat family (1.8B, 7B, 20B).
 
 **2/18** Re-evaluate Speechless-Codallama-v2.0 with better prompt.

@@ -220,12 +220,15 @@ def download_internlm_1p8b_chat_model(): download_model('internlm/internlm2-chat
 def download_internlm_7b_chat_model(): download_model('internlm/internlm2-chat-7b', info = { 'eos_token_id': 92542 } )
 def download_internlm_20b_chat_model(): download_model('internlm/internlm2-chat-20b', info = { 'eos_token_id': 92542 } )
 
+def download_gemma_2b_instruct_model(): download_model('google/gemma-2b-it', ignore_patterns=["*.gguf"], info={"eos_token_id": 107 })
+def download_gemma_7b_instruct_model(): download_model('google/gemma-7b-it', ignore_patterns=["*.gguf"])
+
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
         "torch==2.1.2",
-        "transformers==4.37.2",
+        "transformers==4.38.0",
         "optimum==1.15.0",
         "tiktoken==0.5.2",
         "bitsandbytes==0.41.3",
@@ -238,7 +241,7 @@ image = (
         "hf-hub-ctranslate2>=2.0.8",
         "ctranslate2>=3.16.0",
         "xformers==0.0.23.post1+cu118",
-        "https://github.com/vllm-project/vllm/releases/download/v0.3.1/vllm-0.3.1+cu118-cp310-cp310-manylinux1_x86_64.whl",
+        "https://github.com/vllm-project/vllm/releases/download/v0.3.2/vllm-0.3.2+cu118-cp310-cp310-manylinux1_x86_64.whl",
         "https://github.com/turboderp/exllamav2/releases/download/v0.0.12/exllamav2-0.0.12+cu118-cp310-cp310-linux_x86_64.whl",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
@@ -252,7 +255,7 @@ image = (
     .run_commands(
         "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
     )
-    # vllm 0.3.1 cu18 wheel installs the wrong cupy package. watch version, 13 doesnt work.
+    # vllm cu18 wheel installs the wrong cupy package. watch version, 13 doesnt work.
     .run_commands(
         "pip uninstall -y cupy-cuda12x && pip install cupy-cuda11x==12.1.0"
     )
@@ -268,7 +271,7 @@ image = (
     #     "aqlm[gpu]"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_internlm_20b_chat_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_gemma_2b_instruct_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
@@ -288,8 +291,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)              # 16GB
-#gpu_request = gpu.A10G(count=1)            # 24GB
-gpu_request = gpu.A10G(count=2)            # 48GB
+gpu_request = gpu.A10G(count=1)            # 24GB
+#gpu_request = gpu.A10G(count=2)            # 48GB
 #gpu_request = gpu.A100(count=1, memory=80) # 80GB
 #######################################
 
