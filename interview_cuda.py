@@ -679,6 +679,7 @@ class InterviewVLLM:
         from vllm import SamplingParams
 
         sampling_params = SamplingParams(
+            stop=self.info.get('generate_args', {}).get('stop_seq', []),
             stop_token_ids=self.stop_token_ids,
             temperature=params.get('temperature', 1.0),
             top_k=params.get('top_k', 1000),

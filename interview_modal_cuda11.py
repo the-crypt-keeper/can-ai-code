@@ -221,7 +221,10 @@ def download_internlm_7b_chat_model(): download_model('internlm/internlm2-chat-7
 def download_internlm_20b_chat_model(): download_model('internlm/internlm2-chat-20b', info = { 'eos_token_id': 92542 } )
 
 def download_gemma_2b_instruct_model(): download_model('google/gemma-2b-it', ignore_patterns=["*.gguf"], info={"eos_token_id": 107 })
-def download_gemma_7b_instruct_model(): download_model('google/gemma-7b-it', ignore_patterns=["*.gguf"])
+def download_gemma_7b_instruct_model(): download_model('google/gemma-7b-it', ignore_patterns=["*.gguf"], info={"eos_token_id": 107 })
+
+def download_starcoder2_3b_model(): download_model('bigcode/starcoder2-3b', info={'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+def download_starcoder2_7b_model(): download_model('bigcode/starcoder2-7b', info={'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -241,8 +244,8 @@ image = (
         "hf-hub-ctranslate2>=2.0.8",
         "ctranslate2>=3.16.0",
         "xformers==0.0.23.post1+cu118",
-        "https://github.com/vllm-project/vllm/releases/download/v0.3.2/vllm-0.3.2+cu118-cp310-cp310-manylinux1_x86_64.whl",
-        "https://github.com/turboderp/exllamav2/releases/download/v0.0.12/exllamav2-0.0.12+cu118-cp310-cp310-linux_x86_64.whl",
+        "https://github.com/vllm-project/vllm/releases/download/v0.3.3/vllm-0.3.3+cu118-cp310-cp310-manylinux1_x86_64.whl",
+        "https://github.com/turboderp/exllamav2/releases/download/v0.0.13/exllamav2-0.0.13+cu118-cp310-cp310-linux_x86_64.whl",
         index_url="https://download.pytorch.org/whl/cu118",
         extra_index_url="https://pypi.org/simple"
     )  
@@ -271,7 +274,7 @@ image = (
     #     "aqlm[gpu]"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_gemma_2b_instruct_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_starcoder2_3b_model, secret=Secret.from_name("my-huggingface-secret"))
     ######################################
 )
 stub = Stub(image=image)
