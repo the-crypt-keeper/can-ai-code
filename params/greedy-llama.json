@@ -1,7 +1,8 @@
 {
-    "max_new_tokens": 512,
+    "max_new_tokens": 1024,
     "top_k": 0,
     "top_p": 1.0,
     "min_p": 0.0,
-    "temperature": 1.0
+    "temperature": 1.0,
+    "repetition_penalty": 1.0
 }

@@ -82,9 +82,6 @@ def download_llama2_chat_70b_exl2_2p55_model(): download_model('turboderp/Llama2
 def download_llama2_chat_70b_exl2_2p4_model(): download_model('turboderp/Llama2-70B-chat-exl2', revision = '2.4bpw')
 def download_llama2_chat_70b_exl2_4p0_model(): download_model('turboderp/Llama2-70B-chat-exl2', revision = '4.0bpw')
 
-def download_codellama_instruct_34b_fp16_model(): download_model('TheBloke/CodeLlama-34B-Instruct-fp16')
-def download_codellama_python_34b_fp16_model(): download_model('TheBloke/CodeLlama-34B-Python-fp16')
-def download_codellama_34b_fp16_model(): download_model('TheBloke/CodeLlama-34B-fp16')
 def download_codellama_instruct_34b_exl2_4p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '4.0bpw')
 def download_codellama_instruct_34b_exl2_3p0_model(): download_model('turboderp/CodeLlama-34B-instruct-exl2', revision = '3.0bpw')
 def download_codebooga_34b_exl2_4p25_model(): download_model('oobabooga/CodeBooga-34B-v0.1-EXL2-4.250b')
@@ -92,10 +89,6 @@ def download_codebooga_34b_exl2_3p0_model(): download_model('LoneStriker/CodeBoo
 def download_codebooga_34b_exl2_4p0_model(): download_model('LoneStriker/CodeBooga-34B-v0.1-4.0bpw-h6-exl2')
 def download_codebooga_34b_exl2_5p0_model(): download_model('LoneStriker/CodeBooga-34B-v0.1-5.0bpw-h6-exl2')
 def download_speechless_codellama_34b_model(): download_model('TheBloke/speechless-codellama-34b-v2.0-AWQ')
-def download_codellama_7b_model(): download_model('TheBloke/CodeLlama-7B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
-def download_codellama_13b_model(): download_model('TheBloke/CodeLlama-13B-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
-def download_codellama_python_7b_model(): download_model('TheBloke/CodeLlama-7B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
-def download_codellama_python_13b_model(): download_model('TheBloke/CodeLlama-13B-Python-fp16', info = { 'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_nous_hermes_code_13b_model(): download_model('Undi95/Nous-Hermes-13B-Code', info = { 'tokenizer': 'NousResearch/Nous-Hermes-Llama2-13b' })
 def download_codellama_oasst_13b_model(): download_model('OpenAssistant/codellama-13b-oasst-sft-v10')
 def download_codellama_phind_v2_model(): download_model('TheBloke/Phind-CodeLlama-34B-v2-AWQ', info = { 'big_model': True })
@@ -118,11 +111,18 @@ def download_codellama_instruct_70b_exl2_4p0bpw_model(): download_model('LoneStr
 def download_codellama_instruct_70b_exl2_5p0bpw_model(): download_model('LoneStriker/CodeLlama-70b-Instruct-hf-5.0bpw-h6-exl2', info={"eos_token_id": 32015, 'generate_args': { 'stop_seq': ["<step>"] }})
 
 def download_codellama_meta_7b_instruct_model(): download_model('codellama/CodeLlama-7b-Instruct-hf')
+def download_codellama_gptq_7b_instruct_model(): download_model('TheBloke/CodeLlama-7B-Instruct-GPTQ')
+def download_codellama_awq_7b_instruct_model(): download_model('TheBloke/CodeLlama-7B-Instruct-AWQ')
 def download_codellama_meta_13b_instruct_model(): download_model('codellama/CodeLlama-13b-Instruct-hf')
+def download_codellama_gptq_13b_instruct_model(): download_model('TheBloke/CodeLlama-13B-Instruct-GPTQ')
+def download_codellama_awq_13b_instruct_model(): download_model('TheBloke/CodeLlama-13B-Instruct-AWQ')
 def download_codellama_meta_34b_instruct_model(): download_model('codellama/CodeLlama-34b-Instruct-hf')
 def download_codellama_meta_7b_model(): download_model('codellama/CodeLlama-7b-hf')
 def download_codellama_meta_13b_model(): download_model('codellama/CodeLlama-13b-hf')
 def download_codellama_meta_34b_model(): download_model('codellama/CodeLlama-34b-hf')
+def download_codellama_meta_7b_python_model(): download_model('codellama/CodeLlama-7b-Python-hf')
+def download_codellama_meta_13b_python_model(): download_model('codellama/CodeLlama-13b-Python-hf')
+def download_codellama_meta_34b_python_model(): download_model('codellama/CodeLlama-34b-Python-hf')
 
 def download_mistral_instruct_model(): download_model('mistralai/Mistral-7B-Instruct-v0.1')
 def download_mistral_instruct_0p2_model(): download_model('mistralai/Mistral-7B-Instruct-v0.2')
@@ -286,7 +286,7 @@ image = (
     #     "aqlm[gpu]"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codellama_meta_34b_model, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(download_codellama_gptq_13b_instruct_model, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=image)
@@ -306,9 +306,9 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)              # 16GB
-#gpu_request = gpu.A10G(count=1)            # 24GB
+gpu_request = gpu.A10G(count=1)            # 24GB
 #gpu_request = gpu.A10G(count=2)            # 48GB
-gpu_request = gpu.A100(count=1, memory=80) # 80GB
+#gpu_request = gpu.A100(count=1, memory=80) # 80GB
 #######################################
 
 @stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secrets=[Secret.from_name("my-huggingface-secret")]) #, mounts=[Mount.from_local_python_packages("interview_cuda")])
@@ -365,22 +365,32 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = "", ba
     from prepare import save_interview
     from interview_cuda import interview_run
 
-    output_template = Template(open(templateout).read()) if templateout else None
-
     tasks = []
-    for param_file in params.split(','):
-        for input_file in input.split(','):
-            if param_file != '' and input_file != '':
-                tasks.append((param_file, input_file))
+    if input[0] == '@':
+        import yaml
+        input_list = yaml.safe_load(open(input[1:], 'r'))
+        for item in input_list:
+            i_input = item.get('input')
+            i_params = item.get('params', params)
+            i_templateout = item.get('templateout', templateout)
+            i_completion = item.get('completion', completion)
+            tasks.append((i_params, i_input, i_templateout, i_completion))
+    else:
+        for param_file in params.split(','):
+            for input_file in input.split(','):
+                if param_file != '' and input_file != '':
+                    tasks.append((param_file, input_file, templateout, completion))
 
     model = ModalWrapper()
 
-    for param_file, input_file in tasks:
+    for param_file, input_file, templateout_file, completion_flag in tasks:
+      print(f'> Starting {input_file}:{templateout_file} with params {param_file} completion={completion_flag}')
       interview = [json.loads(line) for line in open(input_file)]
       params_json = json.load(open(param_file,'r'))
-      if completion: params_json['completion'] = True
+      output_template = Template(open(templateout_file).read()) if templateout_file else None
+      if completion_flag: params_json['completion'] = True
 
       for iter in range(iterations):
         print(f"Starting iteration {iter} of {param_file} {input_file}")
         results, remote_info = interview_run(RUNTIME, model.generate.remote, interview, params_json, output_template, batch=batch )
-        save_interview(input_file, templateout if templateout else 'none', param_file, remote_info['model_name'], results)
+        save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
