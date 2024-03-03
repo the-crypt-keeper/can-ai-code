@@ -1,4 +1,4 @@
-from modal import Stub, Image, method, gpu, Secret, Mount
+from modal import Stub, Image, method, enter, gpu, Secret, Mount
 from huggingface_hub import snapshot_download
 import time
 import json
@@ -275,7 +275,7 @@ image = (
     #     "aqlm[gpu]"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codellama_instruct_13b_model, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(download_codellama_13b_model, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=image)
@@ -300,9 +300,10 @@ gpu_request = gpu.A10G(count=2)            # 48GB
 #gpu_request = gpu.A100(count=1, memory=80) # 80GB
 #######################################
 
-@stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secrets=[Secret.from_name("my-huggingface-secret")], mounts=[Mount.from_local_python_packages("interview_cuda")])
+@stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secrets=[Secret.from_name("my-huggingface-secret")]) #, mounts=[Mount.from_local_python_packages("interview_cuda")])
 class ModalWrapper:
-    def __enter__(self):
+    @enter()
+    def startup(self):
         self.info = json.load(open('./_info.json'))
 
         if RUNTIME == "transformers":

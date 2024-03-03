@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**3/02** Evaluate bigcoder/starcoder2 family.  Starting to split results into `Instruct`, `Code-Completion` and `Fill-in-the-Middle` objectives.  Upgraded to modal==0.58.92
+
 **2/22** Evaluate google/gemma-it family (neither model can pass junior, senior is a write-off).
 
 **2/19** Evaluate ajibawa-2023/Code-290k-13B. Evaluate internlm/internlm2-chat family (1.8B, 7B, 20B).

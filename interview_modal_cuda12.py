@@ -16,7 +16,7 @@ def model_llama_chat_7b_e8p(): download_model('relaxml/Llama-2-7b-chat-E8P-2Bit'
 image = (
     Image.from_registry("nvcr.io/nvidia/pytorch:23.06-py3")
     .pip_install(
-        "transformers==4.35.2",
+        "transformers==4.37.2",
         "optimum==1.15.0",
         "tiktoken==0.5.2",
         "bitsandbytes==0.41.3",
@@ -26,23 +26,23 @@ image = (
         "hf-transfer~=0.1",
         "scipy==1.10.1",
         "pyarrow==11.0.0",
-        "hf-hub-ctranslate2>=2.0.8",
-        "ctranslate2>=3.16.0",
+        # "hf-hub-ctranslate2>=2.0.8",
+        # "ctranslate2>=3.16.0",
     )  
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "GITHUB_ACTIONS": "true", "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
     .pip_install(
-        "vllm==0.2.3",
-        "auto-gptq==0.5.1",
+        "vllm==0.3.0",
+        "auto-gptq==0.6.0",
     )
-    .run_commands(
-        "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
-    )
-    .run_commands(
-        "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7"
-    )    
-    .run_commands(
-        "git clone https://github.com/Cornell-RelaxML/quip-sharp.git /repositories/quip-sharp && cd /repositories/quip-sharp && git checkout 1d6e3c2d4c144eba80b945cca5429ce8d79d2cec && pip install -r requirements.txt && cd quiptools && python setup.py install"
-    )
+    # .run_commands(
+    #     "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
+    # )
+    # .run_commands(
+    #     "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7"
+    # )    
+    # .run_commands(
+    #     "git clone https://github.com/Cornell-RelaxML/quip-sharp.git /repositories/quip-sharp && cd /repositories/quip-sharp && git checkout 1d6e3c2d4c144eba80b945cca5429ce8d79d2cec && pip install -r requirements.txt && cd quiptools && python setup.py install"
+    # )
     ##### SELECT MODEL HERE ##############    
     .run_function(model_llama_chat_7b_e8p, secret=Secret.from_name("my-huggingface-secret"))
     .pip_install("protobuf==3.20.3")

@@ -19,6 +19,9 @@ bigcode-starcoderplus: { name: 'StarCoderPlus', size: '15B', tags: ["bigcode"], 
 bigcode-starcoder: { name: 'StarCoder', size: '15B', tags: ["bigcode"] }
 bigcode-gpt-bigcode-santacoder: { name: 'SantaCoder', size: '3B', tags: ["bigcode"], alias: "bigcode-gpt-bigcode-santacoder-fp16", url: "https://huggingface.co/bigcode/gpt_bigcode-santacoder" }
 bigcode-octocoder: { name: 'OctoCoder', size: '15B', tags: ["bigcode"] }
+bigcode-starcoder2-3b: { name: 'StarCoder2', size: '3B', tags: ["bigcode"] }
+bigcode-starcoder2-7b: { name: 'StarCoder2', size: '7B', tags: ["bigcode"] }
+bigcode-starcoder2-15b: { name: 'StarCoder2', size: '15B', tags: ["bigcode"] }
 HuggingFaceH4-starchat-alpha: { name: "StarChat-Alpha", size: "15B", tags: ["bigcode"], alias: ["HuggingFaceH4-starchat-playground-hf-space-starchat-alpha","HuggingFaceH4-starchat-alpha-fp16"] }
 HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigcode"], alias: ["starchat-beta-gradio","HuggingFaceH4-starchat-beta-fp16","HuggingFaceH4-starchat-playground-hf-space-starchat-beta"] }
 openaccess-ai-collective-minotaur-15b: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], alias: "openaccess-ai-collective-minotaur-15b-fp16", url: "https://huggingface.co/openaccess-ai-collective/minotaur-15b" }
@@ -120,9 +123,9 @@ Undi95-Nous-Hermes-13B-Code-fp16: { name: "NH Llama2 x Airoboros 2.1 Coder", siz
 
 LLM360-CrystalCoder-fp16: { name: "LLM360 CrystalCoder", size: "7B", tags: ["llm360"] }
 
-TheBloke-CodeLlama-7B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-fp16" }
+TheBloke-CodeLlama-7B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-fp16", alias: "TheBloke-CodeLlama-7B-Instruct-fp16" }
 TheBloke-CodeLlama-7B-fp16-fp16: { name: "CodeLlama", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-fp16" }
-TheBloke-CodeLlama-7B-Python-fp16-fp16: { name: "CodeLlama-Python", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Python-fp16" }
+TheBloke-CodeLlama-7B-Python-fp16-fp16: { name: "CodeLlama-Python", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Python-fp16", alias: "TheBloke-CodeLlama-7B-Python-fp16" }
 codellama-7b-python.Q4-K-M: { name: "CodeLlama-Python", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF", quant: "GGUF-Q4KM" }
 codellama-7b-python.Q5-K-M: { name: "CodeLlama-Python", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF", quant: "GGUF-Q5KM" }
 codellama-7b-python.Q6-K: { name: "CodeLlama-Python", size: "7B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-7B-Python-GGUF", quant: "GGUF-Q6K" }
@@ -133,9 +136,9 @@ piratos-ct2fast-codellama-13b-instruct-hf: { name: "CodeLlama-Python", size: "13
 codellama-CodeLlama-7b-Instruct-hf: { name: "CodeLlama-HF-Instruct", size: "7B", tags: ["llama2","codellama"] }
 OpenAssistant-codellama-13b-oasst-sft-v10-fp16: { name: "OpenAssistant CodeLlama", size: "13B", tags: ["llama2","codellama"] }
 
-TheBloke-CodeLlama-13B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Instruct-fp16" }
+TheBloke-CodeLlama-13B-Instruct-fp16-fp16: { name: "CodeLlama-Instruct", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Instruct-fp16", alias: "TheBloke-CodeLlama-13B-Instruct-fp16" }
 TheBloke-CodeLlama-13B-fp16-fp16: { name: "CodeLlama", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-fp16" }
-TheBloke-CodeLlama-13B-Python-fp16-fp16: { name: "CodeLlama-Python", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Python-fp16" }
+TheBloke-CodeLlama-13B-Python-fp16-fp16: { name: "CodeLlama-Python", size: "13B", tags: ["llama2","codellama"], url: "https://huggingface.co/TheBloke/CodeLlama-13B-Python-fp16", alias: "TheBloke-CodeLlama-13B-Python-fp16" }
 
 turboderp-CodeLlama-13B-instruct-exl2-2.7bpw: { name: "CodeLlama-Instruct", size: "13B", quant: "EXL2-2.7", tags: ["llama2","codellama"], url: "https://huggingface.co/turboderp/CodeLlama-13B-instruct-exl2" }
 turboderp-CodeLlama-13B-instruct-exl2-4.65bpw: { name: "CodeLlama-Instruct", size: "13B", quant: "EXL2-4.65", tags: ["llama2","codellama"], url: "https://huggingface.co/turboderp/CodeLlama-13B-instruct-exl2" }
