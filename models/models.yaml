@@ -332,6 +332,8 @@ ajibawa-2023-Python-Code-13B: { name: "ajibawa-2023-Python-Code", size: "13B", u
 ajibawa-2023-Code-33B: { name: "ajibawa-2023-Code", size: "33B", url: "https://huggingface.co/ajibawa-2023/Code-33B", tags: ["llama2"]}
 ajibawa-2023-Python-Code-33B: { name: "ajibawa-2023-Python-Code", size: "33B", url: "https://huggingface.co/ajibawa-2023/Python-Code-33B", tags: ["llama2"]}
 ajibawa-2023-Code-290k-13B: { name: "ajibawa-2023-Code-290k", size: "13B", url: "ajibawa-2023/Code-290k-13B", tags: ["llama2"]}
+ajibawa-2023-Code-290k-6.7B-Instruct: { name: "ajibawa-2023-Code-290k-6.7B-Instruct", size: "6.7B", url: "ajibawa-2023/Code-290k-6.7B-Instruct", tags: ["deepseek"]}
+ajibawa-2023-OpenHermes-2.5-Code-290k-13B: { name: "ajibawa-2023-OpenHermes-2.5-Code-290k", size: "13B", url: "ajibawa-2023/OpenHermes-2.5-Code-290k-13B", tags: ["llama2"]}
 
 NousResearch-Nous-Hermes-2-SOLAR-10.7B: { name: "Nous-Hermes-2-SOLAR", size: "10.7B", tags: ["solar"] }
 upstage-SOLAR-10.7B-Instruct-v1.0: { name: "SOLAR-Instruct", size: "10.7B", tags: ["solar"] }

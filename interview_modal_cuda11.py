@@ -34,6 +34,8 @@ def download_ajibwa_code_33b_model(): download_model('ajibawa-2023/Code-33B')
 def download_ajibwa_python_code_13b_model(): download_model('ajibawa-2023/Python-Code-13B')
 def download_ajibwa_python_code_33b_model(): download_model('ajibawa-2023/Python-Code-33B')
 def download_ajibwa_code_290k_13b_model(): download_model('ajibawa-2023/Code-290k-13B')
+def download_ajibwa_openhermes_2p5_code_13b_model(): download_model('ajibawa-2023/OpenHermes-2.5-Code-290k-13B')
+def download_ajibwa_deepseek_code_290k_6p7b_model(): download_model('ajibawa-2023/Code-290k-6.7B-Instruct')
 
 def download_llama2_7b_model(): download_model("meta-llama/Llama-2-7b-hf", ignore_patterns=["*.bin"])
 def download_llama2_chat_7b_model(): download_model("meta-llama/Llama-2-7b-chat-hf", ignore_patterns=["*.bin"])
@@ -275,7 +277,7 @@ image = (
     #     "aqlm[gpu]"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_codellama_13b_model, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(download_ajibwa_openhermes_2p5_code_13b_model, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=image)
