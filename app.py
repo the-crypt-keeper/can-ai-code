@@ -90,6 +90,14 @@ def verify_urls():
         except requests.RequestException as e:
             print(f"Request failed for model {model['id']}: {model['url']} (Error: {e})")
 
+TASK_LIST = ['Instruct', 'Completion', 'Fill-in-the-Middle']
+def task_heuristic(template):
+    if 'completion' in template:
+        return 'Completion'
+    if 'fim' in template:
+        return 'Fill-in-the-Middle'
+    return 'Instruct'
+
 def calculate_summary(data, language = None):
     summary = []
     for file, info in data.items():
@@ -101,6 +109,7 @@ def calculate_summary(data, language = None):
     sumdf = pd.DataFrame(summary, columns=['Eval', 'Interview', 'Languages', 'Template', 'TemplateOut', 'Params', 'Model', 'Timestamp', 'Passed', 'Total', 'Runtime'])
     sumdf = sumdf[['Interview','Model','Params','Template','Runtime','Passed','Total']]
     sumdf['Score'] = sumdf['Passed'] / sumdf['Total']
+    sumdf['Task'] = sumdf['Template'].apply(task_heuristic)
     sumdf.drop('Total', axis=1, inplace=True)
 
     merged_df = pd.merge(sumdf, load_models(), left_on='Model', right_on='id', how='left')
@@ -189,10 +198,22 @@ def main():
         summary = calculate_summary(data, mode_to_language[mode])
 
         with interview_col:
-            interview_list = sorted(summary['Interview'].unique())
-            default_interview = interview_list.index('junior-v2') if 'junior-v2' in interview_list else 0
-            selected_interview = st.selectbox('Interview', interview_list, index=default_interview)
-            filtered = summary[ summary['Interview'] == selected_interview ]
+            # find unique combinations of Task and Interview
+            interview_tasks = []
+            for task in TASK_LIST:
+                interview_list = sorted(summary[summary['Task'] == task]['Interview'].unique())
+                for interview in interview_list:
+                    interview_tasks.append((task, interview, f'{task} | {interview}'))
+            
+            interview_tasks_labels = [x[2] for x in interview_tasks]
+            default_interview = interview_tasks_labels.index('Instruct | junior-v2') if 'Instruct | junior-v2' in interview_tasks_labels else 0
+            selected_pair = st.selectbox('Task and Interview', interview_tasks_labels, index=default_interview)
+            selected_index = interview_tasks_labels.index(selected_pair)
+            
+            selected_task = interview_tasks[selected_index][0]
+            selected_interview = interview_tasks[selected_index][1]
+            
+            filtered = summary[ (summary['Interview'] == selected_interview) & (summary['Task'] == selected_task) ]
 
         with model_col:
             tag_list = ["all"] + sorted(filtered['tags'].explode().dropna().unique())
