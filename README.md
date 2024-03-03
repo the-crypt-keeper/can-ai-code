@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**3/03** Re-evaluate CodeLlama family.  Leaderboard results are now split by task!
+
 **3/02** Evaluate bigcoder/starcoder2 family.  Starting to split results into `Instruct`, `Code-Completion` and `Fill-in-the-Middle` objectives.  Upgraded to modal==0.58.92
 
 **2/22** Evaluate google/gemma-it family (neither model can pass junior, senior is a write-off).
@@ -29,10 +31,6 @@ A self-evaluating interview for AI coding models.
 **2/15** Evaluate top end of the Qwen1.5 family (4B, 7B, 14B, 72B).
 
 **2/06** Evaluate upstage/SOLAR-10.7B-Instruct-v1.0.
-
-**2/06** Evaluate CodeLlama-Instruct-70B AWQ, GPTQ and EXL2.  GGUF quants seem to perform very poorly and suspect something may be wrong with my GGUF test harness, so holding off on publishing those results.  Update leaderboard app to show all quants seperately by default.
-
-**2/05** Improve exllamav2 integration (support token healing and 8bit cache). Evaluate stabilityai/stable-code-3b at completion and fim tasks.  Working on a big CodeLlama-70b eval, stay tuned!
 
 ## Test Suites
 
