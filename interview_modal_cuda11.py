@@ -225,6 +225,7 @@ def download_gemma_7b_instruct_model(): download_model('google/gemma-7b-it', ign
 
 def download_starcoder2_3b_model(): download_model('bigcode/starcoder2-3b', info={'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 def download_starcoder2_7b_model(): download_model('bigcode/starcoder2-7b', info={'generate_args': { 'stop_seq': ["\n#","\n//"] } })
+def download_starcoder2_15b_model(): download_model('bigcode/starcoder2-15b', info={'generate_args': { 'stop_seq': ["\n#","\n//"] } })
 
 image = (
     Image.from_registry("nvidia/cuda:11.8.0-devel-ubuntu22.04",
@@ -274,7 +275,7 @@ image = (
     #     "aqlm[gpu]"        
     # )
     ##### SELECT MODEL HERE ##############    
-    .run_function(download_starcoder2_3b_model, secret=Secret.from_name("my-huggingface-secret"))
+    .run_function(download_codellama_instruct_13b_model, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=image)
@@ -294,12 +295,12 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)              # 16GB
-gpu_request = gpu.A10G(count=1)            # 24GB
-#gpu_request = gpu.A10G(count=2)            # 48GB
+#gpu_request = gpu.A10G(count=1)            # 24GB
+gpu_request = gpu.A10G(count=2)            # 48GB
 #gpu_request = gpu.A100(count=1, memory=80) # 80GB
 #######################################
 
-@stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
+@stub.cls(gpu=gpu_request, cpu=2, concurrency_limit=1, container_idle_timeout=300, secrets=[Secret.from_name("my-huggingface-secret")], mounts=[Mount.from_local_python_packages("interview_cuda")])
 class ModalWrapper:
     def __enter__(self):
         self.info = json.load(open('./_info.json'))
@@ -336,11 +337,19 @@ class ModalWrapper:
 
     @method()
     def generate(self, prompt, params):
+        
+        if params.get('completion'):
+            print('>> Completion mode, overriding stop_seq.')
+            ga = self.info.get('generate_args', {})
+            ga['stop_seq'] = ["\n#","\n//"]
+            self.info['generate_args'] = ga
+            del params['completion']
+            
         return self.wrapper.generate(prompt, params)
 
 # For local testing, run `modal run -q interview_modal.py --input results/prepare.ndjson --params params/precise.json`
 @stub.local_entrypoint()
-def main(input: str, params: str, iterations: int = 1, templateout: str = "", batch: bool = False):
+def main(input: str, params: str, iterations: int = 1, templateout: str = "", batch: bool = False, completion: bool = False):
     from prepare import save_interview
     from interview_cuda import interview_run
 
@@ -357,6 +366,7 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = "", ba
     for param_file, input_file in tasks:
       interview = [json.loads(line) for line in open(input_file)]
       params_json = json.load(open(param_file,'r'))
+      if completion: params_json['completion'] = True
 
       for iter in range(iterations):
         print(f"Starting iteration {iter} of {param_file} {input_file}")
