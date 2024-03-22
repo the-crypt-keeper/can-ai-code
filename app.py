@@ -131,7 +131,7 @@ def dump_csv():
     paths = ['results/**/eval*.ndjson']
     data = load_data(paths)
     summary = calculate_summary(data)
-    summary.to_csv('can-ai-code-results.csv')
+    summary.to_csv('can-ai-code-results.csv', index=False)
     print(f'Wrote {len(summary)} rows to can-ai-code-results.csv')
         
 def main():
