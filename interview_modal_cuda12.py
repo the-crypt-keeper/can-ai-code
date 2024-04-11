@@ -1,4 +1,4 @@
-from modal import Stub, Image, method, gpu, Secret, Mount
+from modal import Stub, Image, method, enter, gpu, Secret, Mount
 from huggingface_hub import snapshot_download
 import time
 import json
@@ -12,41 +12,39 @@ def download_model(name, info = {}, **kwargs):
     snapshot_download(name, **kwargs)
 
 def model_llama_chat_7b_e8p(): download_model('relaxml/Llama-2-7b-chat-E8P-2Bit')
+def model_hermes2_pro_mistral_7b(): download_model('NousResearch/Hermes-2-Pro-Mistral-7B')
 
 image = (
-    Image.from_registry("nvcr.io/nvidia/pytorch:23.06-py3")
+    Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04",
+                        setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "transformers==4.37.2",
-        "optimum==1.15.0",
-        "tiktoken==0.5.2",
-        "bitsandbytes==0.41.3",
-        "accelerate==0.25.0",
+        "transformers==4.39.3",
+        "optimum==1.18.1",
+        "tiktoken==0.6.0",
+        "bitsandbytes==0.43.1",
+        "accelerate==0.29.2",
         "einops==0.6.1",
         "sentencepiece==0.1.99",
         "hf-transfer~=0.1",
         "scipy==1.10.1",
         "pyarrow==11.0.0",
-        # "hf-hub-ctranslate2>=2.0.8",
-        # "ctranslate2>=3.16.0",
+        "protobuf==3.20.3",
+        "vllm==0.4.0.post1",
+        "auto-gptq==0.7.1"        
     )  
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1", "GITHUB_ACTIONS": "true", "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
-    .pip_install(
-        "vllm==0.3.0",
-        "auto-gptq==0.6.0",
-    )
-    # .run_commands(
-    #     "git clone https://github.com/turboderp/exllama /repositories/exllama && cd /repositories/exllama && git checkout 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d"
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"}) #, "GITHUB_ACTIONS": "true", "TORCH_CUDA_ARCH_LIST": "8.0 8.6 8.9 9.0"})
+    # .pip_install(
+    #     "vllm==0.4.0.post1",
+    #     "auto-gptq==0.7.1",
+    #     # "exllamav2==0.0.18"
     # )
-    # .run_commands(
-    #     "git clone https://github.com/turboderp/exllamav2 /repositories/exllamav2 && cd /repositories/exllamav2 && git checkout 3cabfb0d0672c18ffa1aba9bcae3328cfd86dfe7"
-    # )    
     # .run_commands(
     #     "git clone https://github.com/Cornell-RelaxML/quip-sharp.git /repositories/quip-sharp && cd /repositories/quip-sharp && git checkout 1d6e3c2d4c144eba80b945cca5429ce8d79d2cec && pip install -r requirements.txt && cd quiptools && python setup.py install"
     # )
+    # .pip_install("git+https://github.com/NVIDIA/TransformerEngine.git@main")
+    
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_llama_chat_7b_e8p, secret=Secret.from_name("my-huggingface-secret"))
-    .pip_install("protobuf==3.20.3")
-    .pip_install("git+https://github.com/NVIDIA/TransformerEngine.git@main")
+    .run_function(model_hermes2_pro_mistral_7b, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=image)
@@ -55,12 +53,12 @@ stub = Stub(image=image)
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2"
 #RUNTIME = "awq"
-RUNTIME = "quipsharp"
+#RUNTIME = "quipsharp"
 #######################################
 
 ##### SELECT GPU HERE #################
@@ -69,9 +67,10 @@ gpu_request = gpu.A10G(count=1)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
-@stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secret=Secret.from_name("my-huggingface-secret"), mounts=[Mount.from_local_python_packages("interview_cuda")])
+@stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secrets=[Secret.from_name("my-huggingface-secret")], mounts=[Mount.from_local_python_packages("interview_cuda")])
 class ModalWrapper:
-    def __enter__(self):
+    @enter()
+    def startup(self):
         self.info = json.load(open('./_info.json'))
 
         if RUNTIME == "transformers":
