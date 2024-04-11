@@ -264,6 +264,7 @@ TheBloke-Mistral-7B-Code-16K-qlora-GPTQ: { name: "Mistral-7B-code-16k-qlora", si
 TheBloke-Mistral-7B-Code-16K-qlora-GPTQ-gptq-4bit-32g-actorder-True: { name: "Mistral-7B-code-16k-qlora", size: "7B", quant: "GPTQ-4b32g", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Code-16K-qlora-GPTQ" }
 TheBloke-Mistral-7B-Code-16K-qlora-AWQ: { name: "Mistral-7B-code-16k-qlora", size: "7B", quant: "AWQ-4b", tags: ["mistral"], url: "https://huggingface.co/TheBloke/Mistral-7B-Code-16K-qlora-AWQ" }
 cognitivecomputations-dolphin-2.6-mistral-7b-dpo-laser: { name: "Dolphin 2.6 Mistral 7b - DPO Laser", size: "7B", tags: ["mistral"], url: "https://huggingface.co/cognitivecomputations/dolphin-2.6-mistral-7b-dpo-laser" }
+NousResearch-Hermes-2-Pro-Mistral-7B: { name: "Hermes 2 Pro Mistral 7B", size: "7B", tags: ["mistral"] }
 
 turboderp-Mixtral-8x7B-instruct-exl2-3.5bpw: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "EXL2-3.5", url: "https://huggingface.co/turboderp/Mixtral-8x7B-instruct-exl2" }
 turboderp-Mixtral-8x7B-instruct-exl2-3.0bpw: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "EXL2-3.0", url: "https://huggingface.co/turboderp/Mixtral-8x7B-instruct-exl2" }

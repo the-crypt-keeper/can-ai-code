@@ -18,19 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**4/11** Evalute NousResearch/Hermes-2-Pro-Mistral-7B.
+
 **3/03** Re-evaluate CodeLlama family.  Leaderboard results are now split by task!
 
 **3/02** Evaluate bigcoder/starcoder2 family.  Starting to split results into `Instruct`, `Code-Completion` and `Fill-in-the-Middle` objectives.  Upgraded to modal==0.58.92
 
 **2/22** Evaluate google/gemma-it family (neither model can pass junior, senior is a write-off).
-
-**2/19** Evaluate ajibawa-2023/Code-290k-13B. Evaluate internlm/internlm2-chat family (1.8B, 7B, 20B).
-
-**2/18** Re-evaluate Speechless-Codallama-v2.0 with better prompt.
-
-**2/15** Evaluate top end of the Qwen1.5 family (4B, 7B, 14B, 72B).
-
-**2/06** Evaluate upstage/SOLAR-10.7B-Instruct-v1.0.
 
 ## Test Suites
 
