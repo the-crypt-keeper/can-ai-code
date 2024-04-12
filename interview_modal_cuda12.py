@@ -10,9 +10,14 @@ def download_model(name, info = {}, **kwargs):
         json.dump({"model_name": name, **info}, f)
     snapshot_download(name, **kwargs)
 
+# LLAMA2
 def model_llama_chat_7b_e8p(): download_model('relaxml/Llama-2-7b-chat-E8P-2Bit')
+# Mistral
 def model_hermes2_pro_mistral_7b(): download_model('NousResearch/Hermes-2-Pro-Mistral-7B')
 def model_ajibawa2023_code_mistral_7b(): download_model('ajibawa-2023/Code-Mistral-7B')
+# Starcoder
+def model_dolphincoder_starcoder2_7b(): download_model('cognitivecomputations/dolphincoder-starcoder2-7b')
+def model_dolphincoder_starcoder2_15b(): download_model('cognitivecomputations/dolphincoder-starcoder2-15b')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
@@ -28,7 +33,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
@@ -52,7 +57,7 @@ vllm_image = (
     )  
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_ajibawa2023_code_mistral_7b, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_dolphincoder_starcoder2_15b, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=vllm_image)

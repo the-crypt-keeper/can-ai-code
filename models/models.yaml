@@ -27,6 +27,8 @@ HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigco
 openaccess-ai-collective-minotaur-15b: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], alias: "openaccess-ai-collective-minotaur-15b-fp16", url: "https://huggingface.co/openaccess-ai-collective/minotaur-15b" }
 TheBloke-minotaur-15B-GPTQ: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
 openchat-opencoderplus-fp16: { name: "OpenCoderPlus", size: "15B", tags: ["bigcode"] }
+cognitivecomputations-dolphincoder-starcoder2-7b: { name: "DolphinCoder-Starcoder2", size: "7B", tags: ["bigcode"] }
+cognitivecomputations-dolphincoder-starcoder2-15b: { name: "DolphinCoder-Starcoder2", size: "15B", tags: ["bigcode"] }
 
 michaelfeil-ct2fast-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], quant: "CT2-INT8" }
 WizardLM-WizardCoder-15B-V1.0: { name: "WizardCoder", size: "15B", tags: ["bigcode","wizard"], alias: ["WizardLM-WizardCoder-15B-V1.0-fp16", "375cead61e4db124-gradio-app-wizardcoder-16b"] }
