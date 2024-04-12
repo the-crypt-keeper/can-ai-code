@@ -20,7 +20,7 @@ A self-evaluating interview for AI coding models.
 
 **4/12** Evaluate ajibawa-2023/Code-Mistral-7B, cognitivecomputations/dolphincoder-starcoder2 7B and 15B.
 
-**4/11** Evalute NousResearch/Hermes-2-Pro-Mistral-7B.
+**4/11** Emerging from a nasty round of COVID, apologies for lack of updates starting to catch up now.  Evaluate NousResearch/Hermes-2-Pro-Mistral-7B.
 
 **3/03** Re-evaluate CodeLlama family.  Leaderboard results are now split by task!
 
