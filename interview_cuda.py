@@ -411,8 +411,9 @@ class InterviewExllama2:
         #if '70B' in model_name: self.info['low_mem'] = True
 
     def load(self):
-        import sys
-        sys.path += ["/repositories/exllamav2","../exllamav2"]
+        print("Starting load..")
+        # import sys
+        # sys.path += ["/repositories/exllamav2","../exllamav2"]
         import os
         
         # monkey-patch a fix for https://github.com/the-crypt-keeper/can-ai-code/issues/114
@@ -465,152 +466,47 @@ class InterviewExllama2:
     def generate(self, prompt, params):
         
         from exllamav2.generator import (
-            ExLlamaV2BaseGenerator,
+            ExLlamaV2StreamingGenerator,
             ExLlamaV2Sampler,
         )
-        import torch
-        import random
         
-        class CustomGenerator(ExLlamaV2BaseGenerator):
-            def generate_simple(self, prompt: str or list,
-                                gen_settings: ExLlamaV2Sampler.Settings,
-                                num_tokens: int,
-                                seed = None,
-                                token_healing = False,
-                                encode_special_tokens = False,
-                                decode_special_tokens = False,
-                                loras = None,
-                                stop_token = -1,
-                                stop_text = []):
-
-                # Default stop token
-
-                if stop_token == -1: stop_token = self.tokenizer.eos_token_id
-
-                # Accept LoRA or list of LoRAs
-
-                if loras is not None and isinstance(loras, ExLlamaV2Lora): loras = [loras]
-
-                # Apply seed
-
-                if seed is not None: random.seed(seed)
-
-                # Tokenize input and produce padding mask if needed
-
-                batch_size = 1 if isinstance(prompt, str) else len(prompt)
-                ids, position_offsets = self.tokenizer.encode(prompt, encode_special_tokens = encode_special_tokens, return_offsets = True)
-                if batch_size == 1: position_offsets = None
-
-                overflow = ids.shape[-1] + num_tokens - self.model.config.max_seq_len
-                if overflow > 0: ids = ids[:, overflow:]
-
-                mask = self.tokenizer.padding_mask(ids) if batch_size > 1 else None
-
-                # Prepare for healing
-
-                unhealed_token = None
-                if ids.shape[-1] < 2: token_healing = False
-                if token_healing:
-                    unhealed_token = ids[:, -1:]
-                    ids = ids[:, :-1]
-
-                # Process prompt and begin gen
-
-                self._gen_begin_base(ids, mask, loras, position_offsets = position_offsets)
-
-                # Begin filters
-
-                id_to_piece = self.tokenizer.get_id_to_piece_list()
-                if unhealed_token is not None:
-                    unhealed_token_list = unhealed_token.flatten().tolist()
-                    heal = [id_to_piece[x] for x in unhealed_token_list]
-                else:
-                    heal = None
-                gen_settings.begin_filters(heal)
-
-                # Generate tokens
-
-                batch_eos = [False] * batch_size
-                
-                text = [''] * batch_size
-
-                for i in range(num_tokens):
-
-                    logits = self.model.forward(self.sequence_ids[:, -1:], self.cache, input_mask = mask, loras = loras, position_offsets = position_offsets).float().cpu()
-                    token, _, _ = ExLlamaV2Sampler.sample(logits, gen_settings, self.sequence_ids, random.random(), self.tokenizer, prefix_token = unhealed_token)
-
-                    eos = False
-                    if stop_token is not None:
-                        for b in range(batch_size):
-                            if token[b, 0].item() == stop_token:
-                                batch_eos[b] = True                                
-                                token[b, 0] = self.tokenizer.pad_token_id
-                            if len(stop_text) > 0:
-                                text[b] += self.tokenizer.decode(token, decode_special_tokens = True)[b]
-                                for stop_str in stop_text:
-                                    if stop_str in text[b]: batch_eos[b] = True
-                                
-                    if all(batch_eos): eos = True
-                    
-                    self.sequence_ids = torch.cat([self.sequence_ids, token], dim = 1)
-                    gen_settings.feed_filters(token)
-
-                    unhealed_token = None
-                    if eos: break
-
-                # Decode
-
-                text = self.tokenizer.decode(self.sequence_ids, decode_special_tokens = decode_special_tokens)
-
-                if isinstance(prompt, str): return text[0]
-                return text            
-
-        generator = CustomGenerator(self.model, self.cache, self.tokenizer)        
+        generator = ExLlamaV2StreamingGenerator(self.model, self.cache, self.tokenizer)        
         
         settings = ExLlamaV2Sampler.Settings()
         settings.temperature = params.get('temperature', 1.0)
         settings.top_k = params.get('top_k', 1000)
         settings.top_p = params.get('top_p', 1.0)
         settings.token_repetition_penalty = params.get('repetition_penalty', 1.0)
-        #settings.disallow_tokens(self.tokenizer, [self.tokenizer.eos_token_id])
 
         self.info['sampling_params'] = str(settings.__dict__)
 
         max_new_tokens = params.get('max_new_tokens', 512)
         stop_text = self.info.get('generate_args',{}).get('stop_seq', [])
-            
-        generator.warmup()
-        time_begin = time.time()
+        stop_condition_list = []
+        if self.info.get('eos_token_id'):
+            stop_condition_list.append(self.info.get('eos_token_id'))
+        stop_condition_list += stop_text        
+        generator.set_stop_conditions(stop_condition_list)
         
-        if isinstance(prompt, list):
-            batches = [prompt[i:i + self.batch_size] for i in range(0, len(prompt), self.batch_size)]
-        else:
-            batches = [[prompt]]
-            
-        collected_outputs = []
-        for b, batch in enumerate(batches):
-            if len(batches) > 1: print(f"Batch {b + 1} of {len(batches)}...")
-            outputs = generator.generate_simple(batch,
-                                                settings,
-                                                max_new_tokens,
-                                                seed = self.info.get('seed', 0),
-                                                encode_special_tokens=True,
-                                                decode_special_tokens=True,
-                                                token_healing=self.token_healing,
-                                                stop_text=stop_text)
+        input_ids = self.tokenizer.encode(prompt, add_bos = True)        
+        generator.begin_stream_ex(input_ids, settings)
 
-            trimmed_outputs = [o[len(p):] for p, o in zip(batch, outputs)]
-            collected_outputs += trimmed_outputs      
+        # Streaming loop. Note that repeated calls to sys.stdout.flush() adds some latency, but some
+        # consoles won't update partial lines without it.
+        generated_tokens = 0
+        text = ''
 
-        time_end = time.time()
-        time_total = time_end - time_begin
-        
-        if isinstance(prompt, list):
-            answers = collected_outputs
-        else:
-            answers = collected_outputs[0]
+        while True:
+            res = generator.stream_ex()
+            chunk = res["chunk"]
+            eos = res["eos"]
 
-        return answers, self.info
+            generated_tokens += 1
+            print (chunk, end = "")
+            text += chunk
+            if eos or generated_tokens == max_new_tokens: break
+
+        return text, self.info
 
 ####################
 ##  vLLM Adapter  ##
@@ -641,10 +537,21 @@ class InterviewVLLM:
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         max_model_len = self.info.get('max_model_len', 2048)
         enforce_eager = self.info.get('enforce_eager', False)
+
+        # monkey-patch a fix for vllm flavor of https://github.com/the-crypt-keeper/can-ai-code/issues/114
+        from vllm.distributed import utils
+        original_test_gpu_peer_copy = utils._can_actually_p2p
+        def safe_test_gpu_peer_copy(x,y):
+            try:
+                return original_test_gpu_peer_copy(x,y)
+            except Exception as e:
+                print('test_gpu_peer_copy() failed: ', str(e))
+                return False
+        utils._can_actually_p2p = safe_test_gpu_peer_copy
         
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            gpu_memory_utilization=0.92
+            gpu_memory_utilization=0.95
             enforce_eager = True
             self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, tensor_parallel_size=self.gpu_split, trust_remote_code=True, enforce_eager=enforce_eager, gpu_memory_utilization=gpu_memory_utilization)
         else:

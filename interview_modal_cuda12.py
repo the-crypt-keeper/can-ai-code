@@ -10,27 +10,32 @@ def download_model(name, info = {}, **kwargs):
         json.dump({"model_name": name, **info}, f)
     snapshot_download(name, **kwargs)
 
-# LLAMA2
+# LLAMA2 7B
 def model_llama_chat_7b_e8p(): download_model('relaxml/Llama-2-7b-chat-E8P-2Bit')
-# Mistral
+# Mistral 7B
 def model_hermes2_pro_mistral_7b(): download_model('NousResearch/Hermes-2-Pro-Mistral-7B')
 def model_ajibawa2023_code_mistral_7b(): download_model('ajibawa-2023/Code-Mistral-7B')
-# Starcoder
+# Starcoder2
 def model_dolphincoder_starcoder2_7b(): download_model('cognitivecomputations/dolphincoder-starcoder2-7b')
 def model_dolphincoder_starcoder2_15b(): download_model('cognitivecomputations/dolphincoder-starcoder2-15b')
-# LLama3
+# LLama3 8B
 def model_llama3_instruct_8b(): download_model('meta-llama/Meta-Llama-3-8B-Instruct')
-def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw')
-def model_llama3_instruct_70b_gptq():      download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ')
+def model_llama3_instruct_8b_awq(): download_model('casperhansen/llama-3-8b-instruct-awq', info={'eos_token_id': 128009})
+def model_llama3_instruct_8b_gptq_8bpw(): download_model('astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit', info={'eos_token_id': 128009})
+def model_llama3_instruct_8b_gptq_4bpw(): download_model('MaziyarPanahi/Meta-Llama-3-8B-Instruct-GPTQ', info={'eos_token_id': 128009})
+def model_llama3_instruct_8b_exl2_6bpw(): download_model('turboderp/Llama-3-8B-Instruct-exl2', revision='6.0bpw', info={'eos_token_id': 128009})
+# LLama3 70B
+def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
+def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-#RUNTIME = "exllama2"
+RUNTIME = "exllama2"
 #RUNTIME = "awq"
 #RUNTIME = "quipsharp"
 #######################################
@@ -61,9 +66,10 @@ vllm_image = (
         "exllamav2==0.0.19"
     )
     .pip_install("flash-attn==2.5.7")
+    .pip_install("https://github.com/turboderp/exllamav2/releases/download/v0.0.19/exllamav2-0.0.19+cu121-cp310-cp310-linux_x86_64.whl")
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_llama3_instruct_70b_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_llama3_instruct_8b_exl2_6bpw, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=vllm_image)
