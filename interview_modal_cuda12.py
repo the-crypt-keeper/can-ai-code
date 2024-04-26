@@ -18,6 +18,10 @@ def model_ajibawa2023_code_mistral_7b(): download_model('ajibawa-2023/Code-Mistr
 # Starcoder
 def model_dolphincoder_starcoder2_7b(): download_model('cognitivecomputations/dolphincoder-starcoder2-7b')
 def model_dolphincoder_starcoder2_15b(): download_model('cognitivecomputations/dolphincoder-starcoder2-15b')
+# LLama3
+def model_llama3_instruct_8b(): download_model('meta-llama/Meta-Llama-3-8B-Instruct')
+def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw')
+def model_llama3_instruct_70b_gptq():      download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
@@ -33,7 +37,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=1)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
@@ -41,8 +45,8 @@ vllm_image = (
     Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "transformers==4.39.3",
-        "optimum==1.18.1",
+        "transformers==4.40.0",
+        "optimum==1.19.1",
         "tiktoken==0.6.0",
         "bitsandbytes==0.43.1",
         "accelerate==0.29.2",
@@ -52,12 +56,14 @@ vllm_image = (
         "scipy==1.10.1",
         "pyarrow==11.0.0",
         "protobuf==3.20.3",
-        "vllm==0.4.0.post1",
-        "auto-gptq==0.7.1"        
-    )  
+        "vllm==0.4.1",
+        "auto-gptq==0.7.1",
+        "exllamav2==0.0.19"
+    )
+    .pip_install("flash-attn==2.5.7")
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_dolphincoder_starcoder2_15b, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_llama3_instruct_70b_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=vllm_image)
