@@ -35,14 +35,14 @@ def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2"
+RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
 #RUNTIME = "quipsharp"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
@@ -63,13 +63,12 @@ vllm_image = (
         "protobuf==3.20.3",
         "vllm==0.4.1",
         "auto-gptq==0.7.1",
-        "exllamav2==0.0.19"
+        "https://github.com/turboderp/exllamav2/releases/download/v0.0.19/exllamav2-0.0.19+cu121-cp310-cp310-linux_x86_64.whl"
     )
-    .pip_install("flash-attn==2.5.7")
-    .pip_install("https://github.com/turboderp/exllamav2/releases/download/v0.0.19/exllamav2-0.0.19+cu121-cp310-cp310-linux_x86_64.whl")
+    .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_llama3_instruct_8b_exl2_6bpw, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_llama3_instruct_70b_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=vllm_image)
@@ -91,9 +90,10 @@ class ModalWrapper:
         elif RUNTIME == "exllama":
             gpu_split = '17,24' if gpu_request.count == 2 else None
             self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)
-        elif RUNTIME == "exllama2":
-            #
-            self.wrapper = InterviewExllama2(self.info['model_name'], self.info)
+        elif RUNTIME[0:8] == "exllama2":
+            token_healing = '-th' in RUNTIME
+            cache_8bit = '8b' in RUNTIME
+            self.wrapper = InterviewExllama2(self.info['model_name'], self.info, token_healing=token_healing, cache_8bit=cache_8bit)
         elif RUNTIME == "awq":
             if self.info.get('big_model'):
                 gpu_split = '0,1' if gpu_request.count == 2 else '0,cpu'

@@ -18,15 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**4/28** Evaluate Llama-3-Instruct 8B (fp16, exl2 6bit, awq, gptq 4bit/8bit) and 70B (gptq, exl2 4bit).  Improved documentation on how to perform evals is coming!
+
 **4/12** Evaluate ajibawa-2023/Code-Mistral-7B, cognitivecomputations/dolphincoder-starcoder2 7B and 15B.
 
 **4/11** Emerging from a nasty round of COVID, apologies for lack of updates starting to catch up now.  Evaluate NousResearch/Hermes-2-Pro-Mistral-7B.
 
 **3/03** Re-evaluate CodeLlama family.  Leaderboard results are now split by task!
-
-**3/02** Evaluate bigcoder/starcoder2 family.  Starting to split results into `Instruct`, `Code-Completion` and `Fill-in-the-Middle` objectives.  Upgraded to modal==0.58.92
-
-**2/22** Evaluate google/gemma-it family (neither model can pass junior, senior is a write-off).
 
 ## Test Suites
 

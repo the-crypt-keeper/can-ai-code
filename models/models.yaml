@@ -368,3 +368,12 @@ internlm-internlm2-chat-20b: { name: "InternLM2-Chat", size: "20B", tags: ["inte
 
 google-gemma-7b-it: { name: "Gemma-IT", size: "7B", tags: ["gemma"] }
 google-gemma-2b-it: { name: "Gemma-IT", size: "2B", tags: ["gemma"] }
+
+meta-llama-Meta-Llama-3-8B-Instruct: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], url: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct" }
+casperhansen-llama-3-8b-instruct-awq: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "AWQ-4b" }
+MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ-main"] }
+astronomer-Llama-3-8B-Instruct-GPTQ-8-Bit: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-8b" }
+turboderp-Llama-3-8B-Instruct-exl2-6.0bpw: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "EXL2-6b", url: "https://huggingface.co/turboderp/Llama-3-8B-Instruct-exl2" }
+
+MaziyarPanahi-Meta-Llama-3-70B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-70B-Instruct-GPTQ-main"] }
+turboderp-Llama-3-70B-Instruct-exl2-4.0bpw: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "EXL2-4b" }
