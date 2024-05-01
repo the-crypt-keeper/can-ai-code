@@ -377,3 +377,8 @@ turboderp-Llama-3-8B-Instruct-exl2-6.0bpw: { name: "Llama 3 Instruct", size: "8B
 
 MaziyarPanahi-Meta-Llama-3-70B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-70B-Instruct-GPTQ-main"] }
 turboderp-Llama-3-70B-Instruct-exl2-4.0bpw: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "EXL2-4b" }
+
+Meta-Llama-3-8B-Instruct-IQ4-XS: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-IQ4XS", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+Meta-Llama-3-8B-Instruct-Q4-K-M: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q4KM", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+Meta-Llama-3-8B-Instruct-Q6-K: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q6K", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+Meta-Llama-3-8B-Instruct-Q8-0: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
