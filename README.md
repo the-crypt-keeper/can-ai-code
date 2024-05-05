@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**5/6** Evaluate CodeGemma-7b-It (FP16, NF4, Q6_K_M).
+**5/6** Evaluate CodeGemma-7b-It (FP16, NF4, Q6_K_M) for instruction following, CodeGemma-2b and 7b for Completion and FIM (FP16, NF4, Q8).
 
 **5/5** Evaluate Phi-3 (transformers and GGUF) - there seems to be something wrong with the GGUF, even at fp16 performance is lower then transformers.
 
