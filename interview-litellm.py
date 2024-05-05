@@ -34,10 +34,12 @@ if __name__ == '__main__':
     # OpenAI custom base
     if args.apibase: 
         params['api_base'] = args.apibase
-        model_name = 'openai/custom'
+        model_name = 'local_api/custom'
         
         model_info = requests.get(args.apibase + 'v1/models').json()        
         args.model = model_info['data'][0]['id'].split('/')[-1].replace('.gguf','')
+        
+    runtime = model_name.split('/')[0]
 
     # Load interview
     interview = [json.loads(line) for line in open(args.input)]
@@ -47,7 +49,8 @@ if __name__ == '__main__':
         print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
         messages = [{'role': 'user', 'content': challenge['prompt']}]
         response = litellm.completion(model=model_name, messages=messages, seed=args.seed, **params)
-        answer = response.choices[0].message.content
+        msg = response.choices[0].message
+        answer = msg['content'] if isinstance(msg,dict) else msg.content
 
         print()
         print(answer)
@@ -58,7 +61,7 @@ if __name__ == '__main__':
         result['answer'] = answer
         result['params'] = params
         result['model'] = args.model
-        result['runtime'] = 'litellm'
+        result['runtime'] = runtime
 
         results.append(result)
 
