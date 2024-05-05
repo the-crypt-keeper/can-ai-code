@@ -329,6 +329,10 @@ microsoft-phi-2-fp16: { name: "Phi-2", size: "2.7B", tags: ["phi"] }
 cognitivecomputations-dolphin-2-6-phi-2-fp16: { name: "Dolphin 2.6 Phi-2", size: "2.7B", tags: ["phi","dolphin"], url: "https://huggingface.co/cognitivecomputations/dolphin-2_6-phi-2" }
 microsoft-Orca-2-13b: { name: "Orca 2", size: "13B", tags: ["llama2"] }
 TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: ["llama2"] }
+microsoft-Phi-3-mini-4k-instruct-fp16: { name: "Phi-3-Mini-Instruct", size: "4B", tags: ["phi"], url: "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct" }
+ollama-phi3: { name: "Phi-3-Mini-Instruct", size: "4B", tags: ["phi"], quant: "GGUF-Q4KM", url: "https://ollama.com/library/phi3" }
+Phi-3-mini-4k-instruct-fp16: { name: "Phi-3-Mini-Instruct", size: "4B", tags: ["phi"], quant: "GGUF-FP16", url: "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf" }
+Phi-3-mini-4k-instruct-q4: { name: "Phi-3-Mini-Instruct", size: "4B", tags: ["phi"], quant: "GGUF-Q4KM", url: "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf" }
 
 TheBloke-Nous-Hermes-2-Yi-34B-GPTQ: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GPTQ-4b", tags: ["yi"], alias: ["TheBloke-Nous-Hermes-2-Yi-34B-GPTQ-main"] }
 TheBloke-Nous-Hermes-2-Yi-34B-AWQ: { name: "Nous Hermes 2 Yi", size: "34B", quant: "AWQ-4b", tags: ["yi"] }

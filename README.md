@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**5/5** Evaluate Phi-3 (transformers and GGUF) - there seems to be something wrong with the GGUF!
+
 **5/1** Evaluate Llama-3-Instruct 8B GGUF (IQ4XS, Q4KM, Q6K, Q8).
 
 **4/28** Evaluate Llama-3-Instruct 8B (fp16, exl2 6bit, awq, gptq 4bit/8bit) and 70B (gptq, exl2 4bit).  Improved documentation on how to perform evals is coming!
