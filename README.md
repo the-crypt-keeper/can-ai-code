@@ -18,7 +18,9 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**5/5** Evaluate Phi-3 (transformers and GGUF) - there seems to be something wrong with the GGUF!
+**5/6** Evaluate CodeGemma-7b-It (FP16, NF4, Q6_K_M).
+
+**5/5** Evaluate Phi-3 (transformers and GGUF) - there seems to be something wrong with the GGUF, even at fp16 performance is lower then transformers.
 
 **5/1** Evaluate Llama-3-Instruct 8B GGUF (IQ4XS, Q4KM, Q6K, Q8).
 
