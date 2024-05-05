@@ -375,7 +375,7 @@ google-gemma-2b-it: { name: "Gemma-IT", size: "2B", tags: ["gemma"] }
 
 google-codegemma-7b-it-fp16: { name: "Gemma-IT", size: "7B", tags: ["gemma"] }
 google-codegemma-7b-it-nf4: { name: "Gemma-IT", size: "7B", tags: ["gemma"], quant: "BNB-NF4" }
-ollama-codegemma:7b-instruct-v1.1-q6-K: { name: "Gemma-IT", size: "7B", tags: ["gemma"], quant: "GGUF-Q6K", alias: ["ollama-chat-codegemma:7b-instruct-v1.1-q6-K"] }
+ollama-codegemma:7b-instruct-v1.1-q6-K: { name: "Gemma-IT", size: "7B", tags: ["gemma"], quant: "GGUF-Q6K", alias: ["ollama-chat-codegemma:7b-instruct-v1.1-q6-K"], url: "https://ollama.com/library/codegemma" }
 
 meta-llama-Meta-Llama-3-8B-Instruct: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], url: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct" }
 casperhansen-llama-3-8b-instruct-awq: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "AWQ-4b" }
