@@ -107,8 +107,11 @@ class InterviewTransformers:
             print('WARNING: generate config could not be auto-loaded from model:', str(e))
             generation_config = GenerationConfig(**params)
 
-        if not generation_config.eos_token_id:
-            generation_config.eos_token_id = self.info.get('eos_token_id', self.tokenizer.eos_token_id)
+        original_eos_token_id = generation_config.eos_token_id
+            
+        if self.info.get('eos_token_id'):
+            generation_config.eos_token_id = [self.info.get('eos_token_id')]
+            if original_eos_token_id is not None: generation_config.eos_token_id += [original_eos_token_id]
         self.info['sampling_params'] = str(generation_config)
 
         if 'stop_seq' in generate_args:
@@ -142,10 +145,17 @@ class InterviewTransformers:
             inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
             input_len = inputs.size()[-1]
             sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
-            answer = self.tokenizer.decode(sample[0][input_len:-1], clean_up_tokenization_spaces=False, )
-            
+            answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False, skip_special_tokens=True)
+
+        if generation_config.eos_token_id is not None:
+            eos_token_ids = generation_config.eos_token_id
+            if not isinstance(eos_token_ids, list): eos_token_ids = [eos_token_ids]                
+            for tmp_eos_token in eos_token_ids:
+                eos_token_str = self.tokenizer.decode([tmp_eos_token])
+                answer = answer.replace(eos_token_str, '')
+
         t1 = time.time()
-        output_len = len(sample[0])
+        output_len = len(sample[0])-input_len
         speed = output_len / (t1-t0)
         print(f"Generated {output_len} tokens in {t1-t0}s speed {speed:.2f} tok/sec")
 
@@ -861,7 +871,7 @@ def download_safetensors(model_name, revision=None):
             continue
         break
 
-def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = ""):
+def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = "", completion : bool = False):
     from prepare import save_interview
 
     download_safetensors(model_name, revision if revision else None)
@@ -869,6 +879,11 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
     gpu_split = gpusplit if gpusplit != '' else None
     model_info = json.loads(info) if isinstance(info, str) else info
     if revision: model_info['revision'] = revision
+
+    if completion:
+        ga = model_info.get('generate_args', {})
+        ga['stop_seq'] = ["\n#","\n//","\n\n\n\n"]
+        model_info['generate_args'] = ga
 
     if runtime == 'transformers':
         if quant:

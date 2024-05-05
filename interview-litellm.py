@@ -3,6 +3,7 @@ import argparse
 import json
 from time import sleep
 from prepare import save_interview
+from jinja2 import Template
 import litellm
 import requests
 
@@ -24,6 +25,8 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=42, help='random seed to use (helps determinism)')
     parser.add_argument('--params', type=str, required=True, help='parameter file to use')
     parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
+    parser.add_argument('--templateout', type=str, help='output template')
+    parser.add_argument('--stop', type=str, help='stop sequences list json')
     args = parser.parse_args()
 
     # Load params and init model
@@ -38,12 +41,17 @@ if __name__ == '__main__':
         
         model_info = requests.get(args.apibase + 'v1/models').json()        
         args.model = model_info['data'][0]['id'].split('/')[-1].replace('.gguf','')
+
+    if args.stop:
+        params['stop'] = json.loads(args.stop)
         
     runtime = model_name.split('/')[0]
 
     # Load interview
     interview = [json.loads(line) for line in open(args.input)]
     results = []
+    
+    output_template = Template(open(args.templateout).read()) if args.templateout else None
 
     for idx, challenge in enumerate(interview):
         print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
@@ -51,7 +59,8 @@ if __name__ == '__main__':
         response = litellm.completion(model=model_name, messages=messages, seed=args.seed, **params)
         msg = response.choices[0].message
         answer = msg['content'] if isinstance(msg,dict) else msg.content
-
+        answer = output_template.render(**challenge, Answer=answer) if output_template else result            
+        
         print()
         print(answer)
         print(response.usage)
