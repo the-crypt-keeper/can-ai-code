@@ -60,6 +60,8 @@ class InterviewTransformers:
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
                                                 load_in_4bit = self.quant in [QUANT_FP4, QUANT_NF4],
                                                 bnb_4bit_quant_type = "nf4" if self.quant == QUANT_NF4 else "fp4")
+        if quantization_config.load_in_4bit: quantization_config.bnb_4bit_compute_dtype = torch.float16
+        if self.quant == QUANT_FP16: quantization_config = None
                
         if use_pipeline:
             print('Loading model with pipeline...')
@@ -88,6 +90,8 @@ class InterviewTransformers:
         print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s used {mem_usage/1024/1024:.2f}MB of memory")        
 
     def generate(self, prompt, params, gen_args = {}):
+        t0 = time.time()
+        
         from transformers import GenerationConfig
 
         generate_args = copy(self.info['generate_args']) if 'generate_args' in self.info else {}
@@ -138,15 +142,12 @@ class InterviewTransformers:
             inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
             input_len = inputs.size()[-1]
             sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
-            answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False)
-       
-        eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>', '<EOT>', '<empty_output>', '<|im_end|>', '[EOS]' ]
-        eos_token = self.tokenizer.decode([generation_config.eos_token_id])
-        if not eos_token in eos_list: eos_list += [eos_token]
-        if 'stopping_criteria' in generate_args: eos_list += generate_args['stopping_criteria'][0].stop_texts
-        
-        for eos in eos_list:
-            answer = answer.replace(eos, '')
+            answer = self.tokenizer.decode(sample[0][input_len:-1], clean_up_tokenization_spaces=False, )
+            
+        t1 = time.time()
+        output_len = len(sample[0])
+        speed = output_len / (t1-t0)
+        print(f"Generated {output_len} tokens in {t1-t0}s speed {speed:.2f} tok/sec")
 
         return answer, self.info
 
@@ -875,8 +876,10 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
             for k,v in quant_suffix.items():
                 if v == quant:
                     quant_id = k
-            if not quant_id:
+            if quant_id is None:
                 raise Exception("quant "+quant+" not found")
+            else:
+                print("quant:", quant_id)
         else:
             quant_id = QUANT_FP16
         model = InterviewTransformers(model_name, model_info, gpu_split=gpu_split, quant=quant_id)
