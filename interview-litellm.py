@@ -22,6 +22,7 @@ if __name__ == '__main__':
     parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
     parser.add_argument('--model', type=str, default='openai/chatgpt', help='model to use')
     parser.add_argument('--apibase', type=str, help='api base url override')
+    parser.add_argument('--runtime', type=str, help='override runtime (when using openai-compatible server)')
     parser.add_argument('--seed', type=int, default=42, help='random seed to use (helps determinism)')
     parser.add_argument('--params', type=str, required=True, help='parameter file to use')
     parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
@@ -33,10 +34,15 @@ if __name__ == '__main__':
     params = convert_params(json.load(open(args.params)))
     litellm.drop_params=True
     model_name = args.model
-    
+    runtime = model_name.split('/')[0]
+        
     # OpenAI custom base
     if args.apibase: 
         params['api_base'] = args.apibase
+        if 'openai' in model_name:
+            if not args.runtime: raise Exception("If apibase is set and model is openai/ you must also provide runtime.")
+            runtime = args.runtime
+            
         model_name = 'local_api/custom'
         
         model_info = requests.get(args.apibase + 'v1/models').json()        
@@ -45,7 +51,6 @@ if __name__ == '__main__':
     if args.stop:
         params['stop'] = json.loads(args.stop)
         
-    runtime = model_name.split('/')[0]
 
     # Load interview
     interview = [json.loads(line) for line in open(args.input)]
@@ -59,7 +64,7 @@ if __name__ == '__main__':
         response = litellm.completion(model=model_name, messages=messages, seed=args.seed, **params)
         msg = response.choices[0].message
         answer = msg['content'] if isinstance(msg,dict) else msg.content
-        answer = output_template.render(**challenge, Answer=answer) if output_template else result            
+        answer = output_template.render(**challenge, Answer=answer) if output_template else answer            
         
         print()
         print(answer)

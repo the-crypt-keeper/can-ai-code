@@ -27,22 +27,25 @@ def model_llama3_instruct_8b_exl2_6bpw(): download_model('turboderp/Llama-3-8B-I
 # LLama3 70B
 def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
+# CodeQwen
+def model_codeqwen_7b_awq(): download_model("Qwen/CodeQwen1.5-7B-Chat-AWQ")
+def model_codeqwen_7b_fp16(): download_model("Qwen/CodeQwen1.5-7B-Chat")
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2-th"
+#RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
 #RUNTIME = "quipsharp"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=1)
 #gpu_request = gpu.A100(count=1)
 #######################################
 
@@ -68,7 +71,7 @@ vllm_image = (
     .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_llama3_instruct_70b_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_codeqwen_7b_fp16, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 stub = Stub(image=vllm_image)

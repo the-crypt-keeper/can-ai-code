@@ -8,7 +8,7 @@
 
 ## Evaluating Instruct
 
-We will use `MODEL=cognitivecomputations/dolphincoder-starcoder2-7b` as an example, replace with the HF-Hub path of the model you wish to evaluate.
+We will use `MODEL=google/codegemma-7b-it` as an example, replace with the HF-Hub path of the model you wish to evaluate.
 
 ### Build prompts
 
@@ -16,7 +16,7 @@ The first step of an evaluation is to convert an interview into prompts using th
 
 `python3 ./prepare.py --chat $MODEL --interview junior-v2`
 
-The prompts will be written to `results/prepare_junior-v2_python-javascript_chat-simple-cognitivecomputations-dolphincoder-starcoder2-7b.ndjson`
+The prompts will be written to `results/prepare_junior-v2_python-javascript_chat-simple-google-codegemma-7b-it.ndjson`
 
 Let's also prepare to run the `senior` interview at the same time:
 
@@ -24,7 +24,23 @@ Let's also prepare to run the `senior` interview at the same time:
 
 ### Run Inference
 
-#### Local GPU (CUDA)
+#### Local GPU: Transformers
+
+`pip3 install -r requirements.transformers.txt`
+
+```
+python3 ./interview_cuda.py \
+         --runtime transformers \
+         --model_name google/codegemma-7b-it \
+         --input results/prepare_junior-v2_python-javascript_chat-simple-google-codegemma-7b-it.ndjson \
+         --params params/greedy-hf.json
+```
+
+#### Local GPU: vLLM
+
+TODO
+
+#### Local GPU: exllamav2
 
 TODO
 
