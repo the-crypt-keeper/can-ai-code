@@ -366,6 +366,11 @@ Qwen-Qwen1.5-7B-Chat: { name: "Qwen1.5-Chat", size: "7B", tags: ["qwen"] }
 Qwen-Qwen1.5-14B-Chat: { name: "Qwen1.5-Chat", size: "14B", tags: ["qwen"] }
 Qwen-Qwen1.5-72B-Chat-AWQ: { name: "Qwen1.5-Chat", size: "72B", quant: "AWQ-4b", tags: ["qwen"] }
 
+Qwen-CodeQwen1.5-7B-Chat-fp16: { name: "CodeQwen1.5-Chat", size: "7B", tags: ["qwen"], alias: ["Qwen-CodeQwen1.5-7B-Chat"] }
+Qwen-CodeQwen1.5-7B-Chat-AWQ: { name: "CodeQwen1.5-Chat", size: "7B", tags: ["qwen"], quant: "AWQ-4bpw" }
+ollama-chat-codeqwen:7b-chat-v1.5-q8-0: { name: "CodeQwen1.5-Chat", size: "7B", quant: "GGUF-Q8", tags: ["qwen"], url: "https://ollama.com/library/codeqwen" }
+
+
 internlm-internlm2-chat-1-8b: { name: "InternLM2-Chat", size: "1.8B", tags: ["internlm2"], url: "https://huggingface.co/internlm/internlm2-chat-1_8b" }
 internlm-internlm2-chat-7b: { name: "InternLM2-Chat", size: "7B", tags: ["internlm2"] }
 internlm-internlm2-chat-20b: { name: "InternLM2-Chat", size: "20B", tags: ["internlm2"] }
@@ -384,6 +389,8 @@ google-codegemma-2b-fp16: { name: "CodeGemma", size: "2B", tags: ["gemma"] }
 google-codegemma-2b-nf4: { name: "CodeGemma", size: "2B", tags: ["gemma"], quant: "BNB-NF4" }
 google-codegemma-2b-int8: { name: "CodeGemma", size: "2B", tags: ["gemma"], quant: "BNB-INT8" }
 ollama-codegemma:2b-code-v1.1-q8-0: { name: "CodeGemma", size: "2B", tags: ["gemma"], quant: "GGML_Q8", url: "https://ollama.com/library/codegemma" }
+
+openchat-openchat-3.5-0106-gemma-fp16: { name: "OpenChat-3.5-0106-Gemma", tags: ["gemma"], size: "7B", alias: ["openchat-openchat-3.5-0106-gemma"] }
 
 meta-llama-Meta-Llama-3-8B-Instruct: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], url: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct" }
 casperhansen-llama-3-8b-instruct-awq: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "AWQ-4b" }
