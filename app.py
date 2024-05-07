@@ -165,9 +165,9 @@ def main():
 
         These are complex interviews with hundreds of questions and the evaluation harness is python-specific.  See [llm-humaneval-benchmarks](https://github.com/my-other-github-account/llm-humaneval-benchmarks) and [code-eval](https://github.com/abacaj/code-eval) for projects large lists of Humaneval LLM benchmark results.
 
-        ## What is the difference between `junior-v2` and `junior-dev` interviews?
+        ## What is the difference between `junior-v2` and `senior` interviews?
 
-        The v2 interview fixes a number of bugs in the prompt, self-checking, and evaluation harness.  It also focuses on code-generation models and avoids quantization where possible.
+        The `junior-v2` interview is fairly easy as far as coding goes, its more a check of instruction following and making sure there are no rejections if you try to do something the model decides it might not like.  `senior` is a moderate difficulty coding test.
 
         ## Who are you?
 
