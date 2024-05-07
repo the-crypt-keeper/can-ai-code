@@ -122,6 +122,7 @@ NousResearch-Nous-Hermes-Llama2-13b: { name: "Nous-Hermes Llama2", "size": "13B"
 rombodawg-LosslessMegaCoder-llama2-7b-mini: { name: "LosslessMegaCoder", "size": "7B", tags: ["llama2"] }
 rombodawg-LosslessMegaCoder-llama2-13b-mini: { name: "LosslessMegaCoder", "size": "13B", tags: ["llama2"] }
 Undi95-Nous-Hermes-13B-Code-fp16: { name: "NH Llama2 x Airoboros 2.1 Coder", size: "13B", tags: ["llama2","airoboros"] }
+NousResearch-Hermes-2-Pro-Llama-3-8B: { name: "Nous-Hermes 2 Pro Llama3", "size": "8B", tags: ["llama3"], alias: ["NousResearch-Hermes-2-Pro-Llama-3-8B-fp16"] }
 
 LLM360-CrystalCoder-fp16: { name: "LLM360 CrystalCoder", size: "7B", tags: ["llm360"] }
 
