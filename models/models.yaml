@@ -406,3 +406,10 @@ Meta-Llama-3-8B-Instruct-IQ4-XS: { name: "Llama 3 Instruct", size: "8B", tags: [
 Meta-Llama-3-8B-Instruct-Q4-K-M: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q4KM", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
 Meta-Llama-3-8B-Instruct-Q6-K: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q6K", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
 Meta-Llama-3-8B-Instruct-Q8-0: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+
+ibm-granite-granite-3b-code-instruct-fp16: { name: "Granite", size: "3B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
+ibm-granite-granite-3b-code-instruct-nf4: { name: "Granite", size: "3B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
+ibm-granite-granite-8b-code-instruct-fp16: { name: "Granite", size: "8B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-8b-code-instruct" }
+ibm-granite-granite-8b-code-instruct-nf4: { name: "Granite", size: "8B", quant: "BNB-NF4",tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-8b-code-instruct" }
+ibm-granite-granite-20b-code-instruct-fp16: { name: "Granite", size: "20B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }
+ibm-granite-granite-20b-code-instruct-nf4: { name: "Granite", size: "20B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }

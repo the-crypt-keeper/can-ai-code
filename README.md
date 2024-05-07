@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**5/7** Evaluate ibm-granite/granite-code-instruct 3B (FP16, NF4), 8B (FP16, NF4) and 20B (NF4).
+
 **5/6** Evaluate Qwen/CodeQwen1.5-7B-Chat (FP16, AWQ, Q8), openchat/openchat-3.5-0106-gemma (FP16), NousResearch/Hermes-2-Pro-Llama-3-8B (FP16).
 
 **5/6** Evaluate CodeGemma-7b-It (FP16, NF4, Q6_K_M) for instruction following, CodeGemma-2b and 7b for Completion and FIM (FP16, NF4, Q8).
