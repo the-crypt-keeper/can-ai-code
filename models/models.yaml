@@ -411,5 +411,6 @@ ibm-granite-granite-3b-code-instruct-fp16: { name: "Granite", size: "3B", tags: 
 ibm-granite-granite-3b-code-instruct-nf4: { name: "Granite", size: "3B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
 ibm-granite-granite-8b-code-instruct-fp16: { name: "Granite", size: "8B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-8b-code-instruct" }
 ibm-granite-granite-8b-code-instruct-nf4: { name: "Granite", size: "8B", quant: "BNB-NF4",tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-8b-code-instruct" }
-ibm-granite-granite-20b-code-instruct-fp16: { name: "Granite", size: "20B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }
+ibm-granite-granite-20b-code-instruct: { name: "Granite", size: "20B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }
 ibm-granite-granite-20b-code-instruct-nf4: { name: "Granite", size: "20B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }
+ibm-granite-granite-34b-code-instruct: { name: "Granite", size: "34B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-34b-code-instruct" }
