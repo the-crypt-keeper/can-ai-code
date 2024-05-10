@@ -109,10 +109,11 @@ class InterviewTransformers:
 
         original_eos_token_id = generation_config.eos_token_id
             
-        if self.info.get('eos_token_id'):
+        if self.info.get('eos_token_id') is not None:
             generation_config.eos_token_id = [self.info.get('eos_token_id')]
             if original_eos_token_id is not None: generation_config.eos_token_id += [original_eos_token_id]
         self.info['sampling_params'] = str(generation_config)
+        # print('sampling_params', self.info['sampling_params'])
 
         if 'stop_seq' in generate_args:
             from transformers import StoppingCriteria, StoppingCriteriaList
