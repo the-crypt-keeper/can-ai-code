@@ -113,9 +113,9 @@ def calculate_summary(data, language = None):
     sumdf.drop('Total', axis=1, inplace=True)
 
     merged_df = pd.merge(sumdf, load_models(), left_on='Model', right_on='id', how='left')
-    merged_df['name'].fillna(merged_df['Model'], inplace=True)
-    merged_df['size'].fillna('', inplace=True)
-    merged_df.drop('Model', axis=1, inplace=True)
+    merged_df['name'] = merged_df['name'].fillna(merged_df['Model'])
+    merged_df['size'] = merged_df['size'].fillna('')
+    merged_df = merged_df.drop('Model', axis=1)
 
     return merged_df
 
