@@ -25,6 +25,8 @@ def model_llama3_instruct_8b_gptq_8bpw(): download_model('astronomer/Llama-3-8B-
 def model_llama3_instruct_8b_gptq_4bpw(): download_model('MaziyarPanahi/Meta-Llama-3-8B-Instruct-GPTQ', info={'eos_token_id': 128009})
 def model_llama3_instruct_8b_exl2_6bpw(): download_model('turboderp/Llama-3-8B-Instruct-exl2', revision='6.0bpw', info={'eos_token_id': 128009})
 def model_ajibawa_code_llama3(): download_model('ajibawa-2023/Code-Llama-3-8B')
+def model_rombodawg_llama3_8b_instruct_coder(): download_model('rombodawg/Llama-3-8B-Instruct-Coder')
+
 # LLama3 70B
 def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
@@ -43,7 +45,6 @@ def model_starchat2_sft_0p1(): download_model('HuggingFaceH4/starchat2-15b-sft-v
 def model_mixtral_8x22b_instruct_awq(): download_model('MaziyarPanahi/Mixtral-8x22B-Instruct-v0.1-AWQ')
 def model_mixtral_8x22b_instruct_gptq(): download_model('jarrelscy/Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit')
 def model_mixtral_8x22b_instruct_exl2(): download_model('turboderp/Mixtral-8x22B-Instruct-v0.1-exl2', revision='4.0bpw')
-
 def model_wizardlm2_8x22b_awq(): download_model('MaziyarPanahi/WizardLM-2-8x22B-AWQ')
 def model_wizardlm2_8x22b_exl2(): download_model('Dracones/WizardLM-2-8x22B_exl2_4.0bpw')
 
@@ -87,7 +88,7 @@ vllm_image = (
     .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_wizardlm2_8x22b_exl2, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_mixtral_8x22b_instruct_exl2, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)

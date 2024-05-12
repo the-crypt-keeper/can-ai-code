@@ -302,7 +302,9 @@ cloudyu-Mixtral-7Bx2-MoE-fp16: { name: "Mixtral-7Bx2-MoE", size: "7B", tags: ["m
 
 MaziyarPanahi-Mixtral-8x22B-Instruct-v0.1-AWQ: { name: "Mixtral-8x22B-Instruct-0.1", size: "141B", tags: ["mistral"], quant: "AWQ-4b" }
 jarrelscy-Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit:  { name: "Mixtral-8x22B-Instruct-0.1", size: "141B", tags: ["mistral"], quant: "GPTQ-4b" }
+turboderp-Mixtral-8x22B-Instruct-v0.1-exl2-4.0bpw: { name: "Mixtral-8x22B-Instruct-0.1", size: "141B", tags: ["mistral"], quant: "EXL2-4.0" }
 MaziyarPanahi-WizardLM-2-8x22B-AWQ: { name: "WizardLM2-8x22B", size: "141B", tags: ["mistral","wizard"], quant: "AWQ-4b" }
+Dracones-WizardLM-2-8x22B-exl2-4.0bpw-main: { name: "WizardLM2-8x22B", size: "141B", tags: ["mistral","wizard"], quant: "EXL2-4.0" }
 
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
@@ -408,6 +410,7 @@ casperhansen-llama-3-8b-instruct-awq: { name: "Llama 3 Instruct", size: "8B", ta
 MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ-main"] }
 astronomer-Llama-3-8B-Instruct-GPTQ-8-Bit: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-8b" }
 turboderp-Llama-3-8B-Instruct-exl2-6.0bpw: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "EXL2-6b", url: "https://huggingface.co/turboderp/Llama-3-8B-Instruct-exl2" }
+rombodawg-Llama-3-8B-Instruct-Coder: { name: "Llama 3 Instruct Coder", size: "8B", tags: ["llama3"] }
 
 MaziyarPanahi-Meta-Llama-3-70B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-70B-Instruct-GPTQ-main"] }
 turboderp-Llama-3-70B-Instruct-exl2-4.0bpw: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "EXL2-4b" }
