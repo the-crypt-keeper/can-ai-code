@@ -22,8 +22,13 @@ bigcode-octocoder: { name: 'OctoCoder', size: '15B', tags: ["bigcode"] }
 bigcode-starcoder2-3b: { name: 'StarCoder2', size: '3B', tags: ["bigcode"] }
 bigcode-starcoder2-7b: { name: 'StarCoder2', size: '7B', tags: ["bigcode"] }
 bigcode-starcoder2-15b: { name: 'StarCoder2', size: '15B', tags: ["bigcode"] }
+bigcode-starcoder2-15b-instruct-v0.1-fp16: { name: 'StarCoder2-Instruct-v0.1', size: '15B', tags: ["bigcode"] }
 HuggingFaceH4-starchat-alpha: { name: "StarChat-Alpha", size: "15B", tags: ["bigcode"], alias: ["HuggingFaceH4-starchat-playground-hf-space-starchat-alpha","HuggingFaceH4-starchat-alpha-fp16"] }
 HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigcode"], alias: ["starchat-beta-gradio","HuggingFaceH4-starchat-beta-fp16","HuggingFaceH4-starchat-playground-hf-space-starchat-beta"] }
+HuggingFaceH4-starchat2-15b-v0.1-fp16: { name: "StarChat2-v0.1", size: "15B", tags: ["bigcode"] }
+HuggingFaceH4-starchat2-15b-sft-v0.1-fp16: { name: "StarChat2-SFT-v0.1", size: "15B", tags: ["bigcode"] }
+stelterlab-starchat2-15b-v0.1-AWQ: { name: "StarChat2-v0.1", size: "15B", tags: ["bigcode"], quant: "AWQ-4b" }
+
 openaccess-ai-collective-minotaur-15b: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], alias: "openaccess-ai-collective-minotaur-15b-fp16", url: "https://huggingface.co/openaccess-ai-collective/minotaur-15b" }
 TheBloke-minotaur-15B-GPTQ: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
 openchat-opencoderplus-fp16: { name: "OpenCoderPlus", size: "15B", tags: ["bigcode"] }
@@ -295,6 +300,10 @@ openchat-openchat-3.5-1210: { name: "OpenChat-1210", size: "7B", tags: ["mistral
 beowolx-CodeNinja-1.0-OpenChat-7B: { name: "CodeNinja-1.0", size: "7B", tags: ["mistral"] }
 cloudyu-Mixtral-7Bx2-MoE-fp16: { name: "Mixtral-7Bx2-MoE", size: "7B", tags: ["mistral"], url: "https://huggingface.co/cloudyu/Mixtral_7Bx2_MoE" }
 
+MaziyarPanahi-Mixtral-8x22B-Instruct-v0.1-AWQ: { name: "Mixtral-8x22B-Instruct-0.1", size: "141B", tags: ["mistral"], quant: "AWQ-4b" }
+jarrelscy-Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit:  { name: "Mixtral-8x22B-Instruct-0.1", size: "141B", tags: ["mistral"], quant: "GPTQ-4b" }
+MaziyarPanahi-WizardLM-2-8x22B-AWQ: { name: "WizardLM2-8x22B", size: "141B", tags: ["mistral","wizard"], quant: "AWQ-4b" }
+
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-gpt4-alpaca-lora: { name: "Alpaca MLP", size: "65B", quant: "GPTQ-4b", tags: ["llama"], url: "https://huggingface.co/TheBloke/gpt4-alpaca-lora_mlp-65B-GPTQ" }
@@ -356,6 +365,7 @@ ajibawa-2023-Code-290k-13B: { name: "ajibawa-2023-Code-290k", size: "13B", url: 
 ajibawa-2023-Code-290k-6.7B-Instruct: { name: "ajibawa-2023-Code-290k-6.7B-Instruct", size: "6.7B", url: "ajibawa-2023/Code-290k-6.7B-Instruct", tags: ["deepseek"]}
 ajibawa-2023-OpenHermes-2.5-Code-290k-13B: { name: "ajibawa-2023-OpenHermes-2.5-Code-290k", size: "13B", url: "ajibawa-2023/OpenHermes-2.5-Code-290k-13B", tags: ["llama2"]}
 ajibawa-2023-Code-Mistral-7B: { name: "ajibawa-2023-Code-Mistral-7B", size: "7B", tags: ["mistral"], url: "https://huggingface.co/ajibawa-2023/Code-Mistral-7B"}
+ajibawa-2023-Code-Llama-3-8B: { name: "ajibawa-2023-Code-Llama3-8B", size: "8B", tags: ["llama3"], url: "https://huggingface.co/ajibawa-2023/Code-Llama-3-8B"}
 
 NousResearch-Nous-Hermes-2-SOLAR-10.7B: { name: "Nous-Hermes-2-SOLAR", size: "10.7B", tags: ["solar"] }
 upstage-SOLAR-10.7B-Instruct-v1.0: { name: "SOLAR-Instruct", size: "10.7B", tags: ["solar"] }

@@ -18,7 +18,9 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**5/7** Evaluate ibm-granite/granite-code-instruct 3B (FP16, NF4), 8B (FP16, NF4) and 20B (NF4).
+**5/11** Evaluate ajibawa-2023/Code-Llama-3-8B, bigcode/starcoder2-15b-instruct-v0.1 and sft (FP16 and AWQ), HuggingFaceH4/starchat2-15b-v0.1.
+
+**5/7** Evaluate ibm-granite/granite-code-instruct 3B (FP16, NF4), 8B (FP16, NF4), 20B (FP16, NF4) and 34B (FP16).
 
 **5/6** Evaluate Qwen/CodeQwen1.5-7B-Chat (FP16, AWQ, Q8), openchat/openchat-3.5-0106-gemma (FP16), NousResearch/Hermes-2-Pro-Llama-3-8B (FP16).
 
