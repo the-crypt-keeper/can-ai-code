@@ -427,3 +427,7 @@ ibm-granite-granite-8b-code-instruct-nf4: { name: "Granite", size: "8B", quant: 
 ibm-granite-granite-20b-code-instruct: { name: "Granite", size: "20B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }
 ibm-granite-granite-20b-code-instruct-nf4: { name: "Granite", size: "20B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }
 ibm-granite-granite-34b-code-instruct: { name: "Granite", size: "34B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-34b-code-instruct" }
+
+01-ai-Yi-1.5-6B-Chat: { name: "Yi-1.5-Chat", size: "6B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-6B-Chat" }
+01-ai-Yi-1.5-9B-Chat: { name: "Yi-1.5-Chat", size: "9B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-9B-Chat" }
+01-ai-Yi-1.5-34B-Chat: { name: "Yi-1.5-Chat", size: "34B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-34B-Chat" }

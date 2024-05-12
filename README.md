@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**5/12** Evaluate Yi-1.5 6B, 9B and 34B (FP16).
+
 **5/11** Evaluate ajibawa-2023/Code-Llama-3-8B (FP16), bigcode/starcoder2-15b-instruct-v0.1 and sft (FP16 and AWQ), HuggingFaceH4/starchat2-15b-v0.1 (FP16), rombodawg/Llama-3-8B-Instruct-Coder-v2 (FP16), Mixtral-Instruct-8x22B (AWQ, GPTQ, EXL2-4bit), WizardLM2-8x22B (AWQ, EXL2-4bit).
 
 **5/7** Evaluate ibm-granite/granite-code-instruct 3B (FP16, NF4), 8B (FP16, NF4), 20B (FP16, NF4) and 34B (FP16).
@@ -27,16 +29,6 @@ A self-evaluating interview for AI coding models.
 **5/6** Evaluate CodeGemma-7b-It (FP16, NF4, Q6_K_M) for instruction following, CodeGemma-2b and 7b for Completion and FIM (FP16, NF4, Q8).
 
 **5/5** Evaluate Phi-3 (transformers and GGUF) - there seems to be something wrong with the GGUF, even at fp16 performance is lower then transformers.
-
-**5/1** Evaluate Llama-3-Instruct 8B GGUF (IQ4XS, Q4KM, Q6K, Q8).
-
-**4/28** Evaluate Llama-3-Instruct 8B (fp16, exl2 6bit, awq, gptq 4bit/8bit) and 70B (gptq, exl2 4bit).  Improved documentation on how to perform evals is coming!
-
-**4/12** Evaluate ajibawa-2023/Code-Mistral-7B, cognitivecomputations/dolphincoder-starcoder2 7B and 15B.
-
-**4/11** Emerging from a nasty round of COVID, apologies for lack of updates starting to catch up now.  Evaluate NousResearch/Hermes-2-Pro-Mistral-7B.
-
-**3/03** Re-evaluate CodeLlama family.  Leaderboard results are now split by task!
 
 ## Test Suites
 

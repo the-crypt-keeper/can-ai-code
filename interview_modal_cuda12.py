@@ -47,22 +47,24 @@ def model_mixtral_8x22b_instruct_gptq(): download_model('jarrelscy/Mixtral-8x22B
 def model_mixtral_8x22b_instruct_exl2(): download_model('turboderp/Mixtral-8x22B-Instruct-v0.1-exl2', revision='4.0bpw')
 def model_wizardlm2_8x22b_awq(): download_model('MaziyarPanahi/WizardLM-2-8x22B-AWQ')
 def model_wizardlm2_8x22b_exl2(): download_model('Dracones/WizardLM-2-8x22B_exl2_4.0bpw')
+# Yi-1.5
+def model_yi_1p5_34b(): download_model('01-ai/Yi-1.5-34B-Chat', info={"eos_token_id":7})
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-RUNTIME = "exllama2-th"
+#RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
 #RUNTIME = "quipsharp"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A10G(count=4)
 gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
@@ -88,7 +90,7 @@ vllm_image = (
     .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_mixtral_8x22b_instruct_exl2, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_yi_1p5_34b, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
