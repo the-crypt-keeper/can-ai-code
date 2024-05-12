@@ -548,7 +548,7 @@ class InterviewVLLM:
         dtype = 'bfloat16' if quantization is None else 'float16'
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         max_model_len = self.info.get('max_model_len', 2048)
-        enforce_eager = self.info.get('enforce_eager', False)
+        enforce_eager = self.info.get('enforce_eager', True)
 
         # monkey-patch a fix for vllm flavor of https://github.com/the-crypt-keeper/can-ai-code/issues/114
         from vllm.distributed import utils
