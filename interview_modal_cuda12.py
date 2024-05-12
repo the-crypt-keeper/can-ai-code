@@ -1,4 +1,4 @@
-from modal import Stub, Image, method, enter, gpu, Secret, Mount
+from modal import App, Image, method, enter, gpu, Secret, Mount
 from huggingface_hub import snapshot_download
 import json
 from jinja2 import Template
@@ -24,29 +24,45 @@ def model_llama3_instruct_8b_awq(): download_model('casperhansen/llama-3-8b-inst
 def model_llama3_instruct_8b_gptq_8bpw(): download_model('astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit', info={'eos_token_id': 128009})
 def model_llama3_instruct_8b_gptq_4bpw(): download_model('MaziyarPanahi/Meta-Llama-3-8B-Instruct-GPTQ', info={'eos_token_id': 128009})
 def model_llama3_instruct_8b_exl2_6bpw(): download_model('turboderp/Llama-3-8B-Instruct-exl2', revision='6.0bpw', info={'eos_token_id': 128009})
+def model_ajibawa_code_llama3(): download_model('ajibawa-2023/Code-Llama-3-8B')
 # LLama3 70B
 def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
 # CodeQwen
 def model_codeqwen_7b_awq(): download_model("Qwen/CodeQwen1.5-7B-Chat-AWQ")
 def model_codeqwen_7b_fp16(): download_model("Qwen/CodeQwen1.5-7B-Chat")
+# ibm-granite
+def model_granite_20b(): download_model("ibm-granite/granite-20b-code-instruct")
+def model_granite_34b(): download_model("ibm-granite/granite-34b-code-instruct")
+# starcoder2
+def model_starcoder2_instruct_0p1(): download_model('bigcode/starcoder2-15b-instruct-v0.1', info={'eos_token_id': 0})
+def model_starchat2_0p1(): download_model('HuggingFaceH4/starchat2-15b-v0.1', info={'eos_token_id': 49153})
+def modal_starchat2_0p1_awq(): download_model('stelterlab/starchat2-15b-v0.1-AWQ', info={'eos_token_id': 49153})
+def model_starchat2_sft_0p1(): download_model('HuggingFaceH4/starchat2-15b-sft-v0.1', info={'eos_token_id': 49153})
+# Mixtral
+def model_mixtral_8x22b_instruct_awq(): download_model('MaziyarPanahi/Mixtral-8x22B-Instruct-v0.1-AWQ')
+def model_mixtral_8x22b_instruct_gptq(): download_model('jarrelscy/Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit')
+def model_mixtral_8x22b_instruct_exl2(): download_model('turboderp/Mixtral-8x22B-Instruct-v0.1-exl2', revision='4.0bpw')
+
+def model_wizardlm2_8x22b_awq(): download_model('MaziyarPanahi/WizardLM-2-8x22B-AWQ')
+def model_wizardlm2_8x22b_exl2(): download_model('Dracones/WizardLM-2-8x22B_exl2_4.0bpw')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
-#RUNTIME = "exllama2-th"
+RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
 #RUNTIME = "quipsharp"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
 vllm_image = (
@@ -71,12 +87,12 @@ vllm_image = (
     .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_codeqwen_7b_fp16, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_wizardlm2_8x22b_exl2, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
-stub = Stub(image=vllm_image)
+app = App(image=vllm_image)
 
-@stub.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secrets=[Secret.from_name("my-huggingface-secret")], mounts=[Mount.from_local_python_packages("interview_cuda")])
+@app.cls(gpu=gpu_request, concurrency_limit=1, container_idle_timeout=300, secrets=[Secret.from_name("my-huggingface-secret")], mounts=[Mount.from_local_python_packages("interview_cuda")])
 class ModalWrapper:
     @enter()
     def startup(self):
@@ -85,13 +101,13 @@ class ModalWrapper:
         if RUNTIME == "transformers":
             self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
         elif RUNTIME == "vllm":
-            gpu_split = 2 if gpu_request.count == 2 else None
+            gpu_split = 2 if gpu_request.count > 1 else None
             print(gpu_split)
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
         elif RUNTIME == "exllama":
-            gpu_split = '17,24' if gpu_request.count == 2 else None
+            gpu_split = '17,24' if gpu_request.count > 1 else None
             self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME[0:8] == "exllama2":
             token_healing = '-th' in RUNTIME
@@ -99,7 +115,7 @@ class ModalWrapper:
             self.wrapper = InterviewExllama2(self.info['model_name'], self.info, token_healing=token_healing, cache_8bit=cache_8bit)
         elif RUNTIME == "awq":
             if self.info.get('big_model'):
-                gpu_split = '0,1' if gpu_request.count == 2 else '0,cpu'
+                gpu_split = '0,1' if gpu_request.count > 1 else '0,cpu'
             else:
                 gpu_split = None
             self.wrapper = InterviewAWQ(self.info['model_name'], self.info, gpu_split=gpu_split)
@@ -117,7 +133,7 @@ class ModalWrapper:
         return self.wrapper.generate(prompt, params)
 
 # For local testing, run `modal run -q interview_modal.py --input results/prepare.ndjson --params params/precise.json`
-@stub.local_entrypoint()
+@app.local_entrypoint()
 def main(input: str, params: str, iterations: int = 1, templateout: str = "", batch: bool = False):
     from prepare import save_interview
     from interview_cuda import interview_run
