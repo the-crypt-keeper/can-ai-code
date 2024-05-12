@@ -24,6 +24,10 @@ quant_suffix[QUANT_INT8] = 'int8'
 quant_suffix[QUANT_FP4] = 'fp4'
 quant_suffix[QUANT_NF4] = 'nf4'
 
+hf_api = HfApi()
+def hf_list_files(model, revision):
+    return hf_api.list_repo_files(model, revision=revision)
+
 class InterviewTransformers:
     def __init__(self, model_name, model_info = {}, quant = QUANT_FP16, gpu_split = None):
         self.model_name = model_name
@@ -312,11 +316,10 @@ class InterviewExllama:
         tokenizer_model_path = hf_hub_download(repo_id=self.model_name, filename="tokenizer.model")
         self.tokenizer = ExLlamaTokenizer(tokenizer_model_path)
 
-        api = HfApi()
-        files = api.list_files_info(self.model_name, revision=self.info.get('revision',None))
+        files = hf_list_files(self.model_name, self.info.get('revision',None))
         model_path = None
         for file_info in files:
-            if (file_info.rfilename.find(".safetensors") != -1):
+            if (file_info.find(".safetensors") != -1):
                 model_path = hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename=file_info.rfilename)
                 break
         
@@ -648,13 +651,12 @@ class InterviewAWQ:
         # Model
         t0 = time.time()
 
-        api = HfApi()
-        files = api.list_files_info(self.model_name)
+        files = hf_list_files(self.model_name, self.info.get('revision',None))
         model_path = None
         search_list = [".index.json", ".pt", ".bin"]
         for file_info in files:
             for needle in search_list:
-                if file_info.rfilename.find(needle) != -1:
+                if file_info.find(needle) != -1:
                     model_path = hf_hub_download(repo_id=self.model_name, filename=file_info.rfilename)
                     break
 
@@ -842,14 +844,13 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
 def download_safetensors(model_name, revision=None):
     from huggingface_hub import snapshot_download, HfApi
 
-    api = HfApi()
-    files = api.list_files_info(model_name, revision=revision)
+    files = hf_list_files(model_name, revision)
     
     search_list = ["safetensors"]
     found_safetensors = False
     for file_info in files:
         for needle in search_list:
-            if file_info.rfilename.find(needle) != -1:
+            if file_info.find(needle) != -1:
                 found_safetensors = True
                 break
 
