@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**5/15** Evaluate Llama3-8B BF16 GGUFs.
+
 **5/12** Evaluate Yi-1.5 6B, 9B and 34B (FP16).
 
 **5/11** Evaluate ajibawa-2023/Code-Llama-3-8B (FP16), bigcode/starcoder2-15b-instruct-v0.1 and sft (FP16 and AWQ), HuggingFaceH4/starchat2-15b-v0.1 (FP16), rombodawg/Llama-3-8B-Instruct-Coder-v2 (FP16), Mixtral-Instruct-8x22B (AWQ, GPTQ, EXL2-4bit), WizardLM2-8x22B (AWQ, EXL2-4bit).

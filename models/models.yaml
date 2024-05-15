@@ -405,7 +405,7 @@ ollama-codegemma:2b-code-v1.1-q8-0: { name: "CodeGemma", size: "2B", tags: ["gem
 
 openchat-openchat-3.5-0106-gemma-fp16: { name: "OpenChat-3.5-0106-Gemma", tags: ["gemma"], size: "7B", alias: ["openchat-openchat-3.5-0106-gemma"] }
 
-meta-llama-Meta-Llama-3-8B-Instruct: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], url: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct" }
+meta-llama-Meta-Llama-3-8B-Instruct: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], url: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct", alias: ["meta-llama-Meta-Llama-3-8B-Instruct-fp16"] }
 casperhansen-llama-3-8b-instruct-awq: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "AWQ-4b" }
 MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ-main"] }
 astronomer-Llama-3-8B-Instruct-GPTQ-8-Bit: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-8b" }
@@ -419,6 +419,10 @@ Meta-Llama-3-8B-Instruct-IQ4-XS: { name: "Llama 3 Instruct", size: "8B", tags: [
 Meta-Llama-3-8B-Instruct-Q4-K-M: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q4KM", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
 Meta-Llama-3-8B-Instruct-Q6-K: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q6K", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
 Meta-Llama-3-8B-Instruct-Q8-0: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+Meta-Llama-3-8B-Instruct-correct-pre-tokenizer-and-EOS-token-Q8-0: { name: "Llama 3 Instruct (fixed pretokenizer/eos)", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "NikolayKozloff/Meta-Llama-3-8B-Instruct-bf16-correct-pre-tokenizer-and-EOS-token-Q8_0-Q6_k-Q4_K_M-GGUF" }
+Meta-Llama-3-8B-Instruct-bf16: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-BF16", url: "https://huggingface.co/ddh0/Meta-Llama-3-8B-Instruct-bf16-GGUF" }
+ollama-chat-llama3:8b-instruct-fp16: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-F16", url: "https://ollama.com/library/llama3" }
+ollama-chat-llama3:8b-instruct-q8-0: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://ollama.com/library/llama3" }
 
 ibm-granite-granite-3b-code-instruct-fp16: { name: "Granite", size: "3B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
 ibm-granite-granite-3b-code-instruct-nf4: { name: "Granite", size: "3B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }

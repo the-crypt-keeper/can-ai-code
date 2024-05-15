@@ -43,8 +43,6 @@ if __name__ == '__main__':
             if not args.runtime: raise Exception("If apibase is set and model is openai/ you must also provide runtime.")
             runtime = args.runtime
             
-        model_name = 'local_api/custom'
-        
         model_info = requests.get(args.apibase + 'v1/models').json()        
         args.model = model_info['data'][0]['id'].split('/')[-1].replace('.gguf','')
 
