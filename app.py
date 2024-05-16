@@ -168,6 +168,10 @@ def main():
         ## What is the difference between `junior-v2` and `senior` interviews?
 
         The `junior-v2` interview is fairly easy as far as coding goes, its more a check of instruction following and making sure there are no rejections if you try to do something the model decides it might not like.  `senior` is a moderate difficulty coding test.
+        
+        ## What does "Best Result Only" mean?
+        
+        We sometimes evaluate multiple templates/prompts/parameters for the same model+size+quant. When this checkbox is enabled, it shows the best performing template/prompt combination for each model (this is the one you should be using). When disabled, it shows all the data.
 
         ## Who are you?
 
