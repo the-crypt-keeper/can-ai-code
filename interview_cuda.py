@@ -118,6 +118,8 @@ class InterviewTransformers:
             if original_eos_token_id is not None: generation_config.eos_token_id += [original_eos_token_id]
         self.info['sampling_params'] = str(generation_config)
         # print('sampling_params', self.info['sampling_params'])
+        
+        eos_str_list = []
 
         if 'stop_seq' in generate_args:
             from transformers import StoppingCriteria, StoppingCriteriaList
@@ -140,7 +142,8 @@ class InterviewTransformers:
                             return True
                         
                     return False
-                
+            
+            eos_str_list += generate_args['stop_seq']
             generate_args['stopping_criteria'] = StoppingCriteriaList([StopSequenceCriteria(self.tokenizer, generate_args['stop_seq'])])
             del generate_args['stop_seq']
             
@@ -156,8 +159,10 @@ class InterviewTransformers:
             eos_token_ids = generation_config.eos_token_id
             if not isinstance(eos_token_ids, list): eos_token_ids = [eos_token_ids]                
             for tmp_eos_token in eos_token_ids:
-                eos_token_str = self.tokenizer.decode([tmp_eos_token])
-                answer = answer.replace(eos_token_str, '')
+                eos_str_list.append(self.tokenizer.decode([tmp_eos_token]))
+                
+        for tmp_eos_str in eos_str_list:
+            answer = answer.replace(tmp_eos_str, '')
 
         t1 = time.time()
         output_len = len(sample[0])-input_len
@@ -873,7 +878,7 @@ def download_safetensors(model_name, revision=None):
             continue
         break
 
-def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = "", completion : bool = False):
+def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = "", stop:str = "", completion : bool = False):
     from prepare import save_interview
 
     download_safetensors(model_name, revision if revision else None)
@@ -882,10 +887,14 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
     model_info = json.loads(info) if isinstance(info, str) else info
     if revision: model_info['revision'] = revision
 
-    if completion:
+    if completion or stop != '':
         ga = model_info.get('generate_args', {})
-        ga['stop_seq'] = ["\n#","\n//","\n\n\n\n"]
-        model_info['generate_args'] = ga
+        ga['stop_seq'] = ga.get('stop_seq', [])
+        if completion:
+            ga['stop_seq'] += ["\n#","\n//","\n\n\n\n"]
+        if stop != '':
+            ga['stop_seq'] += stop
+        model_info['generate_args'] = ga       
 
     if runtime == 'transformers':
         if quant:

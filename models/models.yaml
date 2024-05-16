@@ -253,6 +253,9 @@ tiiuae-falcon-7b-instruct-Q5-K-M: { name: "Falcon Instruct", size: "7B", quant: 
 
 falcon-180b-gradio: { name: "Falcon Chat", size: "180B", tags: ["falcon"], url: "https://huggingface.co/tiiuae/falcon-180B-chat" }
 
+tiiuae-falcon-11B-fp16: { name: "Falcon2", size: "11B", tags: ["falcon"] }
+tiiuae-falcon-11B-nf4: { name: "Falcon2", size: "11B", tags: ["falcon"], quant: "BNB-NF4" }
+
 stabilityai-stablecode-instruct-alpha-3b-fp16: { name: "StableCode Instruct Alpha", size: "3B", tags: ["stablecode"] }
 stabilityai-stablelm-3b-4e1t-fp16: { name: "StableLM-4e1t", size: "3B", tags: ["stablecode"], url: "https://huggingface.co/stabilityai/stablelm-3b-4e1t" }
 stabilityai-stable-code-3b-fp16: { name: "StableCode", size: "3B", tags: ["stablecode"], url: "https://huggingface.co/stabilityai/stable-code-3b" }
@@ -335,6 +338,8 @@ ise-uiuc-Magicoder-DS-6.7B: { name: "Magicoder-DS", size: "6.7B", tags: ["magico
 ise-uiuc-Magicoder-CL-7B: { name: "Magicoder-CL", size: "7B", tags: ["magicoder","llama2"], url: "https://huggingface.co/ise-uiuc/Magicoder-CL-7B" }
 ise-uiuc-Magicoder-S-CL-7B: { name: "Magicoder-S-CL", size: "7B", tags: ["magicoder","llama2"], url: "https://huggingface.co/ise-uiuc/Magicoder-S-CL-7B" }
 
+rombodawg-DeepMagic-Coder-7b-Alt: { name: "DeepMagic-Coder-Alt", size: "7B", tags: ["magicoder"], url: "https://huggingface.co/rombodawg/DeepMagic-Coder-7b-Alt"}
+rombodawg-Everyone-Coder-33b-v2-Base: { name: "Everyone-Coder-v2-Base", size: "33B", tags: ["deepseek"], url: "https://huggingface.co/rombodawg/Everyone-Coder-33b-v2-Base"}
 togethercomputer-StripedHyena-Nous-7B-fp16: { name: "StripedHyena-Nous", size: "7B", tags: ["together"], url: "https://huggingface.co/togethercomputer/StripedHyena-Nous-7B" }
 
 microsoft-phi-2-fp16: { name: "Phi-2", size: "2.7B", tags: ["phi"] }

@@ -49,6 +49,8 @@ def model_wizardlm2_8x22b_awq(): download_model('MaziyarPanahi/WizardLM-2-8x22B-
 def model_wizardlm2_8x22b_exl2(): download_model('Dracones/WizardLM-2-8x22B_exl2_4.0bpw')
 # Yi-1.5
 def model_yi_1p5_34b(): download_model('01-ai/Yi-1.5-34B-Chat', info={"eos_token_id":7})
+# DeepSeek
+def model_everyone_coder_33b_v2_base(): download_model('rombodawg/Everyone-Coder-33b-v2-Base')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
@@ -90,7 +92,7 @@ vllm_image = (
     .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_yi_1p5_34b, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_everyone_coder_33b_v2_base, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
