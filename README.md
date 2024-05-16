@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**5/16** Evaluate rombodawg/Everyone-Coder-33b-v2-Base (FP16), rombodawg/DeepMagic-Coder-7b-Alt (FP16), tiiuae/falcon-11B (FP16 and NF4).  Something appears to be wrong with falcon-11b.
+
 **5/15** Evaluate Llama3-8B BF16 GGUFs.
 
 **5/12** Evaluate Yi-1.5 6B, 9B and 34B (FP16).
