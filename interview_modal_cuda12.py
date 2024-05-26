@@ -48,6 +48,7 @@ def model_wizardlm2_8x22b_awq(): download_model('MaziyarPanahi/WizardLM-2-8x22B-
 def model_wizardlm2_8x22b_exl2(): download_model('Dracones/WizardLM-2-8x22B_exl2_4.0bpw')
 # Yi-1.5
 def model_yi_1p5_34b(): download_model('01-ai/Yi-1.5-34B-Chat', info={"eos_token_id":7})
+def model_yi_9b_coder(): download_model('TechxGenus/Yi-9B-Coder')
 # DeepSeek
 def model_everyone_coder_33b_v2_base(): download_model('rombodawg/Everyone-Coder-33b-v2-Base')
 # Phi3
@@ -68,8 +69,8 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1, memory=40)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 vllm_image = (
@@ -94,8 +95,7 @@ vllm_image = (
     .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_phi3_medium_4k_instruct, secrets=[Secret.from_name("my-huggingface-secret")])
-    .pip_install("pytest")
+    .run_function(model_yi_9b_coder, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)

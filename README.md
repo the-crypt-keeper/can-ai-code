@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**5/26** Evaluate microsoft/phi-3-small and phi3-medium instruct (FP16 and NF4).
+**5/26** Evaluate microsoft/phi-3-small and phi3-medium instruct (FP16 and NF4), Evalute TechxGenus/Yi-9B-Coder (FP16).
 
 **5/16** Evaluate rombodawg/Everyone-Coder-33b-v2-Base (FP16), rombodawg/DeepMagic-Coder-7b-Alt (FP16), tiiuae/falcon-11B (FP16 and NF4).  Something appears to be wrong with falcon-11b.
 

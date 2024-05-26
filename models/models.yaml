@@ -361,6 +361,7 @@ LoneStriker-Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi"
 LoneStriker-Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi", size: "34B", quant: "EXL-4bpw", tags: ["yi"], url: "https://huggingface.co/LoneStriker/Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2" }
 nous-hermes-2-yi-34b.Q4-K-M: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GGUF-Q4KM", tags: ["yi"], url: "https://huggingface.co/TheBloke/Nous-Hermes-2-Yi-34B-GGUF" }
 jondurbin-bagel-34b-v0.2: { name: "Bagel v0.2", size: "34B", tags: ["yi"] }
+TechxGenus-Yi-9B-Coder-fp16: { name: "Yi-9B-Coder", size: "9B", tags: ["yi"] }
 
 TinyLlama-TinyLlama-1.1B-Chat-v1.0: { name: "TinyLlama v1.0 Chat", size: "1.1B", alias: ["TinyLlama-TinyLlama-1.1B-Chat-v1.0-fp16"] }
 
