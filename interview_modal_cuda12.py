@@ -26,7 +26,6 @@ def model_llama3_instruct_8b_gptq_4bpw(): download_model('MaziyarPanahi/Meta-Lla
 def model_llama3_instruct_8b_exl2_6bpw(): download_model('turboderp/Llama-3-8B-Instruct-exl2', revision='6.0bpw', info={'eos_token_id': 128009})
 def model_ajibawa_code_llama3(): download_model('ajibawa-2023/Code-Llama-3-8B')
 def model_rombodawg_llama3_8b_instruct_coder(): download_model('rombodawg/Llama-3-8B-Instruct-Coder')
-
 # LLama3 70B
 def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
@@ -51,12 +50,15 @@ def model_wizardlm2_8x22b_exl2(): download_model('Dracones/WizardLM-2-8x22B_exl2
 def model_yi_1p5_34b(): download_model('01-ai/Yi-1.5-34B-Chat', info={"eos_token_id":7})
 # DeepSeek
 def model_everyone_coder_33b_v2_base(): download_model('rombodawg/Everyone-Coder-33b-v2-Base')
+# Phi3
+def model_phi3_small_8k_instruct(): download_model('microsoft/Phi-3-small-8k-instruct')
+def model_phi3_medium_4k_instruct(): download_model('microsoft/Phi-3-medium-4k-instruct')
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2-th"
@@ -66,8 +68,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=4)
-gpu_request = gpu.A100(count=1, memory=80)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 vllm_image = (
@@ -92,7 +94,8 @@ vllm_image = (
     .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_everyone_coder_33b_v2_base, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_phi3_medium_4k_instruct, secrets=[Secret.from_name("my-huggingface-secret")])
+    .pip_install("pytest")
     ######################################
 )
 app = App(image=vllm_image)

@@ -350,6 +350,10 @@ TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: [
 microsoft-Phi-3-mini-4k-instruct-fp16: { name: "Phi-3-Mini-Instruct", size: "3.8B", tags: ["phi"], url: "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct" }
 ollama-phi3:3.8b-mini-instruct-4k-q4-K-M: { name: "Phi-3-Mini-Instruct", size: "3.8B", tags: ["phi"], quant: "GGUF-Q4KM", url: "https://ollama.com/library/phi3", alias: ["ollama-chat-phi3:3.8b-mini-instruct-4k-q4-K-M"] }
 ollama-phi3:3.8b-mini-instruct-4k-fp16: { name: "Phi-3-Mini-Instruct", size: "3.8B", tags: ["phi"], quant: "GGUF-FP16", url: "https://ollama.com/library/phi3", alias: ["ollama-chat-phi3:3.8b-mini-instruct-4k-fp16"] }
+microsoft-Phi-3-small-8k-instruct-fp16: { name: "Phi-3-Small-Instruct", size: "7B", tags: ["phi"], url: "https://huggingface.co/microsoft/Phi-3-small-8k-instruct" }
+microsoft-Phi-3-small-8k-instruct-nf4: { name: "Phi-3-Small-Instruct", size: "7B", tags: ["phi"], quant: "BNB-NF4", url: "https://huggingface.co/microsoft/Phi-3-small-8k-instruct" }
+microsoft-Phi-3-medium-4k-instruct-fp16: { name: "Phi-3-Medium-Instruct", size: "14B", tags: ["phi"], url: "https://huggingface.co/microsoft/Phi-3-medium-4k-instruct" }
+microsoft-Phi-3-medium-4k-instruct-nf4: { name: "Phi-3-Medium-Instruct", size: "14B", tags: ["phi"], quant: "BNB-NF4", url: "https://huggingface.co/microsoft/Phi-3-medium-4k-instruct" }
 
 TheBloke-Nous-Hermes-2-Yi-34B-GPTQ: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GPTQ-4b", tags: ["yi"], alias: ["TheBloke-Nous-Hermes-2-Yi-34B-GPTQ-main"] }
 TheBloke-Nous-Hermes-2-Yi-34B-AWQ: { name: "Nous Hermes 2 Yi", size: "34B", quant: "AWQ-4b", tags: ["yi"] }
