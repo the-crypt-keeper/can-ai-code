@@ -799,17 +799,17 @@ class InterviewQuipSharp:
         answer = self.tokenizer.decode(sample[0][len(inputs[0]):], skip_special_tokens=True)
         return answer, self.info
     
-def interview_run(runtime, generate, interview, params_json, output_template, batch = False):
+def interview_run(runtime, generate, interview, params_json, output_template, batch = False, quiet = False):
     if batch:
-        print(f"Running batch of {len(interview)} prompts")
+        if not quiet: print(f"Running batch of {len(interview)} prompts")
         prompts = [q['prompt'] for q in interview]
         answers, model_info = generate(prompts, params=params_json)
-        print('Local model info:', model_info)
+        if not quiet: print('Local model info:', model_info)
     else:
         answers = []
         model_info = None
         for idx, question in enumerate(interview):
-            print(f"{idx+1}/{len(interview)} {question['name']} {question['language']}")
+            if not quiet: print(f"{idx+1}/{len(interview)} {question['name']} {question['language']}")
 
             # generate the answer
             result, info = generate(question['prompt'], params=params_json)
@@ -817,15 +817,16 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
             # save for later
             if model_info is None:
                 model_info = info
-                print('Local model info:', model_info)
+                if not quiet: print('Local model info:', model_info)
 
             # optional output template
             answer = output_template.render(**question, Answer=result) if output_template else result
             answers.append(answer)
 
-            print()
-            print(answer)
-            print()
+            if not quiet: 
+                print()
+                print(answer)
+                print()
 
     results = []
     for idx, question in enumerate(interview):
@@ -877,11 +878,74 @@ def download_safetensors(model_name, revision=None):
             print('Download problem: ', e)
             continue
         break
+    
+#################################
+##  Mistral-Inference Adapter  ##
+#################################
+def is_torchrun() -> bool:
+    required_vars = ["MASTER_ADDR", "MASTER_PORT", "RANK", "WORLD_SIZE"]
+    return all(var in os.environ for var in required_vars)
 
+class InterviewMistral:
+    def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False, cache_8bit = False):
+        self.model_name = model_name
+        self.gpu_split = gpu_split
+        self.info = model_info
+        
+        self.tokenizer = None
+        self.model = None
+        self.batch = False
+
+        self.info['model_name'] = self.model_name.split('/')[-1]
+
+    def load(self):
+        print("Starting load..")
+        config_path = self.model_name # hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename="params.json")
+        
+        from mistral_inference.model import Transformer
+        from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
+        import torch
+        
+        if is_torchrun():
+            torch.distributed.init_process_group()
+            torch.cuda.set_device(torch.distributed.get_rank())
+            num_pipeline_ranks = torch.distributed.get_world_size()
+        else:
+            num_pipeline_ranks = 1
+                
+        print("Loading model...")
+        dtype = torch.bfloat16 if self.info.get('bf16', False) else torch.float16
+        self.tokenizer = MistralTokenizer.from_file(f"{config_path}/tokenizer.model.v3")
+        self.model = Transformer.from_folder(config_path, num_pipeline_ranks=num_pipeline_ranks, dtype=dtype)
+            
+    def generate(self, prompt, params):
+        from mistral_inference.generate import generate
+        from mistral_common.protocol.instruct.messages import UserMessage
+        from mistral_common.protocol.instruct.request import ChatCompletionRequest        
+        
+        eos_id = self.tokenizer.instruct_tokenizer.tokenizer.eos_id
+        if self.info.get('eos_token_id'):
+            eos_id = self.info.get('eos_token_id')
+            # print("overide stop_token:", eos_id)
+            
+        self.info['sampling_params'] = {
+            'max_tokens': params.get('max_new_tokens'),
+            'temperature': params.get('temperature', 0.0)
+        }
+                
+        completion_request = ChatCompletionRequest(messages=[UserMessage(content=prompt)])
+        tokens = self.tokenizer.encode_chat_completion(completion_request).tokens
+        out_tokens, _ = generate([tokens], self.model, eos_id=eos_id, **self.info['sampling_params'])
+        result = self.tokenizer.instruct_tokenizer.tokenizer.decode(out_tokens[0])
+
+        return result, self.info
+    
+    
 def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = "", stop:str = "", completion : bool = False):
     from prepare import save_interview
 
-    download_safetensors(model_name, revision if revision else None)
+    if runtime != 'mistral':
+        download_safetensors(model_name, revision if revision else None)
 
     gpu_split = gpusplit if gpusplit != '' else None
     model_info = json.loads(info) if isinstance(info, str) else info
@@ -894,8 +958,8 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
             ga['stop_seq'] += ["\n#","\n//","\n\n\n\n"]
         if stop != '':
             ga['stop_seq'] += stop
-        model_info['generate_args'] = ga       
-
+        model_info['generate_args'] = ga    
+        
     if runtime == 'transformers':
         if quant:
             quant_id = None
@@ -924,6 +988,8 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         model = InterviewHQQ(model_name, model_info, gpu_split=gpu_split)        
     elif runtime == 'ctranslate2':
         model = InterviewCtranslate2(model_name, model_info, gpu_split=gpu_split)
+    elif runtime == 'mistral':
+        model = InterviewMistral(model_name, model_info)
     else:
         raise Exception('Unknown runtime '+runtime)
     
@@ -933,6 +999,11 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
     for param_file in params.split(','):
         for input_file in input.split(','):
             tasks.append((param_file, input_file))
+
+    should_save = True
+    if is_torchrun():
+        import torch
+        should_save = torch.distributed.get_rank() == 0
 
     for param_file, input_pairs in tasks:
       insplit = input_pairs.split(':')
@@ -944,10 +1015,12 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
       params_json = json.load(open(param_file,'r'))
 
       for iter in range(iterations):
-        print("Starting", model_name, "iter=", iter, "param_file=", param_file, "input_file=", input_file, "templateout_file=", templateout_file)
-        results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch)
-        save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
-
+        if should_save:
+            print("Starting", model_name, "iter=", iter, "param_file=", param_file, "input_file=", input_file, "templateout_file=", templateout_file)
+        results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch, quiet=not should_save)
+        if should_save:
+            save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
+    
 if __name__ == "__main__":
     import fire
     fire.Fire(main)

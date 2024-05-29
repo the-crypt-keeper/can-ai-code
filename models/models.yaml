@@ -294,6 +294,8 @@ mixtral-instruct-8x7b-2.10bpw: { name: "Mixtral-8x7B-Instruct", size: "46B", tag
 mixtral-instruct-8x7b-q2k: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GGUF-Q2_K-new", url: "https://huggingface.co/ikawrakow/mixtral-instruct-8x7b-quantized-gguf" }
 mixtral-instruct-8x7b-q3k-small: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GGUF-Q3_K_S-new", url: "https://huggingface.co/ikawrakow/mixtral-instruct-8x7b-quantized-gguf" }
 
+codestral-22B-v0.1: { name: "Codestral-v0.1", size: "22B", tags: ["mistral","codestral"], url: "https://huggingface.co/mistralai/Codestral-22B-v0.1" }
+
 TheBloke-Beyonder-4x7B-v2-AWQ: { name: "Beyonder-4x7B-v2", size: "46B", tags: ["mistral"], quant: "AWQ-4b" }
 
 LoneStriker-dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2-main: { name: "Dolphin-2.5-Mixtral-8x7B", size: "46B", tags: ["mistral","dolphin"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2" }
