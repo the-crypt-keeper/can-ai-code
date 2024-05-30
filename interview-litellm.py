@@ -42,9 +42,12 @@ if __name__ == '__main__':
         if 'openai' in model_name:
             if not args.runtime: raise Exception("If apibase is set and model is openai/ you must also provide runtime.")
             runtime = args.runtime
-            
-        model_info = requests.get(args.apibase + 'v1/models').json()        
-        args.model = model_info['data'][0]['id'].split('/')[-1].replace('.gguf','')
+        
+        try:
+            model_info = requests.get(args.apibase + 'v1/models').json()        
+            args.model = model_info['data'][0]['id'].split('/')[-1].replace('.gguf','')
+        except:
+            pass
 
     if args.stop:
         params['stop'] = json.loads(args.stop)

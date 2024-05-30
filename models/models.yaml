@@ -295,6 +295,8 @@ mixtral-instruct-8x7b-q2k: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: [
 mixtral-instruct-8x7b-q3k-small: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GGUF-Q3_K_S-new", url: "https://huggingface.co/ikawrakow/mixtral-instruct-8x7b-quantized-gguf" }
 
 codestral-22B-v0.1: { name: "Codestral-v0.1", size: "22B", tags: ["mistral","codestral"], url: "https://huggingface.co/mistralai/Codestral-22B-v0.1" }
+ollama-chat-codestral:22b-v0.1-q6-K: { name: "Codestral-v0.1", size: "22B", tags: ["mistral","codestral"], quant: "GGUF-Q6_K", url: "https://ollama.com/library/codestral" }
+ollama-chat-codestral:22b-v0.1-q4-K-M: { name: "Codestral-v0.1", size: "22B", tags: ["mistral","codestral"], quant: "GGUF-Q4_K_M", url: "https://ollama.com/library/codestral" }
 
 TheBloke-Beyonder-4x7B-v2-AWQ: { name: "Beyonder-4x7B-v2", size: "46B", tags: ["mistral"], quant: "AWQ-4b" }
 
