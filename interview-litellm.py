@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
-from time import sleep
+from time import sleep, time
 from prepare import save_interview
 from jinja2 import Template
 import litellm
@@ -52,35 +52,38 @@ if __name__ == '__main__':
     if args.stop:
         params['stop'] = json.loads(args.stop)
         
-
-    # Load interview
-    interview = [json.loads(line) for line in open(args.input)]
-    results = []
-    
+    # Run interview
     output_template = Template(open(args.templateout).read()) if args.templateout else None
+    for input_file in args.input.split(','):
+        interview = [json.loads(line) for line in open(input_file)]
+        results = []     
 
-    for idx, challenge in enumerate(interview):
-        print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
-        messages = [{'role': 'user', 'content': challenge['prompt']}]
-        response = litellm.completion(model=model_name, messages=messages, seed=args.seed, **params)
-        msg = response.choices[0].message
-        answer = msg['content'] if isinstance(msg,dict) else msg.content
-        answer = output_template.render(**challenge, Answer=answer) if output_template else answer            
-        
-        print()
-        print(answer)
-        print(response.usage)
-        print()
+        for idx, challenge in enumerate(interview):
+            print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
+            messages = [{'role': 'user', 'content': challenge['prompt']}]
+            t0 = time()
+            response = litellm.completion(model=model_name, messages=messages, seed=args.seed, **params)
+            t1 = time()
+            speed = response.usage.completion_tokens/(t1-t0)
+            
+            msg = response.choices[0].message
+            answer = msg['content'] if isinstance(msg,dict) else msg.content
+            answer = output_template.render(**challenge, Answer=answer) if output_template else answer            
+            
+            print()
+            print(answer)
+            print(f"PERF: {model_name} generated {response.usage.completion_tokens} tokens in {t1-t0:.2f}s, {speed:.2f} tok/sec")
+            print()
 
-        result = challenge.copy()
-        result['answer'] = answer
-        result['params'] = params
-        result['model'] = args.model
-        result['runtime'] = runtime
+            result = challenge.copy()
+            result['answer'] = answer
+            result['params'] = params
+            result['model'] = args.model
+            result['runtime'] = runtime
 
-        results.append(result)
+            results.append(result)
 
-        if args.delay:
-            sleep(args.delay)
+            if args.delay:
+                sleep(args.delay)
 
-    save_interview(args.input, 'none', args.params, args.model, results)
+        save_interview(input_file, 'none', args.params, args.model, results)
