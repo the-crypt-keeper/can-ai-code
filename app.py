@@ -210,7 +210,7 @@ def main():
                     interview_tasks.append((task, interview, f'{task} | {interview}'))
             
             interview_tasks_labels = [x[2] for x in interview_tasks]
-            default_interview = interview_tasks_labels.index('Instruct | junior-v2') if 'Instruct | junior-v2' in interview_tasks_labels else 0
+            default_interview = interview_tasks_labels.index('Instruct | senior') if 'Instruct | senior' in interview_tasks_labels else 0
             selected_pair = st.selectbox('Task and Interview', interview_tasks_labels, index=default_interview)
             selected_index = interview_tasks_labels.index(selected_pair)
             
