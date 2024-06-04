@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**6/4** Re-evaluate all current OpenAI and Mistral available models.
+
 **5/30** Evaluate mistralai/Codestral-22B-v0.1 via ollama Q6K and Q4KM. The Q6K performs identical to the FP16 but the Q4KM is "different" it stumbled on JavaScript but was better on Python, I'd stick to Q6 here if you have the VRAM.
 
 **5/29** Evaluate mistralai/Codestral-22B-v0.1 (FP16).
@@ -25,14 +27,6 @@ A self-evaluating interview for AI coding models.
 **5/26** Evaluate microsoft/phi-3-small and phi3-medium instruct (FP16 and NF4), Evaluate TechxGenus/Yi-9B-Coder (FP16).
 
 **5/16** Evaluate rombodawg/Everyone-Coder-33b-v2-Base (FP16), rombodawg/DeepMagic-Coder-7b-Alt (FP16), tiiuae/falcon-11B (FP16 and NF4).  Something appears to be wrong with falcon-11b.
-
-**5/15** Evaluate Llama3-8B BF16 GGUFs.
-
-**5/12** Evaluate Yi-1.5 6B, 9B and 34B (FP16).
-
-**5/11** Evaluate ajibawa-2023/Code-Llama-3-8B (FP16), bigcode/starcoder2-15b-instruct-v0.1 and sft (FP16 and AWQ), HuggingFaceH4/starchat2-15b-v0.1 (FP16), rombodawg/Llama-3-8B-Instruct-Coder-v2 (FP16), Mixtral-Instruct-8x22B (AWQ, GPTQ, EXL2-4bit), WizardLM2-8x22B (AWQ, EXL2-4bit).
-
-**5/7** Evaluate ibm-granite/granite-code-instruct 3B (FP16, NF4), 8B (FP16, NF4), 20B (FP16, NF4) and 34B (FP16).
 
 ## Test Suites
 
