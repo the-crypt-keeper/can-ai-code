@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**6/7** Evaluate Qwen2 7B, 57B (FP16) and 72B (FP16, GPTQ, AWQ).  The coding ability of this excellent 72B model is degraded by 4-bit quantization, the AWQ in particular seems to have suffered the most damage.
+
 **6/4** Re-evaluate all current OpenAI and Mistral available models.  The `Instruct | senior` interview is now the default view on the dashboard.
 
 **5/30** Evaluate mistralai/Codestral-22B-v0.1 via ollama Q6K and Q4KM. The Q6K performs identical to the FP16 but the Q4KM is "different" it stumbled on JavaScript but was better on Python, I'd stick to Q6 here if you have the VRAM.
