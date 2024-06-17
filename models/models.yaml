@@ -463,3 +463,7 @@ Qwen-Qwen2-72B-Instruct: { name: "Qwen2-Instruct", size: "72B", tags: ["qwen2"],
 Qwen-Qwen2-72B-Instruct-AWQ: { name: "Qwen2-Instruct", size: "72B", quant: "AWQ-4b", tags: ["qwen2"] }
 Qwen-Qwen2-72B-Instruct-GPTQ-Int4: { name: "Qwen2-Instruct", size: "72B", quant: "GPTQ-4b", tags: ["qwen2"] }
 Qwen-Qwen2-57B-A14B-Instruct: { name: "Qwen2-A14B-Instruct", size: "57B", tags: ["qwen2"] }
+
+DeepSeek-Coder-V2-Lite-Base: { name: "DeepSeek-Coder-V2-Lite-Base", size: "16B", tags: ["deepseek2"], alias: ["DeepSeek-Coder-V2-Lite-Base-fp16"] }
+DeepSeek-Coder-V2-Lite-Instruct: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], alias: ["deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-fp16","-home-mike-models-DeepSeek-Coder-V2-Lite-Instruct"] }
+deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-nf4: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], quant: "BNB-NF4", alias: ["DeepSeek-Coder-V2-Lite-Instruct-nf4"] }

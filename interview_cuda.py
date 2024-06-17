@@ -84,7 +84,8 @@ class InterviewTransformers:
 
         # if passed a path, take the last dir name otherwise replace / with -
         if self.model_name[0] == '/':
-            self.info['model_name'] = self.model_name.split('/')[-1]
+            split_path = self.model_name.split('/')
+            self.info['model_name'] = split_path[-1] if split_path[-1].strip() != '' else split_path[-2]
         else:
             self.info['model_name'] = self.model_name.replace('/','-')
         # add quant suffix
@@ -553,7 +554,7 @@ class InterviewVLLM:
         if 'gptq' in self.model_name.lower(): quantization = 'gptq'
         if 'sq-' in self.model_name.lower(): quantization = 'squeezellm'
         
-        dtype = 'bfloat16' if quantization is None else 'float16'
+        dtype = 'float16' if quantization is None else 'float16'
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         max_model_len = self.info.get('max_model_len', 2048)
         enforce_eager = self.info.get('enforce_eager', True)
@@ -597,8 +598,12 @@ class InterviewVLLM:
             self.stop_token_ids = [int(x) for x in eos_token_id]
         else:
             self.stop_token_ids = [int(eos_token_id)]
-        
-        self.info['model_name'] = self.model_name
+
+        if self.model_name[0] == '/':
+            split_path = self.model_name.split('/')
+            self.info['model_name'] = split_path[-1] if split_path[-1].strip() != '' else split_path[-2]
+        else:        
+            self.info['model_name'] = self.model_name
 
         print(f"Model loaded in {time.time() - t0:.2f}s")   
 
@@ -944,7 +949,7 @@ class InterviewMistral:
 def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = "", stop:str = "", completion : bool = False):
     from prepare import save_interview
 
-    if runtime != 'mistral':
+    if not os.path.exists(model_name):
         download_safetensors(model_name, revision if revision else None)
 
     gpu_split = gpusplit if gpusplit != '' else None
@@ -955,7 +960,7 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         ga = model_info.get('generate_args', {})
         ga['stop_seq'] = ga.get('stop_seq', [])
         if completion:
-            ga['stop_seq'] += ["\n#","\n//","\n\n\n\n"]
+            ga['stop_seq'] += ["\n#","\n//"]
         if stop != '':
             ga['stop_seq'] += stop
         model_info['generate_args'] = ga    
