@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**6/17** Evaluate DeepSeek-V2 17B for instruct, complete and FIM.
+
 **6/7** Evaluate Qwen2 7B, 57B (FP16) and 72B (FP16, GPTQ, AWQ).  The coding ability of this excellent 72B model is degraded by 4-bit quantization, the AWQ in particular seems to have suffered the most damage.
 
 **6/4** Re-evaluate all current OpenAI and Mistral available models.  The `Instruct | senior` interview is now the default view on the dashboard.
