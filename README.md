@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**6/24** Evaluate Replete-Coder-Qwen2 1.5B and Qwen2 1.5B for comparison.
+
 **6/17** Evaluate DeepSeek-V2 17B for instruct, complete and FIM.
 
 **6/7** Evaluate Qwen2 7B, 57B (FP16) and 72B (FP16, GPTQ, AWQ).  The coding ability of this excellent 72B model is degraded by 4-bit quantization, the AWQ in particular seems to have suffered the most damage.
