@@ -1,14 +1,22 @@
+openai-gpt-3.5-turbo-0125: { name: "OpenAI gpt-3.5-turbo-0125", size: "170B", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-3.5-turbo-0301: { name: "OpenAI gpt-3.5-turbo-0301", size: "170B", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-3.5-turbo-0613: { name: "OpenAI gpt-3.5-turbo-0613", size: "170B", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-3.5-turbo-1106: { name: "OpenAI gpt-3.5-turbo-1106", size: "170B", url: "https://openai.com/", tags: ["commercial"] }
-openai-gpt-4-0613: { name: "OpenAI gpt-4-0613", url: "https://openai.com/", tags: ["commercial"] }
-openai-gpt-4-1106-preview: { name: "OpenAI gpt-4-1106-preview", url: "https://openai.com/", tags: ["commercial"] }
-ai21-j2-jumbo-instruct: { name: "AI21 J2", size: "178B", url: "https://www.ai21.com/", tags: ["commercial"] }
-cohere-command-nightly: { name: "Cohere Command", size: "52B", url: "https://cohere.ai/", tags: ["commercial"] }
 
-mistral-mistral-tiny: { name: "Mistral-Tiny", size: "7B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-mistral-small: { name: "Mistral-Small", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-mistral-medium: { name: "Mistral-Medium", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+openai-gpt-4-0613: { name: "OpenAI gpt-4-0613", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4-32k-0613: { name: "OpenAI gpt-4-32k-0613", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4-1106-preview: { name: "OpenAI gpt-4-1106-preview", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4-0125-preview: { name: "OpenAI gpt-4-0125-preview", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4-turbo-2024-04-09: { name: "OpenAI gpt-4-turbo-2024-04-09", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4o-2024-05-13: { name: "OpenAI gpt-4o-2024-05-13", url: "https://openai.com/", tags: ["commercial"] }
+
+mistral-mistral-tiny-2312: { name: "Mistral mistral-tiny-2312", size: "7B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-small-2312: { name: "Mistral mistral-small-2312", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-small-2402: { name: "Mistral mistral-small-2312", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-medium-2312: { name: "Mistral mistral-medium-2312", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-large-2402: { name: "Mistral mistral-large-2402", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-codestral-2405: { name: "Mistral codestral-2405", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-open-mixtral-8x22b-2404: { name: "Mistral open-mixtral-8x22b-2404", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 
 bigcode-starcoderbase-1b-fp16: { name: 'StarCoderBase', size: '1B', tags: ["bigcode"] }
 bigcode-starcoderbase-3b-fp16: { name: 'StarCoderBase', size: '3B', tags: ["bigcode"] }
@@ -22,8 +30,13 @@ bigcode-octocoder: { name: 'OctoCoder', size: '15B', tags: ["bigcode"] }
 bigcode-starcoder2-3b: { name: 'StarCoder2', size: '3B', tags: ["bigcode"] }
 bigcode-starcoder2-7b: { name: 'StarCoder2', size: '7B', tags: ["bigcode"] }
 bigcode-starcoder2-15b: { name: 'StarCoder2', size: '15B', tags: ["bigcode"] }
+bigcode-starcoder2-15b-instruct-v0.1-fp16: { name: 'StarCoder2-Instruct-v0.1', size: '15B', tags: ["bigcode"] }
 HuggingFaceH4-starchat-alpha: { name: "StarChat-Alpha", size: "15B", tags: ["bigcode"], alias: ["HuggingFaceH4-starchat-playground-hf-space-starchat-alpha","HuggingFaceH4-starchat-alpha-fp16"] }
 HuggingFaceH4-starchat-beta: { name: "StarChat-Beta", size: "15B", tags: ["bigcode"], alias: ["starchat-beta-gradio","HuggingFaceH4-starchat-beta-fp16","HuggingFaceH4-starchat-playground-hf-space-starchat-beta"] }
+HuggingFaceH4-starchat2-15b-v0.1-fp16: { name: "StarChat2-v0.1", size: "15B", tags: ["bigcode"] }
+HuggingFaceH4-starchat2-15b-sft-v0.1-fp16: { name: "StarChat2-SFT-v0.1", size: "15B", tags: ["bigcode"] }
+stelterlab-starchat2-15b-v0.1-AWQ: { name: "StarChat2-v0.1", size: "15B", tags: ["bigcode"], quant: "AWQ-4b" }
+
 openaccess-ai-collective-minotaur-15b: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], alias: "openaccess-ai-collective-minotaur-15b-fp16", url: "https://huggingface.co/openaccess-ai-collective/minotaur-15b" }
 TheBloke-minotaur-15B-GPTQ: { name: "Minotaur-Code", size: "15B", tags: ["bigcode"], quant: "GPTQ-4b" }
 openchat-opencoderplus-fp16: { name: "OpenCoderPlus", size: "15B", tags: ["bigcode"] }
@@ -122,6 +135,7 @@ NousResearch-Nous-Hermes-Llama2-13b: { name: "Nous-Hermes Llama2", "size": "13B"
 rombodawg-LosslessMegaCoder-llama2-7b-mini: { name: "LosslessMegaCoder", "size": "7B", tags: ["llama2"] }
 rombodawg-LosslessMegaCoder-llama2-13b-mini: { name: "LosslessMegaCoder", "size": "13B", tags: ["llama2"] }
 Undi95-Nous-Hermes-13B-Code-fp16: { name: "NH Llama2 x Airoboros 2.1 Coder", size: "13B", tags: ["llama2","airoboros"] }
+NousResearch-Hermes-2-Pro-Llama-3-8B: { name: "Nous-Hermes 2 Pro Llama3", "size": "8B", tags: ["llama3"], alias: ["NousResearch-Hermes-2-Pro-Llama-3-8B-fp16"] }
 
 LLM360-CrystalCoder-fp16: { name: "LLM360 CrystalCoder", size: "7B", tags: ["llm360"] }
 
@@ -247,6 +261,9 @@ tiiuae-falcon-7b-instruct-Q5-K-M: { name: "Falcon Instruct", size: "7B", quant: 
 
 falcon-180b-gradio: { name: "Falcon Chat", size: "180B", tags: ["falcon"], url: "https://huggingface.co/tiiuae/falcon-180B-chat" }
 
+tiiuae-falcon-11B-fp16: { name: "Falcon2", size: "11B", tags: ["falcon"] }
+tiiuae-falcon-11B-nf4: { name: "Falcon2", size: "11B", tags: ["falcon"], quant: "BNB-NF4" }
+
 stabilityai-stablecode-instruct-alpha-3b-fp16: { name: "StableCode Instruct Alpha", size: "3B", tags: ["stablecode"] }
 stabilityai-stablelm-3b-4e1t-fp16: { name: "StableLM-4e1t", size: "3B", tags: ["stablecode"], url: "https://huggingface.co/stabilityai/stablelm-3b-4e1t" }
 stabilityai-stable-code-3b-fp16: { name: "StableCode", size: "3B", tags: ["stablecode"], url: "https://huggingface.co/stabilityai/stable-code-3b" }
@@ -285,6 +302,10 @@ mixtral-instruct-8x7b-2.10bpw: { name: "Mixtral-8x7B-Instruct", size: "46B", tag
 mixtral-instruct-8x7b-q2k: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GGUF-Q2_K-new", url: "https://huggingface.co/ikawrakow/mixtral-instruct-8x7b-quantized-gguf" }
 mixtral-instruct-8x7b-q3k-small: { name: "Mixtral-8x7B-Instruct", size: "46B", tags: ["mistral"], quant: "GGUF-Q3_K_S-new", url: "https://huggingface.co/ikawrakow/mixtral-instruct-8x7b-quantized-gguf" }
 
+codestral-22B-v0.1: { name: "Codestral-v0.1", size: "22B", tags: ["mistral","codestral"], url: "https://huggingface.co/mistralai/Codestral-22B-v0.1" }
+ollama-chat-codestral:22b-v0.1-q6-K: { name: "Codestral-v0.1", size: "22B", tags: ["mistral","codestral"], quant: "GGUF-Q6_K", url: "https://ollama.com/library/codestral" }
+ollama-chat-codestral:22b-v0.1-q4-K-M: { name: "Codestral-v0.1", size: "22B", tags: ["mistral","codestral"], quant: "GGUF-Q4_K_M", url: "https://ollama.com/library/codestral" }
+
 TheBloke-Beyonder-4x7B-v2-AWQ: { name: "Beyonder-4x7B-v2", size: "46B", tags: ["mistral"], quant: "AWQ-4b" }
 
 LoneStriker-dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2-main: { name: "Dolphin-2.5-Mixtral-8x7B", size: "46B", tags: ["mistral","dolphin"], quant: "EXL2-4.0", url: "https://huggingface.co/LoneStriker/dolphin-2.5-mixtral-8x7b-4.0bpw-h6-exl2-2" }
@@ -293,6 +314,12 @@ LoneStriker-dolphin-2.7-mixtral-8x7b-4.0bpw-h6-exl2-main: { name: "Dolphin-2.7-M
 openchat-openchat-3.5-1210: { name: "OpenChat-1210", size: "7B", tags: ["mistral"] }
 beowolx-CodeNinja-1.0-OpenChat-7B: { name: "CodeNinja-1.0", size: "7B", tags: ["mistral"] }
 cloudyu-Mixtral-7Bx2-MoE-fp16: { name: "Mixtral-7Bx2-MoE", size: "7B", tags: ["mistral"], url: "https://huggingface.co/cloudyu/Mixtral_7Bx2_MoE" }
+
+MaziyarPanahi-Mixtral-8x22B-Instruct-v0.1-AWQ: { name: "Mixtral-8x22B-Instruct-0.1", size: "141B", tags: ["mistral"], quant: "AWQ-4b" }
+jarrelscy-Mixtral-8x22B-Instruct-v0.1-GPTQ-4bit:  { name: "Mixtral-8x22B-Instruct-0.1", size: "141B", tags: ["mistral"], quant: "GPTQ-4b" }
+turboderp-Mixtral-8x22B-Instruct-v0.1-exl2-4.0bpw: { name: "Mixtral-8x22B-Instruct-0.1", size: "141B", tags: ["mistral"], quant: "EXL2-4.0" }
+MaziyarPanahi-WizardLM-2-8x22B-AWQ: { name: "WizardLM2-8x22B", size: "141B", tags: ["mistral","wizard"], quant: "AWQ-4b" }
+Dracones-WizardLM-2-8x22B-exl2-4.0bpw-main: { name: "WizardLM2-8x22B", size: "141B", tags: ["mistral","wizard"], quant: "EXL2-4.0" }
 
 tsumeone-llama-30b-supercot-4bit-cuda: { name: "Llama-30b-SuperCOT", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
 TheBloke-upstage-llama-30b-instruct-2048-GPTQ: { name: "Upstage-Llama-2k", size: "33B", quant: "GPTQ-4b", tags: ["llama"] }
@@ -323,6 +350,8 @@ ise-uiuc-Magicoder-DS-6.7B: { name: "Magicoder-DS", size: "6.7B", tags: ["magico
 ise-uiuc-Magicoder-CL-7B: { name: "Magicoder-CL", size: "7B", tags: ["magicoder","llama2"], url: "https://huggingface.co/ise-uiuc/Magicoder-CL-7B" }
 ise-uiuc-Magicoder-S-CL-7B: { name: "Magicoder-S-CL", size: "7B", tags: ["magicoder","llama2"], url: "https://huggingface.co/ise-uiuc/Magicoder-S-CL-7B" }
 
+rombodawg-DeepMagic-Coder-7b-Alt: { name: "DeepMagic-Coder-Alt", size: "7B", tags: ["magicoder"], url: "https://huggingface.co/rombodawg/DeepMagic-Coder-7b-Alt"}
+rombodawg-Everyone-Coder-33b-v2-Base: { name: "Everyone-Coder-v2-Base", size: "33B", tags: ["deepseek"], url: "https://huggingface.co/rombodawg/Everyone-Coder-33b-v2-Base"}
 togethercomputer-StripedHyena-Nous-7B-fp16: { name: "StripedHyena-Nous", size: "7B", tags: ["together"], url: "https://huggingface.co/togethercomputer/StripedHyena-Nous-7B" }
 
 microsoft-phi-2-fp16: { name: "Phi-2", size: "2.7B", tags: ["phi"] }
@@ -330,12 +359,21 @@ cognitivecomputations-dolphin-2-6-phi-2-fp16: { name: "Dolphin 2.6 Phi-2", size:
 microsoft-Orca-2-13b: { name: "Orca 2", size: "13B", tags: ["llama2"] }
 TheBloke-Orca-2-13B-AWQ: { name: "Orca 2", size: "13B", quant: "AWQ-4b", tags: ["llama2"] }
 
+microsoft-Phi-3-mini-4k-instruct-fp16: { name: "Phi-3-Mini-Instruct", size: "3.8B", tags: ["phi"], url: "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct" }
+ollama-phi3:3.8b-mini-instruct-4k-q4-K-M: { name: "Phi-3-Mini-Instruct", size: "3.8B", tags: ["phi"], quant: "GGUF-Q4KM", url: "https://ollama.com/library/phi3", alias: ["ollama-chat-phi3:3.8b-mini-instruct-4k-q4-K-M"] }
+ollama-phi3:3.8b-mini-instruct-4k-fp16: { name: "Phi-3-Mini-Instruct", size: "3.8B", tags: ["phi"], quant: "GGUF-FP16", url: "https://ollama.com/library/phi3", alias: ["ollama-chat-phi3:3.8b-mini-instruct-4k-fp16"] }
+microsoft-Phi-3-small-8k-instruct-fp16: { name: "Phi-3-Small-Instruct", size: "7B", tags: ["phi"], url: "https://huggingface.co/microsoft/Phi-3-small-8k-instruct" }
+microsoft-Phi-3-small-8k-instruct-nf4: { name: "Phi-3-Small-Instruct", size: "7B", tags: ["phi"], quant: "BNB-NF4", url: "https://huggingface.co/microsoft/Phi-3-small-8k-instruct" }
+microsoft-Phi-3-medium-4k-instruct-fp16: { name: "Phi-3-Medium-Instruct", size: "14B", tags: ["phi"], url: "https://huggingface.co/microsoft/Phi-3-medium-4k-instruct" }
+microsoft-Phi-3-medium-4k-instruct-nf4: { name: "Phi-3-Medium-Instruct", size: "14B", tags: ["phi"], quant: "BNB-NF4", url: "https://huggingface.co/microsoft/Phi-3-medium-4k-instruct" }
+
 TheBloke-Nous-Hermes-2-Yi-34B-GPTQ: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GPTQ-4b", tags: ["yi"], alias: ["TheBloke-Nous-Hermes-2-Yi-34B-GPTQ-main"] }
 TheBloke-Nous-Hermes-2-Yi-34B-AWQ: { name: "Nous Hermes 2 Yi", size: "34B", quant: "AWQ-4b", tags: ["yi"] }
 LoneStriker-Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi", size: "34B", quant: "EXL-3bpw", tags: ["yi"], url: "https://huggingface.co/LoneStriker/Nous-Hermes-2-Yi-34B-3.0bpw-h6-exl2" }
 LoneStriker-Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2-main: { name: "Nous Hermes 2 Yi", size: "34B", quant: "EXL-4bpw", tags: ["yi"], url: "https://huggingface.co/LoneStriker/Nous-Hermes-2-Yi-34B-4.0bpw-h6-exl2" }
 nous-hermes-2-yi-34b.Q4-K-M: { name: "Nous Hermes 2 Yi", size: "34B", quant: "GGUF-Q4KM", tags: ["yi"], url: "https://huggingface.co/TheBloke/Nous-Hermes-2-Yi-34B-GGUF" }
 jondurbin-bagel-34b-v0.2: { name: "Bagel v0.2", size: "34B", tags: ["yi"] }
+TechxGenus-Yi-9B-Coder-fp16: { name: "Yi-9B-Coder", size: "9B", tags: ["yi"] }
 
 TinyLlama-TinyLlama-1.1B-Chat-v1.0: { name: "TinyLlama v1.0 Chat", size: "1.1B", alias: ["TinyLlama-TinyLlama-1.1B-Chat-v1.0-fp16"] }
 
@@ -351,6 +389,7 @@ ajibawa-2023-Code-290k-13B: { name: "ajibawa-2023-Code-290k", size: "13B", url: 
 ajibawa-2023-Code-290k-6.7B-Instruct: { name: "ajibawa-2023-Code-290k-6.7B-Instruct", size: "6.7B", url: "ajibawa-2023/Code-290k-6.7B-Instruct", tags: ["deepseek"]}
 ajibawa-2023-OpenHermes-2.5-Code-290k-13B: { name: "ajibawa-2023-OpenHermes-2.5-Code-290k", size: "13B", url: "ajibawa-2023/OpenHermes-2.5-Code-290k-13B", tags: ["llama2"]}
 ajibawa-2023-Code-Mistral-7B: { name: "ajibawa-2023-Code-Mistral-7B", size: "7B", tags: ["mistral"], url: "https://huggingface.co/ajibawa-2023/Code-Mistral-7B"}
+ajibawa-2023-Code-Llama-3-8B: { name: "ajibawa-2023-Code-Llama3-8B", size: "8B", tags: ["llama3"], url: "https://huggingface.co/ajibawa-2023/Code-Llama-3-8B"}
 
 NousResearch-Nous-Hermes-2-SOLAR-10.7B: { name: "Nous-Hermes-2-SOLAR", size: "10.7B", tags: ["solar"] }
 upstage-SOLAR-10.7B-Instruct-v1.0: { name: "SOLAR-Instruct", size: "10.7B", tags: ["solar"] }
@@ -362,9 +401,71 @@ Qwen-Qwen1.5-7B-Chat: { name: "Qwen1.5-Chat", size: "7B", tags: ["qwen"] }
 Qwen-Qwen1.5-14B-Chat: { name: "Qwen1.5-Chat", size: "14B", tags: ["qwen"] }
 Qwen-Qwen1.5-72B-Chat-AWQ: { name: "Qwen1.5-Chat", size: "72B", quant: "AWQ-4b", tags: ["qwen"] }
 
+Qwen-CodeQwen1.5-7B-Chat-fp16: { name: "CodeQwen1.5-Chat", size: "7B", tags: ["qwen"], alias: ["Qwen-CodeQwen1.5-7B-Chat"] }
+Qwen-CodeQwen1.5-7B-Chat-AWQ: { name: "CodeQwen1.5-Chat", size: "7B", tags: ["qwen"], quant: "AWQ-4bpw" }
+ollama-chat-codeqwen:7b-chat-v1.5-q8-0: { name: "CodeQwen1.5-Chat", size: "7B", quant: "GGUF-Q8", tags: ["qwen"], url: "https://ollama.com/library/codeqwen" }
+
+
 internlm-internlm2-chat-1-8b: { name: "InternLM2-Chat", size: "1.8B", tags: ["internlm2"], url: "https://huggingface.co/internlm/internlm2-chat-1_8b" }
 internlm-internlm2-chat-7b: { name: "InternLM2-Chat", size: "7B", tags: ["internlm2"] }
 internlm-internlm2-chat-20b: { name: "InternLM2-Chat", size: "20B", tags: ["internlm2"] }
 
 google-gemma-7b-it: { name: "Gemma-IT", size: "7B", tags: ["gemma"] }
 google-gemma-2b-it: { name: "Gemma-IT", size: "2B", tags: ["gemma"] }
+
+google-codegemma-7b-it-fp16: { name: "CodeGemma-IT", size: "7B", tags: ["gemma"] }
+google-codegemma-7b-it-nf4: { name: "CodeGemma-IT", size: "7B", tags: ["gemma"], quant: "BNB-NF4" }
+ollama-codegemma:7b-instruct-v1.1-q6-K: { name: "CodeGemma-IT", size: "7B", tags: ["gemma"], quant: "GGUF-Q6K", alias: ["ollama-chat-codegemma:7b-instruct-v1.1-q6-K"], url: "https://ollama.com/library/codegemma" }
+
+google-codegemma-7b-fp16: { name: "CodeGemma", size: "7B", tags: ["gemma"] }
+google-codegemma-7b-nf4: { name: "CodeGemma", size: "7B", tags: ["gemma"], quant: "BNB-NF4" }
+ollama-codegemma:7b-code-q8-0: { name: "CodeGemma", size: "7B", tags: ["gemma"], quant: "GGML_Q8", url: "https://ollama.com/library/codegemma" }
+google-codegemma-2b-fp16: { name: "CodeGemma", size: "2B", tags: ["gemma"] }
+google-codegemma-2b-nf4: { name: "CodeGemma", size: "2B", tags: ["gemma"], quant: "BNB-NF4" }
+google-codegemma-2b-int8: { name: "CodeGemma", size: "2B", tags: ["gemma"], quant: "BNB-INT8" }
+ollama-codegemma:2b-code-v1.1-q8-0: { name: "CodeGemma", size: "2B", tags: ["gemma"], quant: "GGML_Q8", url: "https://ollama.com/library/codegemma" }
+
+openchat-openchat-3.5-0106-gemma-fp16: { name: "OpenChat-3.5-0106-Gemma", tags: ["gemma"], size: "7B", alias: ["openchat-openchat-3.5-0106-gemma"] }
+
+meta-llama-Meta-Llama-3-8B-Instruct: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], url: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct", alias: ["meta-llama-Meta-Llama-3-8B-Instruct-fp16"] }
+casperhansen-llama-3-8b-instruct-awq: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "AWQ-4b" }
+MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ-main"] }
+astronomer-Llama-3-8B-Instruct-GPTQ-8-Bit: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-8b" }
+turboderp-Llama-3-8B-Instruct-exl2-6.0bpw: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "EXL2-6b", url: "https://huggingface.co/turboderp/Llama-3-8B-Instruct-exl2" }
+rombodawg-Llama-3-8B-Instruct-Coder: { name: "Llama 3 Instruct Coder", size: "8B", tags: ["llama3"] }
+
+MaziyarPanahi-Meta-Llama-3-70B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-70B-Instruct-GPTQ-main"] }
+turboderp-Llama-3-70B-Instruct-exl2-4.0bpw: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "EXL2-4b" }
+
+Meta-Llama-3-8B-Instruct-IQ4-XS: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-IQ4XS", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+Meta-Llama-3-8B-Instruct-Q4-K-M: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q4KM", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+Meta-Llama-3-8B-Instruct-Q6-K: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q6K", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+Meta-Llama-3-8B-Instruct-Q8-0: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://huggingface.co/bartowski/Meta-Llama-3-8B-Instruct-GGUF" }
+Meta-Llama-3-8B-Instruct-correct-pre-tokenizer-and-EOS-token-Q8-0: { name: "Llama 3 Instruct (fixed pretokenizer/eos)", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://huggingface.co/NikolayKozloff/Meta-Llama-3-8B-Instruct-bf16-correct-pre-tokenizer-and-EOS-token-Q8_0-Q6_k-Q4_K_M-GGUF" }
+Meta-Llama-3-8B-Instruct-bf16: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-BF16", url: "https://huggingface.co/ddh0/Meta-Llama-3-8B-Instruct-bf16-GGUF" }
+ollama-chat-llama3:8b-instruct-fp16: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-F16", url: "https://ollama.com/library/llama3" }
+ollama-chat-llama3:8b-instruct-q8-0: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://ollama.com/library/llama3" }
+
+ibm-granite-granite-3b-code-instruct-fp16: { name: "Granite", size: "3B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
+ibm-granite-granite-3b-code-instruct-nf4: { name: "Granite", size: "3B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
+ibm-granite-granite-8b-code-instruct-fp16: { name: "Granite", size: "8B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-8b-code-instruct" }
+ibm-granite-granite-8b-code-instruct-nf4: { name: "Granite", size: "8B", quant: "BNB-NF4",tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-8b-code-instruct" }
+ibm-granite-granite-20b-code-instruct: { name: "Granite", size: "20B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }
+ibm-granite-granite-20b-code-instruct-nf4: { name: "Granite", size: "20B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-20b-code-instruct" }
+ibm-granite-granite-34b-code-instruct: { name: "Granite", size: "34B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-34b-code-instruct" }
+
+01-ai-Yi-1.5-6B-Chat: { name: "Yi-1.5-Chat", size: "6B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-6B-Chat" }
+01-ai-Yi-1.5-9B-Chat: { name: "Yi-1.5-Chat", size: "9B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-9B-Chat" }
+01-ai-Yi-1.5-34B-Chat: { name: "Yi-1.5-Chat", size: "34B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-34B-Chat" }
+
+Qwen-Qwen2-1.5B-Instruct: { name: "Qwen2-Instruct", size: "1.5B", tags: ["qwen2"], alias: ["Qwen-Qwen2-1.5B-Instruct-fp16"] }
+Qwen-Qwen2-7B-Instruct: { name: "Qwen2-Instruct", size: "7B", tags: ["qwen2"] }
+Qwen-Qwen2-72B-Instruct: { name: "Qwen2-Instruct", size: "72B", tags: ["qwen2"], alias: ["Qwen-Qwen2-7B-Instruct-fp16"] }
+Qwen-Qwen2-72B-Instruct-AWQ: { name: "Qwen2-Instruct", size: "72B", quant: "AWQ-4b", tags: ["qwen2"] }
+Qwen-Qwen2-72B-Instruct-GPTQ-Int4: { name: "Qwen2-Instruct", size: "72B", quant: "GPTQ-4b", tags: ["qwen2"] }
+Qwen-Qwen2-57B-A14B-Instruct: { name: "Qwen2-A14B-Instruct", size: "57B", tags: ["qwen2"] }
+Replete-AI-Replete-Coder-Qwen2-1.5b: { name: "Replete-Coder-Qwen2", size: "1.5B", tags: ["qwen2"], alias: ["Replete-AI-Replete-Coder-Qwen2-1.5b-fp16"], url: "https://huggingface.co/Replete-AI/Replete-Coder-Qwen2-1.5b" }
+
+DeepSeek-Coder-V2-Lite-Base: { name: "DeepSeek-Coder-V2-Lite-Base", size: "16B", tags: ["deepseek2"], alias: ["DeepSeek-Coder-V2-Lite-Base-fp16"] }
+DeepSeek-Coder-V2-Lite-Instruct: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], alias: ["deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-fp16","-home-mike-models-DeepSeek-Coder-V2-Lite-Instruct"] }
+deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-nf4: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], quant: "BNB-NF4", alias: ["DeepSeek-Coder-V2-Lite-Instruct-nf4"] }

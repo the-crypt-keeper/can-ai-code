@@ -113,9 +113,9 @@ def calculate_summary(data, language = None):
     sumdf.drop('Total', axis=1, inplace=True)
 
     merged_df = pd.merge(sumdf, load_models(), left_on='Model', right_on='id', how='left')
-    merged_df['name'].fillna(merged_df['Model'], inplace=True)
-    merged_df['size'].fillna('', inplace=True)
-    merged_df.drop('Model', axis=1, inplace=True)
+    merged_df['name'] = merged_df['name'].fillna(merged_df['Model'])
+    merged_df['size'] = merged_df['size'].fillna('')
+    merged_df = merged_df.drop('Model', axis=1)
 
     return merged_df
 
@@ -165,9 +165,13 @@ def main():
 
         These are complex interviews with hundreds of questions and the evaluation harness is python-specific.  See [llm-humaneval-benchmarks](https://github.com/my-other-github-account/llm-humaneval-benchmarks) and [code-eval](https://github.com/abacaj/code-eval) for projects large lists of Humaneval LLM benchmark results.
 
-        ## What is the difference between `junior-v2` and `junior-dev` interviews?
+        ## What is the difference between `junior-v2` and `senior` interviews?
 
-        The v2 interview fixes a number of bugs in the prompt, self-checking, and evaluation harness.  It also focuses on code-generation models and avoids quantization where possible.
+        The `junior-v2` interview is fairly easy as far as coding goes, its more a check of instruction following and making sure there are no rejections if you try to do something the model decides it might not like.  `senior` is a moderate difficulty coding test.
+        
+        ## What does "Best Result Only" mean?
+        
+        We sometimes evaluate multiple templates/prompts/parameters for the same model+size+quant. When this checkbox is enabled, it shows the best performing template/prompt combination for each model (this is the one you should be using). When disabled, it shows all the data.
 
         ## Who are you?
 
@@ -206,7 +210,7 @@ def main():
                     interview_tasks.append((task, interview, f'{task} | {interview}'))
             
             interview_tasks_labels = [x[2] for x in interview_tasks]
-            default_interview = interview_tasks_labels.index('Instruct | junior-v2') if 'Instruct | junior-v2' in interview_tasks_labels else 0
+            default_interview = interview_tasks_labels.index('Instruct | senior') if 'Instruct | senior' in interview_tasks_labels else 0
             selected_pair = st.selectbox('Task and Interview', interview_tasks_labels, index=default_interview)
             selected_index = interview_tasks_labels.index(selected_pair)
             

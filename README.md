@@ -18,15 +18,21 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**4/12** Evaluate ajibawa-2023/Code-Mistral-7B, cognitivecomputations/dolphincoder-starcoder2 7B and 15B.
+**6/24** Evaluate Replete-Coder-Qwen2 1.5B and Qwen2 1.5B for comparison.
 
-**4/11** Emerging from a nasty round of COVID, apologies for lack of updates starting to catch up now.  Evaluate NousResearch/Hermes-2-Pro-Mistral-7B.
+**6/17** Evaluate DeepSeek-V2 17B for instruct, complete and FIM.
 
-**3/03** Re-evaluate CodeLlama family.  Leaderboard results are now split by task!
+**6/7** Evaluate Qwen2 7B, 57B (FP16) and 72B (FP16, GPTQ, AWQ).  The coding ability of this excellent 72B model is degraded by 4-bit quantization, the AWQ in particular seems to have suffered the most damage.
 
-**3/02** Evaluate bigcoder/starcoder2 family.  Starting to split results into `Instruct`, `Code-Completion` and `Fill-in-the-Middle` objectives.  Upgraded to modal==0.58.92
+**6/4** Re-evaluate all current OpenAI and Mistral available models.  The `Instruct | senior` interview is now the default view on the dashboard.
 
-**2/22** Evaluate google/gemma-it family (neither model can pass junior, senior is a write-off).
+**5/30** Evaluate mistralai/Codestral-22B-v0.1 via ollama Q6K and Q4KM. The Q6K performs identical to the FP16 but the Q4KM is "different" it stumbled on JavaScript but was better on Python, I'd stick to Q6 here if you have the VRAM.
+
+**5/29** Evaluate mistralai/Codestral-22B-v0.1 (FP16).
+
+**5/26** Evaluate microsoft/phi-3-small and phi3-medium instruct (FP16 and NF4), Evaluate TechxGenus/Yi-9B-Coder (FP16).
+
+**5/16** Evaluate rombodawg/Everyone-Coder-33b-v2-Base (FP16), rombodawg/DeepMagic-Coder-7b-Alt (FP16), tiiuae/falcon-11B (FP16 and NF4).  Something appears to be wrong with falcon-11b.
 
 ## Test Suites
 

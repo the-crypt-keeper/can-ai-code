@@ -24,6 +24,10 @@ quant_suffix[QUANT_INT8] = 'int8'
 quant_suffix[QUANT_FP4] = 'fp4'
 quant_suffix[QUANT_NF4] = 'nf4'
 
+hf_api = HfApi()
+def hf_list_files(model, revision):
+    return hf_api.list_repo_files(model, revision=revision)
+
 class InterviewTransformers:
     def __init__(self, model_name, model_info = {}, quant = QUANT_FP16, gpu_split = None):
         self.model_name = model_name
@@ -60,6 +64,8 @@ class InterviewTransformers:
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
                                                 load_in_4bit = self.quant in [QUANT_FP4, QUANT_NF4],
                                                 bnb_4bit_quant_type = "nf4" if self.quant == QUANT_NF4 else "fp4")
+        if quantization_config.load_in_4bit: quantization_config.bnb_4bit_compute_dtype = torch.float16
+        if self.quant == QUANT_FP16: quantization_config = None
                
         if use_pipeline:
             print('Loading model with pipeline...')
@@ -78,7 +84,8 @@ class InterviewTransformers:
 
         # if passed a path, take the last dir name otherwise replace / with -
         if self.model_name[0] == '/':
-            self.info['model_name'] = self.model_name.split('/')[-1]
+            split_path = self.model_name.split('/')
+            self.info['model_name'] = split_path[-1] if split_path[-1].strip() != '' else split_path[-2]
         else:
             self.info['model_name'] = self.model_name.replace('/','-')
         # add quant suffix
@@ -88,6 +95,8 @@ class InterviewTransformers:
         print(f"Model {self.info['model_name']} loaded in {time.time() - t0:.2f}s used {mem_usage/1024/1024:.2f}MB of memory")        
 
     def generate(self, prompt, params, gen_args = {}):
+        t0 = time.time()
+        
         from transformers import GenerationConfig
 
         generate_args = copy(self.info['generate_args']) if 'generate_args' in self.info else {}
@@ -103,9 +112,15 @@ class InterviewTransformers:
             print('WARNING: generate config could not be auto-loaded from model:', str(e))
             generation_config = GenerationConfig(**params)
 
-        if not generation_config.eos_token_id:
-            generation_config.eos_token_id = self.info.get('eos_token_id', self.tokenizer.eos_token_id)
+        original_eos_token_id = generation_config.eos_token_id
+            
+        if self.info.get('eos_token_id') is not None:
+            generation_config.eos_token_id = [self.info.get('eos_token_id')]
+            if original_eos_token_id is not None: generation_config.eos_token_id += [original_eos_token_id]
         self.info['sampling_params'] = str(generation_config)
+        # print('sampling_params', self.info['sampling_params'])
+        
+        eos_str_list = []
 
         if 'stop_seq' in generate_args:
             from transformers import StoppingCriteria, StoppingCriteriaList
@@ -128,7 +143,8 @@ class InterviewTransformers:
                             return True
                         
                     return False
-                
+            
+            eos_str_list += generate_args['stop_seq']
             generate_args['stopping_criteria'] = StoppingCriteriaList([StopSequenceCriteria(self.tokenizer, generate_args['stop_seq'])])
             del generate_args['stop_seq']
             
@@ -138,15 +154,21 @@ class InterviewTransformers:
             inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
             input_len = inputs.size()[-1]
             sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
-            answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False)
-       
-        eos_list = [ '<|end|>', '<|endoftext|>', '<|endofmask|>', '</s>', '<s>', '<EOT>', '<empty_output>', '<|im_end|>', '[EOS]' ]
-        eos_token = self.tokenizer.decode([generation_config.eos_token_id])
-        if not eos_token in eos_list: eos_list += [eos_token]
-        if 'stopping_criteria' in generate_args: eos_list += generate_args['stopping_criteria'][0].stop_texts
-        
-        for eos in eos_list:
-            answer = answer.replace(eos, '')
+            answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False, skip_special_tokens=True)
+
+        if generation_config.eos_token_id is not None:
+            eos_token_ids = generation_config.eos_token_id
+            if not isinstance(eos_token_ids, list): eos_token_ids = [eos_token_ids]                
+            for tmp_eos_token in eos_token_ids:
+                eos_str_list.append(self.tokenizer.decode([tmp_eos_token]))
+                
+        for tmp_eos_str in eos_str_list:
+            answer = answer.replace(tmp_eos_str, '')
+
+        t1 = time.time()
+        output_len = len(sample[0])-input_len
+        speed = output_len / (t1-t0)
+        print(f"Generated {output_len} tokens in {t1-t0}s speed {speed:.2f} tok/sec")
 
         return answer, self.info
 
@@ -300,11 +322,10 @@ class InterviewExllama:
         tokenizer_model_path = hf_hub_download(repo_id=self.model_name, filename="tokenizer.model")
         self.tokenizer = ExLlamaTokenizer(tokenizer_model_path)
 
-        api = HfApi()
-        files = api.list_files_info(self.model_name, revision=self.info.get('revision',None))
+        files = hf_list_files(self.model_name, self.info.get('revision',None))
         model_path = None
         for file_info in files:
-            if (file_info.rfilename.find(".safetensors") != -1):
+            if (file_info.find(".safetensors") != -1):
                 model_path = hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename=file_info.rfilename)
                 break
         
@@ -411,8 +432,9 @@ class InterviewExllama2:
         #if '70B' in model_name: self.info['low_mem'] = True
 
     def load(self):
-        import sys
-        sys.path += ["/repositories/exllamav2","../exllamav2"]
+        print("Starting load..")
+        # import sys
+        # sys.path += ["/repositories/exllamav2","../exllamav2"]
         import os
         
         # monkey-patch a fix for https://github.com/the-crypt-keeper/can-ai-code/issues/114
@@ -465,152 +487,47 @@ class InterviewExllama2:
     def generate(self, prompt, params):
         
         from exllamav2.generator import (
-            ExLlamaV2BaseGenerator,
+            ExLlamaV2StreamingGenerator,
             ExLlamaV2Sampler,
         )
-        import torch
-        import random
         
-        class CustomGenerator(ExLlamaV2BaseGenerator):
-            def generate_simple(self, prompt: str or list,
-                                gen_settings: ExLlamaV2Sampler.Settings,
-                                num_tokens: int,
-                                seed = None,
-                                token_healing = False,
-                                encode_special_tokens = False,
-                                decode_special_tokens = False,
-                                loras = None,
-                                stop_token = -1,
-                                stop_text = []):
-
-                # Default stop token
-
-                if stop_token == -1: stop_token = self.tokenizer.eos_token_id
-
-                # Accept LoRA or list of LoRAs
-
-                if loras is not None and isinstance(loras, ExLlamaV2Lora): loras = [loras]
-
-                # Apply seed
-
-                if seed is not None: random.seed(seed)
-
-                # Tokenize input and produce padding mask if needed
-
-                batch_size = 1 if isinstance(prompt, str) else len(prompt)
-                ids, position_offsets = self.tokenizer.encode(prompt, encode_special_tokens = encode_special_tokens, return_offsets = True)
-                if batch_size == 1: position_offsets = None
-
-                overflow = ids.shape[-1] + num_tokens - self.model.config.max_seq_len
-                if overflow > 0: ids = ids[:, overflow:]
-
-                mask = self.tokenizer.padding_mask(ids) if batch_size > 1 else None
-
-                # Prepare for healing
-
-                unhealed_token = None
-                if ids.shape[-1] < 2: token_healing = False
-                if token_healing:
-                    unhealed_token = ids[:, -1:]
-                    ids = ids[:, :-1]
-
-                # Process prompt and begin gen
-
-                self._gen_begin_base(ids, mask, loras, position_offsets = position_offsets)
-
-                # Begin filters
-
-                id_to_piece = self.tokenizer.get_id_to_piece_list()
-                if unhealed_token is not None:
-                    unhealed_token_list = unhealed_token.flatten().tolist()
-                    heal = [id_to_piece[x] for x in unhealed_token_list]
-                else:
-                    heal = None
-                gen_settings.begin_filters(heal)
-
-                # Generate tokens
-
-                batch_eos = [False] * batch_size
-                
-                text = [''] * batch_size
-
-                for i in range(num_tokens):
-
-                    logits = self.model.forward(self.sequence_ids[:, -1:], self.cache, input_mask = mask, loras = loras, position_offsets = position_offsets).float().cpu()
-                    token, _, _ = ExLlamaV2Sampler.sample(logits, gen_settings, self.sequence_ids, random.random(), self.tokenizer, prefix_token = unhealed_token)
-
-                    eos = False
-                    if stop_token is not None:
-                        for b in range(batch_size):
-                            if token[b, 0].item() == stop_token:
-                                batch_eos[b] = True                                
-                                token[b, 0] = self.tokenizer.pad_token_id
-                            if len(stop_text) > 0:
-                                text[b] += self.tokenizer.decode(token, decode_special_tokens = True)[b]
-                                for stop_str in stop_text:
-                                    if stop_str in text[b]: batch_eos[b] = True
-                                
-                    if all(batch_eos): eos = True
-                    
-                    self.sequence_ids = torch.cat([self.sequence_ids, token], dim = 1)
-                    gen_settings.feed_filters(token)
-
-                    unhealed_token = None
-                    if eos: break
-
-                # Decode
-
-                text = self.tokenizer.decode(self.sequence_ids, decode_special_tokens = decode_special_tokens)
-
-                if isinstance(prompt, str): return text[0]
-                return text            
-
-        generator = CustomGenerator(self.model, self.cache, self.tokenizer)        
+        generator = ExLlamaV2StreamingGenerator(self.model, self.cache, self.tokenizer)        
         
         settings = ExLlamaV2Sampler.Settings()
         settings.temperature = params.get('temperature', 1.0)
         settings.top_k = params.get('top_k', 1000)
         settings.top_p = params.get('top_p', 1.0)
         settings.token_repetition_penalty = params.get('repetition_penalty', 1.0)
-        #settings.disallow_tokens(self.tokenizer, [self.tokenizer.eos_token_id])
 
         self.info['sampling_params'] = str(settings.__dict__)
 
         max_new_tokens = params.get('max_new_tokens', 512)
         stop_text = self.info.get('generate_args',{}).get('stop_seq', [])
-            
-        generator.warmup()
-        time_begin = time.time()
+        stop_condition_list = []
+        if self.info.get('eos_token_id'):
+            stop_condition_list.append(self.info.get('eos_token_id'))
+        stop_condition_list += stop_text        
+        generator.set_stop_conditions(stop_condition_list)
         
-        if isinstance(prompt, list):
-            batches = [prompt[i:i + self.batch_size] for i in range(0, len(prompt), self.batch_size)]
-        else:
-            batches = [[prompt]]
-            
-        collected_outputs = []
-        for b, batch in enumerate(batches):
-            if len(batches) > 1: print(f"Batch {b + 1} of {len(batches)}...")
-            outputs = generator.generate_simple(batch,
-                                                settings,
-                                                max_new_tokens,
-                                                seed = self.info.get('seed', 0),
-                                                encode_special_tokens=True,
-                                                decode_special_tokens=True,
-                                                token_healing=self.token_healing,
-                                                stop_text=stop_text)
+        input_ids = self.tokenizer.encode(prompt, add_bos = True)        
+        generator.begin_stream_ex(input_ids, settings)
 
-            trimmed_outputs = [o[len(p):] for p, o in zip(batch, outputs)]
-            collected_outputs += trimmed_outputs      
+        # Streaming loop. Note that repeated calls to sys.stdout.flush() adds some latency, but some
+        # consoles won't update partial lines without it.
+        generated_tokens = 0
+        text = ''
 
-        time_end = time.time()
-        time_total = time_end - time_begin
-        
-        if isinstance(prompt, list):
-            answers = collected_outputs
-        else:
-            answers = collected_outputs[0]
+        while True:
+            res = generator.stream_ex()
+            chunk = res["chunk"]
+            eos = res["eos"]
 
-        return answers, self.info
+            generated_tokens += 1
+            print (chunk, end = "")
+            text += chunk
+            if eos or generated_tokens == max_new_tokens: break
+
+        return text, self.info
 
 ####################
 ##  vLLM Adapter  ##
@@ -637,14 +554,25 @@ class InterviewVLLM:
         if 'gptq' in self.model_name.lower(): quantization = 'gptq'
         if 'sq-' in self.model_name.lower(): quantization = 'squeezellm'
         
-        dtype = 'bfloat16' if quantization is None else 'float16'
+        dtype = 'float16' if quantization is None else 'float16'
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         max_model_len = self.info.get('max_model_len', 2048)
-        enforce_eager = self.info.get('enforce_eager', False)
+        enforce_eager = self.info.get('enforce_eager', True)
+
+        # monkey-patch a fix for vllm flavor of https://github.com/the-crypt-keeper/can-ai-code/issues/114
+        from vllm.distributed import utils
+        original_test_gpu_peer_copy = utils._can_actually_p2p
+        def safe_test_gpu_peer_copy(x,y):
+            try:
+                return original_test_gpu_peer_copy(x,y)
+            except Exception as e:
+                print('test_gpu_peer_copy() failed: ', str(e))
+                return False
+        utils._can_actually_p2p = safe_test_gpu_peer_copy
         
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            gpu_memory_utilization=0.92
+            gpu_memory_utilization=1
             enforce_eager = True
             self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, tensor_parallel_size=self.gpu_split, trust_remote_code=True, enforce_eager=enforce_eager, gpu_memory_utilization=gpu_memory_utilization)
         else:
@@ -670,8 +598,12 @@ class InterviewVLLM:
             self.stop_token_ids = [int(x) for x in eos_token_id]
         else:
             self.stop_token_ids = [int(eos_token_id)]
-        
-        self.info['model_name'] = self.model_name
+
+        if self.model_name[0] == '/':
+            split_path = self.model_name.split('/')
+            self.info['model_name'] = split_path[-1] if split_path[-1].strip() != '' else split_path[-2]
+        else:        
+            self.info['model_name'] = self.model_name
 
         print(f"Model loaded in {time.time() - t0:.2f}s")   
 
@@ -729,13 +661,12 @@ class InterviewAWQ:
         # Model
         t0 = time.time()
 
-        api = HfApi()
-        files = api.list_files_info(self.model_name)
+        files = hf_list_files(self.model_name, self.info.get('revision',None))
         model_path = None
         search_list = [".index.json", ".pt", ".bin"]
         for file_info in files:
             for needle in search_list:
-                if file_info.rfilename.find(needle) != -1:
+                if file_info.find(needle) != -1:
                     model_path = hf_hub_download(repo_id=self.model_name, filename=file_info.rfilename)
                     break
 
@@ -873,17 +804,17 @@ class InterviewQuipSharp:
         answer = self.tokenizer.decode(sample[0][len(inputs[0]):], skip_special_tokens=True)
         return answer, self.info
     
-def interview_run(runtime, generate, interview, params_json, output_template, batch = False):
+def interview_run(runtime, generate, interview, params_json, output_template, batch = False, quiet = False):
     if batch:
-        print(f"Running batch of {len(interview)} prompts")
+        if not quiet: print(f"Running batch of {len(interview)} prompts")
         prompts = [q['prompt'] for q in interview]
         answers, model_info = generate(prompts, params=params_json)
-        print('Local model info:', model_info)
+        if not quiet: print('Local model info:', model_info)
     else:
         answers = []
         model_info = None
         for idx, question in enumerate(interview):
-            print(f"{idx+1}/{len(interview)} {question['name']} {question['language']}")
+            if not quiet: print(f"{idx+1}/{len(interview)} {question['name']} {question['language']}")
 
             # generate the answer
             result, info = generate(question['prompt'], params=params_json)
@@ -891,15 +822,16 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
             # save for later
             if model_info is None:
                 model_info = info
-                print('Local model info:', model_info)
+                if not quiet: print('Local model info:', model_info)
 
             # optional output template
             answer = output_template.render(**question, Answer=result) if output_template else result
             answers.append(answer)
 
-            print()
-            print(answer)
-            print()
+            if not quiet: 
+                print()
+                print(answer)
+                print()
 
     results = []
     for idx, question in enumerate(interview):
@@ -923,14 +855,13 @@ def interview_run(runtime, generate, interview, params_json, output_template, ba
 def download_safetensors(model_name, revision=None):
     from huggingface_hub import snapshot_download, HfApi
 
-    api = HfApi()
-    files = api.list_files_info(model_name, revision=revision)
+    files = hf_list_files(model_name, revision)
     
     search_list = ["safetensors"]
     found_safetensors = False
     for file_info in files:
         for needle in search_list:
-            if file_info.rfilename.find(needle) != -1:
+            if file_info.find(needle) != -1:
                 found_safetensors = True
                 break
 
@@ -952,24 +883,98 @@ def download_safetensors(model_name, revision=None):
             print('Download problem: ', e)
             continue
         break
+    
+#################################
+##  Mistral-Inference Adapter  ##
+#################################
+def is_torchrun() -> bool:
+    required_vars = ["MASTER_ADDR", "MASTER_PORT", "RANK", "WORLD_SIZE"]
+    return all(var in os.environ for var in required_vars)
 
-def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = ""):
+class InterviewMistral:
+    def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False, cache_8bit = False):
+        self.model_name = model_name
+        self.gpu_split = gpu_split
+        self.info = model_info
+        
+        self.tokenizer = None
+        self.model = None
+        self.batch = False
+
+        self.info['model_name'] = self.model_name.split('/')[-1]
+
+    def load(self):
+        print("Starting load..")
+        config_path = self.model_name # hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename="params.json")
+        
+        from mistral_inference.model import Transformer
+        from mistral_common.tokens.tokenizers.mistral import MistralTokenizer
+        import torch
+        
+        if is_torchrun():
+            torch.distributed.init_process_group()
+            torch.cuda.set_device(torch.distributed.get_rank())
+            num_pipeline_ranks = torch.distributed.get_world_size()
+        else:
+            num_pipeline_ranks = 1
+                
+        print("Loading model...")
+        dtype = torch.bfloat16 if self.info.get('bf16', False) else torch.float16
+        self.tokenizer = MistralTokenizer.from_file(f"{config_path}/tokenizer.model.v3")
+        self.model = Transformer.from_folder(config_path, num_pipeline_ranks=num_pipeline_ranks, dtype=dtype)
+            
+    def generate(self, prompt, params):
+        from mistral_inference.generate import generate
+        from mistral_common.protocol.instruct.messages import UserMessage
+        from mistral_common.protocol.instruct.request import ChatCompletionRequest        
+        
+        eos_id = self.tokenizer.instruct_tokenizer.tokenizer.eos_id
+        if self.info.get('eos_token_id'):
+            eos_id = self.info.get('eos_token_id')
+            # print("overide stop_token:", eos_id)
+            
+        self.info['sampling_params'] = {
+            'max_tokens': params.get('max_new_tokens'),
+            'temperature': params.get('temperature', 0.0)
+        }
+                
+        completion_request = ChatCompletionRequest(messages=[UserMessage(content=prompt)])
+        tokens = self.tokenizer.encode_chat_completion(completion_request).tokens
+        out_tokens, _ = generate([tokens], self.model, eos_id=eos_id, **self.info['sampling_params'])
+        result = self.tokenizer.instruct_tokenizer.tokenizer.decode(out_tokens[0])
+
+        return result, self.info
+    
+    
+def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = "", stop:str = "", completion : bool = False):
     from prepare import save_interview
 
-    download_safetensors(model_name, revision if revision else None)
+    if not os.path.exists(model_name):
+        download_safetensors(model_name, revision if revision else None)
 
     gpu_split = gpusplit if gpusplit != '' else None
     model_info = json.loads(info) if isinstance(info, str) else info
     if revision: model_info['revision'] = revision
 
+    if completion or stop != '':
+        ga = model_info.get('generate_args', {})
+        ga['stop_seq'] = ga.get('stop_seq', [])
+        if completion:
+            ga['stop_seq'] += ["\n#","\n//"]
+        if stop != '':
+            ga['stop_seq'] += stop
+        model_info['generate_args'] = ga    
+        
     if runtime == 'transformers':
         if quant:
             quant_id = None
             for k,v in quant_suffix.items():
                 if v == quant:
                     quant_id = k
-            if not quant_id:
+            if quant_id is None:
                 raise Exception("quant "+quant+" not found")
+            else:
+                print("quant:", quant_id)
         else:
             quant_id = QUANT_FP16
         model = InterviewTransformers(model_name, model_info, gpu_split=gpu_split, quant=quant_id)
@@ -988,6 +993,8 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         model = InterviewHQQ(model_name, model_info, gpu_split=gpu_split)        
     elif runtime == 'ctranslate2':
         model = InterviewCtranslate2(model_name, model_info, gpu_split=gpu_split)
+    elif runtime == 'mistral':
+        model = InterviewMistral(model_name, model_info)
     else:
         raise Exception('Unknown runtime '+runtime)
     
@@ -997,6 +1004,11 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
     for param_file in params.split(','):
         for input_file in input.split(','):
             tasks.append((param_file, input_file))
+
+    should_save = True
+    if is_torchrun():
+        import torch
+        should_save = torch.distributed.get_rank() == 0
 
     for param_file, input_pairs in tasks:
       insplit = input_pairs.split(':')
@@ -1008,10 +1020,12 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
       params_json = json.load(open(param_file,'r'))
 
       for iter in range(iterations):
-        print("Starting", model_name, "iter=", iter, "param_file=", param_file, "input_file=", input_file, "templateout_file=", templateout_file)
-        results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch)
-        save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
-
+        if should_save:
+            print("Starting", model_name, "iter=", iter, "param_file=", param_file, "input_file=", input_file, "templateout_file=", templateout_file)
+        results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch, quiet=not should_save)
+        if should_save:
+            save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
+    
 if __name__ == "__main__":
     import fire
     fire.Fire(main)
