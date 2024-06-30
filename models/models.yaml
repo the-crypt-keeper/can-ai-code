@@ -445,6 +445,7 @@ Meta-Llama-3-8B-Instruct-correct-pre-tokenizer-and-EOS-token-Q8-0: { name: "Llam
 Meta-Llama-3-8B-Instruct-bf16: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-BF16", url: "https://huggingface.co/ddh0/Meta-Llama-3-8B-Instruct-bf16-GGUF" }
 ollama-chat-llama3:8b-instruct-fp16: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-F16", url: "https://ollama.com/library/llama3" }
 ollama-chat-llama3:8b-instruct-q8-0: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://ollama.com/library/llama3" }
+Replete-Coder-Llama3-8B: { name: "Replete-Coder-Llama3", size: "8B", tags: ["llama3"], alias: ["Replete-Coder-Llama3-8B-fp16"], url: "https://huggingface.co/Replete-AI/Replete-Coder-Llama3-8B" }
 
 ibm-granite-granite-3b-code-instruct-fp16: { name: "Granite", size: "3B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
 ibm-granite-granite-3b-code-instruct-nf4: { name: "Granite", size: "3B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
@@ -469,3 +470,5 @@ Replete-AI-Replete-Coder-Qwen2-1.5b: { name: "Replete-Coder-Qwen2", size: "1.5B"
 DeepSeek-Coder-V2-Lite-Base: { name: "DeepSeek-Coder-V2-Lite-Base", size: "16B", tags: ["deepseek2"], alias: ["DeepSeek-Coder-V2-Lite-Base-fp16"] }
 DeepSeek-Coder-V2-Lite-Instruct: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], alias: ["deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-fp16","-home-mike-models-DeepSeek-Coder-V2-Lite-Instruct"] }
 deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-nf4: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], quant: "BNB-NF4", alias: ["DeepSeek-Coder-V2-Lite-Instruct-nf4"] }
+
+google-gemma-2-9b-it-fp16: { name: "Gemma 2 Instruct", size: "9B", tags: ["gemma2"] }
