@@ -560,15 +560,15 @@ class InterviewVLLM:
         enforce_eager = self.info.get('enforce_eager', True)
 
         # monkey-patch a fix for vllm flavor of https://github.com/the-crypt-keeper/can-ai-code/issues/114
-        from vllm.distributed import utils
-        original_test_gpu_peer_copy = utils._can_actually_p2p
-        def safe_test_gpu_peer_copy(x,y):
-            try:
-                return original_test_gpu_peer_copy(x,y)
-            except Exception as e:
-                print('test_gpu_peer_copy() failed: ', str(e))
-                return False
-        utils._can_actually_p2p = safe_test_gpu_peer_copy
+        # from vllm.distributed import utils
+        # original_test_gpu_peer_copy = utils._can_actually_p2p
+        # def safe_test_gpu_peer_copy(x,y):
+        #     try:
+        #         return original_test_gpu_peer_copy(x,y)
+        #     except Exception as e:
+        #         print('test_gpu_peer_copy() failed: ', str(e))
+        #         return False
+        # utils._can_actually_p2p = safe_test_gpu_peer_copy
         
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')

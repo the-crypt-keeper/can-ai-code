@@ -60,12 +60,15 @@ def model_everyone_coder_33b_v2_base(): download_model('rombodawg/Everyone-Coder
 # Phi3
 def model_phi3_small_8k_instruct(): download_model('microsoft/Phi-3-small-8k-instruct')
 def model_phi3_medium_4k_instruct(): download_model('microsoft/Phi-3-medium-4k-instruct')
+# Gemma2
+def model_gemma2_9b_instruct(): download_model('google/gemma-2-9b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
+def model_gemma2_27b_instruct(): download_model('google/gemma-2-27b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2-th"
@@ -75,33 +78,33 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
-#gpu_request = gpu.A100(count=4, memory=40)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
 vllm_image = (
     Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "transformers==4.40.0",
-        "optimum==1.19.1",
-        "tiktoken==0.6.0",
+        "transformers==4.42.3",
+        # "optimum==1.20.0",
+        "tiktoken==0.7.0",
         "bitsandbytes==0.43.1",
-        "accelerate==0.29.2",
+        "accelerate==0.31.0",
         "einops==0.6.1",
         "sentencepiece==0.1.99",
         "hf-transfer~=0.1",
         "scipy==1.10.1",
         "pyarrow==11.0.0",
         "protobuf==3.20.3",
-        "vllm==0.4.1",
+        "vllm==0.5.0.post1",
         "auto-gptq==0.7.1",
-        "https://github.com/turboderp/exllamav2/releases/download/v0.0.19/exllamav2-0.0.19+cu121-cp310-cp310-linux_x86_64.whl"
+        "https://github.com/turboderp/exllamav2/releases/download/v0.1.6/exllamav2-0.1.6+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl"
     )
-    .pip_install("flash-attn==2.5.7") # this errors out unless torch is already installed
+    .pip_install("flash-attn==2.5.9.post1") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_qwen2_72b_awq, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_gemma2_27b_instruct, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
