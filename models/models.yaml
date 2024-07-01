@@ -472,6 +472,8 @@ DeepSeek-Coder-V2-Lite-Instruct: { name: "DeepSeek-Coder-V2-Lite-Instruct", size
 deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-nf4: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], quant: "BNB-NF4", alias: ["DeepSeek-Coder-V2-Lite-Instruct-nf4"] }
 
 google-gemma-2-9b-it-fp16: { name: "Gemma 2 Instruct", size: "9B", tags: ["gemma2"] }
+google-gemma-2-27b-it-fp16: { name: "Gemma 2 Instruct", size: "27B", tags: ["gemma2"] }
+google-gemma-2-27b-it-nf4: { name: "Gemma 2 Instruct", size: "27B", quant: "BNB-NF4", tags: ["gemma2"] }
 
 anthropic-claude-3-haiku-20240307: { name: "Claude 3 Haiku 20240307", tags: ["claude"], url: "https://www.anthropic.com/" }
 anthropic-claude-3-sonnet-20240229: { name: "Claude 3 Sonnet 20240229", tags: ["claude"], url: "https://www.anthropic.com/" }
