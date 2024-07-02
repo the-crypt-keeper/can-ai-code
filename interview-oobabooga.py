@@ -12,7 +12,7 @@ parser.add_argument('--host', type=str, default='localhost:5000', help="host to 
 parser.add_argument('--kobold', action='store_true', help='use koboldcpp server instead of text-generation-web-ui')
 args = parser.parse_args()
 
-URL_TAIL='/api/v1/generate'
+URL_TAIL='/v1/chat/completions'
 URI = f'{args.host}{URL_TAIL}' if '://' in args.host else f'http://{args.host}{URL_TAIL}'
 
 def kobold_params(params):
@@ -29,12 +29,24 @@ raw_params = json.load(open(args.params))
 params = kobold_params(raw_params) if args.kobold else raw_params
 
 def send_request(prompt):
-    request = params.copy()
-    request["prompt"] = prompt
-    response = requests.post(URI, json=request)    
+    request_body = {
+        "messages": [
+            {"role": "user", "content": prompt}
+        ]
+    }
+    
+    request_body.update(params)
+    response = requests.post(URI, json=request_body)
+
     assert response.status_code == 200, response.content
-    result = response.json()['results'][0]['text']
-    return result 
+    
+    response_data = response.json()
+    assistant_response = response_data['choices'][0]['message']['content']
+    
+    print(assistant_response)  # For debugging, to see the extracted response
+    return assistant_response
+
+
 
 def run():
     interview = [json.loads(line) for line in open(args.input)]
