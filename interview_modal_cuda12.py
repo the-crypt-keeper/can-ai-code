@@ -67,10 +67,10 @@ def model_gemma2_27b_instruct(): download_model('google/gemma-2-27b-it', info={'
 def model_codegeex4_all_9b(): download_model('THUDM/codegeex4-all-9b')
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_NF4
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2-th"
@@ -99,7 +99,7 @@ vllm_image = (
         "scipy==1.10.1",
         "pyarrow==11.0.0",
         "protobuf==3.20.3",
-        "vllm==0.5.0.post1",
+        "vllm==0.5.1",
         "auto-gptq==0.7.1",
         "https://github.com/turboderp/exllamav2/releases/download/v0.1.6/exllamav2-0.1.6+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl"
     )
@@ -107,7 +107,7 @@ vllm_image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
     .run_function(model_codegeex4_all_9b, secrets=[Secret.from_name("my-huggingface-secret")])
-    .pip_install("transformers==4.40.2")
+    #.pip_install("transformers==4.40.2")
     ######################################
 )
 app = App(image=vllm_image)

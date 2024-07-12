@@ -485,3 +485,6 @@ ollama-chat-command-r-plus:104b-q4-0: { name: "Command R Plus", size: "104B", qu
 cohere-command: { name: "Command", url: "https://cohere.com/" }
 cohere-command-light: { name: "Command Light", url: "https://cohere.com/" }
 ollama-chat-command-r:35b-v0.1-q4-K-M: { name: "Command R", size: "35B", quant: "GGML-Q4KM", url: "https://ollama.com/library/command-r" }
+
+THUDM-codegeex4-all-9b: { name: "CodeGeeX4-All", size: "9B", alias: ["THUDM-codegeex4-all-9b-fp16"] }
+THUDM-codegeex4-all-9b-nf4: { name: "CodeGeeX4-All", size: "9B", quant: "BNB-NF4" }

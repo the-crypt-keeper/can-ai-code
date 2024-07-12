@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/12** Evaluate HUDM/codegeex4-all-9b (FP16 and NF4).
+
 **6/30** Evaluate Replete-Coder-Llama3 8B (FP16) and Gemma2 Instruct 9B (FP16) as well as all available Cohere and Anthropic models.
 
 **6/24** Evaluate Replete-Coder-Qwen2 1.5B and Qwen2 1.5B for comparison.
