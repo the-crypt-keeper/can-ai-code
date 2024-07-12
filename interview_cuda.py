@@ -60,7 +60,13 @@ class InterviewTransformers:
         print('Loading tokenizer',tokenizer_model)
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_model, trust_remote_code=True, **self.info.get('tokenizer_args', {}))
 
-        torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.float16
+        if self.info.get('dtype') == 'bfloat16':
+            torch_dtype = torch.bfloat16
+        elif self.info.get('dtype') == 'float16':
+            torch_dtype = torch.float16
+        else:
+            torch_dtype = torch.float32 if self.quant == QUANT_FP32 else torch.bfloat16
+            
         quantization_config = BitsAndBytesConfig(load_in_8bit = self.quant == QUANT_INT8,
                                                 load_in_4bit = self.quant in [QUANT_FP4, QUANT_NF4],
                                                 bnb_4bit_quant_type = "nf4" if self.quant == QUANT_NF4 else "fp4")
@@ -74,7 +80,8 @@ class InterviewTransformers:
             mem_usage = self.pipeline.model.get_memory_footprint()
         elif use_accelerate:
             print('Loading model with accelerate...')
-            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), trust_remote_code=True)
+            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), low_cpu_mem_usage=True, trust_remote_code=True)
+            #self.model = self.model.to('cuda:0').eval()
             mem_usage = self.model.get_memory_footprint()
         else:
             print('Loading model ...')
@@ -153,6 +160,7 @@ class InterviewTransformers:
         else:
             inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
             input_len = inputs.size()[-1]
+            
             sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
             answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False, skip_special_tokens=True)
 

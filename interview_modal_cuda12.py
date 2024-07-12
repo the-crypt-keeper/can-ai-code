@@ -63,10 +63,12 @@ def model_phi3_medium_4k_instruct(): download_model('microsoft/Phi-3-medium-4k-i
 # Gemma2
 def model_gemma2_9b_instruct(): download_model('google/gemma-2-9b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
 def model_gemma2_27b_instruct(): download_model('google/gemma-2-27b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
+# codegeex4
+def model_codegeex4_all_9b(): download_model('THUDM/codegeex4-all-9b')
 
 ##### SELECT RUNTIME HERE #############
 RUNTIME = "transformers"
-QUANT = QUANT_FP16
+QUANT = QUANT_NF4
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
@@ -78,8 +80,8 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1, memory=80)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
 vllm_image = (
@@ -104,7 +106,8 @@ vllm_image = (
     .pip_install("flash-attn==2.5.9.post1") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_gemma2_27b_instruct, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_codegeex4_all_9b, secrets=[Secret.from_name("my-huggingface-secret")])
+    .pip_install("transformers==4.40.2")
     ######################################
 )
 app = App(image=vllm_image)
