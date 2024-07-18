@@ -17,6 +17,8 @@ mistral-mistral-medium-2312: { name: "Mistral mistral-medium-2312", url: "https:
 mistral-mistral-large-2402: { name: "Mistral mistral-large-2402", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-codestral-2405: { name: "Mistral codestral-2405", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-open-mixtral-8x22b-2404: { name: "Mistral open-mixtral-8x22b-2404", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-open-codestral-mamba: { name: "Mistral open-codestral-mamba", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-open-mistral-nemo-2407: { name: "Mistral open-mistral-nemo-2407", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 
 bigcode-starcoderbase-1b-fp16: { name: 'StarCoderBase', size: '1B', tags: ["bigcode"] }
 bigcode-starcoderbase-3b-fp16: { name: 'StarCoderBase', size: '3B', tags: ["bigcode"] }

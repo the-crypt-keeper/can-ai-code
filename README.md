@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/18** Evaluate mistral-nemo-2407 and open-codestral-mamba (API).
+
 **7/12** Evaluate HUDM/codegeex4-all-9b (FP16 and NF4).
 
 **6/30** Evaluate Replete-Coder-Llama3 8B (FP16) and Gemma2 Instruct 9B (FP16) as well as all available Cohere and Anthropic models.
