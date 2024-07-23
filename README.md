@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/23** Evaluate Llama-3.1-Instruct 8B (FP16, NF4, Q6K) and 70B (NF4, Q4_0). Something might be up with the 8B k-quants!
+
 **7/18** Evaluate mistral-nemo-2407 and open-codestral-mamba (API).
 
 **7/12** Evaluate HUDM/codegeex4-all-9b (FP16 and NF4).

@@ -8,7 +8,7 @@ def download_model(name, info = {}, **kwargs):
     for k,v in kwargs.items(): info[k] = v
     with open("./_info.json",'w') as f:
         json.dump({"model_name": name, **info}, f)
-    snapshot_download(name, **kwargs)
+    snapshot_download(name, ignore_patterns=["*.pth"], **kwargs)
 
 # LLAMA2 7B
 def model_llama_chat_7b_e8p(): download_model('relaxml/Llama-2-7b-chat-E8P-2Bit')
@@ -65,12 +65,15 @@ def model_gemma2_9b_instruct(): download_model('google/gemma-2-9b-it', info={'ge
 def model_gemma2_27b_instruct(): download_model('google/gemma-2-27b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
 # codegeex4
 def model_codegeex4_all_9b(): download_model('THUDM/codegeex4-all-9b')
+# llama3.1
+def model_llama31_8b_instruct(): download_model('meta-llama/Meta-Llama-3.1-8B-Instruct')
+def model_llama31_70b_instruct(): download_model('meta-llama/Meta-Llama-3.1-70B-Instruct')
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+RUNTIME = "transformers"
+QUANT = QUANT_NF4
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2-th"
@@ -80,8 +83,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1, memory=80)
+#gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
 vllm_image = (
@@ -106,8 +109,8 @@ vllm_image = (
     .pip_install("flash-attn==2.5.9.post1") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_codegeex4_all_9b, secrets=[Secret.from_name("my-huggingface-secret")])
-    #.pip_install("transformers==4.40.2")
+    .run_function(model_llama31_70b_instruct, secrets=[Secret.from_name("my-huggingface-secret")])
+    .pip_install("transformers==4.43.1")
     ######################################
 )
 app = App(image=vllm_image)
