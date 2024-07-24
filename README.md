@@ -18,19 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/24** Evaluate Llama-3.1-Instruct 70B (GPTQ), DBRX-Instruct, Qwen-1.5-72B and 110B.
+
 **7/23** Evaluate Llama-3.1-Instruct 8B (FP16, NF4, Q6K, Q8_0, Q4_1) and 70B (NF4, Q4_0). Something looks to be up with the 8B k-quants.
 
 **7/18** Evaluate mistral-nemo-2407 and open-codestral-mamba (API).
 
 **7/12** Evaluate HUDM/codegeex4-all-9b (FP16 and NF4).
-
-**6/30** Evaluate Replete-Coder-Llama3 8B (FP16) and Gemma2 Instruct 9B (FP16) as well as all available Cohere and Anthropic models.
-
-**6/24** Evaluate Replete-Coder-Qwen2 1.5B and Qwen2 1.5B for comparison.
-
-**6/17** Evaluate DeepSeek-V2 17B for instruct, complete and FIM.
-
-**6/7** Evaluate Qwen2 7B, 57B (FP16) and 72B (FP16, GPTQ, AWQ).  The coding ability of this excellent 72B model is degraded by 4-bit quantization, the AWQ in particular seems to have suffered the most damage.
 
 ## Test Suites
 
