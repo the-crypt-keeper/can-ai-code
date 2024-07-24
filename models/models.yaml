@@ -502,3 +502,4 @@ ollama-chat-llama3.1:8b-instruct-q8-0: { name: "Llama 3.1 Instruct", size: "8B",
 meta-llama-Meta-Llama-3.1-70B-Instruct-nf4: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "BNB-NF4", url: "https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct" }
 ollama-chat-llama3.1:70b-instruct-q4-0: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GGUF-Q4_0", url: "https://ollama.com/library/llama3.1:70b-instruct-q4_0" }
 -home-mike-models-Meta-Llama-3.1-70B-Instruct-gptq-4bit-: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GPTQ-4bit", url: "https://huggingface.co/ModelCloud/Meta-Llama-3.1-70B-Instruct-gptq-4bit" }
+hf:meta-llama-Meta-Llama-3.1-405B-Instruct: { name: "Llama 3.1 Instruct", size: "405B", tags: ["llama31"], quant: "FP8", url: "https://huggingface.co/meta-llama/Meta-Llama-3.1-405B-Instruct" }

@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**7/24** Evaluate Llama-3.1=Instruct 405B (FP8) via glhf API.
+
 **7/24** Evaluate Llama-3.1-Instruct 70B (GPTQ), DBRX-Instruct, Qwen-1.5-72B and 110B.
 
 **7/23** Evaluate Llama-3.1-Instruct 8B (FP16, NF4, Q6K, Q8_0, Q4_1) and 70B (NF4, Q4_0). Something looks to be up with the 8B k-quants.
