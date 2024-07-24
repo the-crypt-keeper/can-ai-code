@@ -22,12 +22,14 @@ if __name__ == '__main__':
     parser.add_argument('--input', type=str, required=True, help='path to prepare*.ndjson from prepare stage')
     parser.add_argument('--model', type=str, default='openai/chatgpt', help='model to use')
     parser.add_argument('--apibase', type=str, help='api base url override')
+    parser.add_argument('--apikey', type=str, help='api key (if required)')
     parser.add_argument('--runtime', type=str, help='override runtime (when using openai-compatible server)')
     parser.add_argument('--seed', type=int, default=42, help='random seed to use (helps determinism)')
     parser.add_argument('--params', type=str, required=True, help='parameter file to use')
     parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
     parser.add_argument('--templateout', type=str, help='output template')
     parser.add_argument('--stop', type=str, help='stop sequences list json')
+    parser.add_argument('--debug', help='enable litellm debug mode')
     args = parser.parse_args()
 
     # Load params and init model
@@ -35,6 +37,7 @@ if __name__ == '__main__':
     litellm.drop_params=True
     model_name = args.model
     runtime = model_name.split('/')[0]
+    if args.debug: litellm.set_verbose=True
         
     # OpenAI custom base
     if args.apibase: 
@@ -42,12 +45,16 @@ if __name__ == '__main__':
         if 'openai' in model_name:
             if not args.runtime: raise Exception("If apibase is set and model is openai/ you must also provide runtime.")
             runtime = args.runtime
+            args.model = args.model.replace('openai/','')
         
         try:
             model_info = requests.get(args.apibase + 'v1/models').json()        
             args.model = model_info['data'][0]['id'].split('/')[-1].replace('.gguf','')
         except:
             pass
+        
+    if args.apikey:
+        params['api_key'] = args.apikey
 
     if args.stop:
         params['stop'] = json.loads(args.stop)
