@@ -12,7 +12,7 @@ A self-evaluating interview for AI coding models.
 
 * Interview questions written by humans, test taken by AI
 * Inference scripts for all common API providers and CUDA-enabled quantization runtimes
-* Sandbox enviroment (Docker-based) for untrusted Python and NodeJS code validation
+* Sandbox environment (Docker-based) for untrusted Python and NodeJS code validation
 * Evaluate effects of prompting techniques and sampling parameters on LLM coding performance
 * Evaluate LLM coding performance degradation due to quantization
 
