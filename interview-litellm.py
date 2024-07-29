@@ -41,6 +41,8 @@ if __name__ == '__main__':
         
     # OpenAI custom base
     if args.apibase: 
+        if args.apibase.endswith('/'): args.apibase = args.apibase[:-1]
+        if args.apibase.endswith('/v1'): args.apibase = args.apibase[:-3]
         params['api_base'] = args.apibase
         if 'openai' in model_name:
             if not args.runtime: raise Exception("If apibase is set and model is openai/ you must also provide runtime.")
@@ -48,10 +50,11 @@ if __name__ == '__main__':
             args.model = args.model.replace('openai/','')
         
         try:
-            model_info = requests.get(args.apibase + 'v1/models').json()        
+            model_info = requests.get(args.apibase + '/v1/models').json()        
             args.model = model_info['data'][0]['id'].split('/')[-1].replace('.gguf','')
+            print('Detected model: ', args.model)
         except:
-            pass
+            raise 'Unable to reach /v1/models endpoint'
         
     if args.apikey:
         params['api_key'] = args.apikey
