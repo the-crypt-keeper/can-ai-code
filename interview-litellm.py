@@ -43,18 +43,21 @@ if __name__ == '__main__':
     if args.apibase: 
         if args.apibase.endswith('/'): args.apibase = args.apibase[:-1]
         if args.apibase.endswith('/v1'): args.apibase = args.apibase[:-3]
+        args.apibase += '/v1'
         params['api_base'] = args.apibase
+        
         if 'openai' in model_name:
             if not args.runtime: raise Exception("If apibase is set and model is openai/ you must also provide runtime.")
             runtime = args.runtime
             args.model = args.model.replace('openai/','')
         
         try:
-            model_info = requests.get(args.apibase + '/v1/models').json()        
-            args.model = model_info['data'][0]['id'].split('/')[-1].replace('.gguf','')
-            print('Detected model: ', args.model)
+            model_info = requests.get(args.apibase + '/models').json()
+            model_name = 'openai/'+model_info['data'][0]['id']
+            args.model = model_name.split('/')[-1].replace('.gguf','')
+            print('Detected model', model_name, args.model)
         except:
-            raise 'Unable to reach /v1/models endpoint'
+            raise Exception(f'Unable to reach {args.apibase}/models')
         
     if args.apikey:
         params['api_key'] = args.apikey
