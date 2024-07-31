@@ -17,16 +17,13 @@ A self-evaluating interview for AI coding models.
 * Evaluate LLM coding performance degradation due to quantization
 
 ## News
+**7/31** Evaluate Llama.3.1-Instruct 8B and 70B GGUF. Evaluate Mistral Nemo 12B GGUF.
 
-**7/24** Evaluate Llama-3.1=Instruct 405B (FP8) via glhf API.
+**7/24** Evaluate Llama-3.1-Instruct 405B (FP8) via glhf API.
 
 **7/24** Evaluate Llama-3.1-Instruct 70B (GPTQ), DBRX-Instruct, Qwen-1.5-72B and 110B.
 
 **7/23** Evaluate Llama-3.1-Instruct 8B (FP16, NF4, Q6K, Q8_0, Q4_1) and 70B (NF4, Q4_0). Something looks to be up with the 8B k-quants.
-
-**7/18** Evaluate mistral-nemo-2407 and open-codestral-mamba (API).
-
-**7/12** Evaluate HUDM/codegeex4-all-9b (FP16 and NF4).
 
 ## Test Suites
 
