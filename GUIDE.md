@@ -14,7 +14,7 @@
 python3 ./prepare.py --template prompts/chat-simple.txt
 ```
 
-### Launch API and evaluate
+### Launch API and run interview
 
 If successful this step will drop two interview*.json files (one for senior and another for junior-v2) into the results/ directory.
 
@@ -47,6 +47,12 @@ python3 ./interview-litellm.py --runtime koboldcpp --apikey xx --apibase http://
 ```
 python3 ./interview-litellm.py --model 'ollama_chat/<model>' --params params/greedy-openai.json --input results/prepare_senior_python-javascript_chat-simple.ndjson,results/prepare_junior-v2_python-javascript_chat-simple.ndjson
 ```
+
+### Run Self-evaluation and view results
+
+`bulk-eval.sh` is a quick and easy way to run the `evaluate.py` script for all `results/interview*` it finds.
+
+`streamlit run app.py "results/eval*"` will then show you local results only.
 
 ## Evaluating Instruct with CUDA
 
