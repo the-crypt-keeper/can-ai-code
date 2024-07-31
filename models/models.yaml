@@ -12,13 +12,15 @@ openai-gpt-4o-2024-05-13: { name: "OpenAI gpt-4o-2024-05-13", url: "https://open
 
 mistral-mistral-tiny-2312: { name: "Mistral mistral-tiny-2312", size: "7B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-small-2312: { name: "Mistral mistral-small-2312", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-mistral-small-2402: { name: "Mistral mistral-small-2312", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-small-2402: { name: "Mistral mistral-small-2402", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-medium-2312: { name: "Mistral mistral-medium-2312", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-large-2402: { name: "Mistral mistral-large-2402", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-codestral-2405: { name: "Mistral codestral-2405", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-open-mixtral-8x22b-2404: { name: "Mistral open-mixtral-8x22b-2404", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-open-codestral-mamba: { name: "Mistral open-codestral-mamba", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-open-mistral-nemo-2407: { name: "Mistral open-mistral-nemo-2407", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-open-mixtral-8x22b-2404: { name: "Mistral open-mixtral-8x22b-2404", url: "https://mistral.ai/", tags: ["mistral"] }
+mistral-open-codestral-mamba: { name: "Mistral open-codestral-mamba", url: "https://mistral.ai/", tags: ["mistral"] }
+mistral-open-mistral-nemo-2407: { name: "Mistral Nemo-2407", url: "https://mistral.ai/", tags: ["mistral"] }
+Mistral-Nemo-Instruct-2407-Q6-K: { name: "Mistral Nemo-2407", url: "https://huggingface.co/bartowski/Mistral-Nemo-Instruct-2407-GGUF", quant: "GGUF-Q6K", tags: ["mistral"] }
+Mistral-Nemo-Instruct-2407-IQ4-XS: { name: "Mistral Nemo-2407", url: "https://huggingface.co/bartowski/Mistral-Nemo-Instruct-2407-GGUF", quant: "GGUF-IQ4-XS", tags: ["mistral"] }
 
 bigcode-starcoderbase-1b-fp16: { name: 'StarCoderBase', size: '1B', tags: ["bigcode"] }
 bigcode-starcoderbase-3b-fp16: { name: 'StarCoderBase', size: '3B', tags: ["bigcode"] }
@@ -503,3 +505,8 @@ meta-llama-Meta-Llama-3.1-70B-Instruct-nf4: { name: "Llama 3.1 Instruct", size: 
 ollama-chat-llama3.1:70b-instruct-q4-0: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GGUF-Q4_0", url: "https://ollama.com/library/llama3.1:70b-instruct-q4_0" }
 -home-mike-models-Meta-Llama-3.1-70B-Instruct-gptq-4bit-: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GPTQ-4bit", url: "https://huggingface.co/ModelCloud/Meta-Llama-3.1-70B-Instruct-gptq-4bit" }
 hf:meta-llama-Meta-Llama-3.1-405B-Instruct: { name: "Llama 3.1 Instruct", size: "405B", tags: ["llama31"], quant: "FP8", url: "https://huggingface.co/meta-llama/Meta-Llama-3.1-405B-Instruct" }
+Meta-Llama-3.1-8B-Instruct-Q6-K: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "GGUF-Q6K", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF" }
+Meta-Llama-3.1-8B-Instruct-Q8-0: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "GGUF-Q8_0", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF" }
+Meta-Llama-3.1-8B-Instruct-IQ4-XS: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "GGUF-IQ4_XS", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF" }
+Meta-Llama-3.1-70B-Instruct-Q4-K-M: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GGUF-Q4K_M", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF" }
+Meta-Llama-3.1-70B-Instruct-IQ3-XS: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GGUF-IQ3_XS", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF" }
