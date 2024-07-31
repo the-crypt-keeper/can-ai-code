@@ -431,6 +431,7 @@ google-codegemma-2b-int8: { name: "CodeGemma", size: "2B", tags: ["gemma"], quan
 ollama-codegemma:2b-code-v1.1-q8-0: { name: "CodeGemma", size: "2B", tags: ["gemma"], quant: "GGML_Q8", url: "https://ollama.com/library/codegemma" }
 
 openchat-openchat-3.5-0106-gemma-fp16: { name: "OpenChat-3.5-0106-Gemma", tags: ["gemma"], size: "7B", alias: ["openchat-openchat-3.5-0106-gemma"] }
+openchat-openchat-3.6-8b-20240522: { name: "OpenChat-3.5-20240522", tags: ["llama3"], size: "8B" }
 
 meta-llama-Meta-Llama-3-8B-Instruct: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], url: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct", alias: ["meta-llama-Meta-Llama-3-8B-Instruct-fp16"] }
 casperhansen-llama-3-8b-instruct-awq: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "AWQ-4b" }
@@ -476,6 +477,7 @@ DeepSeek-Coder-V2-Lite-Base: { name: "DeepSeek-Coder-V2-Lite-Base", size: "16B",
 DeepSeek-Coder-V2-Lite-Instruct: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], alias: ["deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-fp16","-home-mike-models-DeepSeek-Coder-V2-Lite-Instruct"] }
 deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-nf4: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], quant: "BNB-NF4", alias: ["DeepSeek-Coder-V2-Lite-Instruct-nf4"] }
 
+google-gemma-2-2b-it-fp16: { name: "Gemma 2 Instruct", size: "2B", tags: ["gemma2"] }
 google-gemma-2-9b-it-fp16: { name: "Gemma 2 Instruct", size: "9B", tags: ["gemma2"] }
 google-gemma-2-27b-it-fp16: { name: "Gemma 2 Instruct", size: "27B", tags: ["gemma2"] }
 google-gemma-2-27b-it-nf4: { name: "Gemma 2 Instruct", size: "27B", quant: "BNB-NF4", tags: ["gemma2"] }

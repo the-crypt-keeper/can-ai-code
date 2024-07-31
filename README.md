@@ -17,6 +17,9 @@ A self-evaluating interview for AI coding models.
 * Evaluate LLM coding performance degradation due to quantization
 
 ## News
+
+**7/31** Evaluate gemma-2-2b-it and openchat-3.6-8b-20240522 FP16, both are terrible.
+
 **7/31** Evaluate Llama.3.1-Instruct 8B and 70B GGUF. Evaluate Mistral Nemo 12B GGUF.
 
 **7/24** Evaluate Llama-3.1-Instruct 405B (FP8) via glhf API.
