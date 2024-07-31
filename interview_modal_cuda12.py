@@ -63,17 +63,20 @@ def model_phi3_medium_4k_instruct(): download_model('microsoft/Phi-3-medium-4k-i
 # Gemma2
 def model_gemma2_9b_instruct(): download_model('google/gemma-2-9b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
 def model_gemma2_27b_instruct(): download_model('google/gemma-2-27b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
+def model_gemma2_2b_instruct(): download_model('google/gemma-2-2b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
 # codegeex4
 def model_codegeex4_all_9b(): download_model('THUDM/codegeex4-all-9b')
 # llama3.1
 def model_llama31_8b_instruct(): download_model('meta-llama/Meta-Llama-3.1-8B-Instruct')
 def model_llama31_70b_instruct(): download_model('meta-llama/Meta-Llama-3.1-70B-Instruct')
+# openchat
+def model_openchat_8b_20240522(): download_model('openchat/openchat-3.6-8b-20240522')
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_NF4
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama"
 #RUNTIME = "exllama2-th"
@@ -83,34 +86,37 @@ QUANT = QUANT_NF4
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=2)
-gpu_request = gpu.A100(count=1, memory=80)
+gpu_request = gpu.A10G(count=1)
+#gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
 vllm_image = (
     Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "transformers==4.42.3",
-        # "optimum==1.20.0",
+        "torch==2.3.1",
+        "transformers==4.43.3",
+        #optimum 1.21.2 depends on transformers<4.43.0 and >=4.26.0
+        #"optimum==1.21.2",
         "tiktoken==0.7.0",
-        "bitsandbytes==0.43.1",
-        "accelerate==0.31.0",
+        "bitsandbytes==0.43.3",
+        "accelerate==0.33.0",
         "einops==0.6.1",
         "sentencepiece==0.1.99",
         "hf-transfer~=0.1",
         "scipy==1.10.1",
         "pyarrow==11.0.0",
-        "protobuf==3.20.3",
-        "vllm==0.5.1",
-        "auto-gptq==0.7.1",
-        "https://github.com/turboderp/exllamav2/releases/download/v0.1.6/exllamav2-0.1.6+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl"
+        "protobuf==3.20.3"
     )
-    .pip_install("flash-attn==2.5.9.post1") # this errors out unless torch is already installed
+    .pip_install("flash-attn==2.6.3") # this errors out unless torch is already installed
+    .pip_install(
+        "auto-gptq==0.7.1",
+        "https://vllm-wheels.s3.us-west-2.amazonaws.com/daed30c4a917c870f8fbddf45e3b027710c0842b/vllm-0.5.3.post1-cp38-abi3-manylinux1_x86_64.whl",
+        "https://github.com/turboderp/exllamav2/releases/download/v0.1.8/exllamav2-0.1.8+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl"
+    )    
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_llama31_70b_instruct, secrets=[Secret.from_name("my-huggingface-secret")])
-    .pip_install("transformers==4.43.1")
+    .run_function(model_openchat_8b_20240522, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
@@ -161,6 +167,7 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = "", ba
     from interview_cuda import interview_run
 
     output_template = Template(open(templateout).read()) if templateout else None
+    if RUNTIME == "vllm": batch = True
 
     tasks = []
     for param_file in params.split(','):
