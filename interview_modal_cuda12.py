@@ -18,7 +18,7 @@ def model_ajibawa2023_code_mistral_7b(): download_model('ajibawa-2023/Code-Mistr
 # Starcoder2
 def model_dolphincoder_starcoder2_7b(): download_model('cognitivecomputations/dolphincoder-starcoder2-7b')
 def model_dolphincoder_starcoder2_15b(): download_model('cognitivecomputations/dolphincoder-starcoder2-15b')
-# LLama3 8B
+# LLama3.x 8B
 def model_llama3_instruct_8b(): download_model('meta-llama/Meta-Llama-3-8B-Instruct')
 def model_llama3_instruct_8b_awq(): download_model('casperhansen/llama-3-8b-instruct-awq', info={'eos_token_id': 128009})
 def model_llama3_instruct_8b_gptq_8bpw(): download_model('astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit', info={'eos_token_id': 128009})
@@ -27,8 +27,10 @@ def model_llama3_instruct_8b_exl2_6bpw(): download_model('turboderp/Llama-3-8B-I
 def model_ajibawa_code_llama3(): download_model('ajibawa-2023/Code-Llama-3-8B')
 def model_rombodawg_llama3_8b_instruct_coder(): download_model('rombodawg/Llama-3-8B-Instruct-Coder')
 def model_llama31_instruct_8b(): download_model('meta-llama/Meta-Llama-3.1-8B-Instruct')
+# LLama3.x 70B
+def model_llama31_instruct_70b_awq(): download_model('hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4')
+def model_llama31_instruct_70b_gptq(): download_model('hugging-quants/Meta-Llama-3.1-70B-Instruct-GPTQ-INT4')
 
-# LLama3 70B
 def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
 # CodeQwen
@@ -88,7 +90,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
@@ -118,7 +120,7 @@ vllm_image = (
     )    
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_llama31_instruct_8b, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_llama31_instruct_70b_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)

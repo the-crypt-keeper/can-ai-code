@@ -512,3 +512,5 @@ Meta-Llama-3.1-8B-Instruct-Q8-0: { name: "Llama 3.1 Instruct", size: "8B", tags:
 Meta-Llama-3.1-8B-Instruct-IQ4-XS: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "GGUF-IQ4_XS", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF" }
 Meta-Llama-3.1-70B-Instruct-Q4-K-M: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GGUF-Q4K_M", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF" }
 Meta-Llama-3.1-70B-Instruct-IQ3-XS: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GGUF-IQ3_XS", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF" }
+hugging-quants-Meta-Llama-3.1-70B-Instruct-GPTQ-INT4: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GPTQ-4bit", url: "https://huggingface.co/hugging-quants/Meta-Llama-3.1-70B-Instruct-GPTQ-INT4" }
+hugging-quants-Meta-Llama-3.1-70B-Instruct-AWQ-INT4: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "AWQ-4bit", url: "https://huggingface.co/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" }
