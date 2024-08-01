@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/1** Evaluate Mistral-Large-2402 with GPTQ and AWQ, both are excellent.
+
 **8/1** Evaluate Llama-3.1-Instruct 8B FP16, 70B GPTQ and AWQ with latest vLLM.
 
 **7/31** Evaluate gemma-2-2b-it and openchat-3.6-8b-20240522 FP16, both are terrible.

@@ -15,6 +15,9 @@ def model_llama_chat_7b_e8p(): download_model('relaxml/Llama-2-7b-chat-E8P-2Bit'
 # Mistral 7B
 def model_hermes2_pro_mistral_7b(): download_model('NousResearch/Hermes-2-Pro-Mistral-7B')
 def model_ajibawa2023_code_mistral_7b(): download_model('ajibawa-2023/Code-Mistral-7B')
+# Mistral Large
+def model_mistral_large_awq(): download_model('TechxGenus/Mistral-Large-Instruct-2407-AWQ')
+def model_mistral_large_gptq(): download_model('TechxGenus/Mistral-Large-Instruct-2407-GPTQ')
 # Starcoder2
 def model_dolphincoder_starcoder2_7b(): download_model('cognitivecomputations/dolphincoder-starcoder2-7b')
 def model_dolphincoder_starcoder2_15b(): download_model('cognitivecomputations/dolphincoder-starcoder2-15b')
@@ -30,7 +33,6 @@ def model_llama31_instruct_8b(): download_model('meta-llama/Meta-Llama-3.1-8B-In
 # LLama3.x 70B
 def model_llama31_instruct_70b_awq(): download_model('hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4')
 def model_llama31_instruct_70b_gptq(): download_model('hugging-quants/Meta-Llama-3.1-70B-Instruct-GPTQ-INT4')
-
 def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
 # CodeQwen
@@ -90,7 +92,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=4)
 #gpu_request = gpu.A100(count=1, memory=80)
 #######################################
 
@@ -120,7 +122,7 @@ vllm_image = (
     )    
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_llama31_instruct_70b_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_mistral_large_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)

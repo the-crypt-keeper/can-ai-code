@@ -566,21 +566,10 @@ class InterviewVLLM:
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         max_model_len = self.info.get('max_model_len', 2048)
         enforce_eager = self.info.get('enforce_eager', True)
-
-        # monkey-patch a fix for vllm flavor of https://github.com/the-crypt-keeper/can-ai-code/issues/114
-        # from vllm.distributed import utils
-        # original_test_gpu_peer_copy = utils._can_actually_p2p
-        # def safe_test_gpu_peer_copy(x,y):
-        #     try:
-        #         return original_test_gpu_peer_copy(x,y)
-        #     except Exception as e:
-        #         print('test_gpu_peer_copy() failed: ', str(e))
-        #         return False
-        # utils._can_actually_p2p = safe_test_gpu_peer_copy
         
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            gpu_memory_utilization=1
+            gpu_memory_utilization=0.9 if 'awq' in quantization else 0.95
             enforce_eager = True
             self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, tensor_parallel_size=self.gpu_split, trust_remote_code=True, enforce_eager=enforce_eager, gpu_memory_utilization=gpu_memory_utilization)
         else:

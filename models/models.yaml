@@ -14,7 +14,10 @@ mistral-mistral-tiny-2312: { name: "Mistral mistral-tiny-2312", size: "7B", url:
 mistral-mistral-small-2312: { name: "Mistral mistral-small-2312", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-small-2402: { name: "Mistral mistral-small-2402", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-medium-2312: { name: "Mistral mistral-medium-2312", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-mistral-large-2402: { name: "Mistral mistral-large-2402", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+TechxGenus-Mistral-Large-Instruct-2407-GPTQ: { name: "Mistral Large Instruct 2402", quant: "GPTQ-4bit", tags: ["mistral"] }
+TechxGenus-Mistral-Large-Instruct-2407-AWQ: { name: "Mistral Large Instruct 2402", quant: "AWQ-4bit", tags: ["mistral"] }
+mistral-mistral-large-2402: { name: "Mistral Large Instruct 2402", url: "https://mistral.ai/", tags: ["mistral"] }
+
 mistral-codestral-2405: { name: "Mistral codestral-2405", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-open-mixtral-8x22b-2404: { name: "Mistral open-mixtral-8x22b-2404", url: "https://mistral.ai/", tags: ["mistral"] }
 mistral-open-codestral-mamba: { name: "Mistral open-codestral-mamba", url: "https://mistral.ai/", tags: ["mistral"] }
