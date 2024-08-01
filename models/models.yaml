@@ -498,7 +498,7 @@ hf:databricks-dbrx-instruct: { name: "DBRX Instruct", size: "132B", tags: ["dbrx
 THUDM-codegeex4-all-9b: { name: "CodeGeeX4-All", size: "9B", alias: ["THUDM-codegeex4-all-9b-fp16"] }
 THUDM-codegeex4-all-9b-nf4: { name: "CodeGeeX4-All", size: "9B", quant: "BNB-NF4" }
 
-Meta-Llama-3.1-8B-Instruct: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], url: "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct", alias: ["Meta-Llama-3.1-8B-Instruct-fp16"] }
+Meta-Llama-3.1-8B-Instruct: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], url: "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct", alias: ["Meta-Llama-3.1-8B-Instruct-fp16","meta-llama-Meta-Llama-3.1-8B-Instruct"] }
 Meta-Llama-3.1-8B-Instruct-nf4: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "BNB-NF4", url: "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct" }
 ollama-chat-llama3.1:8b-instruct-q6-K: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "GGUF-Q6K", url: "https://ollama.com/library/llama3.1:8b-instruct-q6_K" }
 ollama-chat-llama3.1:8b-instruct-q4-1: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "GGUF-Q4_1", url: "https://ollama.com/library/llama3.1:8b-instruct-q4_1" }
