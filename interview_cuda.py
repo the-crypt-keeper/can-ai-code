@@ -293,7 +293,7 @@ class InterviewAutoGPTQ:
         sampling_params = {
             "temperature": params.get('temperature', 1.0),
             "repetition_penalty": params.get('repetition_penalty', 1.0),
-            "top_k": params.get('top_k', 1000),
+            "top_k": params.get('top_k', -1),
             "top_p": params.get('top_p', 1.0),
             "max_new_tokens": params.get('max_new_tokens', 512)
         }
@@ -366,7 +366,7 @@ class InterviewExllama:
         generator = ExLlamaGenerator(self.model, self.tokenizer, self.cache)
         generator.settings = ExLlamaGenerator.Settings()
         generator.settings.temperature = params.get('temperature', 1.0)
-        generator.settings.top_k = params.get('top_k', 1000)
+        generator.settings.top_k = params.get('top_k', -1)
         generator.settings.top_p = params.get('top_p', 1.0)
         generator.settings.min_p = 0
         generator.settings.token_repetition_penalty_max = params.get('repetition_penalty', 1.0)
@@ -503,7 +503,7 @@ class InterviewExllama2:
         
         settings = ExLlamaV2Sampler.Settings()
         settings.temperature = params.get('temperature', 1.0)
-        settings.top_k = params.get('top_k', 1000)
+        settings.top_k = params.get('top_k', -1)
         settings.top_p = params.get('top_p', 1.0)
         settings.token_repetition_penalty = params.get('repetition_penalty', 1.0)
 
@@ -622,10 +622,10 @@ class InterviewVLLM:
             stop=self.info.get('generate_args', {}).get('stop_seq', []),
             stop_token_ids=self.stop_token_ids,
             temperature=params.get('temperature', 1.0),
-            top_k=params.get('top_k', 1000),
+            top_k=params.get('top_k', -1),
             top_p=params.get('top_p', 1.0),
             max_tokens=params.get('max_new_tokens', 512),
-            presence_penalty=params.get('repetition_penalty', 1.0)
+            repetition_penalty=params.get('repetition_penalty', 1.0)
         )
         result = self.llm.generate(prompt, sampling_params)
         self.info['sampling_params'] = str(sampling_params)
@@ -710,7 +710,7 @@ class InterviewAWQ:
             'do_sample': True,
             'temperature': params.get('temperature', 1.0),
             'max_length': params.get('max_new_tokens', 512),
-            'top_k': params.get('top_k', 40),
+            'top_k': params.get('top_k', -1),
             'top_p': params.get('top_p', 1.0),
             'repetition_penalty': params.get('repetition_penalty', 1.0)
         }
@@ -804,7 +804,7 @@ class InterviewQuipSharp:
                                  attention_mask=inputs['attention_mask'].cuda(),
                                  max_length=2048,
                                  penalty_alpha=0.6,
-                                 top_k=1,
+                                 top_k=-1,
                                  use_cache=True,
                                  return_dict_in_generate=True).sequences[0]
         

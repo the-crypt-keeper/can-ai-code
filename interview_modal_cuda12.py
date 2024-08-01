@@ -26,6 +26,8 @@ def model_llama3_instruct_8b_gptq_4bpw(): download_model('MaziyarPanahi/Meta-Lla
 def model_llama3_instruct_8b_exl2_6bpw(): download_model('turboderp/Llama-3-8B-Instruct-exl2', revision='6.0bpw', info={'eos_token_id': 128009})
 def model_ajibawa_code_llama3(): download_model('ajibawa-2023/Code-Llama-3-8B')
 def model_rombodawg_llama3_8b_instruct_coder(): download_model('rombodawg/Llama-3-8B-Instruct-Coder')
+def model_llama31_instruct_8b(): download_model('meta-llama/Meta-Llama-3.1-8B-Instruct')
+
 # LLama3 70B
 def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
@@ -116,7 +118,7 @@ vllm_image = (
     )    
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_openchat_8b_20240522, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_llama31_instruct_8b, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
