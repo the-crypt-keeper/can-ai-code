@@ -455,6 +455,8 @@ Meta-Llama-3-8B-Instruct-bf16: { name: "Llama 3 Instruct", size: "8B", tags: ["l
 ollama-chat-llama3:8b-instruct-fp16: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-F16", url: "https://ollama.com/library/llama3" }
 ollama-chat-llama3:8b-instruct-q8-0: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GGUF-Q8", url: "https://ollama.com/library/llama3" }
 Replete-Coder-Llama3-8B: { name: "Replete-Coder-Llama3", size: "8B", tags: ["llama3"], alias: ["Replete-Coder-Llama3-8B-fp16"], url: "https://huggingface.co/Replete-AI/Replete-Coder-Llama3-8B" }
+ISTA-DASLab-Meta-Llama-3-8B-Instruct-AQLM-2Bit-1x16: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "AQLM-2Bit", url: "https://huggingface.co/ISTA-DASLab/Meta-Llama-3-8B-Instruct-AQLM-2Bit-1x16" }
+ISTA-DASLab-Meta-Llama-3-70B-Instruct-AQLM-2Bit-1x16: { name: "Llama 3 Instruct", size: "70B", tags: ["llama3"], quant: "AQLM-2Bit", url: "https://huggingface.co/ISTA-DASLab/Meta-Llama-3-70B-Instruct-AQLM-2Bit-1x16" }
 
 ibm-granite-granite-3b-code-instruct-fp16: { name: "Granite", size: "3B", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
 ibm-granite-granite-3b-code-instruct-nf4: { name: "Granite", size: "3B", quant: "BNB-NF4", tags: ["granite"], url: "https://huggingface.co/ibm-granite/granite-3b-code-instruct" }
@@ -484,6 +486,7 @@ google-gemma-2-2b-it-fp16: { name: "Gemma 2 Instruct", size: "2B", tags: ["gemma
 google-gemma-2-9b-it-fp16: { name: "Gemma 2 Instruct", size: "9B", tags: ["gemma2"] }
 google-gemma-2-27b-it-fp16: { name: "Gemma 2 Instruct", size: "27B", tags: ["gemma2"] }
 google-gemma-2-27b-it-nf4: { name: "Gemma 2 Instruct", size: "27B", quant: "BNB-NF4", tags: ["gemma2"] }
+
 
 anthropic-claude-3-haiku-20240307: { name: "Claude 3 Haiku 20240307", tags: ["claude"], url: "https://www.anthropic.com/" }
 anthropic-claude-3-sonnet-20240229: { name: "Claude 3 Sonnet 20240229", tags: ["claude"], url: "https://www.anthropic.com/" }

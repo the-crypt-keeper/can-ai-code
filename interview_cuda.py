@@ -558,19 +558,26 @@ class InterviewVLLM:
 
         t0 = time.time()
         quantization = None
+        dtype = 'bfloat16'
         if 'awq' in self.model_name.lower(): quantization = 'awq'
-        if 'gptq' in self.model_name.lower(): quantization = 'gptq'
+        if 'gptq' in self.model_name.lower():
+            quantization = 'gptq'
+            dtype = 'float16'
         if 'sq-' in self.model_name.lower(): quantization = 'squeezellm'
+        if 'aqlm' in self.model_name.lower():
+            quantization = 'aqlm'
+            dtype = 'float16'
         
-        dtype = 'float16' if quantization is None else 'float16'
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
         max_model_len = self.info.get('max_model_len', 2048)
         enforce_eager = self.info.get('enforce_eager', True)
         
+        import os
+        os.environ['VLLM_ATTENTION_BACKEND'] = self.info.get('VLLM_ATTENTION_BACKEND', 'FLASH_ATTN')
+        
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
             gpu_memory_utilization=0.9 if 'awq' in quantization else 0.95
-            enforce_eager = True
             self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, tensor_parallel_size=self.gpu_split, trust_remote_code=True, enforce_eager=enforce_eager, gpu_memory_utilization=gpu_memory_utilization)
         else:
             print('Starting in single GPU mode..')

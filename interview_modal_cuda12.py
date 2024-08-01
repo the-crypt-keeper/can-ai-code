@@ -30,11 +30,13 @@ def model_llama3_instruct_8b_exl2_6bpw(): download_model('turboderp/Llama-3-8B-I
 def model_ajibawa_code_llama3(): download_model('ajibawa-2023/Code-Llama-3-8B')
 def model_rombodawg_llama3_8b_instruct_coder(): download_model('rombodawg/Llama-3-8B-Instruct-Coder')
 def model_llama31_instruct_8b(): download_model('meta-llama/Meta-Llama-3.1-8B-Instruct')
+def model_llama3_instruct_aqlm_2b_1x16(): download_model('ISTA-DASLab/Meta-Llama-3-8B-Instruct-AQLM-2Bit-1x16')
 # LLama3.x 70B
 def model_llama31_instruct_70b_awq(): download_model('hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4')
 def model_llama31_instruct_70b_gptq(): download_model('hugging-quants/Meta-Llama-3.1-70B-Instruct-GPTQ-INT4')
 def model_llama3_instruct_70b_exl2_4bpw(): download_model('turboderp/Llama-3-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama3_instruct_70b_gptq(): download_model('MaziyarPanahi/Meta-Llama-3-70B-Instruct-GPTQ', info={'eos_token_id': 128009})
+def model_llama3_instruct_70b_aqlm(): download_model('ISTA-DASLab/Meta-Llama-3-70B-Instruct-AQLM-2Bit-1x16')
 # CodeQwen
 def model_codeqwen_7b_awq(): download_model("Qwen/CodeQwen1.5-7B-Chat-AWQ")
 def model_codeqwen_7b_fp16(): download_model("Qwen/CodeQwen1.5-7B-Chat")
@@ -70,6 +72,7 @@ def model_phi3_medium_4k_instruct(): download_model('microsoft/Phi-3-medium-4k-i
 def model_gemma2_9b_instruct(): download_model('google/gemma-2-9b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
 def model_gemma2_27b_instruct(): download_model('google/gemma-2-27b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
 def model_gemma2_2b_instruct(): download_model('google/gemma-2-2b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
+def model_gemma2_27b_gptq(): download_model('ModelCloud/gemma-2-27b-it-gptq-4bit', info={'VLLM_ATTENTION_BACKEND': 'FLASHINFER', 'generate_args': { 'stop_seq': ['**Explanation:**']}})
 # codegeex4
 def model_codegeex4_all_9b(): download_model('THUDM/codegeex4-all-9b')
 # llama3.1
@@ -92,8 +95,8 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=4)
-#gpu_request = gpu.A100(count=1, memory=80)
+#gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 vllm_image = (
@@ -121,8 +124,9 @@ vllm_image = (
         "https://github.com/turboderp/exllamav2/releases/download/v0.1.8/exllamav2-0.1.8+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl"
     )    
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
+    .pip_install("https://github.com/flashinfer-ai/flashinfer/releases/download/v0.1.3/flashinfer-0.1.3+cu121torch2.3-cp310-cp310-linux_x86_64.whl")
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_mistral_large_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_llama3_instruct_70b_aqlm, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
@@ -173,7 +177,7 @@ def main(input: str, params: str, iterations: int = 1, templateout: str = "", ba
     from interview_cuda import interview_run
 
     output_template = Template(open(templateout).read()) if templateout else None
-    if RUNTIME == "vllm": batch = True
+    #if RUNTIME == "vllm": batch = True
 
     tasks = []
     for param_file in params.split(','):

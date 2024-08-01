@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/1** Evaluate Llama-3-Instruct 8B and 70B with AQLM-2bit. Very slow. 8B is badly damaged.
+
 **8/1** Evaluate Mistral-Large-2402 with GPTQ and AWQ, both are excellent.
 
 **8/1** Evaluate Llama-3.1-Instruct 8B FP16, 70B GPTQ and AWQ with latest vLLM.
