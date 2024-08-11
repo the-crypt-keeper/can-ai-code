@@ -18,21 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/10** Evaluate Llama-3-Instruct 8B and 70B EXL2 and some low-bit GGUFs.
+
 **8/1** Evaluate Llama-3-Instruct 8B and 70B with AQLM-2bit. Very slow. 8B is badly damaged.
 
 **8/1** Evaluate Mistral-Large-2402 with GPTQ and AWQ, both are excellent.
 
 **8/1** Evaluate Llama-3.1-Instruct 8B FP16, 70B GPTQ and AWQ with latest vLLM.
-
-**7/31** Evaluate gemma-2-2b-it and openchat-3.6-8b-20240522 FP16, both are terrible.
-
-**7/31** Evaluate Llama.3.1-Instruct 8B and 70B GGUF. Evaluate Mistral Nemo 12B GGUF.
-
-**7/24** Evaluate Llama-3.1-Instruct 405B (FP8) via glhf API.
-
-**7/24** Evaluate Llama-3.1-Instruct 70B (GPTQ), DBRX-Instruct, Qwen-1.5-72B and 110B.
-
-**7/23** Evaluate Llama-3.1-Instruct 8B (FP16, NF4, Q6K, Q8_0, Q4_1) and 70B (NF4, Q4_0). Something looks to be up with the 8B k-quants.
 
 ## Test Suites
 
