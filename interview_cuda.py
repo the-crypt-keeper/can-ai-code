@@ -304,131 +304,17 @@ class InterviewAutoGPTQ:
         answer = self.tokenizer.decode(sample[0]).replace(prompt, '').replace('<|endoftext|>','').replace('</s>','').replace('<s>','')
         return answer, self.info
 
-#######################
-##  exllama Adapter  ##
-#######################
-class InterviewExllama:
-    def __init__(self, model_name, model_info = {}, quant = None, gpu_split = None):
-        self.model_name = model_name
-        self.info = model_info
-        self.gpu_split = gpu_split
-        self.quant = quant
-        self.batch = False
-
-    def load(self):
-        import sys
-        sys.path += ["/repositories/exllama","../exllama"]
-        print('Starting up...')
-        import torch
-        from model import ExLlama, ExLlamaCache, ExLlamaConfig
-        from tokenizer import ExLlamaTokenizer        
-
-        torch.set_grad_enabled(False)
-        torch.cuda._lazy_init()
-
-        print("Loading tokenizer..")
-        tokenizer_model_path = hf_hub_download(repo_id=self.model_name, filename="tokenizer.model")
-        self.tokenizer = ExLlamaTokenizer(tokenizer_model_path)
-
-        files = hf_list_files(self.model_name, self.info.get('revision',None))
-        model_path = None
-        for file_info in files:
-            if (file_info.find(".safetensors") != -1):
-                model_path = hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename=file_info.rfilename)
-                break
-        
-        if model_path is None:
-            raise Exception("Could not find safetensors.")
-        else:
-            print("Loading from", model_path)
-        
-        self.config = ExLlamaConfig(hf_hub_download(repo_id=self.model_name, filename="config.json"))
-        self.config.model_path = model_path
-        self.config.max_seq_len = self.info.get('max_seq_len', 2048)
-        self.config.compress_pos_emb = self.info.get('compress_pos_emb', 1.0)
-
-        if self.gpu_split is not None:
-            self.config.set_auto_map(self.gpu_split)
-
-        print('Loading model...')
-        t0 = time.time()
-        self.model = ExLlama(self.config)
-        self.cache = ExLlamaCache(self.model)
-        print(f"Model loaded in {time.time() - t0:.2f}s")
-
-        self.info['model_name'] = self.model_name
-
-    def generate(self, prompt, params):
-        # Init generator
-        from generator import ExLlamaGenerator
-        import sys
-
-        generator = ExLlamaGenerator(self.model, self.tokenizer, self.cache)
-        generator.settings = ExLlamaGenerator.Settings()
-        generator.settings.temperature = params.get('temperature', 1.0)
-        generator.settings.top_k = params.get('top_k', -1)
-        generator.settings.top_p = params.get('top_p', 1.0)
-        generator.settings.min_p = 0
-        generator.settings.token_repetition_penalty_max = params.get('repetition_penalty', 1.0)
-        generator.settings.token_repetition_penalty_sustain = params.get('repeat_last_n', 256)
-        generator.settings.token_repetition_penalty_decay = params.get('repetition_decay', 128)
-
-        # Beam Search Parameters
-        generator.settings.beams = params.get('beams', 1)
-        generator.settings.beam_length = params.get('beam_length', 1)
-
-        self.info['sampling_params'] = str(generator.settings.__dict__)
-
-        # Encode prompt and init the generator
-        prompt_ids = self.tokenizer.encode(prompt)
-        num_res_tokens = prompt_ids.shape[-1]
-        generator.gen_begin(prompt_ids)
-
-        # Begin beam search
-        generator.begin_beam_search()
-        min_response_tokens = 10
-        res_line = ''
-
-        t0 = time.time()
-
-        for i in range(params['max_new_tokens']):
-            # Get a token
-            gen_token = generator.beam_search()
-
-            # If token is EOS, replace it with newline before continuing
-            if gen_token.item() == self.tokenizer.eos_token_id:
-                generator.replace_last_token(self.tokenizer.newline_token_id)
-
-            # Decode the current line and print any characters added
-            num_res_tokens += 1
-            text = self.tokenizer.decode(generator.sequence_actual[:, -num_res_tokens:][0])
-            new_text = text[len(res_line):]
-            res_line += new_text    
-
-            #print(new_text, end="")  # (character streaming output is here)
-            #sys.stdout.flush()
-
-            # End conditions
-            if gen_token.item() == self.tokenizer.eos_token_id: break
-            if res_line.endswith(params.get('stop_seq','###')): break
-
-            generator.end_beam_search()
-            answer = text[len(prompt)+1:]
-
-        print(f"Generated {num_res_tokens-prompt_ids.shape[-1]} tokens in {time.time()-t0:.2f}s")
-        return answer, self.info
-
 ########################
 ##  exllama2 Adapter  ##
 ########################
 class InterviewExllama2:
-    def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False, cache_8bit = False):
+    def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False, cache_4bit = False):
         self.model_name = model_name
         self.gpu_split = gpu_split
         self.info = model_info
         
         self.token_healing = token_healing
-        self.cache_8bit = cache_8bit
+        self.cache_4bit = cache_4bit
         
         self.batch_size = self.info.get('batch_size', 1)
 
@@ -460,7 +346,7 @@ class InterviewExllama2:
             ExLlamaV2,
             ExLlamaV2Config,
             ExLlamaV2Cache,
-            ExLlamaV2Cache_8bit,
+            ExLlamaV2Cache_Q4,
             ExLlamaV2Tokenizer,
         )
 
@@ -478,64 +364,51 @@ class InterviewExllama2:
 
         print("Loading model...")
         self.model = ExLlamaV2(config)
-        if self.cache_8bit:
-            print("Using 8-bit KV cache...")
-            self.cache = ExLlamaV2Cache_8bit(self.model, max_seq_len=2048, lazy=True, batch_size = self.batch_size)
+        if self.cache_4bit:
+            print("Using 4-bit KV cache...")
+            self.cache = ExLlamaV2Cache_Q4(self.model, max_seq_len=2048, lazy=True, batch_size = self.batch_size)
         else:
             self.cache = ExLlamaV2Cache(self.model, max_seq_len=2048, lazy=True, batch_size = self.batch_size)
-        if self.info.get('low_mem', False): 
-            self.model.load()
-        else:
-            self.model.load_autosplit(self.cache)
+        self.model.load_autosplit(self.cache, progress = True)
 
         if self.info.get('eos_token_id'):
             self.tokenizer.eos_token_id = self.info.get('eos_token_id')
             print("overide stop_token:", self.tokenizer.eos_token_id)
             
     def generate(self, prompt, params):
+        from exllamav2.generator import ExLlamaV2DynamicGenerator, ExLlamaV2Sampler
         
-        from exllamav2.generator import (
-            ExLlamaV2StreamingGenerator,
-            ExLlamaV2Sampler,
-        )
-        
-        generator = ExLlamaV2StreamingGenerator(self.model, self.cache, self.tokenizer)        
+        generator = ExLlamaV2DynamicGenerator(self.model, self.cache, self.tokenizer)        
         
         settings = ExLlamaV2Sampler.Settings()
         settings.temperature = params.get('temperature', 1.0)
         settings.top_k = params.get('top_k', -1)
-        settings.top_p = params.get('top_p', 1.0)
+        settings.top_p = params.get('top_p', 0.0)
         settings.token_repetition_penalty = params.get('repetition_penalty', 1.0)
 
         self.info['sampling_params'] = str(settings.__dict__)
 
         max_new_tokens = params.get('max_new_tokens', 512)
         stop_text = self.info.get('generate_args',{}).get('stop_seq', [])
-        stop_condition_list = []
-        if self.info.get('eos_token_id'):
-            stop_condition_list.append(self.info.get('eos_token_id'))
-        stop_condition_list += stop_text        
-        generator.set_stop_conditions(stop_condition_list)
+        stop_condition_list = self.tokenizer.eos_token_id if isinstance(self.tokenizer.eos_token_id, list) else [self.tokenizer.eos_token_id]
+        stop_condition_list += stop_text
         
-        input_ids = self.tokenizer.encode(prompt, add_bos = True)        
-        generator.begin_stream_ex(input_ids, settings)
+        prompts = prompt if isinstance(prompt, list) else [prompt]
+        
+        print('Starting batch generation, please wait..')
+        answers = generator.generate(
+            prompt = prompts,
+            max_new_tokens = max_new_tokens,
+            stop_conditions = stop_condition_list,
+            gen_settings = settings,            
+            token_healing = self.token_healing,
+            encode_special_tokens = True,
+            completion_only = True
+        )
+        
+        if not isinstance(prompt, list): answers = answers[0]
 
-        # Streaming loop. Note that repeated calls to sys.stdout.flush() adds some latency, but some
-        # consoles won't update partial lines without it.
-        generated_tokens = 0
-        text = ''
-
-        while True:
-            res = generator.stream_ex()
-            chunk = res["chunk"]
-            eos = res["eos"]
-
-            generated_tokens += 1
-            print (chunk, end = "")
-            text += chunk
-            if eos or generated_tokens == max_new_tokens: break
-
-        return text, self.info
+        return answers, self.info
 
 ####################
 ##  vLLM Adapter  ##
@@ -986,8 +859,6 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         model = InterviewVLLM(model_name, model_info, gpu_split=gpu_split)
     elif runtime == 'autogptq':
         model = InterviewAutoGPTQ(model_name, model_info, gpu_split=gpu_split)
-    elif runtime == 'exllama':
-        model = InterviewExllama(model_name, model_info, gpu_split=gpu_split)
     elif runtime[0:8] == 'exllama2':
         token_healing = '-th' in runtime
         model = InterviewExllama2(model_name, model_info, gpu_split=gpu_split, token_healing=token_healing)

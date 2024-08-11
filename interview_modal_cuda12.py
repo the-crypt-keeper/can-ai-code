@@ -78,6 +78,13 @@ def model_codegeex4_all_9b(): download_model('THUDM/codegeex4-all-9b')
 # llama3.1
 def model_llama31_8b_instruct(): download_model('meta-llama/Meta-Llama-3.1-8B-Instruct')
 def model_llama31_70b_instruct(): download_model('meta-llama/Meta-Llama-3.1-70B-Instruct')
+def model_llama31_8b_instruct_hqq(): download_model('mobiuslabsgmbh/Llama-3.1-8b-instruct_4bitgs64_hqq_calib')
+def model_llama31_8b_exl2_8bpw(): download_model('turboderp/Llama-3.1-8B-Instruct-exl2', revision='8.0bpw', info={'eos_token_id': 128009})
+def model_llama31_8b_exl2_6bpw(): download_model('turboderp/Llama-3.1-8B-Instruct-exl2', revision='6.0bpw', info={'eos_token_id': 128009})
+def model_llama31_8b_exl2_5bpw(): download_model('turboderp/Llama-3.1-8B-Instruct-exl2', revision='5.0bpw', info={'eos_token_id': 128009})
+def model_llama31_70b_exl2_4bpw(): download_model('turboderp/Llama-3.1-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
+def model_llama31_70b_exl2_35bpw(): download_model('turboderp/Llama-3.1-70B-Instruct-exl2', revision='3.5bpw', info={'eos_token_id': 128009})
+def model_llama31_70b_exl2_3bpw(): download_model('turboderp/Llama-3.1-70B-Instruct-exl2', revision='3.0bpw', info={'eos_token_id': 128009})
 # openchat
 def model_openchat_8b_20240522(): download_model('openchat/openchat-3.6-8b-20240522')
 
@@ -85,28 +92,28 @@ def model_openchat_8b_20240522(): download_model('openchat/openchat-3.6-8b-20240
 #RUNTIME = "transformers"
 #QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
-#RUNTIME = "exllama"
-#RUNTIME = "exllama2-th"
+RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
 #RUNTIME = "quipsharp"
+#RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-#gpu_request = gpu.A10G(count=1)
-gpu_request = gpu.A100(count=1, memory=40)
+gpu_request = gpu.A10G(count=2)
+#gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
 vllm_image = (
     Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "torch==2.3.1",
-        "transformers==4.43.3",
-        #optimum 1.21.2 depends on transformers<4.43.0 and >=4.26.0
-        #"optimum==1.21.2",
+        "torch==2.4.0",
+        "transformers==4.44.0",
+        #optimum 1.21.3 depends on transformers<4.44.0 and >=4.29.0
+        #"optimum==1.21.3",
         "tiktoken==0.7.0",
         "bitsandbytes==0.43.3",
         "accelerate==0.33.0",
@@ -115,18 +122,18 @@ vllm_image = (
         "hf-transfer~=0.1",
         "scipy==1.10.1",
         "pyarrow==11.0.0",
-        "protobuf==3.20.3"
+        "protobuf==3.20.3",
+        
+        "hqq==0.1.8",
+        "https://vllm-wheels.s3.us-west-2.amazonaws.com/4c5d8e8ea91aa19415aa479d81e818913d51414c/vllm-0.5.4-cp38-abi3-manylinux1_x86_64.whl",
+        "https://github.com/turboderp/exllamav2/releases/download/v0.1.8/exllamav2-0.1.8+cu121.torch2.4.0-cp310-cp310-linux_x86_64.whl"
     )
     .pip_install("flash-attn==2.6.3") # this errors out unless torch is already installed
-    .pip_install(
-        "auto-gptq==0.7.1",
-        "https://vllm-wheels.s3.us-west-2.amazonaws.com/daed30c4a917c870f8fbddf45e3b027710c0842b/vllm-0.5.3.post1-cp38-abi3-manylinux1_x86_64.whl",
-        "https://github.com/turboderp/exllamav2/releases/download/v0.1.8/exllamav2-0.1.8+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl"
-    )    
+    #.pip_install("auto-gptq==0.7.1")    
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     .pip_install("https://github.com/flashinfer-ai/flashinfer/releases/download/v0.1.3/flashinfer-0.1.3+cu121torch2.3-cp310-cp310-linux_x86_64.whl")
-    ##### SELECT MODEL HERE ##############    
-    .run_function(model_llama3_instruct_70b_aqlm, secrets=[Secret.from_name("my-huggingface-secret")])
+    ##### SELECT MODEL HERE ##############
+    .run_function(model_llama31_8b_exl2_5bpw, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
@@ -144,13 +151,12 @@ class ModalWrapper:
             self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
         elif RUNTIME == "autogptq":
             self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
-        elif RUNTIME == "exllama":
-            gpu_split = '17,24' if gpu_request.count > 1 else None
-            self.wrapper = InterviewExllama(self.info['model_name'], self.info, gpu_split=gpu_split)
+        elif RUNTIME == "hqq":
+            self.wrapper = InterviewHQQ(self.info['model_name'], self.info)
         elif RUNTIME[0:8] == "exllama2":
             token_healing = '-th' in RUNTIME
-            cache_8bit = '8b' in RUNTIME
-            self.wrapper = InterviewExllama2(self.info['model_name'], self.info, token_healing=token_healing, cache_8bit=cache_8bit)
+            cache_4bit = '4b' in RUNTIME
+            self.wrapper = InterviewExllama2(self.info['model_name'], self.info, token_healing=token_healing, cache_4bit=cache_4bit)
         elif RUNTIME == "awq":
             if self.info.get('big_model'):
                 gpu_split = '0,1' if gpu_request.count > 1 else '0,cpu'
