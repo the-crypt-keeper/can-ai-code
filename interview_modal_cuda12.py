@@ -94,15 +94,15 @@ def model_openchat_8b_20240522(): download_model('openchat/openchat-3.6-8b-20240
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
 #RUNTIME = "autogptq"
-RUNTIME = "exllama2-th"
+#RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
 #RUNTIME = "quipsharp"
-#RUNTIME = "hqq"
+RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=1)
 #gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
@@ -133,7 +133,8 @@ vllm_image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     .pip_install("https://github.com/flashinfer-ai/flashinfer/releases/download/v0.1.3/flashinfer-0.1.3+cu121torch2.3-cp310-cp310-linux_x86_64.whl")
     ##### SELECT MODEL HERE ##############
-    .run_function(model_llama31_8b_exl2_5bpw, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_llama31_8b_instruct_hqq, secrets=[Secret.from_name("my-huggingface-secret")])
+    .pip_install("git+https://github.com/mobiusml/hqq.git","bitblas")
     ######################################
 )
 app = App(image=vllm_image)

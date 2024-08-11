@@ -602,28 +602,40 @@ class InterviewHQQ:
 
     def load(self):
         import torch
-        from hqq.engine.hf import HQQModelForCausalLM, AutoTokenizer
-
-        #Optional
-        # from hqq.core.quantize import HQQLinear, HQQBackend
-        # HQQLinear.set_backend(HQQBackend.PYTORCH_COMPILE) 
+        from transformers import AutoTokenizer
+        from hqq.models.hf.base import AutoHQQHFModel
+        from hqq.utils.patching import patch_linearlayers, patch_add_quant_config, prepare_for_inference
+        from hqq.core.quantize import BaseQuantizeConfig, HQQLinear, HQQBackend
 
         # Config
         print('Starting up...')
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-        
-        # Model        
-        model_path = os.path.dirname(hf_hub_download(repo_id=self.model_name, filename='qmodel.pt'))
-                
+
         print('Loading model...')
         t0 = time.time()
-        self.model     = HQQModelForCausalLM.from_quantized(model_path)
+        compute_dtype = torch.float16 #bfloat16 for torchao, float16 for bitblas
+        cache_dir = '.'
+        self.model     = AutoHQQHFModel.from_quantized(self.model_name, cache_dir=cache_dir, compute_dtype=compute_dtype)
         self.info['model_name'] = self.model_name
         print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
+        
+        print('Configuring backend..')
+        quant_config = BaseQuantizeConfig(nbits=4, group_size=64, quant_scale=False, quant_zero=False, axis=1)
+        patch_linearlayers(self.model, patch_add_quant_config, quant_config)
+
+        HQQLinear.set_backend(HQQBackend.PYTORCH)
+        prepare_for_inference(self.model) #default backend
+        #prepare_for_inference(self.model, backend="torchao_int4") #need bfloat16
+        #prepare_for_inference(self.model, backend="bitblas")
+        
+        print('Loading complete.')
 
     def generate(self, prompt, params):
+        print('Generating, please wait...')
         inputs = self.tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
-        sample = self.model.generate(eos_token_id=self.tokenizer.eos_token_id, max_new_tokens=params.get('max_new_tokens', 512), **(inputs.to('cuda')))
+        sample = self.model.generate(eos_token_id=self.tokenizer.eos_token_id,
+                                     max_new_tokens=params.get('max_new_tokens', 512),
+                                     **(inputs.to('cuda')))
         self.info['sampling_params'] = {}
         answer = self.tokenizer.decode(sample[0][len(inputs[0]):], skip_special_tokens=True)
         return answer, self.info
