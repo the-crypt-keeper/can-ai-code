@@ -521,6 +521,7 @@ Meta-Llama-3.1-70B-Instruct-IQ3-XS: { name: "Llama 3.1 Instruct", size: "70B", t
 Meta-Llama-3.1-70B-Instruct-IQ2-S: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GGUF-IQ2_S", url: "https://huggingface.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF" }
 hugging-quants-Meta-Llama-3.1-70B-Instruct-GPTQ-INT4: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "GPTQ-4bit", url: "https://huggingface.co/hugging-quants/Meta-Llama-3.1-70B-Instruct-GPTQ-INT4" }
 hugging-quants-Meta-Llama-3.1-70B-Instruct-AWQ-INT4: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "AWQ-4bit", url: "https://huggingface.co/hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4" }
+mobiuslabsgmbh-Llama-3.1-8b-instruct-4bitgs64-hqq-calib: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "HQQ-4g64", url: "https://huggingface.co/mobiuslabsgmbh/Llama-3.1-8b-instruct_4bitgs64_hqq_calib" } 
 turboderp-Llama-3.1-8B-Instruct-exl2-8.0bpw: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "EXL2-8bpw", url: "https://huggingface.co/turboderp/Llama-3.1-8B-Instruct-exl2" }
 turboderp-Llama-3.1-8B-Instruct-exl2-6.0bpw: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "EXL2-6bpw", url: "https://huggingface.co/turboderp/Llama-3.1-8B-Instruct-exl2" }
 turboderp-Llama-3.1-8B-Instruct-exl2-5.0bpw: { name: "Llama 3.1 Instruct", size: "8B", tags: ["llama31"], quant: "EXL2-5bpw", url: "https://huggingface.co/turboderp/Llama-3.1-8B-Instruct-exl2" }

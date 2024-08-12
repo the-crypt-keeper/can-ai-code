@@ -606,6 +606,7 @@ class InterviewHQQ:
         from hqq.models.hf.base import AutoHQQHFModel
         from hqq.utils.patching import patch_linearlayers, patch_add_quant_config, prepare_for_inference
         from hqq.core.quantize import BaseQuantizeConfig, HQQLinear, HQQBackend
+        from hqq.utils.generation_hf import HFGenerator
 
         # Config
         print('Starting up...')
@@ -619,25 +620,25 @@ class InterviewHQQ:
         self.info['model_name'] = self.model_name
         print(f"Model loaded in {time.time() - t0:.2f}s used {self.model.get_memory_footprint()/1024/1024:.2f}MB of memory")
         
-        print('Configuring backend..')
+        print('Preparing backend..')
         quant_config = BaseQuantizeConfig(nbits=4, group_size=64, quant_scale=False, quant_zero=False, axis=1)
         patch_linearlayers(self.model, patch_add_quant_config, quant_config)
 
-        HQQLinear.set_backend(HQQBackend.PYTORCH)
-        prepare_for_inference(self.model) #default backend
+        HQQLinear.set_backend(HQQBackend.PYTORCH_COMPILE)
+        #prepare_for_inference(self.model) #default backend
         #prepare_for_inference(self.model, backend="torchao_int4") #need bfloat16
-        #prepare_for_inference(self.model, backend="bitblas")
+        prepare_for_inference(self.model, backend="bitblas")
+        
+        print('Compiling generator...')
+        self.gen = HFGenerator(self.model, self.tokenizer, max_new_tokens=1024, do_sample=False, compile="partial")
         
         print('Loading complete.')
 
     def generate(self, prompt, params):
         print('Generating, please wait...')
-        inputs = self.tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
-        sample = self.model.generate(eos_token_id=self.tokenizer.eos_token_id,
-                                     max_new_tokens=params.get('max_new_tokens', 512),
-                                     **(inputs.to('cuda')))
-        self.info['sampling_params'] = {}
-        answer = self.tokenizer.decode(sample[0][len(inputs[0]):], skip_special_tokens=True)
+        self.info['sampling_params'] = {'do_sample': False }
+        result = self.gen.generate(prompt, use_chat_template = False, print_tokens = True)
+        answer = result['output_text']
         return answer, self.info
 
 #########################

@@ -18,7 +18,9 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**8/10** Evaluate Llama-3-Instruct 8B and 70B EXL2 and some low-bit GGUFs.
+**8/11** Evaluate Llama-3.1-Instruct 8B HQQ.
+
+**8/10** Evaluate Llama-3.1-Instruct 8B and 70B EXL2 and some low-bit GGUFs.
 
 **8/1** Evaluate Llama-3-Instruct 8B and 70B with AQLM-2bit. Very slow. 8B is badly damaged.
 
