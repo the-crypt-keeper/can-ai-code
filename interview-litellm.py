@@ -48,7 +48,12 @@ if __name__ == '__main__':
 
         try:
             model_info = requests.get(args.apibase + '/models').json()
-            model_name = 'openai/'+model_info['data'][0]['id']
+            if args.model == 'openai/chatgpt':
+                model_name = 'openai/'+model_info['data'][0]['id']
+            else:
+                selected_model = [x for x in model_info['data'] if x['id'] == args.model.replace('openai/','')]
+                if len(selected_model) == 0:
+                    raise Exception(f'Unable to find {args.model} at {args.apibase}')
             args.model = model_name.split('/')[-1].replace('.gguf','')
             print('> Detected model', model_name, args.model)
         except:
@@ -63,6 +68,9 @@ if __name__ == '__main__':
         else:
             raise Exception("Unable to auto-detect, please provide --runtime if --apibase is set")
         print('> Detected runtime', runtime)
+
+        if not args.apikey: args.apikey = 'xx-key-ignored'
+
     if args.apikey:
         params['api_key'] = args.apikey
 
