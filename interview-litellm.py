@@ -52,8 +52,8 @@ if __name__ == '__main__':
                 model_name = 'openai/'+model_info['data'][0]['id']
             else:
                 selected_model = [x for x in model_info['data'] if x['id'] == args.model.replace('openai/','')]
-                if len(selected_model) == 0:
-                    raise Exception(f'Unable to find {args.model} at {args.apibase}')
+                if len(selected_model) == 0: raise Exception(f'Unable to find {args.model} at {args.apibase}')
+                model_name = 'openai/'+selected_model[0]['id']
             args.model = model_name.split('/')[-1].replace('.gguf','')
             print('> Detected model', model_name, args.model)
         except:
