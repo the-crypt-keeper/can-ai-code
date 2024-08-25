@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**8/25** Evaluate NTQAI/Nxcode-CQ-7B-orpo (FP16), PHI 3.5 Mini and MoE (FP16).
+
 **8/11** Evaluate Llama-3.1-Instruct 8B HQQ.
 
 **8/10** Evaluate Llama-3.1-Instruct 8B and 70B EXL2 and some low-bit GGUFs.

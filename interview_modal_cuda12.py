@@ -46,6 +46,7 @@ def model_qwen2_72b(): download_model('Qwen/Qwen2-72B-Instruct')
 def model_qwen2_57b(): download_model('Qwen/Qwen2-57B-A14B-Instruct')
 def model_qwen2_72b_gptq4(): download_model('Qwen/Qwen2-72B-Instruct-GPTQ-Int4')
 def model_qwen2_72b_awq(): download_model('Qwen/Qwen2-72B-Instruct-AWQ')
+def model_nxcode_vq_7b(): download_model('NTQAI/Nxcode-CQ-7B-orpo')
 # ibm-granite
 def model_granite_20b(): download_model("ibm-granite/granite-20b-code-instruct")
 def model_granite_34b(): download_model("ibm-granite/granite-34b-code-instruct")
@@ -68,6 +69,9 @@ def model_everyone_coder_33b_v2_base(): download_model('rombodawg/Everyone-Coder
 # Phi3
 def model_phi3_small_8k_instruct(): download_model('microsoft/Phi-3-small-8k-instruct')
 def model_phi3_medium_4k_instruct(): download_model('microsoft/Phi-3-medium-4k-instruct')
+# Phi 3.5
+def model_phi35_mini_instruct(): download_model('microsoft/Phi-3.5-mini-instruct')
+def model_phi35_moe_instruct(): download_model('microsoft/Phi-3.5-MoE-instruct')
 # Gemma2
 def model_gemma2_9b_instruct(): download_model('google/gemma-2-9b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
 def model_gemma2_27b_instruct(): download_model('google/gemma-2-27b-it', info={'generate_args': { 'stop_seq': ['**Explanation:**']}})
@@ -85,19 +89,23 @@ def model_llama31_8b_exl2_5bpw(): download_model('turboderp/Llama-3.1-8B-Instruc
 def model_llama31_70b_exl2_4bpw(): download_model('turboderp/Llama-3.1-70B-Instruct-exl2', revision='4.0bpw', info={'eos_token_id': 128009})
 def model_llama31_70b_exl2_35bpw(): download_model('turboderp/Llama-3.1-70B-Instruct-exl2', revision='3.5bpw', info={'eos_token_id': 128009})
 def model_llama31_70b_exl2_3bpw(): download_model('turboderp/Llama-3.1-70B-Instruct-exl2', revision='3.0bpw', info={'eos_token_id': 128009})
+def model_llama31_70b_instruct_hqq(): download_model('mobiuslabsgmbh/Llama-3.1-70b-instruct_4bitgs64_hqq')
+def model_llama31_storm_8b(): download_model('akjindal53244/Llama-3.1-Storm-8B')
+# Hermes3
+def model_hermes3_8b(): download_model('NousResearch/Hermes-3-Llama-3.1-8B')
 # openchat
 def model_openchat_8b_20240522(): download_model('openchat/openchat-3.6-8b-20240522')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
-#QUANT = QUANT_FP16
+#QUANT = QUANT_NF4
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
 #RUNTIME = "quipsharp"
-RUNTIME = "hqq"
+#RUNTIME = "hqq"
 #######################################
 
 ##### SELECT GPU HERE #################
@@ -131,10 +139,9 @@ vllm_image = (
     .pip_install("flash-attn==2.6.3") # this errors out unless torch is already installed
     #.pip_install("auto-gptq==0.7.1")    
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
-    .pip_install("https://github.com/flashinfer-ai/flashinfer/releases/download/v0.1.3/flashinfer-0.1.3+cu121torch2.3-cp310-cp310-linux_x86_64.whl")
-    ##### SELECT MODEL HERE ##############
-    .run_function(model_llama31_8b_instruct_hqq, secrets=[Secret.from_name("my-huggingface-secret")])
     .pip_install("git+https://github.com/mobiusml/hqq.git","bitblas")
+    ##### SELECT MODEL HERE ##############
+    .run_function(model_nxcode_vq_7b, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)

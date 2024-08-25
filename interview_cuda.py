@@ -625,9 +625,9 @@ class InterviewHQQ:
         patch_linearlayers(self.model, patch_add_quant_config, quant_config)
 
         HQQLinear.set_backend(HQQBackend.PYTORCH_COMPILE)
-        #prepare_for_inference(self.model) #default backend
+        prepare_for_inference(self.model) #default backend
         #prepare_for_inference(self.model, backend="torchao_int4") #need bfloat16
-        prepare_for_inference(self.model, backend="bitblas")
+        #prepare_for_inference(self.model, backend="bitblas")
         
         print('Compiling generator...')
         self.gen = HFGenerator(self.model, self.tokenizer, max_new_tokens=1024, do_sample=False, compile="partial")
