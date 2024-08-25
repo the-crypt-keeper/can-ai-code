@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**8/25** Evaluate NTQAI/Nxcode-CQ-7B-orpo (FP16), PHI 3.5 Mini and MoE (FP16).
+**8/25** Evaluate NTQAI/Nxcode-CQ-7B-orpo (FP16), PHI 3.5 Mini and MoE (FP16), codefuse-ai/CodeFuse-StarCoder2-15B (FP16), internlm/AlchemistCoder-CL-7B (FP16), InternLM2.5 Chat 7B and 20B (FP16).
 
 **8/11** Evaluate Llama-3.1-Instruct 8B HQQ.
 

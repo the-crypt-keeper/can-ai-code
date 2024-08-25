@@ -21,6 +21,7 @@ def model_mistral_large_gptq(): download_model('TechxGenus/Mistral-Large-Instruc
 # Starcoder2
 def model_dolphincoder_starcoder2_7b(): download_model('cognitivecomputations/dolphincoder-starcoder2-7b')
 def model_dolphincoder_starcoder2_15b(): download_model('cognitivecomputations/dolphincoder-starcoder2-15b')
+def model_codefuse_starcoder2(): download_model('codefuse-ai/CodeFuse-StarCoder2-15B')
 # LLama3.x 8B
 def model_llama3_instruct_8b(): download_model('meta-llama/Meta-Llama-3-8B-Instruct')
 def model_llama3_instruct_8b_awq(): download_model('casperhansen/llama-3-8b-instruct-awq', info={'eos_token_id': 128009})
@@ -95,6 +96,10 @@ def model_llama31_storm_8b(): download_model('akjindal53244/Llama-3.1-Storm-8B')
 def model_hermes3_8b(): download_model('NousResearch/Hermes-3-Llama-3.1-8B')
 # openchat
 def model_openchat_8b_20240522(): download_model('openchat/openchat-3.6-8b-20240522')
+# internln
+def model_AlchemistCoder_7b(): download_model('internlm/AlchemistCoder-CL-7B')
+def model_internlm25_chat(): download_model('internlm/internlm2_5-7b-chat')
+def model_internlm25_chat_20b(): download_model('internlm/internlm2_5-20b-chat')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
@@ -110,7 +115,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
+gpu_request = gpu.A10G(count=2)
 #gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
@@ -141,7 +146,7 @@ vllm_image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     .pip_install("git+https://github.com/mobiusml/hqq.git","bitblas")
     ##### SELECT MODEL HERE ##############
-    .run_function(model_nxcode_vq_7b, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_internlm25_chat_20b, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)

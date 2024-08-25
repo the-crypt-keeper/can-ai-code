@@ -450,7 +450,9 @@ class InterviewVLLM:
         
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            gpu_memory_utilization=0.9 if 'awq' in quantization else 0.95
+            gpu_memory_utilization = 0.95
+            if quantization is not None and 'awq' in quantization: 
+                gpu_memory_utilization=0.9
             self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, tensor_parallel_size=self.gpu_split, trust_remote_code=True, enforce_eager=enforce_eager, gpu_memory_utilization=gpu_memory_utilization)
         else:
             print('Starting in single GPU mode..')
