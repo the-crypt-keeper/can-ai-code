@@ -507,6 +507,8 @@ ollama-chat-command-r-plus:104b-q4-0: { name: "Command R Plus", size: "104B", qu
 cohere-command: { name: "Command", url: "https://cohere.com/" }
 cohere-command-light: { name: "Command Light", url: "https://cohere.com/" }
 ollama-chat-command-r:35b-v0.1-q4-K-M: { name: "Command R", size: "35B", quant: "GGML-Q4KM", url: "https://ollama.com/library/command-r" }
+cohere-command-r-plus-08-2024: { name: "Command R Plus 08-2024", size: "104B", url: "https://cohere.com/" }
+cohere-command-r-08-2024: { name: "Command R 08-2024", size: "35B", url: "https://cohere.com/" }
 
 hf:databricks-dbrx-instruct: { name: "DBRX Instruct", size: "132B", tags: ["dbrx"], url: "https://huggingface.co/databricks/dbrx-instruct" }
 

@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**9/04** Evaluate Command-R and Command-R Plus (API).
+
 **8/25** Evaluate NTQAI/Nxcode-CQ-7B-orpo (FP16), PHI 3.5 Mini and MoE (FP16), codefuse-ai/CodeFuse-StarCoder2-15B (FP16), internlm/AlchemistCoder-CL-7B (FP16), InternLM2.5 Chat 7B and 20B (FP16).
 
 **8/11** Evaluate Llama-3.1-Instruct 8B HQQ.
@@ -25,10 +27,6 @@ A self-evaluating interview for AI coding models.
 **8/10** Evaluate Llama-3.1-Instruct 8B and 70B EXL2 and some low-bit GGUFs.
 
 **8/1** Evaluate Llama-3-Instruct 8B and 70B with AQLM-2bit. Very slow. 8B is badly damaged.
-
-**8/1** Evaluate Mistral-Large-2402 with GPTQ and AWQ, both are excellent.
-
-**8/1** Evaluate Llama-3.1-Instruct 8B FP16, 70B GPTQ and AWQ with latest vLLM.
 
 ## Test Suites
 

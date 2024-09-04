@@ -100,6 +100,8 @@ def model_openchat_8b_20240522(): download_model('openchat/openchat-3.6-8b-20240
 def model_AlchemistCoder_7b(): download_model('internlm/AlchemistCoder-CL-7B')
 def model_internlm25_chat(): download_model('internlm/internlm2_5-7b-chat')
 def model_internlm25_chat_20b(): download_model('internlm/internlm2_5-20b-chat')
+# nemo
+def model_mistral_nemo_12b_gptq(): download_model('ModelCloud/Mistral-Nemo-Instruct-2407-gptq-4bit')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
@@ -115,7 +117,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=2)
+gpu_request = gpu.A10G(count=1)
 #gpu_request = gpu.A100(count=1, memory=40)
 #######################################
 
@@ -146,7 +148,7 @@ vllm_image = (
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     .pip_install("git+https://github.com/mobiusml/hqq.git","bitblas")
     ##### SELECT MODEL HERE ##############
-    .run_function(model_internlm25_chat_20b, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_mistral_nemo_12b_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
