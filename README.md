@@ -18,15 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**9/11** Evaluate Yi-Coder-1.5B-Chat and Yi-Coder-9B-Chat (FP16), the 9B in particular is very strong.
+
 **9/04** Evaluate Command-R and Command-R Plus (API).
 
 **8/25** Evaluate NTQAI/Nxcode-CQ-7B-orpo (FP16), PHI 3.5 Mini and MoE (FP16), codefuse-ai/CodeFuse-StarCoder2-15B (FP16), internlm/AlchemistCoder-CL-7B (FP16), InternLM2.5 Chat 7B and 20B (FP16).
 
 **8/11** Evaluate Llama-3.1-Instruct 8B HQQ.
-
-**8/10** Evaluate Llama-3.1-Instruct 8B and 70B EXL2 and some low-bit GGUFs.
-
-**8/1** Evaluate Llama-3-Instruct 8B and 70B with AQLM-2bit. Very slow. 8B is badly damaged.
 
 ## Test Suites
 

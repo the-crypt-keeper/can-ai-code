@@ -102,6 +102,9 @@ def model_internlm25_chat(): download_model('internlm/internlm2_5-7b-chat')
 def model_internlm25_chat_20b(): download_model('internlm/internlm2_5-20b-chat')
 # nemo
 def model_mistral_nemo_12b_gptq(): download_model('ModelCloud/Mistral-Nemo-Instruct-2407-gptq-4bit')
+# yi coder
+def model_yicoder_1p5b_chat(): download_model('01-ai/Yi-Coder-1.5B-Chat')
+def model_yicoder_9b_chat(): download_model('01-ai/Yi-Coder-9B-Chat')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
@@ -126,29 +129,25 @@ vllm_image = (
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
         "torch==2.4.0",
-        "transformers==4.44.0",
-        #optimum 1.21.3 depends on transformers<4.44.0 and >=4.29.0
-        #"optimum==1.21.3",
+        "transformers==4.44.2",
         "tiktoken==0.7.0",
         "bitsandbytes==0.43.3",
-        "accelerate==0.33.0",
+        "accelerate==0.34.2",
         "einops==0.6.1",
-        "sentencepiece==0.1.99",
+        "sentencepiece==0.2.0",
         "hf-transfer~=0.1",
         "scipy==1.10.1",
         "pyarrow==11.0.0",
         "protobuf==3.20.3",
         
-        "hqq==0.1.8",
-        "https://vllm-wheels.s3.us-west-2.amazonaws.com/4c5d8e8ea91aa19415aa479d81e818913d51414c/vllm-0.5.4-cp38-abi3-manylinux1_x86_64.whl",
-        "https://github.com/turboderp/exllamav2/releases/download/v0.1.8/exllamav2-0.1.8+cu121.torch2.4.0-cp310-cp310-linux_x86_64.whl"
+        "vllm==0.6.1", #"https://vllm-wheels.s3.us-west-2.amazonaws.com/4c5d8e8ea91aa19415aa479d81e818913d51414c/vllm-0.5.4-cp38-abi3-manylinux1_x86_64.whl",
+        "exllamav2==0.2.1" #https://github.com/turboderp/exllamav2/releases/download/v0.2.1/exllamav2-0.2.1+cu121.torch2.4.0-cp310-cp310-linux_x86_64.whl"
     )
     .pip_install("flash-attn==2.6.3") # this errors out unless torch is already installed
-    #.pip_install("auto-gptq==0.7.1")    
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
-    .pip_install("git+https://github.com/mobiusml/hqq.git","bitblas")
+    .pip_install("git+https://github.com/mobiusml/hqq.git","bitblas")    
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})    
     ##### SELECT MODEL HERE ##############
-    .run_function(model_mistral_nemo_12b_gptq, secrets=[Secret.from_name("my-huggingface-secret")])
+    .run_function(model_yicoder_9b_chat, secrets=[Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = App(image=vllm_image)
