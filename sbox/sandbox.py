@@ -143,4 +143,5 @@ class FunctionSandbox:
                 return output
                 
         rv_text = output[start_index + 3:].strip()
+        #print(rv_text)
         return json.loads(rv_text)
