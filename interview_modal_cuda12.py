@@ -1,7 +1,7 @@
-from modal import App, Image, method, enter, gpu, Secret, Mount
 from huggingface_hub import snapshot_download
 import json
 from jinja2 import Template
+import modal
 from interview_cuda import *
 
 def download_model(name, info = {}, **kwargs):
@@ -51,6 +51,11 @@ def model_nxcode_vq_7b(): download_model('NTQAI/Nxcode-CQ-7B-orpo')
 # ibm-granite
 def model_granite_20b(): download_model("ibm-granite/granite-20b-code-instruct")
 def model_granite_34b(): download_model("ibm-granite/granite-34b-code-instruct")
+# ibm-granite v3
+def model_granite3_8b(): download_model('ibm-granite/granite-3.0-8b-instruct', info={ 'dtype': 'bfloat16' })
+def model_granite3_2b(): download_model('ibm-granite/granite-3.0-2b-instruct')
+def model_granite3_moe_3b(): download_model('ibm-granite/granite-3.0-3b-a800m-instruct')
+def model_granite3_moe_1b(): download_model('ibm-granite/granite-3.0-1b-a400m-instruct')
 # starcoder2
 def model_starcoder2_instruct_0p1(): download_model('bigcode/starcoder2-15b-instruct-v0.1', info={'eos_token_id': 0})
 def model_starchat2_0p1(): download_model('HuggingFaceH4/starchat2-15b-v0.1', info={'eos_token_id': 49153})
@@ -107,10 +112,10 @@ def model_yicoder_1p5b_chat(): download_model('01-ai/Yi-Coder-1.5B-Chat')
 def model_yicoder_9b_chat(): download_model('01-ai/Yi-Coder-9B-Chat')
 
 ##### SELECT RUNTIME HERE #############
-#RUNTIME = "transformers"
-#QUANT = QUANT_NF4
+RUNTIME = "transformers"
+QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-RUNTIME = "vllm"
+#RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
@@ -119,42 +124,40 @@ RUNTIME = "vllm"
 #######################################
 
 ##### SELECT GPU HERE #################
-#gpu_request = gpu.T4(count=1)
-gpu_request = gpu.A10G(count=1)
-#gpu_request = gpu.A100(count=1, memory=40)
+#gpu_request = modal.gpu.T4(count=1)
+gpu_request = modal.gpu.A10G(count=1)
+#gpu_request = modal.gpu.A100(count=1, memory=80)
 #######################################
 
 vllm_image = (
-    Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04",
+    modal.Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "torch==2.4.0",
-        "transformers==4.44.2",
+        "transformers==4.46.0",
         "tiktoken==0.7.0",
-        "bitsandbytes==0.43.3",
-        "accelerate==0.34.2",
+        "bitsandbytes==0.44.1",
+        "accelerate==1.0.1",
         "einops==0.6.1",
         "sentencepiece==0.2.0",
         "hf-transfer~=0.1",
         "scipy==1.10.1",
         "pyarrow==11.0.0",
         "protobuf==3.20.3",
-        
-        "vllm==0.6.1", #"https://vllm-wheels.s3.us-west-2.amazonaws.com/4c5d8e8ea91aa19415aa479d81e818913d51414c/vllm-0.5.4-cp38-abi3-manylinux1_x86_64.whl",
-        "exllamav2==0.2.1" #https://github.com/turboderp/exllamav2/releases/download/v0.2.1/exllamav2-0.2.1+cu121.torch2.4.0-cp310-cp310-linux_x86_64.whl"
+        "vllm==0.6.3.post1",
+        "auto-gptq==0.7.1",
+        "https://github.com/turboderp/exllamav2/releases/download/v0.2.3/exllamav2-0.2.3+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl"
     )
     .pip_install("flash-attn==2.6.3") # this errors out unless torch is already installed
-    .pip_install("git+https://github.com/mobiusml/hqq.git","bitblas")    
-    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})    
-    ##### SELECT MODEL HERE ##############
-    .run_function(model_yicoder_9b_chat, secrets=[Secret.from_name("my-huggingface-secret")])
+    .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
+    ##### SELECT MODEL HERE ##############    
+    .run_function(model_granite3_moe_1b, secrets=[modal.Secret.from_name("my-huggingface-secret")])
     ######################################
 )
-app = App(image=vllm_image)
+app = modal.App(image=vllm_image)
 
-@app.cls(gpu=gpu_request, concurrency_limit=1, timeout=600, secrets=[Secret.from_name("my-huggingface-secret")], mounts=[Mount.from_local_python_packages("interview_cuda")])
+@app.cls(gpu=gpu_request, concurrency_limit=1, timeout=600, secrets=[modal.Secret.from_name("my-huggingface-secret")])
 class ModalWrapper:
-    @enter()
+    @modal.enter()
     def startup(self):
         self.info = json.load(open('./_info.json'))
 
@@ -186,7 +189,7 @@ class ModalWrapper:
 
         self.wrapper.load()
 
-    @method()
+    @modal.method()
     def generate(self, prompt, params):
         return self.wrapper.generate(prompt, params)
 
