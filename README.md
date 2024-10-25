@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**10/25** Evaluate ibm-granite/granite-3.0 family (8B Dense, 2B Dense, 1B MoE, 3B MoE).  Had to take a brief hiatus due to switching jobs but now working to catch up on the backlog so open Issues if there's any interesting code models or new families in the last ~6 weeks I missed!  Qwen2.5 and Llama3.2 will be up this weekend.
+
 **9/12** Fixed a serialization bug in the evaluator which negatively affected four results: deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-fp16, ibm-granite-granite-8b-code-instruct-nf4, ajibawa-2023-Code-Llama-3-8B, ollama-phi3:3.8b-mini-instruct-4k-fp16
 
 **9/11** Evaluate Yi-Coder-1.5B-Chat and Yi-Coder-9B-Chat (FP16), the 9B in particular is very strong.
