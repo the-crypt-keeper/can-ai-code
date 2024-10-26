@@ -9,14 +9,24 @@ openai-gpt-4-1106-preview: { name: "OpenAI gpt-4-1106-preview", url: "https://op
 openai-gpt-4-0125-preview: { name: "OpenAI gpt-4-0125-preview", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-4-turbo-2024-04-09: { name: "OpenAI gpt-4-turbo-2024-04-09", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-4o-2024-05-13: { name: "OpenAI gpt-4o-2024-05-13", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4o-2024-08-06: { name: "OpenAI gpt-4o-2024-08-06", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4o-mini-2024-07-18: { name: "OpenAI gpt-4o-mini-2024-07-18", url: "https://openai.com/", tags: ["commercial"] }
+
+openai-o1-preview-2024-09-12: { name: "OpenAI o1-preview-2024-09-12", url: "https://openai.com/", tags: ["commercial"] }
+openai-o1-mini-2024-09-12: { name: "OpenAI o1-mini-2024-09-12", url: "https://openai.com/", tags: ["commercial"] }
+
 
 mistral-mistral-tiny-2312: { name: "Mistral mistral-tiny-2312", size: "7B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-small-2312: { name: "Mistral mistral-small-2312", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-small-2402: { name: "Mistral mistral-small-2402", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-small-2409: { name: "Mistral mistral-small-2409", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-medium-2312: { name: "Mistral mistral-medium-2312", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 TechxGenus-Mistral-Large-Instruct-2407-GPTQ: { name: "Mistral Large Instruct 2402", quant: "GPTQ-4bit", tags: ["mistral"] }
 TechxGenus-Mistral-Large-Instruct-2407-AWQ: { name: "Mistral Large Instruct 2402", quant: "AWQ-4bit", tags: ["mistral"] }
 mistral-mistral-large-2402: { name: "Mistral Large Instruct 2402", url: "https://mistral.ai/", tags: ["mistral"] }
+mistral-mistral-large-2407: { name: "Mistral Large Instruct 2407", url: "https://mistral.ai/", tags: ["mistral"] }
+mistral-ministral-3b-2410: { name: "Mistral ministral-3b-2410", size: "3B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-ministral-8b-2410: { name: "Mistral ministral-8b-2410", size: "8B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 
 mistral-codestral-2405: { name: "Mistral codestral-2405", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-open-mixtral-8x22b-2404: { name: "Mistral open-mixtral-8x22b-2404", url: "https://mistral.ai/", tags: ["mistral"] }
@@ -408,18 +418,6 @@ upstage-SOLAR-10.7B-Instruct-v1.0: { name: "SOLAR-Instruct", size: "10.7B", tags
 
 TencentARC-LLaMA-Pro-8B-Instruct: { name: "LLaMA Pro Instruct", size: "8B", tags: ["llama2"] }
 
-Qwen-Qwen1.5-4B-Chat: { name: "Qwen1.5-Chat", size: "4B", tags: ["qwen"] }
-Qwen-Qwen1.5-7B-Chat: { name: "Qwen1.5-Chat", size: "7B", tags: ["qwen"] }
-Qwen-Qwen1.5-14B-Chat: { name: "Qwen1.5-Chat", size: "14B", tags: ["qwen"] }
-Qwen-Qwen1.5-72B-Chat-AWQ: { name: "Qwen1.5-Chat", size: "72B", quant: "AWQ-4b", tags: ["qwen"] }
-hf:Qwen-Qwen1.5-72B-Chat: { name: "Qwen1.5-Chat", size: "72B", tags: ["qwen"], url: "https://huggingface.co/Qwen/Qwen1.5-72B-Chat" }
-hf:Qwen-Qwen1.5-110B-Chat: { name: "Qwen1.5-Chat", size: "110B", tags: ["qwen"], url: "https://huggingface.co/Qwen/Qwen1.5-110B-Chat" }
-
-Qwen-CodeQwen1.5-7B-Chat-fp16: { name: "CodeQwen1.5-Chat", size: "7B", tags: ["qwen"], alias: ["Qwen-CodeQwen1.5-7B-Chat"] }
-Qwen-CodeQwen1.5-7B-Chat-AWQ: { name: "CodeQwen1.5-Chat", size: "7B", tags: ["qwen"], quant: "AWQ-4bpw" }
-ollama-chat-codeqwen:7b-chat-v1.5-q8-0: { name: "CodeQwen1.5-Chat", size: "7B", quant: "GGUF-Q8", tags: ["qwen"], url: "https://ollama.com/library/codeqwen" }
-NTQAI-Nxcode-CQ-7B-orpo: { name: "Nxcode-CQ-7B-orpo", size: "7B", tags: ["qwen"], url: "https://huggingface.co/NTQAI/Nxcode-CQ-7B-orpo" }
-
 internlm-internlm2-chat-1-8b: { name: "InternLM2-Chat", size: "1.8B", tags: ["internlm2"], url: "https://huggingface.co/internlm/internlm2-chat-1_8b" }
 internlm-internlm2-chat-7b: { name: "InternLM2-Chat", size: "7B", tags: ["internlm2"] }
 internlm-internlm2-chat-20b: { name: "InternLM2-Chat", size: "20B", tags: ["internlm2"] }
@@ -487,13 +485,34 @@ ibm-granite-granite-3.0-3b-a800m-instruct: { name: "Granite3 MoE", size: "3B", t
 01-ai-Yi-Coder-1.5B-Chat: { name: "Yi-Coder", size: "1.5B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-Coder-1.5B-Chat" }
 01-ai-Yi-Coder-9B-Chat: { name: "Yi-Coder", size: "9B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-Coder-9B-Chat" }
 
+
+Qwen-Qwen1.5-4B-Chat: { name: "Qwen1.5-Chat", size: "4B", tags: ["qwen"] }
+Qwen-Qwen1.5-7B-Chat: { name: "Qwen1.5-Chat", size: "7B", tags: ["qwen"] }
+Qwen-Qwen1.5-14B-Chat: { name: "Qwen1.5-Chat", size: "14B", tags: ["qwen"] }
+Qwen-Qwen1.5-72B-Chat-AWQ: { name: "Qwen1.5-Chat", size: "72B", quant: "AWQ-4b", tags: ["qwen"] }
+hf:Qwen-Qwen1.5-72B-Chat: { name: "Qwen1.5-Chat", size: "72B", tags: ["qwen"], url: "https://huggingface.co/Qwen/Qwen1.5-72B-Chat" }
+hf:Qwen-Qwen1.5-110B-Chat: { name: "Qwen1.5-Chat", size: "110B", tags: ["qwen"], url: "https://huggingface.co/Qwen/Qwen1.5-110B-Chat" }
+Qwen-CodeQwen1.5-7B-Chat-fp16: { name: "CodeQwen1.5-Chat", size: "7B", tags: ["qwen"], alias: ["Qwen-CodeQwen1.5-7B-Chat"] }
+Qwen-CodeQwen1.5-7B-Chat-AWQ: { name: "CodeQwen1.5-Chat", size: "7B", tags: ["qwen"], quant: "AWQ-4bpw" }
+ollama-chat-codeqwen:7b-chat-v1.5-q8-0: { name: "CodeQwen1.5-Chat", size: "7B", quant: "GGUF-Q8", tags: ["qwen"], url: "https://ollama.com/library/codeqwen" }
+NTQAI-Nxcode-CQ-7B-orpo: { name: "Nxcode-CQ-7B-orpo", size: "7B", tags: ["qwen"], url: "https://huggingface.co/NTQAI/Nxcode-CQ-7B-orpo" }
+
 Qwen-Qwen2-1.5B-Instruct: { name: "Qwen2-Instruct", size: "1.5B", tags: ["qwen2"], alias: ["Qwen-Qwen2-1.5B-Instruct-fp16"] }
 Qwen-Qwen2-7B-Instruct: { name: "Qwen2-Instruct", size: "7B", tags: ["qwen2"] }
-Qwen-Qwen2-72B-Instruct: { name: "Qwen2-Instruct", size: "72B", tags: ["qwen2"], alias: ["Qwen-Qwen2-7B-Instruct-fp16"] }
+Qwen-Qwen2-72B-Instruct: { name: "Qwen2-Instruct", size: "72B", tags: ["qwen2"], alias: ["Qwen-Qwen2-72B-Instruct-fp16"] }
 Qwen-Qwen2-72B-Instruct-AWQ: { name: "Qwen2-Instruct", size: "72B", quant: "AWQ-4b", tags: ["qwen2"] }
 Qwen-Qwen2-72B-Instruct-GPTQ-Int4: { name: "Qwen2-Instruct", size: "72B", quant: "GPTQ-4b", tags: ["qwen2"] }
 Qwen-Qwen2-57B-A14B-Instruct: { name: "Qwen2-A14B-Instruct", size: "57B", tags: ["qwen2"] }
 Replete-AI-Replete-Coder-Qwen2-1.5b: { name: "Replete-Coder-Qwen2", size: "1.5B", tags: ["qwen2"], alias: ["Replete-AI-Replete-Coder-Qwen2-1.5b-fp16"], url: "https://huggingface.co/Replete-AI/Replete-Coder-Qwen2-1.5b" }
+
+Qwen2.5-3B-Instruct: { name: "Qwen2.5-Instruct", size: "3B", tags: ["qwen2.5"], alias: ["Qwen2.5-3B-Instruct-fp16"], url: "https://huggingface.co/Qwen/Qwen2.5-3B-Instruct" }
+Qwen2.5-7B-Instruct: { name: "Qwen2.5-Instruct", size: "7B", tags: ["qwen2.5"], alias: ["Qwen2.5-7B-Instruct-fp16"], url: "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct" }
+Qwen-Qwen2.5-32B-Instruct: { name: "Qwen2.5-Instruct", size: "32B", tags: ["qwen2.5"], alias: ["Qwen2.5-32B-Instruct-fp16"] }
+Qwen2.5-14B-Instruct-AWQ: { name: "Qwen2.5-Instruct", size: "14B", quant: "AWQ-4b", tags: ["qwen2.5"], url: "https://huggingface.co/Qwen/Qwen2.5-14B-Instruct-AWQ" }
+Qwen-Qwen2.5-32B-Instruct-AWQ: { name: "Qwen2.5-Instruct", size: "32B", quant: "AWQ-4b", tags: ["qwen2.5"] }
+Qwen-Qwen2.5-72B-Instruct-AWQ: { name: "Qwen2.5-Instruct", size: "72B", quant: "AWQ-4b", tags: ["qwen2.5"] }
+Qwen2.5-Coder-7B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "7B", tags: ["qwen2.5"], alias: ["Qwen2.5-Coder-7B-Instruct-fp16"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct" }
+Qwen2.5-Coder-1.5B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "1.5B", tags: ["qwen2.5"], alias: ["Qwen2.5-Coder-1.5B-Instruct-fp16"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct" }
 
 DeepSeek-Coder-V2-Lite-Base: { name: "DeepSeek-Coder-V2-Lite-Base", size: "16B", tags: ["deepseek2"], alias: ["DeepSeek-Coder-V2-Lite-Base-fp16"] }
 DeepSeek-Coder-V2-Lite-Instruct: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], alias: ["deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-fp16","-home-mike-models-DeepSeek-Coder-V2-Lite-Instruct"] }
@@ -509,6 +528,7 @@ anthropic-claude-3-haiku-20240307: { name: "Claude 3 Haiku 20240307", tags: ["cl
 anthropic-claude-3-sonnet-20240229: { name: "Claude 3 Sonnet 20240229", tags: ["claude"], url: "https://www.anthropic.com/" }
 anthropic-claude-3-opus-20240229: { name: "Claude 3 Opus 20240229", tags: ["claude"], url: "https://www.anthropic.com/" }
 anthropic-claude-3-5-sonnet-20240620: { name: "Claude 3.5 Sonnet 20240620", tags: ["claude"], url: "https://www.anthropic.com/" }
+anthropic-claude-3-5-sonnet-20241022: { name: "Claude 3.5 Sonnet 20241022", tags: ["claude"], url: "https://www.anthropic.com/" }
 
 cohere-command-r-plus: { name: "Command R Plus", size: "104B", url: "https://cohere.com/" }
 ollama-chat-command-r-plus:104b-q4-0: { name: "Command R Plus", size: "104B", quant: "GGML-Q4KM", url: "https://ollama.com/library/command-r-plus" }
