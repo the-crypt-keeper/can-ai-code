@@ -48,6 +48,10 @@ def model_qwen2_57b(): download_model('Qwen/Qwen2-57B-A14B-Instruct')
 def model_qwen2_72b_gptq4(): download_model('Qwen/Qwen2-72B-Instruct-GPTQ-Int4')
 def model_qwen2_72b_awq(): download_model('Qwen/Qwen2-72B-Instruct-AWQ')
 def model_nxcode_vq_7b(): download_model('NTQAI/Nxcode-CQ-7B-orpo')
+# Qwen 2.5
+def model_qwen25_32b(): download_model('Qwen/Qwen2.5-32B-Instruct')
+def model_qwen25_32b_awq(): download_model('Qwen/Qwen2.5-32B-Instruct-AWQ')
+def model_qwen25_72b_awq(): download_model('Qwen/Qwen2.5-72B-Instruct-AWQ')
 # ibm-granite
 def model_granite_20b(): download_model("ibm-granite/granite-20b-code-instruct")
 def model_granite_34b(): download_model("ibm-granite/granite-34b-code-instruct")
@@ -112,10 +116,10 @@ def model_yicoder_1p5b_chat(): download_model('01-ai/Yi-Coder-1.5B-Chat')
 def model_yicoder_9b_chat(): download_model('01-ai/Yi-Coder-9B-Chat')
 
 ##### SELECT RUNTIME HERE #############
-RUNTIME = "transformers"
-QUANT = QUANT_FP16
+#RUNTIME = "transformers"
+#QUANT = QUANT_FP16
 #RUNTIME = "ctranslate2"
-#RUNTIME = "vllm"
+RUNTIME = "vllm"
 #RUNTIME = "autogptq"
 #RUNTIME = "exllama2-th"
 #RUNTIME = "awq"
@@ -125,8 +129,8 @@ QUANT = QUANT_FP16
 
 ##### SELECT GPU HERE #################
 #gpu_request = modal.gpu.T4(count=1)
-gpu_request = modal.gpu.A10G(count=1)
-#gpu_request = modal.gpu.A100(count=1, memory=80)
+#gpu_request = modal.gpu.A10G(count=2)
+gpu_request = modal.gpu.A100(count=1, memory=80)
 #######################################
 
 vllm_image = (
@@ -150,7 +154,7 @@ vllm_image = (
     .pip_install("flash-attn==2.6.3") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_granite3_moe_1b, secrets=[modal.Secret.from_name("my-huggingface-secret")])
+    .run_function(model_qwen25_72b_awq, secrets=[modal.Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = modal.App(image=vllm_image)
