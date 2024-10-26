@@ -432,11 +432,14 @@ class InterviewVLLM:
         t0 = time.time()
         quantization = None
         dtype = 'bfloat16'
-        if 'awq' in self.model_name.lower(): quantization = 'awq'
+        if 'awq' in self.model_name.lower(): 
+            quantization = 'awq'
+            dtype = 'float16'
         if 'gptq' in self.model_name.lower():
             quantization = 'gptq'
             dtype = 'float16'
-        if 'sq-' in self.model_name.lower(): quantization = 'squeezellm'
+        if 'sq-' in self.model_name.lower():
+            quantization = 'squeezellm'
         if 'aqlm' in self.model_name.lower():
             quantization = 'aqlm'
             dtype = 'float16'
@@ -447,16 +450,16 @@ class InterviewVLLM:
         
         import os
         os.environ['VLLM_ATTENTION_BACKEND'] = self.info.get('VLLM_ATTENTION_BACKEND', 'FLASH_ATTN')
-        
+
+        gpu_memory_utilization = 0.95
         if self.gpu_split is not None:
             print('Starting in multi-gpu mode...')
-            gpu_memory_utilization = 0.95
             if quantization is not None and 'awq' in quantization: 
-                gpu_memory_utilization=0.9
+                gpu_memory_utilization = 0.9
             self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, tensor_parallel_size=self.gpu_split, trust_remote_code=True, enforce_eager=enforce_eager, gpu_memory_utilization=gpu_memory_utilization)
         else:
             print('Starting in single GPU mode..')
-            self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, trust_remote_code=True, enforce_eager=enforce_eager)
+            self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, trust_remote_code=True, enforce_eager=enforce_eager, gpu_memory_utilization=gpu_memory_utilization)
 
         eos_token_id = self.info.get('eos_token_id', None)
         if eos_token_id is not None:
