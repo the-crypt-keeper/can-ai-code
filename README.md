@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**11/13** Evaluate Qwen2.5 (32B at FP16, GGUF Q8, EXL2 8bpw), OpenCoder (1.5B and 8B at FP16).
+
 **10/26** Evaluate Qwen2.5 (3B, 7B, 14B FP16 | 14B, 32B, 72B AWQ) and Qwen-Coder2.5
 
 **10/26** Update evaluations of all available OpenAI, Mistral and Anthropic models.

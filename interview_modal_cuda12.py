@@ -114,6 +114,8 @@ def model_mistral_nemo_12b_gptq(): download_model('ModelCloud/Mistral-Nemo-Instr
 # yi coder
 def model_yicoder_1p5b_chat(): download_model('01-ai/Yi-Coder-1.5B-Chat')
 def model_yicoder_9b_chat(): download_model('01-ai/Yi-Coder-9B-Chat')
+# qwen 2.5
+def model_qwen25_coder_32b(): download_model('Qwen/Qwen2.5-Coder-32B-Instruct')
 
 ##### SELECT RUNTIME HERE #############
 #RUNTIME = "transformers"
@@ -129,7 +131,7 @@ RUNTIME = "vllm"
 
 ##### SELECT GPU HERE #################
 #gpu_request = modal.gpu.T4(count=1)
-#gpu_request = modal.gpu.A10G(count=2)
+#gpu_request = modal.gpu.A10G(count=1)
 gpu_request = modal.gpu.A100(count=1, memory=80)
 #######################################
 
@@ -154,7 +156,8 @@ vllm_image = (
     .pip_install("flash-attn==2.6.3") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
-    .run_function(model_qwen25_72b_awq, secrets=[modal.Secret.from_name("my-huggingface-secret")])
+    .pip_install("git+https://github.com/huggingface/transformers.git")
+    .run_function(model_qwen25_coder_32b, secrets=[modal.Secret.from_name("my-huggingface-secret")])
     ######################################
 )
 app = modal.App(image=vllm_image)
