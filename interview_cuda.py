@@ -435,7 +435,7 @@ class InterviewVLLM:
         if 'awq' in self.model_name.lower(): 
             quantization = 'awq'
             dtype = 'float16'
-        if 'gptq' in self.model_name.lower():
+        if 'gptq' in self.model_name.lower() or 'int4' in self.model_name.lower():
             quantization = 'gptq'
             dtype = 'float16'
         if 'sq-' in self.model_name.lower():
@@ -460,7 +460,7 @@ class InterviewVLLM:
         else:
             print('Starting in single GPU mode..')
             self.llm = LLM(model=self.model_name, revision=self.info.get('revision',None), quantization=quantization, tokenizer_mode=tokenizer_mode, dtype=dtype, max_model_len=max_model_len, trust_remote_code=True, enforce_eager=enforce_eager, gpu_memory_utilization=gpu_memory_utilization)
-
+            
         eos_token_id = self.info.get('eos_token_id', None)
         if eos_token_id is not None:
             print('Override generate_args.eos_token_id = ', eos_token_id)
