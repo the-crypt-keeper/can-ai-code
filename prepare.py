@@ -31,13 +31,35 @@ def save_interview(input, templateout, params, model, results):
         f.write('\n'.join([json.dumps(result, default=vars) for result in results]))
     print('Saved results to', output_filename)
 
+def prepare_interview(interview, languages, message_template, template_name, tokenizer):
+    output_filename = f"results/prepare_{interview}_{languages.replace(',', '-')}_{template_name}.ndjson"
+    outputs = []
+    for test in load_questions(interview=interview):
+        for language in languages.split(','):
+            messages = []
+            for msg in message_template:
+                content = msg['content'].render({'language': language, **test})
+                messages.append({'role': msg['role'], 'content': content})
+                
+            if tokenizer:
+                prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+            else:
+                prompt = '\n'.join([msg['content'] for msg in messages])
+                
+            output = test.copy()
+            del output['Checks']
+            output['language'] = language
+            output['prompt'] = prompt
+            outputs.append(output)
+            
+    return output_filename,outputs
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Interview preparation')
     parser.add_argument('--language', type=str, default='python,javascript', help='languages to prepare, comma seperated')
     parser.add_argument('--interview', type=str, default='junior-v2,senior', help='interviews to prepare')
     parser.add_argument('--template', type=str, help='prompt template file')
     parser.add_argument('--chat',type=str, help='outer chat prompt huggingface model name')
-    parser.add_argument('--fixtsp', action='store_true', help='fix trailing spaces in prompt')
     args = parser.parse_args()
     
     if args.chat and not args.template: args.template = 'prompts/chat-simple.txt'
@@ -57,36 +79,9 @@ if __name__ == "__main__":
     else:
         template_name = Path(args.template).stem
         tokenizer = None
-        
-    if args.fixtsp:
-        template_name += '-fixtsp'
-        
-    interviews = args.interview.split(',')
-    
-    for interview in interviews:
-        output_filename = f"results/prepare_{interview}_{args.language.replace(',', '-')}_{template_name}.ndjson"
-        outputs = []
-        for test in load_questions(interview=interview):
-            for language in args.language.split(','):
-                messages = []
-                for msg in message_template:
-                    content = msg['content'].render({'language': language, **test})
-                    messages.append({'role': msg['role'], 'content': content})
-                
-                if tokenizer:
-                    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-                else:
-                    prompt = '\n'.join([msg['content'] for msg in messages])
-                    
-                if args.fixtsp and prompt[-1] == ' ':
-                    prompt = prompt[:-1]
-                
-                output = test.copy()
-                del output['Checks']
-                output['language'] = language
-                output['prompt'] = prompt
-                outputs.append(output)
-
+   
+    for interview in args.interview.split(','):
+        output_filename, outputs = prepare_interview(interview, args.language, message_template, template_name, tokenizer)
         with open(output_filename, 'w') as file:
             file.write('\n'.join([json.dumps(output) for output in outputs]))
             print(f"Expanded {len(outputs)} {template_name} prompts to {output_filename}")
