@@ -1,7 +1,23 @@
 PyYAML==6.0.1
 fire==0.5.0
 Jinja2==3.1.2
-transformers~=4.46
 beautifulsoup4==4.12.3
 huggingface_hub[cli]==0.26.1
 streamlit==1.32.2
+
+transformers==4.46.3
+tiktoken==0.7.0
+hf-transfer~=0.1
+
+litellm==1.51.2
+
+modal==0.66.22;extra == 'modal'
+
+einops==0.6.1;extra == 'transformers'
+sentencepiece==0.2.0;extra == 'transformers'
+accelerate==1.0.1;extra == 'transformers'
+bitsandbytes==0.44.1;extra == 'transformers'
+auto-gptq==0.7.1;extra == 'transformers'
+
+vllm==0.6.4.post1;extra == 'vllm'
+exllamav2@https://github.com/turboderp/exllamav2/releases/download/v0.2.4/exllamav2-0.2.4+cu121.torch2.5.0-cp310-cp310-linux_x86_64.whl;extra=='exllamav2'

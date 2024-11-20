@@ -8,6 +8,7 @@ def download_model(name, info = {}, **kwargs):
     for k,v in kwargs.items(): info[k] = v
     with open("./_info.json",'w') as f:
         json.dump({"model_name": name, **info}, f)
+    print(f'Downloading model {name} ...')
     snapshot_download(name, ignore_patterns=["*.pth"], **kwargs)
 
 # Example: Gemma2
