@@ -310,7 +310,6 @@ class InterviewAutoGPTQ:
 class InterviewExllama2:
     def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False, cache_4bit = False):
         self.model_name = model_name
-        self.gpu_split = gpu_split
         self.info = model_info
         
         self.token_healing = token_healing
@@ -452,7 +451,7 @@ class InterviewVLLM:
         os.environ['VLLM_ATTENTION_BACKEND'] = self.info.get('VLLM_ATTENTION_BACKEND', 'FLASH_ATTN')
 
         gpu_memory_utilization = 0.95
-        if self.gpu_split is not None:
+        if self.gpu_split > 1:
             print('Starting in multi-gpu mode...')
             if quantization is not None and 'awq' in quantization: 
                 gpu_memory_utilization = 0.9
@@ -558,15 +557,20 @@ class InterviewAWQ:
         q_config = { "zero_point": True, "q_group_size": self.info.get('q_group_size', 128) }
         real_quantize_model_weight(model, w_bit=self.info.get('w_bit', 4), q_config=q_config, init_only=True)
 
-        if self.gpu_split != None:
+        if self.gpu_split > 1 or self.info.get('big_model'):
             print('Loading big model with gpu_count', self.gpu_split)
-            max_memory = {0:"18GiB", "cpu":"99GiB"} if self.gpu_split == "0,cpu" else { 0:"18GiB", 1:"22GiB" }
+            if self.info.get('big_model'):
+                max_memory = {0:"18GiB", "cpu":"99GiB"}
+            else:
+                # TODO: this assumes 24GB GPUs
+                max_memory = { device_id:"18GiB" for device_id in range(0, self.gpu_split) }
+                
             device_map = infer_auto_device_map(model,
                                                no_split_module_classes=["DecoderLayer"],
                                                max_memory=max_memory)
+            
+            # TODO: this hack forces lm_head to the GPU
             if device_map.get('lm_head') == 'cpu': device_map['lm_head'] = 0
-            device_map = 'balanced'
-            print(device_map)
         else:
             device_map = 'balanced'
         
@@ -601,8 +605,6 @@ class InterviewHQQ:
         self.model_name = model_name
         self.info = model_info
         self.quant = quant
-        self.gpu_split = gpu_split
-
         self.batch = False
 
     def load(self):
@@ -654,8 +656,6 @@ class InterviewQuipSharp:
         self.model_name = model_name
         self.info = model_info
         self.quant = quant
-        self.gpu_split = gpu_split
-
         self.batch = False
 
     def load(self):
@@ -789,7 +789,6 @@ def is_torchrun() -> bool:
 class InterviewMistral:
     def __init__(self, model_name, model_info = {}, gpu_split=None, token_healing = False, cache_8bit = False):
         self.model_name = model_name
-        self.gpu_split = gpu_split
         self.info = model_info
         
         self.tokenizer = None
@@ -840,14 +839,12 @@ class InterviewMistral:
 
         return result, self.info
     
-    
-def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", gpusplit: str = "", templateout: str = "", revision: str = "", stop:str = "", completion : bool = False):
+def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", templateout: str = "", revision: str = "", stop:str = "", completion : bool = False):
     from prepare import save_interview
 
     if not os.path.exists(model_name):
         download_safetensors(model_name, revision if revision else None)
-
-    gpu_split = gpusplit if gpusplit != '' else None
+        
     model_info = json.loads(info) if isinstance(info, str) else info
     if revision: model_info['revision'] = revision
 
@@ -859,38 +856,9 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         if stop != '':
             ga['stop_seq'] += stop
         model_info['generate_args'] = ga    
-        
-    if runtime == 'transformers':
-        if quant:
-            quant_id = None
-            for k,v in quant_suffix.items():
-                if v == quant:
-                    quant_id = k
-            if quant_id is None:
-                raise Exception("quant "+quant+" not found")
-            else:
-                print("quant:", quant_id)
-        else:
-            quant_id = QUANT_FP16
-        model = InterviewTransformers(model_name, model_info, gpu_split=gpu_split, quant=quant_id)
-    elif runtime == 'vllm':
-        model = InterviewVLLM(model_name, model_info, gpu_split=gpu_split)
-    elif runtime == 'autogptq':
-        model = InterviewAutoGPTQ(model_name, model_info, gpu_split=gpu_split)
-    elif runtime[0:8] == 'exllama2':
-        token_healing = '-th' in runtime
-        model = InterviewExllama2(model_name, model_info, gpu_split=gpu_split, token_healing=token_healing)
-    elif runtime == 'awq':
-        model = InterviewAWQ(model_name, model_info, gpu_split=gpu_split)
-    elif runtime == 'hqq':
-        model = InterviewHQQ(model_name, model_info, gpu_split=gpu_split)        
-    elif runtime == 'ctranslate2':
-        model = InterviewCtranslate2(model_name, model_info, gpu_split=gpu_split)
-    elif runtime == 'mistral':
-        model = InterviewMistral(model_name, model_info)
-    else:
-        raise Exception('Unknown runtime '+runtime)
-    
+
+    num_gpus = torch.cuda.device_count()
+    model = load_runtime(model_name, model_info, runtime, quant, num_gpus)
     model.load()
 
     tasks = []
@@ -918,6 +886,40 @@ def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}
         results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch, quiet=not should_save)
         if should_save:
             save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
+
+def load_runtime(model_name, model_info, runtime, quant, num_gpus):
+    if quant:
+        quant_id = None
+        for k,v in quant_suffix.items():
+            if v == quant:
+                quant_id = k
+        if quant_id is None:
+            raise Exception("quant "+quant+" not found")
+        else:
+            print("quant:", quant_id)
+    else:
+        quant_id = QUANT_FP16
+            
+    if runtime == 'transformers':
+        model = InterviewTransformers(model_name, model_info, quant=quant_id)
+    elif runtime == 'vllm':
+        model = InterviewVLLM(model_name, model_info, gpu_split=num_gpus)
+    elif runtime == 'autogptq':
+        model = InterviewAutoGPTQ(model_name, model_info)
+    elif runtime[0:8] == 'exllama2':
+        model = InterviewExllama2(model_name, model_info, token_healing=True)
+    elif runtime == 'awq':
+        model = InterviewAWQ(model_name, model_info, gpu_split=num_gpus)
+    elif runtime == 'hqq':
+        model = InterviewHQQ(model_name, model_info)
+    elif runtime == 'ctranslate2':
+        model = InterviewCtranslate2(model_name, model_info)
+    elif runtime == 'mistral':
+        model = InterviewMistral(model_name, model_info)
+    else:
+        raise Exception('Unknown runtime '+runtime)
+    
+    return model
     
 if __name__ == "__main__":
     import fire

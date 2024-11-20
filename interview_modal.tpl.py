@@ -25,8 +25,6 @@ def model_{{MODELSLUG}}():
     download_model("{{MODELNAME}}", **model_args)
 
 ##### SELECT RUNTIME HERE #############
-QUANT = QUANT_FP16
-
 #RUNTIME = "transformers"
 #RUNTIME = "ctranslate2"
 #RUNTIME = "vllm"
@@ -81,35 +79,11 @@ class ModalWrapper:
     def startup(self):
         self.info = json.load(open('./_info.json'))
 
-        if RUNTIME == "transformers":
-            self.wrapper = InterviewTransformers(self.info['model_name'], self.info, quant=QUANT)
-        elif RUNTIME == "vllm":
-            gpu_split = gpu_request.count if gpu_request.count > 1 else None
-            self.wrapper = InterviewVLLM(self.info['model_name'], self.info, gpu_split=gpu_split)
-        elif RUNTIME == "autogptq":
-            self.wrapper = InterviewAutoGPTQ(self.info['model_name'], self.info)
-        elif RUNTIME == "hqq":
-            self.wrapper = InterviewHQQ(self.info['model_name'], self.info)
-        elif RUNTIME[0:8] == "exllama2":
-            self.wrapper = InterviewExllama2(self.info['model_name'], self.info, token_healing=True, cache_4bit=False)
-        elif RUNTIME == "awq":
-            if self.info.get('big_model'):
-                gpu_split = '0,1' if gpu_request.count > 1 else '0,cpu'
-            else:
-                gpu_split = None
-            self.wrapper = InterviewAWQ(self.info['model_name'], self.info, gpu_split=gpu_split)
-        elif RUNTIME == "ctranslate2":
-            self.wrapper = InterviewCtranslate2(self.info['model_name'], self.info)
-        elif RUNTIME == "quipsharp":
-            self.wrapper = InterviewQuipSharp(self.info['model_name'], self.info)
-        else:
-            print(f"Unknown RUNTIME")
-            self.wrapper = None
-        
         try:
+            self.wrapper = load_runtime(self.info['model_name'], self.info, RUNTIME, 'fp16', gpu_request.count)
             self.wrapper.load()
         except Exception as e:
-            print(f'{RUNTIME} crashed during load:', e)
+            print(f'{RUNTIME} crashed during init or load:', e)
             self.wrapper = None
     
     @modal.method()
