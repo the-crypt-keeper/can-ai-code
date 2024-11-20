@@ -15,6 +15,7 @@ GPU_STRINGS = {
 def main(model: str, runtime: str, gpu: str = "A10", input: str = "", interview: str = "senior", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
     model_args = { 'info': json.loads(info) }
     if revision: model_args['revision'] = revision
+    if isinstance(revision, int): raise Exception("Please escape --revision with \\' to avoid Fire parsing issues.")
     model_clean = model.replace('/','-').replace('_','-')
     model_clean_py = model_clean.replace('-','_')
     
