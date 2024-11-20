@@ -20,8 +20,8 @@ def download_model(name, info = {}, **kwargs):
 #def model_llama31_8b_instruct_hqq(): download_model('mobiuslabsgmbh/Llama-3.1-8b-instruct_4bitgs64_hqq_calib')
 #def model_llama31_8b_exl2_8bpw(): download_model('turboderp/Llama-3.1-8B-Instruct-exl2', revision='8.0bpw', info={'eos_token_id': 128009})
 
+model_args = {{MODELARGS}}
 def model_{{MODELSLUG}}():
-    model_args = {{MODELARGS}}
     download_model("{{MODELNAME}}", **model_args)
 
 ##### SELECT RUNTIME HERE #############
@@ -135,7 +135,7 @@ def main(input: str = "", interview:str = "", params: str = "", templateout: str
             interviews.append( (input_file, interview) )
             print(f"Loaded {len(interview)} questions from {input_file}.")
     elif interview != "":
-        tokenizer = AutoTokenizer.from_pretrained("{{MODELNAME}}", trust_remote_code=True,use_fast=False)
+        tokenizer = AutoTokenizer.from_pretrained("{{MODELNAME}}", trust_remote_code=True, revision=model_args.get('revision'))
         for interview_name in interview.split(','):
             language = "python,javascript"
             template_name = "chat-simple-"+"{{MODELSLUG}}".replace('_','-')
