@@ -1,2 +1,0 @@
-vllm==0.4.2
-huggingface-hub==0.22.0
