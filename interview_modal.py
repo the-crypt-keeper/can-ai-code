@@ -16,7 +16,7 @@ def main(model: str, runtime: str, gpu: str = "A10", input: str = "", interview:
     model_args = { 'info': json.loads(info) }
     if revision: model_args['revision'] = revision
     if isinstance(revision, int): raise Exception("Please escape --revision with \\' to avoid Fire parsing issues.")
-    model_clean = model.replace('/','-').replace('_','-')
+    model_clean = model.replace('/','-').replace('_','-').replace('.','-')
     model_clean_py = model_clean.replace('-','_')
     
     if gpu not in GPU_STRINGS.keys():
@@ -46,7 +46,7 @@ def main(model: str, runtime: str, gpu: str = "A10", input: str = "", interview:
     if runtime == "vllm": args += ["--batch"]
 
     print(f"Rendered {output_script} with {modal_params}, executing via modal run with {args}")
-    subprocess.run(["modal", "run", "-q", output_script]+args)
+    subprocess.run(["modal", "run", output_script]+args)
 
 if __name__ == "__main__":
     import fire
