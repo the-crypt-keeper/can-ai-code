@@ -1,4 +1,0 @@
-transformers==4.40.1
-huggingface_hub[cli,torch]
-accelerate==0.29.2
-bitsandbytes==0.43.1
