@@ -4,24 +4,28 @@ import sys
 from jinja2 import Template
 import subprocess
 
-GPU_STRINGS = {
-    "T4": "modal.gpu.T4(count=1)",
-    "A10": "modal.gpu.A10G(count=1)",
-    "A10x2": "modal.gpu.A10G(count=2)",
-    "A100-80": "modal.gpu.A100(count=1, memory=80)",
-    "A100-40": "modal.gpu.A100(count=1, memory=40)",
-}
+# Format: <gpu>-<memory>x<count>
+# Examples: T4, A10Gx2, A100-40x4
+def parse_gpu_string(gstr):
+    count = 1
+    memory = None
+    
+    size_split = gstr.split('x')
+    if len(size_split) > 1: count = int(size_split[1])
+    mem_split = size_split[0].split('-')
+    if len(mem_split) > 1: memory = int(mem_split[1])
+    
+    return f"modal.gpu.{mem_split[0]}(count={count}" + (f", memory={memory})" if memory else ")")
 
-def main(model: str, runtime: str, gpu: str = "A10", input: str = "", interview: str = "senior", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
+def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview: str = "senior", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
     model_args = { 'info': json.loads(info) }
     if revision: model_args['revision'] = revision
     if isinstance(revision, int): raise Exception("Please escape --revision with \\' to avoid Fire parsing issues.")
     model_clean = model.replace('/','-').replace('_','-').replace('.','-')
     model_clean_py = model_clean.replace('-','_')
     
-    if gpu not in GPU_STRINGS.keys():
-        raise Exception("Please provide valid --gpu: "+",".join(GPU_STRINGS.keys()))
-    
+    if input == "" and interview == "": raise Exception("Please provide either --input or --interview")
+   
     input_template = "interview_modal.tpl.py"
     tpl = Template(open(input_template).read())
     
@@ -30,7 +34,7 @@ def main(model: str, runtime: str, gpu: str = "A10", input: str = "", interview:
         'MODELARGS': str(model_args),
         'MODELNAME': model,
         'RUNTIME': runtime,
-        'GPUREQUEST': GPU_STRINGS[gpu]
+        'GPUREQUEST': parse_gpu_string(gpu)
     }
     
     output = tpl.render(modal_params)
