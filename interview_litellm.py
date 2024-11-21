@@ -6,7 +6,7 @@ from prepare import save_interview
 from jinja2 import Template
 import litellm
 import requests
-from prepare import prepare_interview
+from prepare import cli_to_interviews
 
 def convert_params(params):
     # integrating liteLLM to provide a standard I/O interface for every LLM
@@ -85,23 +85,8 @@ if __name__ == '__main__':
     if args.stop:
         params['stop'] = json.loads(args.stop)
         
-    # Collect interviews
-    interviews = []
-    if args.input:
-        for input_file in args.input.split(','):
-            interview = [json.loads(line) for line in open(input_file)]
-            interviews.append( (input_file, interview) )
-            print(f"Loaded {len(interview)} questions from {input_file}.")
-    elif args.interview:
-        for interview_name in args.interview.split(','):
-            language = "python,javascript"
-            template_name = "chat-simple"            
-            message_template = [{'role': 'user', 'content': Template("Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}")}]            
-            output_filename, interview = prepare_interview(interview_name, language, message_template, template_name, None)
-            interviews.append( (output_filename, interview) )
-            print(f"Expanded {len(interview)} questions from {interview_name}.")
-
     # Run interviews
+    interviews = cli_to_interviews(args.input, args.interview, None)
     output_template = Template(open(args.templateout).read()) if args.templateout else None
     for input_file, interview in interviews:
         results = []     

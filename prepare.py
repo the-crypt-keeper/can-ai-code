@@ -54,6 +54,26 @@ def prepare_interview(interview, languages, message_template, template_name, tok
             
     return output_filename,outputs
 
+def cli_to_interviews(input, interview, tokenizer):
+    interviews = []
+    if input != "":
+        for input_file in input.split(','):
+            interview = [json.loads(line) for line in open(input_file)]
+            interviews.append( (input_file, interview) )
+            print(f"Loaded {len(interview)} questions from {input_file}.")
+    elif interview != "":
+        for interview_name in interview.split(','):
+            language = "python,javascript"
+            template_name = "chat-simple"
+            message_template = [{'role': 'user', 'content': Template("Write a {language} function {Signature} {Input} that returns {Output}".replace('{','{'+'{').replace('}','}'+'}'))}]
+            output_filename, interview = prepare_interview(interview_name, language, message_template, template_name, tokenizer)
+            interviews.append( (output_filename, interview) )
+            print(f"Expanded {len(interview)} questions from {interview_name}.")
+    else:
+        raise Exception("Please provide either --input or --interview")
+    
+    return interviews
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Interview preparation')
     parser.add_argument('--language', type=str, default='python,javascript', help='languages to prepare, comma seperated')
