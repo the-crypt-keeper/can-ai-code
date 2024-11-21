@@ -1,0 +1,5 @@
+einops==0.6.1
+sentencepiece==0.2.0
+accelerate==1.0.1
+bitsandbytes==0.44.1
+auto-gptq==0.7.1
