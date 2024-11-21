@@ -247,8 +247,8 @@ def main():
                 default=['all'],
                 format_func=lambda x: 'All' if x == 'all' else ('%dM'%(float(x)*1000) if float(x)<1 else x+'B')
             )
-            if 'all' not in selected_sizes and selected_sizes:
-                filtered = filtered[filtered['size'].isin(selected_sizes)]
+            if selected_sizes != ['all']:
+                filtered = filtered[filtered['size'].isin([s for s in selected_sizes if s != 'all'])]
 
         if best_of:
             if not show_quants:
