@@ -6,6 +6,7 @@ from huggingface_hub import hf_hub_download, HfApi
 from jinja2 import Template
 from typing import List
 from copy import copy
+from transformers import AutoTokenizer
 
 #########################################
 ##  Transformers/BitsAndBytes Adapter  ##
@@ -838,54 +839,6 @@ class InterviewMistral:
         result = self.tokenizer.instruct_tokenizer.tokenizer.decode(out_tokens[0])
 
         return result, self.info
-    
-def main(input: str, params: str, model_name: str, runtime: str, info: str = "{}", iterations: int = 1, quant: str = "", templateout: str = "", revision: str = "", stop:str = "", completion : bool = False):
-    from prepare import save_interview
-
-    if not os.path.exists(model_name):
-        download_safetensors(model_name, revision if revision else None)
-        
-    model_info = json.loads(info) if isinstance(info, str) else info
-    if revision: model_info['revision'] = revision
-
-    if completion or stop != '':
-        ga = model_info.get('generate_args', {})
-        ga['stop_seq'] = ga.get('stop_seq', [])
-        if completion:
-            ga['stop_seq'] += ["\n#","\n//"]
-        if stop != '':
-            ga['stop_seq'] += stop
-        model_info['generate_args'] = ga    
-
-    num_gpus = torch.cuda.device_count()
-    model = load_runtime(model_name, model_info, runtime, quant, num_gpus)
-    model.load()
-
-    tasks = []
-    for param_file in params.split(','):
-        for input_file in input.split(','):
-            tasks.append((param_file, input_file))
-
-    should_save = True
-    if is_torchrun():
-        import torch
-        should_save = torch.distributed.get_rank() == 0
-
-    for param_file, input_pairs in tasks:
-      insplit = input_pairs.split(':')
-      input_file = insplit[0]
-      templateout_file = insplit[1] if len(insplit)>1 else templateout
-
-      interview = [json.loads(line) for line in open(input_file)]
-      output_template = Template(open(templateout_file).read()) if templateout_file else None
-      params_json = json.load(open(param_file,'r'))
-
-      for iter in range(iterations):
-        if should_save:
-            print("Starting", model_name, "iter=", iter, "param_file=", param_file, "input_file=", input_file, "templateout_file=", templateout_file)
-        results, remote_info = interview_run(runtime, model.generate, interview, params_json, output_template, batch=model.batch, quiet=not should_save)
-        if should_save:
-            save_interview(input_file, templateout_file if templateout_file else 'none', param_file, remote_info['model_name'], results)
 
 def load_runtime(model_name, model_info, runtime, quant, num_gpus):
     if quant:
@@ -920,6 +873,67 @@ def load_runtime(model_name, model_info, runtime, quant, num_gpus):
         raise Exception('Unknown runtime '+runtime)
     
     return model
+
+
+def main(model: str, runtime: str, input: str = "", interview: str = "senior", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
+    from prepare import save_interview, prepare_interview
+    import torch
+    
+    if params == "": params = "params/greedy-hf.json" if runtime == "transformers" else "params/greedy-openai.json"
+    quant = 'fp16'
+        
+    if not os.path.exists(model):
+        download_safetensors(model, revision if revision else None)
+        
+    model_info = json.loads(info) if isinstance(info, str) else info
+    if revision: model_info['revision'] = revision
+
+    # if completion or stop != '':
+    #     ga = model_info.get('generate_args', {})
+    #     ga['stop_seq'] = ga.get('stop_seq', [])
+    #     if completion:
+    #         ga['stop_seq'] += ["\n#","\n//"]
+    #     if stop != '':
+    #         ga['stop_seq'] += stop
+    #     model_info['generate_args'] = ga    
+
+    num_gpus = torch.cuda.device_count()
+    wrapper = load_runtime(model, model_info, runtime, quant, num_gpus)
+    wrapper.load()
+
+    interviews = []
+    if input != "":
+        for input_file in input.split(','):
+            interview = [json.loads(line) for line in open(input_file)]
+            interviews.append( (input_file, interview) )
+            print(f"Loaded {len(interview)} questions from {input_file}.")
+    elif interview != "":
+        tokenizer = AutoTokenizer.from_pretrained(model, trust_remote_code=True, revision=revision if revision else None)
+        for interview_name in interview.split(','):
+            language = "python,javascript"
+            template_name = "chat-simple"
+            message_template = [{'role': 'user', 'content': Template("Write a {language} function {Signature} {Input} that returns {Output}".replace('{','{'+'{').replace('}','}'+'}'))}]
+            output_filename, interview = prepare_interview(interview_name, language, message_template, template_name, tokenizer)
+            interviews.append( (output_filename, interview) )
+            print(f"Expanded {len(interview)} questions from {interview_name}.")
+    else:
+        raise Exception("Please provide either --input or --interview")
+
+    main_process = True
+    if is_torchrun():        
+        main_process = torch.distributed.get_rank() == 0
+
+    output_template = Template(open(templateout).read()) if templateout else None
+    params_json = json.load(open(params,'r'))
+
+    for input_file, interview in interviews:
+        if main_process:
+            print("Starting", model, "param_file=", params, "input_file=", input_file, "templateout=", templateout)
+
+        results, remote_info = interview_run(runtime, wrapper.generate, interview, params_json, output_template, batch=wrapper.batch, quiet=not main_process)
+
+        if main_process:
+            save_interview(input_file, templateout if templateout else 'none', params, remote_info['model_name'], results)
     
 if __name__ == "__main__":
     import fire
