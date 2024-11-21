@@ -18,6 +18,10 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**11/21** This project was too difficult to use, and I'm the maintainer!  I've spent some time refactoring the interview scripts, updating requirements.txt and there is a new [evaluation guide](GUIDE.md) for evaluating both models and APIs.
+
+**11/20** Re-Evaluate CodeQwen2.5 (new weights). Evaluate Mistral-Small-2409 and Ministral-8B-2410. Evaluate gpt-4o-2024-11-20.
+
 **11/13** Evaluate Qwen2.5 (32B at FP16, GGUF Q8, EXL2 8bpw), OpenCoder (1.5B and 8B at FP16).
 
 **10/26** Evaluate Qwen2.5 (3B, 7B, 14B FP16 | 14B, 32B, 72B AWQ) and Qwen-Coder2.5
