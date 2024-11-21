@@ -112,10 +112,20 @@ def calculate_summary(data, language = None):
     sumdf['Task'] = sumdf['Template'].apply(task_heuristic)
     sumdf.drop('Total', axis=1, inplace=True)
 
-    merged_df = pd.merge(sumdf, load_models(), left_on='Model', right_on='id', how='left')
+    models_df = load_models()
+    merged_df = pd.merge(sumdf, models_df, left_on='Model', right_on='id', how='left')
     merged_df['name'] = merged_df['name'].fillna(merged_df['Model'])
     merged_df['size'] = merged_df['size'].fillna('')
     merged_df = merged_df.drop('Model', axis=1)
+
+    # Print models in sumdf that don't exist in load_models() result
+    missing_models = set(sumdf['Model']) - set(models_df['id'])
+    if missing_models:
+        print("Models in sumdf that don't exist in load_models() result:")
+        for model in sorted(missing_models):
+            print(f"  - {model}")
+    else:
+        print("All models in sumdf exist in load_models() result.")
 
     return merged_df
 
