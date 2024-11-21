@@ -19,7 +19,7 @@ All interview scripts accept the following common options:
 
 `python ./interview_litellm.py --model <provider>/<model_id> --apikey <key>`
 
-See LiteLLM documentation for the full list of supported providers.
+See [LiteLLM documentation](https://docs.litellm.ai/docs/providers) for the full list of supported providers.
 
 ### Evaluate a Local/Self-Hosted API (LiteLLM)
 
@@ -48,6 +48,12 @@ Note: ` -fa` enables flash attention, ` -ngl 99` enables GPU offloading
 Note: `--flashattention` enables flash attention, `--gpulayers 99 --usecublas 1` enables GPU offloading
 
 `python3 ./interview-litellm.py --model openai/Meta-Llama-3.1-8B-Instruct-Q6_K.gguf --apibase http://127.0.0.1:8080`
+
+#### Evaluate a Local OobaBooga API
+
+See [Ooba Docs](https://github.com/oobabooga/text-generation-webui/wiki/12-%E2%80%90-OpenAI-API) for how to launch.
+
+`python3 ./interview-litellm.py --model openai/<modelid>> --apibase http://127.0.0.1:8080 --runtime oobabooga`
 
 ## Model Evaluations (Instruct)
 
