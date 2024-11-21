@@ -240,10 +240,14 @@ def main():
             size_list = list(filtered['size'].dropna().unique())
             if '' in size_list: size_list.remove('')
             size_list.sort(key=lambda x: float(x) if x else 0)
-            size_list = ['all'] + size_list
-            selected_size = st.selectbox('Size', size_list, format_func=lambda x: 'all' if x == 'all' else '%dM'%(float(x)*1000) if float(x)<1 else x+'B')
-            if selected_size != 'all':
-                filtered = filtered[filtered['size'] == selected_size]
+            selected_sizes = st.multiselect(
+                'Size', 
+                size_list, 
+                default=size_list,
+                format_func=lambda x: '%dM'%(float(x)*1000) if float(x)<1 else x+'B'
+            )
+            if selected_sizes:
+                filtered = filtered[filtered['size'].isin(selected_sizes)]
 
         if best_of:
             if not show_quants:
