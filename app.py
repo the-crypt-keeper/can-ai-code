@@ -249,8 +249,6 @@ def main():
             )
             if 'all' not in selected_sizes and selected_sizes:
                 filtered = filtered[filtered['size'].isin(selected_sizes)]
-            elif selected_sizes == []:
-                filtered = filtered[filtered['size'] == '']  # Empty dataframe if nothing is selected
 
         if best_of:
             if not show_quants:
