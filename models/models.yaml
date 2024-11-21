@@ -10,11 +10,11 @@ openai-gpt-4-0125-preview: { name: "OpenAI gpt-4-0125-preview", url: "https://op
 openai-gpt-4-turbo-2024-04-09: { name: "OpenAI gpt-4-turbo-2024-04-09", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-4o-2024-05-13: { name: "OpenAI gpt-4o-2024-05-13", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-4o-2024-08-06: { name: "OpenAI gpt-4o-2024-08-06", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4o-2024-11-20: { name: "OpenAI gpt-4o-2024-11-20", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-4o-mini-2024-07-18: { name: "OpenAI gpt-4o-mini-2024-07-18", url: "https://openai.com/", tags: ["commercial"] }
 
 openai-o1-preview-2024-09-12: { name: "OpenAI o1-preview-2024-09-12", url: "https://openai.com/", tags: ["commercial"] }
 openai-o1-mini-2024-09-12: { name: "OpenAI o1-mini-2024-09-12", url: "https://openai.com/", tags: ["commercial"] }
-
 
 mistral-mistral-tiny-2312: { name: "Mistral mistral-tiny-2312", size: "7B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-small-2312: { name: "Mistral mistral-small-2312", size: "22B",url: "https://mistral.ai/", tags: ["commercial","mistral"] }
@@ -507,7 +507,7 @@ ollama-chat-codeqwen:7b-chat-v1.5-q8-0: { name: "CodeQwen1.5-Chat", size: "7B", 
 NTQAI-Nxcode-CQ-7B-orpo: { name: "Nxcode-CQ-7B-orpo", size: "7B", tags: ["qwen"], url: "https://huggingface.co/NTQAI/Nxcode-CQ-7B-orpo" }
 
 Qwen-Qwen2-1.5B-Instruct: { name: "Qwen2-Instruct", size: "1.5B", tags: ["qwen2"], alias: ["Qwen-Qwen2-1.5B-Instruct-fp16"] }
-Qwen-Qwen2-7B-Instruct: { name: "Qwen2-Instruct", size: "7B", tags: ["qwen2"] }
+Qwen-Qwen2-7B-Instruct: { name: "Qwen2-Instruct", size: "7B", tags: ["qwen2"], alias: ["Qwen-Qwen2-7B-Instruct-fp16"] }
 Qwen-Qwen2-72B-Instruct: { name: "Qwen2-Instruct", size: "72B", tags: ["qwen2"], alias: ["Qwen-Qwen2-72B-Instruct-fp16"] }
 Qwen-Qwen2-72B-Instruct-AWQ: { name: "Qwen2-Instruct", size: "72B", quant: "AWQ-4b", tags: ["qwen2"] }
 Qwen-Qwen2-72B-Instruct-GPTQ-Int4: { name: "Qwen2-Instruct", size: "72B", quant: "GPTQ-4b", tags: ["qwen2"] }
@@ -590,3 +590,4 @@ turboderp-Llama-3.1-70B-Instruct-exl2-4.0bpw: { name: "Llama 3.1 Instruct", size
 turboderp-Llama-3.1-70B-Instruct-exl2-3.5bpw: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "EXL2-3.5bpw", url: "https://huggingface.co/turboderp/Llama-3.1-70B-Instruct-exl2" }
 turboderp-Llama-3.1-70B-Instruct-exl2-3.0bpw: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "EXL2-3bpw", url: "https://huggingface.co/turboderp/Llama-3.1-70B-Instruct-exl2" }
 hermes-3-llama-3.1-405b-fp8: { name: "Hermes 3 Llama 3.1", size: "405B", tags: ["llama31"], quant: "FP8", url: "NousResearch/Hermes-3-Llama-3.1-405B" }
+Apel-sin-dracarys2-llama-3.1-70b-instruct-exl2-4-25: { name: "Dracarys2-llama-3.1", "size": "70B", quant: "EXL2-4.25bpw", url: "https://huggingface.co/Apel-sin/dracarys2-llama-3.1-70b-instruct-exl2" }
