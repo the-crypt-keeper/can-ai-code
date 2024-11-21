@@ -21,7 +21,7 @@ def convert_params(params):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview executor for LiteLLM')
     parser.add_argument('--input', type=str, help='path to prepare*.ndjson from prepare stage')
-    parser.add_argument('--interview', type=str, help='name of interview to run directly')
+    parser.add_argument('--interview', type=str, default='senior', help='name of interview to run directly')
     parser.add_argument('--model', type=str, default='openai/chatgpt', help='model to use')
     parser.add_argument('--apibase', type=str, help='api base url override')
     parser.add_argument('--apikey', type=str, help='api key (if required)')
@@ -92,8 +92,7 @@ if __name__ == '__main__':
             interview = [json.loads(line) for line in open(input_file)]
             interviews.append( (input_file, interview) )
             print(f"Loaded {len(interview)} questions from {input_file}.")
-
-    if args.interview:
+    elif args.interview:
         for interview_name in args.interview.split(','):
             language = "python,javascript"
             template_name = "chat-simple"            
