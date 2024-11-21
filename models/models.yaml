@@ -17,16 +17,25 @@ openai-o1-mini-2024-09-12: { name: "OpenAI o1-mini-2024-09-12", url: "https://op
 
 
 mistral-mistral-tiny-2312: { name: "Mistral mistral-tiny-2312", size: "7B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-mistral-small-2312: { name: "Mistral mistral-small-2312", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-mistral-small-2402: { name: "Mistral mistral-small-2402", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-mistral-mistral-small-2409: { name: "Mistral mistral-small-2409", size: "46B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-small-2312: { name: "Mistral mistral-small-2312", size: "22B",url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-small-2402: { name: "Mistral mistral-small-2402", size: "22B",url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistral-mistral-small-2409: { name: "Mistral mistral-small-2409", size: "22B",url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-medium-2312: { name: "Mistral mistral-medium-2312", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
-TechxGenus-Mistral-Large-Instruct-2407-GPTQ: { name: "Mistral Large Instruct 2402", quant: "GPTQ-4bit", tags: ["mistral"] }
-TechxGenus-Mistral-Large-Instruct-2407-AWQ: { name: "Mistral Large Instruct 2402", quant: "AWQ-4bit", tags: ["mistral"] }
 mistral-mistral-large-2402: { name: "Mistral Large Instruct 2402", url: "https://mistral.ai/", tags: ["mistral"] }
 mistral-mistral-large-2407: { name: "Mistral Large Instruct 2407", url: "https://mistral.ai/", tags: ["mistral"] }
+mistral-mistral-large-2411: { name: "Mistral Large Instruct 2411", url: "https://mistral.ai/", tags: ["mistral"] }
 mistral-ministral-3b-2410: { name: "Mistral ministral-3b-2410", size: "3B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-ministral-8b-2410: { name: "Mistral ministral-8b-2410", size: "8B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
+mistralai-Ministral-8B-Instruct-2410: { name: "Ministral-Instruct-2410", size: "8B", tags: ["mistral"], alias: ["mistralai-Ministral-8B-Instruct-2410-fp16"] }
+prince-canuma-Ministral-8B-Instruct-2410-HF-fp16: { name: "Ministral-Instruct-2410-HF", size: "8B", tags: ["mistral"], url: "https://huggingface.co/prince-canuma/Ministral-8B-Instruct-2410-HF" }
+lucyknada-prince-canuma-Ministral-8B-Instruct-2410-HF-exl2-4.0bpw: { name: "Ministral-Instruct-2410", size: "8B", quant: "EXL2-4bpw", tags: ["mistral"], url: "https://huggingface.co/lucyknada/prince-canuma-Ministral-8B-Instruct-2410-HF-exl2" }
+lucyknada-prince-canuma-Ministral-8B-Instruct-2410-HF-exl2-8.0bpw: { name: "Ministral-Instruct-2410", size: "8B", quant: "EXL2-4bpw", tags: ["mistral"], url: "https://huggingface.co/lucyknada/prince-canuma-Ministral-8B-Instruct-2410-HF-exl2" }
+PyrTools-Ministral-8B-Instruct-2410-AWQ: { name: "Ministral-Instruct-2410", size: "8B", tags: ["mistral"], quant: "AWQ" }
+mistralai-Mistral-Small-Instruct-2409: { name: "Mistral-Small-Instruct-2409", size: "22B", tags: ["mistral"], alias: ["mistralai-Mistral-Small-Instruct-2409-fp16"] }
+xmadai-Mistral-Small-Instruct-2409-xMADai-INT4: { name: "Mistral-Small-Instruct-2409", size: "22B", quant: "GPTQ-INT4", tags: ["mistral"], alias: ["xmadai-Mistral-Small-Instruct-2409-xMADai-INT4-main"] }
+TechxGenus-Mistral-Large-Instruct-2407-GPTQ: { name: "Mistral Large Instruct 2402", quant: "GPTQ-INT4", tags: ["mistral"] }
+TechxGenus-Mistral-Large-Instruct-2407-AWQ: { name: "Mistral Large Instruct 2402", quant: "AWQ", tags: ["mistral"] }
+bartowski-Mistral-Large-Instruct-2411-exl2-3-0: { name: "Mistral Large Instruct 2411", quant: "EXL2-3bpw", tags: ["mistral"] }
 
 mistral-codestral-2405: { name: "Mistral codestral-2405", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-open-mixtral-8x22b-2404: { name: "Mistral open-mixtral-8x22b-2404", url: "https://mistral.ai/", tags: ["mistral"] }
