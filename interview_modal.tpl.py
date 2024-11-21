@@ -113,7 +113,7 @@ def main(input: str = "", interview:str = "", params: str = "", templateout: str
         tokenizer = AutoTokenizer.from_pretrained("{{MODELNAME}}", trust_remote_code=True, revision=model_args.get('revision'))
         for interview_name in interview.split(','):
             language = "python,javascript"
-            template_name = "chat-simple-"+"{{MODELSLUG}}".replace('_','-')
+            template_name = "chat-simple"
             message_template = [{'role': 'user', 'content': Template("Write a {language} function {Signature} {Input} that returns {Output}".replace('{','{'+'{').replace('}','}'+'}'))}]
             output_filename, interview = prepare_interview(interview_name, language, message_template, template_name, tokenizer)
             interviews.append( (output_filename, interview) )
