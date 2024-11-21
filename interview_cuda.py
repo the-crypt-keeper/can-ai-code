@@ -315,9 +315,10 @@ class InterviewExllama2:
         
         self.token_healing = token_healing
         self.cache_4bit = cache_4bit
-        
-        self.batch_size = self.info.get('batch_size', 1)
 
+        self.batch_size = self.info.get('batch_size', 1)
+        self.batch = (self.batch_size != 1)
+        
         self.tokenizer = None
         self.model = None
         self.cache = None
@@ -876,7 +877,7 @@ def load_runtime(model_name, model_info, runtime, quant, num_gpus):
 
 
 def main(model: str, runtime: str, input: str = "", interview: str = "senior", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
-    from prepare import save_interview, prepare_interview
+    from prepare import save_interview, cli_to_interviews
     import torch
     
     if params == "": params = "params/greedy-hf.json" if runtime == "transformers" else "params/greedy-openai.json"
@@ -901,23 +902,8 @@ def main(model: str, runtime: str, input: str = "", interview: str = "senior", p
     wrapper = load_runtime(model, model_info, runtime, quant, num_gpus)
     wrapper.load()
 
-    interviews = []
-    if input != "":
-        for input_file in input.split(','):
-            interview = [json.loads(line) for line in open(input_file)]
-            interviews.append( (input_file, interview) )
-            print(f"Loaded {len(interview)} questions from {input_file}.")
-    elif interview != "":
-        tokenizer = AutoTokenizer.from_pretrained(model, trust_remote_code=True, revision=revision if revision else None)
-        for interview_name in interview.split(','):
-            language = "python,javascript"
-            template_name = "chat-simple"
-            message_template = [{'role': 'user', 'content': Template("Write a {language} function {Signature} {Input} that returns {Output}".replace('{','{'+'{').replace('}','}'+'}'))}]
-            output_filename, interview = prepare_interview(interview_name, language, message_template, template_name, tokenizer)
-            interviews.append( (output_filename, interview) )
-            print(f"Expanded {len(interview)} questions from {interview_name}.")
-    else:
-        raise Exception("Please provide either --input or --interview")
+    tokenizer = AutoTokenizer.from_pretrained(model, trust_remote_code=True, revision=revision if revision else None)
+    interviews = cli_to_interviews(input, interview, tokenizer)
 
     main_process = True
     if is_torchrun():        

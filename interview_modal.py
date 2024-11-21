@@ -11,11 +11,11 @@ def parse_gpu_string(gstr):
     memory = None
     
     size_split = gstr.split('x')
-    if len(size_split) > 1: count = int(size_split[1])
+    if len(size_split) > 1: count = size_split[1]
     mem_split = size_split[0].split('-')
-    if len(mem_split) > 1: memory = int(mem_split[1])
+    if len(mem_split) > 1: memory = mem_split[1]
     
-    return f"modal.gpu.{mem_split[0]}(count={count}" + (f", memory={memory})" if memory else ")")
+    return f"modal.gpu.{mem_split[0]}(count={count}" + (f", size='{memory}')" if memory else ")")
 
 def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview: str = "senior", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
     model_args = { 'info': json.loads(info) }

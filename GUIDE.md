@@ -2,100 +2,93 @@
 
 ## Prepare Enviroment
 
-1. `python3 -m venv venv`
+1. `python -m venv venv`
 2. `source venv/bin/activate`
-3. `pip3 install -r requirements.txt`
+3. `pip install -r requirements.txt`
 
-## Evaluting Instruct with local API
+## Common Options
 
-### Prepare "chat-simple" template
+All interview scripts accept the following common options:
 
-```
-python3 ./prepare.py --template prompts/chat-simple.txt
-```
+* `--interview` directly run instruct-completion (default: senior)
+* `--input` run a pre-prepared interview used for completion and fim
 
-### Launch API and run interview
+## API Evaluations (Instruct)
 
-If successful this step will drop two interview*.json files (one for senior and another for junior-v2) into the results/ directory.
+### Evaluate a Remote API (LiteLLM)
 
-#### llama-server
+`python ./interview_litellm.py --model <provider>/<model_id> --apikey <key>`
 
-```
-llama-server -m /home/mike/models/Meta-Llama-3.1-8B-Instruct-Q6_K.gguf -c 8192 -fa -ngl 99 --host 0.0.0.0 --port 8080
-```
+See LiteLLM documentation for the full list of supported providers.
 
-`-fa` enables flash attention, `-ngl 99` enables GPU offloading
+### Evaluate a Local/Self-Hosted API (LiteLLM)
 
-```
-python3 ./interview-litellm.py --runtime llama --apikey xx --apibase http://127.0.0.1:8080 --params params/greedy-openai.json --input results/prepare_senior_python-javascript_chat-simple.ndjson,results/prepare_junior-v2_python-javascript_chat-simple.ndjson
-```
+`python ./interview_litellm.py --model openai/<model_id> --apibase http://<host>:<port>/`
 
-#### koboldcpp
+If the runtime cannot be inferred from the endpoint, you will be asked to provide `--runtime`
 
-```
-koboldcpp /home/mike/models/Meta-Llama-3.1-8B-Instruct-Q6_K.gguf --contextsize 8192 --flashattention --gpulayers 99 --usecublas 1 --host 0.0.0.0 --port 8080
-```
+#### Evaluate a Local ollama API
 
-`--flashattention` enables flash attention, `--gpulayers 99 --usecublas 1` enables GPU offloading
+`ollama serve <model_id>`
 
-```
-python3 ./interview-litellm.py --runtime koboldcpp --apikey xx --apibase http://127.0.0.1:8080 --params params/greedy-openai.json --input results/prepare_senior_python-javascript_chat-simple.ndjson,results/prepare_junior-v2_python-javascript_chat-simple.ndjson
-```
+`python ./interview_litellm.py --model ollama_chat/<model_id>`
 
-#### ollama
+#### Evaluate a Local llama-server API
 
-```
-python3 ./interview-litellm.py --model 'ollama_chat/<model>' --params params/greedy-openai.json --input results/prepare_senior_python-javascript_chat-simple.ndjson,results/prepare_junior-v2_python-javascript_chat-simple.ndjson
-```
+`llama-server -m /home/mike/models/Meta-Llama-3.1-8B-Instruct-Q6_K.gguf -c 8192 -fa -ngl 99 --host 0.0.0.0 --port 8080`
 
-### Run Self-evaluation and view results
+Note: ` -fa` enables flash attention, ` -ngl 99` enables GPU offloading
+
+`python3 ./interview-litellm.py --model openai/Meta-Llama-3.1-8B-Instruct-Q6_K.gguf --apibase http://127.0.0.1:8080`
+
+#### Evaluate a Local koboldcpp API
+
+`koboldcpp /home/mike/models/Meta-Llama-3.1-8B-Instruct-Q6_K.gguf --contextsize 8192 --flashattention --gpulayers 99 --usecublas 1 --host 0.0.0.0 --port 8080`
+
+Note: `--flashattention` enables flash attention, `--gpulayers 99 --usecublas 1` enables GPU offloading
+
+`python3 ./interview-litellm.py --model openai/Meta-Llama-3.1-8B-Instruct-Q6_K.gguf --apibase http://127.0.0.1:8080`
+
+## Model Evaluations (Instruct)
+
+### Evaluate a model with local GPU (CUDA)
+
+The local CUDA executor will use all available GPUs by default, use `CUDA_VISIBLE_DEVICES` if you have connected accelerators you don't want used.
+
+#### Backend: Transformers
+
+`pip install -r requirements.txt -r requirements-transformers.txt`
+
+`python ./interview_cuda.py --model <model> --runtime transformers`
+
+#### Backend: vLLM
+
+`pip install -r requirements.txt -r requirements-vllm.txt`
+
+`python ./interview_cuda.py --model <model> --runtime vllm`
+
+#### Backend: Exllamav2
+
+`pip install wheel && pip install -r requirements.txt -r requirements-exl2.txt`
+
+`python ./interview_cuda.py --model <model> --runtime exllama2`
+
+### Evaluate a model with remote GPU (Modal)
+
+`python ./interview_modal.py --model <model> --runtime <runtime> --gpu <gpu>`
+
+See modal docs for valid GPUs.
+
+## Model Evaluations (Code Completion)
+
+TODO
+
+## Model Evaluations (Fill-in-the-Middle)
+
+TODO
+
+## Run Self-Checks and View Results
 
 `bulk-eval.sh` is a quick and easy way to run the `evaluate.py` script for all `results/interview*` it finds.
 
 `streamlit run app.py "results/eval*"` will then show you local results only.
-
-## Evaluating Instruct with CUDA
-
-We will use `MODEL=google/codegemma-7b-it` as an example, replace with the HF-Hub path of the model you wish to evaluate.
-
-### Build chat-formatted prompts
-
-The first step of an evaluation is to convert an interview into prompts using the `prepare.py` script:
-
-`python3 ./prepare.py --chat $MODEL`
-
-The prompts will be written to `results/prepare_junior-v2_python-javascript_chat-simple-google-codegemma-7b-it.ndjson` and `results/prepare_senior_python-javascript_chat-simple-google-codegemma-7b-it.ndjson`
-
-### Run Inference
-
-#### Local GPU: Transformers
-
-`pip3 install -r requirements.transformers.txt`
-
-```
-python3 ./interview_cuda.py \
-         --runtime transformers \
-         --model_name google/codegemma-7b-it \
-         --input results/prepare_junior-v2_python-javascript_chat-simple-google-codegemma-7b-it.ndjson \
-         --params params/greedy-hf.json
-```
-
-#### Local GPU: vLLM
-
-TODO
-
-#### Local GPU: exllamav2
-
-TODO
-
-#### Remote GPU (Modal)
-
-TODO
-
-## Evaluating Code-Completion
-
-TODO
-
-## Evaluating Fill-in-the-Middle
-
-TODO

@@ -93,7 +93,7 @@ class ModalWrapper:
 
 @app.local_entrypoint()
 def main(input: str = "", interview:str = "", params: str = "", templateout: str = "", batch: bool = False):
-    from prepare import save_interview, prepare_interview
+    from prepare import save_interview, cli_to_interviews
     from interview_cuda import interview_run
     from transformers import AutoTokenizer
     
@@ -103,24 +103,10 @@ def main(input: str = "", interview:str = "", params: str = "", templateout: str
     if params == "": params = "params/greedy-hf.json" if RUNTIME == "transformers" else "params/greedy-openai.json"
     params_json = json.load(open(params,'r'))
 
-    interviews = []       
-    if input != "":
-        for input_file in input.split(','):
-            interview = [json.loads(line) for line in open(input_file)]
-            interviews.append( (input_file, interview) )
-            print(f"Loaded {len(interview)} questions from {input_file}.")
-    elif interview != "":
-        tokenizer = AutoTokenizer.from_pretrained("{{MODELNAME}}", trust_remote_code=True, revision=model_args.get('revision'))
-        for interview_name in interview.split(','):
-            language = "python,javascript"
-            template_name = "chat-simple"
-            message_template = [{'role': 'user', 'content': Template("Write a {language} function {Signature} {Input} that returns {Output}".replace('{','{'+'{').replace('}','}'+'}'))}]
-            output_filename, interview = prepare_interview(interview_name, language, message_template, template_name, tokenizer)
-            interviews.append( (output_filename, interview) )
-            print(f"Expanded {len(interview)} questions from {interview_name}.")
-    else:
-        raise Exception("Please provide either --input or --interview")
-
+    print("Loading input ...")
+    tokenizer = AutoTokenizer.from_pretrained("{{MODELNAME}}", trust_remote_code=True, revision=model_args.get('revision'))
+    interviews = cli_to_interviews(input, interview, tokenizer)
+        
     print("Init model...")
     model = ModalWrapper()
 
