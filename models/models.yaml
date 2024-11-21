@@ -511,14 +511,21 @@ Qwen-Qwen2.5-32B-Instruct: { name: "Qwen2.5-Instruct", size: "32B", tags: ["qwen
 Qwen2.5-14B-Instruct-AWQ: { name: "Qwen2.5-Instruct", size: "14B", quant: "AWQ-4b", tags: ["qwen2.5"], url: "https://huggingface.co/Qwen/Qwen2.5-14B-Instruct-AWQ" }
 Qwen-Qwen2.5-32B-Instruct-AWQ: { name: "Qwen2.5-Instruct", size: "32B", quant: "AWQ-4b", tags: ["qwen2.5"] }
 Qwen-Qwen2.5-72B-Instruct-AWQ: { name: "Qwen2.5-Instruct", size: "72B", quant: "AWQ-4b", tags: ["qwen2.5"] }
-Qwen2.5-Coder-7B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "7B", tags: ["qwen2.5"], alias: ["Qwen2.5-Coder-7B-Instruct-fp16"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct" }
-Qwen2.5-Coder-1.5B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "1.5B", tags: ["qwen2.5"], alias: ["Qwen2.5-Coder-1.5B-Instruct-fp16"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct" }
 infly-OpenCoder-1.5B-Instruct-fp16: { name: "infly OpenCoder", size: "1.5B", tags: ["qwen2.5"] }
 infly-OpenCoder-8B-Instruct-fp16: { name: "infly OpenCoder", size: "8B", tags: ["qwen2.5"] }
+
 Qwen-Qwen2.5-Coder-32B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "32B", tags: ["qwen2.5"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct" }
 huggingface-Qwen-Qwen2.5-Coder-32B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "32B", tags: ["qwen2.5"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct" }
 Qwen2.5-Coder-32B-Instruct-Q8-0: { name: "Qwen2.5-Coder-Instruct", size: "32B", quant: "GGUF-Q8", tags: ["qwen2.5"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct-GGUF" }
 Qwen2.5-Coder-32B-Instruct-exl2-8bpw: { name: "Qwen2.5-Coder-Instruct", size: "32B", quant: "EXL2-8bpw", tags: ["qwen2.5"], url: "https://huggingface.co/bartowski/Qwen2.5-Coder-32B-Instruct-exl2" }
+
+Qwen-Qwen2.5-Coder-1.5B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "1.5B", tags: ["qwen2.5"], alias: ["Qwen-Qwen2.5-Coder-1.5B-Instruct-fp16"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct" }
+Qwen-Qwen2.5-Coder-7B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "7B", tags: ["qwen2.5"], alias: ["Qwen2.5-Coder-7B-Instruct-fp16"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct" }
+Qwen-Qwen2.5-Coder-7B-Instruct-AWQ: { name: "Qwen2.5-Coder-Instruct", size: "7B", tags: ["qwen2.5"], alias: ["Qwen2.5-Coder-7B-Instruct-fp16"], quant: "AWQ", url: "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-AWQ" }
+Qwen-Qwen2.5-Coder-7B-Instruct-GPTQ-Int4-main: { name: "Qwen2.5-Coder-Instruct", size: "7B", tags: ["qwen2.5"], alias: ["Qwen2.5-Coder-7B-Instruct-fp16"], quant: "GPTQ-INT4", url: "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GPTQ-INT4" }
+Qwen-Qwen2.5-Coder-14B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "14B", tags: ["qwen2.5"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-14B-Instruct" }
+Qwen-Qwen2.5-Coder-14B-Instruct-AWQ: { name: "Qwen2.5-Coder-Instruct", size: "14B", tags: ["qwen2.5"], quant: "AWQ", url: "https://huggingface.co/Qwen/Qwen2.5-Coder-14B-Instruct-AWQ" }
+Qwen-Qwen2.5-Coder-14B-Instruct-GPTQ-INT4: { name: "Qwen2.5-Coder-Instruct", size: "14B", tags: ["qwen2.5"], quant: "GPTQ-INT4", url: "https://huggingface.co/Qwen/Qwen2.5-Coder-14B-Instruct-GPTQ-INT4", alias: ["Qwen-Qwen2.5-Coder-14B-Instruct-GPTQ-INT4-main"] }
 
 DeepSeek-Coder-V2-Lite-Base: { name: "DeepSeek-Coder-V2-Lite-Base", size: "16B", tags: ["deepseek2"], alias: ["DeepSeek-Coder-V2-Lite-Base-fp16"] }
 DeepSeek-Coder-V2-Lite-Instruct: { name: "DeepSeek-Coder-V2-Lite-Instruct", size: "16B", tags: ["deepseek2"], alias: ["deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-fp16","-home-mike-models-DeepSeek-Coder-V2-Lite-Instruct"] }
