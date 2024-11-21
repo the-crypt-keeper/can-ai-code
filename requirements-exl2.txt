@@ -1,0 +1,1 @@
+exllamav2@https://github.com/turboderp/exllamav2/releases/download/v0.2.4/exllamav2-0.2.4+cu121.torch2.5.0-cp310-cp310-linux_x86_64.whl
