@@ -81,7 +81,10 @@ class InterviewTransformers:
             mem_usage = self.pipeline.model.get_memory_footprint()
         elif use_accelerate:
             print('Loading model with accelerate...')
-            self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), low_cpu_mem_usage=True, trust_remote_code=True)
+            if quantization_config is None:
+                self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, revision=self.info.get('revision',None), low_cpu_mem_usage=True, trust_remote_code=True)
+            else:
+                self.model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map="auto", torch_dtype=torch_dtype, quantization_config=quantization_config, revision=self.info.get('revision',None), low_cpu_mem_usage=True, trust_remote_code=True)
             #self.model = self.model.to('cuda:0').eval()
             mem_usage = self.model.get_memory_footprint()
         else:
@@ -159,10 +162,10 @@ class InterviewTransformers:
         if self.model is None:           
             answer = self.pipeline(prompt, **params)
         else:
-            inputs = self.tokenizer.encode(prompt, return_tensors="pt").to('cuda')
-            input_len = inputs.size()[-1]
+            inputs = self.tokenizer(prompt, return_tensors="pt").to('cuda')
+            input_len = inputs['input_ids'].size()[-1]
             
-            sample = self.model.generate(inputs, generation_config=generation_config, **generate_args)
+            sample = self.model.generate(**inputs, generation_config=generation_config, **generate_args)
             answer = self.tokenizer.decode(sample[0][input_len:], clean_up_tokenization_spaces=False, skip_special_tokens=True)
 
         if generation_config.eos_token_id is not None:
