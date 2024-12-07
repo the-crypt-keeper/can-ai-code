@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/07** Evaluate Llama3.3-70B (FP16, GGUF, AWQ) it's a fantastic model.
+
 **11/21** This project was too difficult to use, and I'm the maintainer!  I've spent some time refactoring the interview scripts, updating requirements.txt and there is a new [evaluation guide](GUIDE.md) for evaluating both models and APIs.
 
 **11/20** Re-Evaluate CodeQwen2.5 (new weights). Evaluate Mistral-Small-2409 and Ministral-8B-2410. Evaluate gpt-4o-2024-11-20.
@@ -27,12 +29,6 @@ A self-evaluating interview for AI coding models.
 **10/26** Evaluate Qwen2.5 (3B, 7B, 14B FP16 | 14B, 32B, 72B AWQ) and Qwen-Coder2.5
 
 **10/26** Update evaluations of all available OpenAI, Mistral and Anthropic models.
-
-**10/25** Evaluate ibm-granite/granite-3.0 family (8B Dense, 2B Dense, 1B MoE, 3B MoE).  Had to take a brief hiatus due to switching jobs but now working to catch up on the backlog so open Issues if there's any interesting code models or new families in the last ~6 weeks I missed!  Qwen2.5 and Llama3.2 will be up this weekend.
-
-**9/12** Fixed a serialization bug in the evaluator which negatively affected four results: deepseek-ai-DeepSeek-Coder-V2-Lite-Instruct-fp16, ibm-granite-granite-8b-code-instruct-nf4, ajibawa-2023-Code-Llama-3-8B, ollama-phi3:3.8b-mini-instruct-4k-fp16
-
-**9/11** Evaluate Yi-Coder-1.5B-Chat and Yi-Coder-9B-Chat (FP16), the 9B in particular is very strong.
 
 ## Test Suites
 
