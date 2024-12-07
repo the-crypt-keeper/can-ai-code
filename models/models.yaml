@@ -591,3 +591,7 @@ turboderp-Llama-3.1-70B-Instruct-exl2-3.5bpw: { name: "Llama 3.1 Instruct", size
 turboderp-Llama-3.1-70B-Instruct-exl2-3.0bpw: { name: "Llama 3.1 Instruct", size: "70B", tags: ["llama31"], quant: "EXL2-3bpw", url: "https://huggingface.co/turboderp/Llama-3.1-70B-Instruct-exl2" }
 hermes-3-llama-3.1-405b-fp8: { name: "Hermes 3 Llama 3.1", size: "405B", tags: ["llama31"], quant: "FP8", url: "NousResearch/Hermes-3-Llama-3.1-405B" }
 Apel-sin-dracarys2-llama-3.1-70b-instruct-exl2-4-25: { name: "Dracarys2-llama-3.1", "size": "70B", quant: "EXL2-4.25bpw", url: "https://huggingface.co/Apel-sin/dracarys2-llama-3.1-70b-instruct-exl2" }
+
+meta-llama-Llama-3.3-70B-Instruct: { name: "Llama 3.3 Instruct", size: "70B", tags: ["llama33"], alias: ["meta-llama-Llama-3.3-70B-Instruct-fp16"] }
+Llama-3.3-70B-Instruct-Q4-K-M: { name: "Llama 3.3 Instruct", size: "70B", tags: ["llama33"], quant: "GGUF-Q4km" }
+casperhansen-llama-3.3-70b-instruct-awq: { name: "Llama 3.3 Instruct", size: "70B", tags: ["llama33"], quant: "AWQ-4bit" }
