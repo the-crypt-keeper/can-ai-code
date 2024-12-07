@@ -56,7 +56,7 @@ def prepare_interview(interview, languages, message_template, template_name, tok
 
 def cli_to_interviews(input, interview, tokenizer):
     interviews = []
-    if input != "":
+    if input != "" and input is not None:
         for input_file in input.split(','):
             interview = [json.loads(line) for line in open(input_file)]
             interviews.append( (input_file, interview) )
