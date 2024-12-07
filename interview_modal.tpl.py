@@ -50,21 +50,21 @@ vllm_image = (
     modal.Image.from_registry("nvidia/cuda:12.1.1-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "transformers==4.46.0",
+        "transformers==4.47.0",
         "tiktoken==0.7.0",
-        "bitsandbytes==0.44.1",
-        "accelerate==1.0.1",
-        "einops==0.6.1",
+        "bitsandbytes==0.45.0",
+        "accelerate==1.2.0",
+        "einops==0.8.0",
         "sentencepiece==0.2.0",
         "hf-transfer~=0.1",
         "scipy==1.10.1",
         "pyarrow==11.0.0",
         "protobuf==3.20.3",
-        "vllm==0.6.3.post1",
+        "vllm==0.6.4.post1",
         "auto-gptq==0.7.1",
-        "https://github.com/turboderp/exllamav2/releases/download/v0.2.3/exllamav2-0.2.3+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl"
+        "https://github.com/turboderp/exllamav2/releases/download/v0.2.5/exllamav2-0.2.5+cu121.torch2.5.0-cp310-cp310-linux_x86_64.whl"
     )
-    .pip_install("flash-attn==2.6.3") # this errors out unless torch is already installed
+    .pip_install("flash-attn==2.7.0.post2") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
     .pip_install("git+https://github.com/huggingface/transformers.git")
