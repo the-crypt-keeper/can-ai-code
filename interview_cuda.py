@@ -879,7 +879,7 @@ def load_runtime(model_name, model_info, runtime, quant, num_gpus):
     return model
 
 
-def main(model: str, runtime: str, input: str = "", interview: str = "senior", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
+def main(model: str, runtime: str, input: str = "", interview: str = "senior", prompt:str="prompts/chat.json", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
     from prepare import save_interview, cli_to_interviews
     import torch
     
@@ -906,7 +906,7 @@ def main(model: str, runtime: str, input: str = "", interview: str = "senior", p
     wrapper.load()
 
     tokenizer = AutoTokenizer.from_pretrained(model, trust_remote_code=True, revision=revision if revision else None)
-    interviews = cli_to_interviews(input, interview, tokenizer)
+    interviews = cli_to_interviews(input, interview, tokenizer, prompt)
 
     main_process = True
     if is_torchrun():        

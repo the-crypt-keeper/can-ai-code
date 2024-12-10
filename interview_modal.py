@@ -17,7 +17,7 @@ def parse_gpu_string(gstr):
     
     return f"modal.gpu.{mem_split[0]}(count={count}" + (f", size='{memory}')" if memory else ")")
 
-def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview: str = "senior", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
+def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview: str = "senior", prompt:str="", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
     model_args = { 'info': json.loads(info) }
     if revision: model_args['revision'] = revision
     if isinstance(revision, int): raise Exception("Please escape --revision with \\' to avoid Fire parsing issues.")
@@ -47,6 +47,7 @@ def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview
     if interview: args += ["--interview",interview]
     if params: args += ["--params", params]
     if templateout: args += ["--templateout",templateout]
+    if prompt: args += ["--prompt",prompt]
     if runtime == "vllm": args += ["--batch"]
 
     print(f"Rendered {output_script} with {modal_params}, executing via modal run with {args}")

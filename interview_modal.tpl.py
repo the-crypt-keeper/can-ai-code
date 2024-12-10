@@ -92,7 +92,7 @@ class ModalWrapper:
         return self.wrapper.generate(prompt, params)
 
 @app.local_entrypoint()
-def main(input: str = "", interview:str = "", params: str = "", templateout: str = "", batch: bool = False):
+def main(input: str = "", interview:str = "", params: str = "", templateout: str = "", prompt:str="prompts/chat.json", batch: bool = False):
     from prepare import save_interview, cli_to_interviews
     from interview_cuda import interview_run
     from transformers import AutoTokenizer
@@ -105,7 +105,7 @@ def main(input: str = "", interview:str = "", params: str = "", templateout: str
 
     print("Loading input ...")
     tokenizer = AutoTokenizer.from_pretrained("{{MODELNAME}}", trust_remote_code=True, revision=model_args.get('revision'))
-    interviews = cli_to_interviews(input, interview, tokenizer)
+    interviews = cli_to_interviews(input, interview, tokenizer, prompt)
         
     print("Init model...")
     model = ModalWrapper()

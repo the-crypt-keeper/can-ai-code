@@ -22,6 +22,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview executor for LiteLLM')
     parser.add_argument('--input', type=str, help='path to prepare*.ndjson from prepare stage')
     parser.add_argument('--interview', type=str, default='senior', help='name of interview to run directly')
+    parser.add_argument('--prompt', type=str, help='chat template for interview', default='prompts/chat.json')
     parser.add_argument('--model', type=str, default='openai/chatgpt', help='model to use')
     parser.add_argument('--apibase', type=str, help='api base url override')
     parser.add_argument('--apikey', type=str, help='api key (if required)')
@@ -86,16 +87,16 @@ if __name__ == '__main__':
         params['stop'] = json.loads(args.stop)
         
     # Run interviews
-    interviews = cli_to_interviews(args.input, args.interview, None)
+    interviews = cli_to_interviews(args.input, args.interview, None, args.prompt)
     output_template = Template(open(args.templateout).read()) if args.templateout else None
     for input_file, interview in interviews:
         results = []     
 
         for idx, challenge in enumerate(interview):
             print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
-            messages = [{'role': 'user', 'content': challenge['prompt']}]
+
             t0 = time()
-            response = litellm.completion(model=model_name, messages=messages, seed=args.seed, **params)
+            response = litellm.completion(model=model_name, messages=challenge['prompt'], seed=args.seed, **params)
             t1 = time()
             speed = response.usage.completion_tokens/(t1-t0)
             

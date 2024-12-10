@@ -40,12 +40,12 @@ def prepare_interview(interview, languages, message_template, template_name, tok
             for msg in message_template:
                 content = msg['content'].render({'language': language, **test})
                 messages.append({'role': msg['role'], 'content': content})
-                
+
             if tokenizer:
                 prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
             else:
-                prompt = '\n'.join([msg['content'] for msg in messages])
-                
+                prompt = messages
+
             output = test.copy()
             del output['Checks']
             output['language'] = language
@@ -54,7 +54,7 @@ def prepare_interview(interview, languages, message_template, template_name, tok
             
     return output_filename,outputs
 
-def cli_to_interviews(input, interview, tokenizer):
+def cli_to_interviews(input, interview, tokenizer, prompt = 'prompts/chat.json'):
     interviews = []
     if input != "" and input is not None:
         for input_file in input.split(','):
@@ -64,8 +64,12 @@ def cli_to_interviews(input, interview, tokenizer):
     elif interview != "":
         for interview_name in interview.split(','):
             language = "python,javascript"
-            template_name = "chat-simple"
-            message_template = [{'role': 'user', 'content': Template("Write a {language} function {Signature} {Input} that returns {Output}".replace('{','{'+'{').replace('}','}'+'}'))}]
+            template_name = prompt.split('/')[-1] if '/' in prompt else prompt
+            template_name = template_name.replace('.json','')
+            with open(prompt) as f:
+                message_template = json.load(f)
+            for msg in message_template:
+                msg['content'] = Template(msg['content'])
             output_filename, interview = prepare_interview(interview_name, language, message_template, template_name, tokenizer)
             interviews.append( (output_filename, interview) )
             print(f"Expanded {len(interview)} questions from {interview_name}.")
@@ -78,15 +82,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Interview preparation')
     parser.add_argument('--language', type=str, default='python,javascript', help='languages to prepare, comma seperated')
     parser.add_argument('--interview', type=str, default='junior-v2,senior', help='interviews to prepare')
-    parser.add_argument('--template', type=str, help='prompt template file')
+    parser.add_argument('--prompt', type=str, help='prompt template file')
     parser.add_argument('--chat',type=str, help='outer chat prompt huggingface model name')
     args = parser.parse_args()
     
-    if args.chat and not args.template: args.template = 'prompts/chat-simple.txt'
-    assert(args.template)
+    if args.chat and not args.prompt: args.prompt = 'prompts/chat.json'
+    assert(args.prompt)
     
-    template_text = open(args.template).read()
-    if 'json' in args.template:
+    template_text = open(args.prompt).read()
+    if 'json' in args.prompt:
         message_template = json.loads(template_text)
     else:
         message_template = [{'role': 'user', 'content': template_text}]
@@ -94,10 +98,10 @@ if __name__ == "__main__":
     
     if args.chat:
         from transformers import AutoTokenizer
-        template_name = Path(args.template).stem+'-'+args.chat.replace('/','-').replace('_','-')
+        template_name = Path(args.prompt).stem+'-'+args.chat.replace('/','-').replace('_','-')
         tokenizer = AutoTokenizer.from_pretrained(args.chat, trust_remote_code=True)
     else:
-        template_name = Path(args.template).stem
+        template_name = Path(args.prompt).stem
         tokenizer = None
    
     for interview in args.interview.split(','):
