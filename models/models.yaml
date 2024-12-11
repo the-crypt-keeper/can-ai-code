@@ -595,3 +595,13 @@ Apel-sin-dracarys2-llama-3.1-70b-instruct-exl2-4-25: { name: "Dracarys2-llama-3.
 meta-llama-Llama-3.3-70B-Instruct: { name: "Llama 3.3 Instruct", size: "70B", tags: ["llama33"], alias: ["meta-llama-Llama-3.3-70B-Instruct-fp16"] }
 Llama-3.3-70B-Instruct-Q4-K-M: { name: "Llama 3.3 Instruct", size: "70B", tags: ["llama33"], quant: "GGUF-Q4km" }
 casperhansen-llama-3.3-70b-instruct-awq: { name: "Llama 3.3 Instruct", size: "70B", tags: ["llama33"], quant: "AWQ-4bit" }
+
+LGAI-EXAONE-EXAONE-3.5-2.4B-Instruct: { name: "EXAONE 3.5", size: "2.4B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct", alias: ["LGAI-EXAONE-EXAONE-3.5-2.4B-Instruct-fp16"] }
+LGAI-EXAONE-EXAONE-3.5-2.4B-Instruct-AWQ: { name: "EXAONE 3.5", size: "2.4B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct-AWQ", quant: "AWQ" }
+EXAONE-3.5-2.4B-Instruct-Q8-0: { name: "EXAONE 3.5", size: "2.4B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct-GGUF", quant: "GGUF-Q8" }
+LGAI-EXAONE-EXAONE-3.5-7.8B-Instruct: { name: "EXAONE 3.5", size: "7.8B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct", alias: ["LGAI-EXAONE-EXAONE-3.5-7.8B-Instruct-fp16"] }
+LGAI-EXAONE-EXAONE-3.5-7.8B-Instruct-AWQ: { name: "EXAONE 3.5", size: "7.8B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct-AWQ", quant: "AWQ" }
+EXAONE-3.5-7.8B-Instruct-Q8-0: { name: "EXAONE 3.5", size: "7.8B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct-GGUF", quant: "GGUF-Q8" }
+LGAI-EXAONE-EXAONE-3.5-32B-Instruct: { name: "EXAONE 3.5", size: "32B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-32B-Instruct", alias: ["LGAI-EXAONE-EXAONE-3.5-32B-Instruct-fp16"] }
+LGAI-EXAONE-EXAONE-3.5-32B-Instruct-AWQ: { name: "EXAONE 3.5", size: "32B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-32B-Instruct-AWQ", quant: "AWQ" }
+EXAONE-3.5-32B-Instruct-Q8-0: { name: "EXAONE 3.5", size: "32B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-32B-Instruct-GGUF", quant: "GGUF-Q8" }

@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/11** Evaluate EXAONE 3.5 2.4B, 7.8B, 32B (FP16, GGUF Q8, AWQ). Evaluate HIGGS quantization of llama 3.1 8b.
+
 **12/07** Evaluate Llama3.3-70B (FP16, GGUF, AWQ) it's a fantastic model.
 
 **11/21** This project was too difficult to use, and I'm the maintainer!  I've spent some time refactoring the interview scripts, updating requirements.txt and there is a new [evaluation guide](GUIDE.md) for evaluating both models and APIs.
