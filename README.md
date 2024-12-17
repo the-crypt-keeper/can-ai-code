@@ -18,19 +18,13 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**12/17** Evaluate Falcon3 1B, 3B, 7B and 10B (FP16, GGUF). A bit of an odd result: Every GGUF except 7B is behind the FP16, while the 7B GGUF mysteriously outperforms even 10B FP16.
+
 **12/11** Evaluate EXAONE 3.5 2.4B, 7.8B, 32B (FP16, GGUF Q8, AWQ). Evaluate HIGGS quantization of llama 3.1 8b.
 
 **12/07** Evaluate Llama3.3-70B (FP16, GGUF, AWQ) it's a fantastic model.
 
 **11/21** This project was too difficult to use, and I'm the maintainer!  I've spent some time refactoring the interview scripts, updating requirements.txt and there is a new [evaluation guide](GUIDE.md) for evaluating both models and APIs.
-
-**11/20** Re-Evaluate CodeQwen2.5 (new weights). Evaluate Mistral-Small-2409 and Ministral-8B-2410. Evaluate gpt-4o-2024-11-20.
-
-**11/13** Evaluate Qwen2.5 (32B at FP16, GGUF Q8, EXL2 8bpw), OpenCoder (1.5B and 8B at FP16).
-
-**10/26** Evaluate Qwen2.5 (3B, 7B, 14B FP16 | 14B, 32B, 72B AWQ) and Qwen-Coder2.5
-
-**10/26** Update evaluations of all available OpenAI, Mistral and Anthropic models.
 
 ## Test Suites
 

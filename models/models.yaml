@@ -605,3 +605,12 @@ EXAONE-3.5-7.8B-Instruct-Q8-0: { name: "EXAONE 3.5", size: "7.8B", tags: ["exaon
 LGAI-EXAONE-EXAONE-3.5-32B-Instruct: { name: "EXAONE 3.5", size: "32B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-32B-Instruct", alias: ["LGAI-EXAONE-EXAONE-3.5-32B-Instruct-fp16"] }
 LGAI-EXAONE-EXAONE-3.5-32B-Instruct-AWQ: { name: "EXAONE 3.5", size: "32B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-32B-Instruct-AWQ", quant: "AWQ" }
 EXAONE-3.5-32B-Instruct-Q8-0: { name: "EXAONE 3.5", size: "32B", tags: ["exaone"], url: "https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-32B-Instruct-GGUF", quant: "GGUF-Q8" }
+
+tiiuae-Falcon3-1B-Instruct: { name: "Falcon3 Instruct", size: "1B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-1B-Instruct", alias: ["tiiuae-Falcon3-1B-Instruct-fp16"] }
+Falcon3-1B-Instruct-q8-0: { name: "Falcon3 Instruct", size: "1B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-1B-Instruct-GGUF", quant: "GGUF-Q8_0" }
+tiiuae-Falcon3-3B-Instruct: { name: "Falcon3 Instruct", size: "3B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-3B-Instruct", alias: ["tiiuae-Falcon3-3B-Instruct-fp16"] }
+Falcon3-3B-Instruct-q8-0: { name: "Falcon3 Instruct", size: "3B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-3B-Instruct-GGUF", quant: "GGUF-Q8_0" }
+tiiuae-Falcon3-7B-Instruct: { name: "Falcon3 Instruct", size: "7B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-7B-Instruct", alias: ["tiiuae-Falcon3-7B-Instruct-fp16"] }
+Falcon3-7B-Instruct-q8-0: { name: "Falcon3 Instruct", size: "7B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-7B-Instruct-GGUF", quant: "GGUF-Q8_0" }
+tiiuae-Falcon3-10B-Instruct: { name: "Falcon3 Instruct", size: "10B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-10B-Instruct", alias: ["tiiuae-Falcon3-10B-Instruct-fp16"] }
+Falcon3-10B-Instruct-q8-0: { name: "Falcon3 Instruct", size: "10B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-10B-Instruct-GGUF", quant: "GGUF-Q8_0" }
