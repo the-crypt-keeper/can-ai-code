@@ -15,6 +15,7 @@ openai-gpt-4o-mini-2024-07-18: { name: "OpenAI gpt-4o-mini-2024-07-18", url: "ht
 
 openai-o1-preview-2024-09-12: { name: "OpenAI o1-preview-2024-09-12", url: "https://openai.com/", tags: ["commercial"] }
 openai-o1-mini-2024-09-12: { name: "OpenAI o1-mini-2024-09-12", url: "https://openai.com/", tags: ["commercial"] }
+openai-o1-2024-12-17: { name: "OpenAI o1-2024-12-17", url: "https://openai.com/", tags: ["commercial"] }
 
 mistral-mistral-tiny-2312: { name: "Mistral mistral-tiny-2312", size: "7B", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-mistral-small-2312: { name: "Mistral mistral-small-2312", size: "22B",url: "https://mistral.ai/", tags: ["commercial","mistral"] }
@@ -371,6 +372,7 @@ deepseek-ai-deepseek-coder-6.7b-instruct-fp16: { name: "DeepSeek Coder Instruct"
 TheBloke-deepseek-coder-6.7B-instruct-AWQ: { name: "DeepSeek Coder Instruct", size: "6.7B", tags: ["deepseek"], quant: "AWQ-4b", url: "https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-AWQ" }
 TheBloke-deepseek-coder-33B-instruct-AWQ: { name: "DeepSeek Coder Instruct", size: "33B", tags: ["deepseek"], quant: "AWQ-4b", url: "https://huggingface.co/TheBloke/deepseek-coder-33B-instruct-AWQ" }
 deepseek-ai-deepseek-moe-16b-chat-fp16: { name: "DeepSeek MoE Chat", size: "16B", tags: ["deepseek"], url: "https://huggingface.co/deepseek-ai/deepseek-moe-16b-chat" }
+deepseek-deepseek-chat: { name: "DeepSeek V3", size: "671B", tags: ["deepseek"], url: "https://platform.deepseek.com/usage" }
 
 ise-uiuc-Magicoder-S-DS-6.7B: { name: "Magicoder-S-DS", size: "6.7B", tags: ["magicoder","deepseek"], url: "https://huggingface.co/ise-uiuc/Magicoder-S-DS-6.7B" }
 ise-uiuc-Magicoder-DS-6.7B: { name: "Magicoder-DS", size: "6.7B", tags: ["magicoder","deepseek"], url: "https://huggingface.co/ise-uiuc/Magicoder-DS-6.7B" }

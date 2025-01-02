@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**1/2** Evaluate DeepSeek-V3 (API) and OpenA1 O1 2024-12-17 (API).
+
 **12/17** Evaluate Falcon3 1B, 3B, 7B and 10B (FP16, GGUF). A bit of an odd result: Every GGUF except 7B is behind the FP16, while the 7B GGUF mysteriously outperforms even 10B FP16.
 
 **12/11** Evaluate EXAONE 3.5 2.4B, 7.8B, 32B (FP16, GGUF Q8, AWQ). Evaluate HIGGS quantization of llama 3.1 8b.

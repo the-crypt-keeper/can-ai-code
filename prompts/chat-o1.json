@@ -1,0 +1,3 @@
+[
+    {"role": "user", "content": "Write a {{language}} function {{Signature}} {{Input}} that returns {{Output}}. The code must start with ```{{language}} and end with ```."}
+]
