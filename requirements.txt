@@ -2,13 +2,14 @@ PyYAML==6.0.1
 fire==0.5.0
 Jinja2==3.1.2
 beautifulsoup4==4.12.3
-huggingface_hub[cli]==0.26.1
+huggingface_hub[cli]==0.27.1
 streamlit==1.32.2
 
-transformers==4.46.3
+transformers==4.47.1
 tiktoken==0.7.0
 hf-transfer~=0.1
 
 litellm==1.51.2
 
 modal==0.66.22
+wheel==0.45.1

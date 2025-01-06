@@ -354,10 +354,13 @@ class InterviewExllama2:
             ExLlamaV2Tokenizer,
         )
 
-        config_path = hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename="config.json")
-
         config = ExLlamaV2Config()
-        config.model_dir = os.path.dirname(config_path)
+        if os.path.exists(self.model_name):
+            config.model_dir = self.model_name
+            self.info['model_name'] = self.model_name.split('/')[-1]
+        else:
+            config_path = hf_hub_download(repo_id=self.model_name, revision=self.info.get('revision',None), filename="config.json")
+            config.model_dir = os.path.dirname(config_path)     
 
         print('Starting up...')
         if self.info.get('low_mem', False): config.set_low_mem()

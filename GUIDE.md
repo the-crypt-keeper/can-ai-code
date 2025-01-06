@@ -4,7 +4,7 @@
 
 1. `python -m venv venv`
 2. `source venv/bin/activate`
-3. `pip install -r requirements.txt`
+3. `pip install -r requirements.txt` (optional: `-r requirements-transformers.txt -r requirements-exl2.txt -r requirements-vllm.txt`)
 
 ## Common Options
 
@@ -60,6 +60,8 @@ See [Ooba Docs](https://github.com/oobabooga/text-generation-webui/wiki/12-%E2%8
 ### Evaluate a model with local GPU (CUDA)
 
 The local CUDA executor will use all available GPUs by default, use `CUDA_VISIBLE_DEVICES` if you have connected accelerators you don't want used.
+
+Note that you can install all 3 backends into a single venv.
 
 #### Backend: Transformers
 
