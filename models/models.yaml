@@ -489,6 +489,9 @@ ibm-granite-granite-3.0-2b-instruct: { name: "Granite3", size: "2B", tags: ["gra
 ibm-granite-granite-3.0-1b-a400m-instruct: { name: "Granite3 MoE", size: "1B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.0-1b-a400m-instruct", alias: ["ibm-granite-granite-3.0-1b-a400m-instruct-fp16"] }
 ibm-granite-granite-3.0-3b-a800m-instruct: { name: "Granite3 MoE", size: "3B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.0-3b-a800m-instruct", alias: ["ibm-granite-granite-3.0-3b-a800m-instruct-fp16"] }
 
+ibm-granite-granite-3.1-2b-instruct: { name: "Granite3.1", size: "2B", tags: ["granite3.1"], url: "https://huggingface.co/ibm-granite/granite-3.1-2b-instruct" }
+ibm-granite-granite-3.1-8b-instruct: { name: "Granite3.1", size: "8B", tags: ["granite3.1"], url: "https://huggingface.co/ibm-granite/granite-3.1-8b-instruct" }
+
 01-ai-Yi-1.5-6B-Chat: { name: "Yi-1.5-Chat", size: "6B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-6B-Chat" }
 01-ai-Yi-1.5-9B-Chat: { name: "Yi-1.5-Chat", size: "9B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-9B-Chat" }
 01-ai-Yi-1.5-34B-Chat: { name: "Yi-1.5-Chat", size: "34B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-34B-Chat" }
@@ -616,3 +619,9 @@ tiiuae-Falcon3-7B-Instruct: { name: "Falcon3 Instruct", size: "7B", tags: ["falc
 Falcon3-7B-Instruct-q8-0: { name: "Falcon3 Instruct", size: "7B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-7B-Instruct-GGUF", quant: "GGUF-Q8_0" }
 tiiuae-Falcon3-10B-Instruct: { name: "Falcon3 Instruct", size: "10B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-10B-Instruct", alias: ["tiiuae-Falcon3-10B-Instruct-fp16"] }
 Falcon3-10B-Instruct-q8-0: { name: "Falcon3 Instruct", size: "10B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-10B-Instruct-GGUF", quant: "GGUF-Q8_0" }
+
+Dolphin3.0-Llama3.2-3B-fp16: { name: "Dolphin3.0-Llama", size: "3B", tags: ["dolphin","llama3"], alias: ["Dolphin3.0-Llama3.2-3B-fp16-fp16"], url: "https://huggingface.co/cognitivecomputations/Dolphin3.0-Llama3.2-3B" }
+cognitivecomputations-Dolphin3.0-Llama3.1-8B: { name: "Dolphin3.0-Llama", size: "8B", tags: ["dolphin","llama3"], alias: ["cognitivecomputations-Dolphin3.0-Llama3.1-8B-fp16"], url: "https://huggingface.co/cognitivecomputations/Dolphin3.0-Llama3.1-8B" }
+Dolphin3.0-Llama3.1-8B-Q8-0: { name: "Dolphin3.0-Llama", size: "8B", tags: ["dolphin","llama3"], quant: "GGUF-Q8", url: "https://huggingface.co/cognitivecomputations/Dolphin3.0-Llama3.1-8B-GGUF" }
+cognitivecomputations-Dolphin3.0-Qwen2.5-3b: { name: "Dolphin3.0-Qwen", size: "8B", tags: ["dolphin","qwen2.5"], alias: ["cognitivecomputations-Dolphin3.0-Qwen2.5-3b-fp16"], url: "https://huggingface.co/cognitivecomputations/Dolphin3.0-Qwen2.5-3b" }
+
