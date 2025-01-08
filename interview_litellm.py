@@ -53,13 +53,17 @@ if __name__ == '__main__':
         params['api_base'] = args.apibase
 
         try:
+            target_model = args.model.replace('openai/','').replace('text-completion-openai/','').replace('text/','')
             model_info = requests.get(args.apibase + '/models').json()
             if args.model == 'openai/chatgpt':
                 model_name = 'openai/'+model_info['data'][0]['id']
             else:
-                selected_model = [x for x in model_info['data'] if x['id'] == args.model.replace('openai/','')]
+                selected_model = [x for x in model_info['data'] if x['id'] == target_model]
                 if len(selected_model) == 0: raise Exception(f'Unable to find {args.model} at {args.apibase}')
-                model_name = 'openai/'+selected_model[0]['id']
+                if 'text-completion-openai/' in args.model or 'text/' in args.model:
+                    model_name = 'text-completion-openai/'+selected_model[0]['id']
+                else:
+                    model_name = 'openai/'+selected_model[0]['id']
             args.model = model_name.split('/')[-1].replace('.gguf','')
             print('> Detected model', model_name, args.model)
         except:
@@ -94,9 +98,13 @@ if __name__ == '__main__':
 
         for idx, challenge in enumerate(interview):
             print(f"{idx+1}/{len(interview)} {challenge['name']} {challenge['language']}")
+            messages = challenge['prompt']
+            if isinstance(messages, str):
+                print('WARNING: Using text completion.')
+                messages = [{'role': 'user', 'content': messages}]
 
             t0 = time()
-            response = litellm.completion(model=model_name, messages=challenge['prompt'], seed=args.seed, **params)
+            response = litellm.completion(model=model_name, messages=messages, seed=args.seed, **params)
             t1 = time()
             speed = response.usage.completion_tokens/(t1-t0)
             
