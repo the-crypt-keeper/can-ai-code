@@ -64,8 +64,15 @@ def extract_code_fallback(answer):
     simple_answer = answer.strip()
     return simple_answer
 
+# Remove reasoning
+def remove_think_tags(text):
+    import re
+    pattern = r'<think>.*?</think>'
+    return re.sub(pattern, '', text, flags=re.DOTALL)
+
 def extract_code(answer, stop_at_prefix=[]):
-    code = None
+    code = None    
+    answer = remove_think_tags(answer)
 
     if answer.find('[PYTHON]') != -1:
         code = extract_code_codellama_python(answer)
