@@ -373,9 +373,9 @@ class InterviewExllama2:
         self.model = ExLlamaV2(config)
         if self.cache_4bit:
             print("Using 4-bit KV cache...")
-            self.cache = ExLlamaV2Cache_Q4(self.model, max_seq_len=2048, lazy=True, batch_size = self.batch_size)
+            self.cache = ExLlamaV2Cache_Q4(self.model, max_seq_len=self.info.get('context_size', 2048), lazy=True, batch_size = self.batch_size)
         else:
-            self.cache = ExLlamaV2Cache(self.model, max_seq_len=2048, lazy=True, batch_size = self.batch_size)
+            self.cache = ExLlamaV2Cache(self.model, max_seq_len=self.info.get('context_size', 2048), lazy=True, batch_size = self.batch_size)
         self.model.load_autosplit(self.cache, progress = True)
 
         if self.info.get('eos_token_id'):
@@ -452,7 +452,7 @@ class InterviewVLLM:
             dtype = 'float16'
         
         tokenizer_mode = self.info.get('tokenizer_mode', 'auto')
-        max_model_len = self.info.get('max_model_len', 2048)
+        max_model_len = self.info.get('context_size', 2048)
         enforce_eager = self.info.get('enforce_eager', True)
         
         import os
@@ -697,7 +697,7 @@ class InterviewQuipSharp:
         inputs = self.tokenizer(prompt, return_tensors="pt")
         sample = self.model.generate(input_ids=inputs['input_ids'].cuda(),
                                  attention_mask=inputs['attention_mask'].cuda(),
-                                 max_length=2048,
+                                 max_length=self.info.get('context_size', 2048),
                                  penalty_alpha=0.6,
                                  top_k=-1,
                                  use_cache=True,
@@ -882,17 +882,17 @@ def load_runtime(model_name, model_info, runtime, quant, num_gpus):
     return model
 
 
-def main(model: str, runtime: str, input: str = "", interview: str = "senior", prompt:str="prompts/chat.json", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
+def main(model: str, runtime: str, input: str = "", interview: str = "senior", prompt:str="prompts/chat.json", params: str = "", templateout: str = "", revision: str = "", info: str = "{}", quant: str = "fp16", context : int = 2048):
     from prepare import save_interview, cli_to_interviews
     import torch
     
     if params == "": params = "params/greedy-hf.json" if runtime == "transformers" else "params/greedy-openai.json"
-    quant = 'fp16'
         
     if not os.path.exists(model):
         download_safetensors(model, revision if revision else None)
-        
+    
     model_info = json.loads(info) if isinstance(info, str) else info
+    model_info['context_size'] = context
     if revision: model_info['revision'] = revision
 
     # if completion or stop != '':

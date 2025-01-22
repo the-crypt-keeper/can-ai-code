@@ -18,8 +18,13 @@ def parse_gpu_string(gstr):
     
     return f"modal.gpu.{mem_split[0]}(count={count}" + (f", size='{memory}')" if memory else ")")
 
-def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview: str = "senior", prompt:str="", params: str = "", templateout: str = "", revision: str = "", info: str = "{}"):
-    model_args = { 'info': json.loads(info) }
+def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview: str = "senior", prompt:str="", params: str = "", templateout: str = "", revision: str = "", info: str = "{}", quant: str = "fp16", context : int = 2048):
+    model_info = json.loads(info) if isinstance(info, str) else info
+    
+    model_args = { 'info': model_info }
+    model_args['info']['quant'] = quant
+    model_args['info']['context_size'] = context
+    
     if revision: model_args['revision'] = revision
     if isinstance(revision, int): raise Exception("Please escape --revision with \\' to avoid Fire parsing issues.")
     model_clean = model.replace('/','-').replace('_','-').replace('.','-')

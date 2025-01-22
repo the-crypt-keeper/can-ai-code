@@ -81,7 +81,7 @@ class ModalWrapper:
         self.info = json.load(open('./_info.json'))
 
         try:
-            self.wrapper = load_runtime(self.info['model_name'], self.info, RUNTIME, 'fp16', gpu_request.count)
+            self.wrapper = load_runtime(self.info['model_name'], self.info, RUNTIME, self.info.get('quant','fp16'), gpu_request.count)
             self.wrapper.load()
         except Exception as e:
             print(f'{RUNTIME} crashed during init or load:', e)
