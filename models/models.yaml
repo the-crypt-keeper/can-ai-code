@@ -629,3 +629,17 @@ microsoft-phi-4: { name: "Phi 4", size: "14B", tags: ["phi4"], alias: ["microsof
 
 gemini-gemini-2.0-flash-exp: { name: "Gemini 2.0 Flash", tags: ["gemini2"], url: "https://gemini.google.com/" }
 gemini-gemini-2.0-flash-thinking-exp-1219: { name: "Gemini 2.0 Flash Thinking", tags: ["gemini2"], url: "https://gemini.google.com/" }
+
+deepseek-deepseek-reasoner: { name: "DeepSeek-R1", size: "671B", url: "https://platform.deepseek.com/usage", tags: ["r1"] }
+casperhansen-deepseek-r1-distill-qwen-14b-awq: { name: "DeepSeek-R1-Distill", tags: ["r1"], size: "14B", quant: "AWQ" }
+casperhansen-deepseek-r1-distill-qwen-32b-awq: { name: "DeepSeek-R1-Distill", tags: ["r1"], size: "32B", quant: "AWQ" }
+casperhansen-deepseek-r1-distill-llama-70b-awq: { name: "DeepSeek-R1-Distill", tags: ["r1"], size: "70B", quant: "AWQ" }
+waldie-DeepSeek-R1-Distill-Qwen-32B-4bpw-h6-exl2-main: { name: "DeepSeek-R1-Distill", tags: ["r1"], size: "32B", quant: "EXL2-4bpw" }
+deepseek-ai-DeepSeek-R1-Distill-Qwen-7B: { name: "DeepSeek-R1-Distill", tags: ["r1"], size: "7B" }
+DeepSeek-R1-Distill-Llama-8B-fp16: { name: "DeepSeek-R1-Distill", tags: ["r1"], size: "8B" }
+deepseek-ai-DeepSeek-R1-Distill-Qwen-14B: { name: "DeepSeek-R1-Distill", tags: ["r1"], size: "14B" }
+ollama-deepseek-r1:7b-qwen-distill-q8-0: { name: "DeepSeek-R1-Distill", url: "https://ollama.com/library/deepseek-r1", tags: ["r1"], size: "7B", quant: "GGUF-Q8" }
+ollama-deepseek-r1:8b-llama-distill-q8-0: { name: "DeepSeek-R1-Distill", url: "https://ollama.com/library/deepseek-r1", tags: ["r1"], size: "8B", quant: "GGUF-Q8" }
+ollama-deepseek-r1:14b-qwen-distill-q8-0: { name: "DeepSeek-R1-Distill", url: "https://ollama.com/library/deepseek-r1", tags: ["r1"], size: "14B", quant: "GGUF-Q8" }
+ollama-deepseek-r1:32b-qwen-distill-q4-K-M: { name: "DeepSeek-R1-Distill", url: "https://ollama.com/library/deepseek-r1", tags: ["r1"], size: "32B", quant: "GGUF-Q4km" }
+ollama-deepseek-r1:70b-llama-distill-q4-K-M: { name: "DeepSeek-R1-Distill", url: "https://ollama.com/library/deepseek-r1", tags: ["r1"], size: "70B", quant: "GGUF-Q4km" }

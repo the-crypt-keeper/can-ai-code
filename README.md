@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**1/23** Evaluate DeepSeek R1 family (670B via API, 70B AWQ/GGUF, 34B AWQ/EXL2/GGUF, 14B FP16/GGUF, 8B FP16/GGUF 7B FP16/GGUF).
+
 **1/8** Evaluate Gemini 2.0 Flash (thanks BLACKGAMER1221) and official microsoft HF release of Phi-4 (FP16).
 
 **1/6** Evaluate Dolphin3 and IBM Granite 3.1 (2B and 8B).
