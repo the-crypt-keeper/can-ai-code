@@ -24,6 +24,8 @@ A self-evaluating interview for AI coding models.
 
 **1/23** Evaluate Hermes3 (70B, 8B, 3B).
 
+**1/23** Re-evaluate Falcon3 (3B, 8B, 10B GGUF Q8).
+
 **1/8** Evaluate Gemini 2.0 Flash (thanks BLACKGAMER1221) and official microsoft HF release of Phi-4 (FP16).
 
 **1/6** Evaluate Dolphin3 and IBM Granite 3.1 (2B and 8B).

@@ -619,6 +619,9 @@ tiiuae-Falcon3-7B-Instruct: { name: "Falcon3 Instruct", size: "7B", tags: ["falc
 Falcon3-7B-Instruct-q8-0: { name: "Falcon3 Instruct", size: "7B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-7B-Instruct-GGUF", quant: "GGUF-Q8_0" }
 tiiuae-Falcon3-10B-Instruct: { name: "Falcon3 Instruct", size: "10B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-10B-Instruct", alias: ["tiiuae-Falcon3-10B-Instruct-fp16"] }
 Falcon3-10B-Instruct-q8-0: { name: "Falcon3 Instruct", size: "10B", tags: ["falcon3"], url: "https://huggingface.co/tiiuae/Falcon3-10B-Instruct-GGUF", quant: "GGUF-Q8_0" }
+ollama-falcon3:3b-instruct-q8-0: { name: "Falcon3 Instruct", size: "3B", tags: ["falcon3"], url: "https://www.ollama.com/library/falcon3", quant: "GGUF-Q8_0" }
+ollama-falcon3:7b-instruct-q8-0: { name: "Falcon3 Instruct", size: "7B", tags: ["falcon3"], url: "https://www.ollama.com/library/falcon3", quant: "GGUF-Q8_0" }
+ollama-falcon3:10b-instruct-q8-0: { name: "Falcon3 Instruct", size: "10B", tags: ["falcon3"], url: "https://www.ollama.com/library/falcon3", quant: "GGUF-Q8_0" }
 
 Dolphin3.0-Llama3.2-3B-fp16: { name: "Dolphin3.0-Llama", size: "3B", tags: ["dolphin","llama3"], alias: ["Dolphin3.0-Llama3.2-3B-fp16-fp16"], url: "https://huggingface.co/cognitivecomputations/Dolphin3.0-Llama3.2-3B" }
 cognitivecomputations-Dolphin3.0-Llama3.1-8B: { name: "Dolphin3.0-Llama", size: "8B", tags: ["dolphin","llama3"], alias: ["cognitivecomputations-Dolphin3.0-Llama3.1-8B-fp16"], url: "https://huggingface.co/cognitivecomputations/Dolphin3.0-Llama3.1-8B" }
