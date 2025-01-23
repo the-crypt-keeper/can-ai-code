@@ -18,15 +18,17 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**1/23** Evaluate DeepSeek R1 family (670B via API, 70B AWQ/GGUF, 34B AWQ/EXL2/GGUF, 14B FP16/GGUF, 8B FP16/GGUF 7B FP16/GGUF).
+**1/23** Evaluate several more reasoning models: QwQ (FP16), Sky-T1 (FP16), Fuse-O1 (FP16).
+
+**1/23** Evaluate DeepSeek R1 family (670B API, 70B AWQ/GGUF, 34B AWQ/EXL2/GGUF, 14B FP16/GGUF, 8B FP16/GGUF 7B FP16/GGUF).
+
+**1/23** Evaluate Hermes3 (70B, 8B, 3B).
 
 **1/8** Evaluate Gemini 2.0 Flash (thanks BLACKGAMER1221) and official microsoft HF release of Phi-4 (FP16).
 
 **1/6** Evaluate Dolphin3 and IBM Granite 3.1 (2B and 8B).
 
 **1/2** Evaluate DeepSeek-V3 (API) and OpenA1 O1 2024-12-17 (API).
-
-**12/17** Evaluate Falcon3 1B, 3B, 7B and 10B (FP16, GGUF). A bit of an odd result: Every GGUF except 7B is behind the FP16, while the 7B GGUF mysteriously outperforms even 10B FP16.
 
 ## Test Suites
 

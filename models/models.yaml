@@ -643,3 +643,12 @@ ollama-deepseek-r1:8b-llama-distill-q8-0: { name: "DeepSeek-R1-Distill", url: "h
 ollama-deepseek-r1:14b-qwen-distill-q8-0: { name: "DeepSeek-R1-Distill", url: "https://ollama.com/library/deepseek-r1", tags: ["r1"], size: "14B", quant: "GGUF-Q8" }
 ollama-deepseek-r1:32b-qwen-distill-q4-K-M: { name: "DeepSeek-R1-Distill", url: "https://ollama.com/library/deepseek-r1", tags: ["r1"], size: "32B", quant: "GGUF-Q4km" }
 ollama-deepseek-r1:70b-llama-distill-q4-K-M: { name: "DeepSeek-R1-Distill", url: "https://ollama.com/library/deepseek-r1", tags: ["r1"], size: "70B", quant: "GGUF-Q4km" }
+
+FuseAI-FuseO1-DeepSeekR1-QwQ-SkyT1-32B-Preview: { name: "FuseO1", size: "32B", url: "https://huggingface.co/FuseAI/FuseO1-DeepSeekR1-QwQ-SkyT1-32B-Preview" }
+NovaSky-AI-Sky-T1-32B-Preview: { name: "Sky-T1", size: "32B", url: "https://huggingface.co/NovaSky-AI/Sky-T1-32B-Preview" }
+Qwen-QwQ-32B-Preview: { name: "QwQ-Preview", size: "32B", url: "https://huggingface.co/Qwen/QwQ-32B-Preview" }
+
+NousResearch-Hermes-3-Llama-3.1-8B: { name: "Hermes 3 Llama", size: "8B" }
+NousResearch-Hermes-3-Llama-3.2-3B: { name: "Hermes 3 Llama", size: "3B" }
+NousResearch-Hermes-3-Llama-3.1-70B-FP8: { name: "Hermes 3 Llama", size: "70B", quant: "FP8" }
+Hermes-3-Llama-3.1-8B.Q8-0: { name: "Hermes 3 Llama", size: "8B", quant: "GGUF-Q8", url: "https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-8B-GGUF" }
