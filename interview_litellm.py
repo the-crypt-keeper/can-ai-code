@@ -45,13 +45,15 @@ if __name__ == '__main__':
     if args.debug: litellm.set_verbose=True
         
     # OpenAI custom base
-    if args.apibase: 
-        # Normalize the base, must end in /v1
-        if args.apibase.endswith('/'): args.apibase = args.apibase[:-1]
-        if args.apibase.endswith('/v1'): args.apibase = args.apibase[:-3]
-        args.apibase += '/v1'
+    if args.apibase:
+        if 'ollama' not in args.model:
+            # Normalize the base, must end in /v1
+            if args.apibase.endswith('/'): args.apibase = args.apibase[:-1]
+            if args.apibase.endswith('/v1'): args.apibase = args.apibase[:-3]
+            args.apibase += '/v1'            
         params['api_base'] = args.apibase
 
+    if args.apibase and 'ollama' not in args.model:
         try:
             target_model = args.model.replace('openai/','').replace('text-completion-openai/','').replace('text/','')
             model_info = requests.get(args.apibase + '/models').json()
