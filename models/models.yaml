@@ -38,6 +38,10 @@ TechxGenus-Mistral-Large-Instruct-2407-GPTQ: { name: "Mistral Large Instruct 240
 TechxGenus-Mistral-Large-Instruct-2407-AWQ: { name: "Mistral Large Instruct 2402", quant: "AWQ", tags: ["mistral"] }
 bartowski-Mistral-Large-Instruct-2411-exl2-3-0: { name: "Mistral Large Instruct 2411", quant: "EXL2-3bpw", tags: ["mistral"] }
 
+mistralai-Mistral-Small-24B-Instruct-2501: { name: "Mistral-Small-Instruct-2501", size: "24B", tags: ["mistral"], alias: ["mistralai-Mistral-Small-24B-Instruct-2501-fp16"] }
+casperhansen-mistral-small-24b-instruct-2501-awq: { name: "Mistral-Small-Instruct-2501", size: "24B", tags: ["mistral"], quant: "AWQ" }
+DeusImperator-Mistral-Small-24B-Instruct-2501-exl2-6.5bpw-L-main: { name: "Mistral-Small-Instruct-2501", size: "24B", tags: ["mistral"], quant: "exl2-6.5bpw" }
+
 mistral-codestral-2405: { name: "Mistral codestral-2405", url: "https://mistral.ai/", tags: ["commercial","mistral"] }
 mistral-open-mixtral-8x22b-2404: { name: "Mistral open-mixtral-8x22b-2404", url: "https://mistral.ai/", tags: ["mistral"] }
 mistral-open-codestral-mamba: { name: "Mistral open-codestral-mamba", url: "https://mistral.ai/", tags: ["mistral"] }
