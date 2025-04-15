@@ -1,5 +1,4 @@
 einops==0.8.0
 sentencepiece==0.2.0
-accelerate==1.2.1
-bitsandbytes==0.45.0
-auto-gptq==0.7.1
+accelerate==1.6.0
+bitsandbytes==0.45.4

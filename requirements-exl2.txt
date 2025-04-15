@@ -1,2 +1,2 @@
-exllamav2@https://github.com/turboderp/exllamav2/releases/download/v0.2.7/exllamav2-0.2.7+cu121.torch2.5.0-cp310-cp310-linux_x86_64.whl
-flash-attn==2.7.2.post1
+exllamav2@https://github.com/turboderp-org/exllamav2/releases/download/v0.2.8/exllamav2-0.2.8+cu124.torch2.6.0-cp312-cp312-linux_x86_64.whl
+flash-attn==2.7.4.post1
