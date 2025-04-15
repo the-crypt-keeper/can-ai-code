@@ -13,6 +13,10 @@ openai-gpt-4o-2024-08-06: { name: "OpenAI gpt-4o-2024-08-06", url: "https://open
 openai-gpt-4o-2024-11-20: { name: "OpenAI gpt-4o-2024-11-20", url: "https://openai.com/", tags: ["commercial"] }
 openai-gpt-4o-mini-2024-07-18: { name: "OpenAI gpt-4o-mini-2024-07-18", url: "https://openai.com/", tags: ["commercial"] }
 
+openai-gpt-4.1-2025-04-14: { name: "OpenAI gpt-4.1 2025-04-14", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4.1-mini-2025-04-14: { name: "OpenAI gpt-4.1-mini 2025-04-14", url: "https://openai.com/", tags: ["commercial"] }
+openai-gpt-4.1-nano-2025-04-14: { name: "OpenAI gpt-4.1-nano 2025-04-14", url: "https://openai.com/", tags: ["commercial"] }
+
 openai-o1-preview-2024-09-12: { name: "OpenAI o1-preview-2024-09-12", url: "https://openai.com/", tags: ["commercial"] }
 openai-o1-mini-2024-09-12: { name: "OpenAI o1-mini-2024-09-12", url: "https://openai.com/", tags: ["commercial"] }
 openai-o1-2024-12-17: { name: "OpenAI o1-2024-12-17", url: "https://openai.com/", tags: ["commercial"] }

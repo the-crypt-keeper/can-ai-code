@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**4/15** Evaluate gpt4.1 (API). Apologies for the hiatus, I've spent last 3 months building a new rig - ramping evals back up this week to catch up on all the new goodies.
+
 **2/20** Evaluate Mistral Small 2501 (FP16, AWQ, EXL2-6.5bpw).
 
 **1/23** Evaluate several more reasoning models: QwQ (FP16), Sky-T1 (FP16), Fuse-O1 (FP16).
