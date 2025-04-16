@@ -642,6 +642,7 @@ Dolphin3.0-Llama3.1-8B-Q8-0: { name: "Dolphin3.0-Llama", size: "8B", tags: ["dol
 cognitivecomputations-Dolphin3.0-Qwen2.5-3b: { name: "Dolphin3.0-Qwen", size: "8B", tags: ["dolphin","qwen2.5"], alias: ["cognitivecomputations-Dolphin3.0-Qwen2.5-3b-fp16"], url: "https://huggingface.co/cognitivecomputations/Dolphin3.0-Qwen2.5-3b" }
 
 microsoft-phi-4: { name: "Phi 4", size: "14B", tags: ["phi4"], alias: ["microsoft-phi-4-fp16"] }
+microsoft-Phi-4-mini-instruct: { name: "Phi 4 Mini", size: "3.8B", tags: ["phi4"], alias: ["microsoft-Phi-4-mini-instruct-fp16"] }
 
 gemini-gemini-2.0-flash-exp: { name: "Gemini 2.0 Flash", tags: ["gemini2"], url: "https://gemini.google.com/" }
 gemini-gemini-2.0-flash-thinking-exp-1219: { name: "Gemini 2.0 Flash Thinking", tags: ["gemini2"], url: "https://gemini.google.com/" }
