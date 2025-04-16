@@ -18,19 +18,11 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**4/16** Evaluate IBM Granite 3.2/3.3 2B/8B (FP16, Q4KM) and either there is some issue with inference or the coding performance of 3.3 8B appears to have regressed significantly vs 3.2/3.1, hold off for now.
+
 **4/15** Evaluate gpt4.1 (API). Apologies for the hiatus, I've spent last 3 months building a new rig - ramping evals back up this week to catch up on all the new goodies.
 
 **2/20** Evaluate Mistral Small 2501 (FP16, AWQ, EXL2-6.5bpw).
-
-**1/23** Evaluate several more reasoning models: QwQ (FP16), Sky-T1 (FP16), Fuse-O1 (FP16).
-
-**1/23** Evaluate DeepSeek R1 family (670B API, 70B AWQ/GGUF, 34B AWQ/EXL2/GGUF, 14B FP16/GGUF, 8B FP16/GGUF 7B FP16/GGUF).
-
-**1/23** Evaluate Hermes3 (70B, 8B, 3B).
-
-**1/23** Re-evaluate Falcon3 (3B, 8B, 10B GGUF Q8).
-
-**1/8** Evaluate Gemini 2.0 Flash (thanks BLACKGAMER1221) and official microsoft HF release of Phi-4 (FP16).
 
 ## Test Suites
 

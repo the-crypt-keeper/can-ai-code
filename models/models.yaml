@@ -497,8 +497,13 @@ ibm-granite-granite-3.0-2b-instruct: { name: "Granite3", size: "2B", tags: ["gra
 ibm-granite-granite-3.0-1b-a400m-instruct: { name: "Granite3 MoE", size: "1B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.0-1b-a400m-instruct", alias: ["ibm-granite-granite-3.0-1b-a400m-instruct-fp16"] }
 ibm-granite-granite-3.0-3b-a800m-instruct: { name: "Granite3 MoE", size: "3B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.0-3b-a800m-instruct", alias: ["ibm-granite-granite-3.0-3b-a800m-instruct-fp16"] }
 
-ibm-granite-granite-3.1-2b-instruct: { name: "Granite3.1", size: "2B", tags: ["granite3.1"], url: "https://huggingface.co/ibm-granite/granite-3.1-2b-instruct" }
-ibm-granite-granite-3.1-8b-instruct: { name: "Granite3.1", size: "8B", tags: ["granite3.1"], url: "https://huggingface.co/ibm-granite/granite-3.1-8b-instruct" }
+ibm-granite-granite-3.1-2b-instruct: { name: "Granite3.1", size: "2B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.1-2b-instruct" }
+ibm-granite-granite-3.1-8b-instruct: { name: "Granite3.1", size: "8B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.1-8b-instruct" }
+ibm-granite-granite-3.2-2b-instruct: { name: "Granite3.2", size: "2B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.2-2b-instruct" }
+ibm-granite-granite-3.2-8b-instruct: { name: "Granite3.2", size: "8B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.2-8b-instruct" }
+ibm-granite-granite-3.3-2b-instruct: { name: "Granite3.3", size: "2B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.3-2b-instruct" }
+ibm-granite-granite-3.3-8b-instruct: { name: "Granite3.3", size: "8B", tags: ["granite3"], url: "https://huggingface.co/ibm-granite/granite-3.3-8b-instruct", alias: ["ibm-granite-granite-3.3-8b-instruct-fp16"] }
+ollama-granite3.3:8b: { name: "Granite3.3", size: "8B", tags: ["granite3"], url: "https://ollama.com/library/granite3.3", quant: "GGUF-Q4KM" }
 
 01-ai-Yi-1.5-6B-Chat: { name: "Yi-1.5-Chat", size: "6B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-6B-Chat" }
 01-ai-Yi-1.5-9B-Chat: { name: "Yi-1.5-Chat", size: "9B", tags: ["yi"], url: "https://huggingface.co/01-ai/Yi-1.5-9B-Chat" }
