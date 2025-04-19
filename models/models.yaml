@@ -462,6 +462,12 @@ ollama-codegemma:2b-code-v1.1-q8-0: { name: "CodeGemma", size: "2B", tags: ["gem
 openchat-openchat-3.5-0106-gemma-fp16: { name: "OpenChat-3.5-0106-Gemma", tags: ["gemma"], size: "7B", alias: ["openchat-openchat-3.5-0106-gemma"] }
 openchat-openchat-3.6-8b-20240522: { name: "OpenChat-3.5-20240522", tags: ["llama3"], size: "8B" }
 
+gemma-3-4b-it: { name: "Gemma3", size: "4B", tags: ["gemma3"], url: "https://huggingface.co/google/gemma-3-4b-it", alias: ["gemma-3-4b-it-fp16"]}
+gemma-3-12b-it: { name: "Gemma3", size: "12B", tags: ["gemma3"], url: "https://huggingface.co/google/gemma-3-12b-it" }
+google-gemma-3-27b-it: { name: "Gemma3", size: "27B", tags: ["gemma3"], url: "https://huggingface.co/google/gemma-3-27b-it", alias: ["google-gemma-3-27b-it-fp16"]}
+ollama-chat-gemma3:12b: { name: "Gemma3", size: "12B", tags: ["gemma3"], quant: "GGUF-Q4KM", url: "https://ollama.com/library/gemma3:12b" }
+ollama-chat-gemma3:27b: { name: "Gemma3", size: "27B", tags: ["gemma3"], quant: "GGUF-Q4KM", url: "https://ollama.com/library/gemma3:27b" }
+
 meta-llama-Meta-Llama-3-8B-Instruct: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], url: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct", alias: ["meta-llama-Meta-Llama-3-8B-Instruct-fp16"] }
 casperhansen-llama-3-8b-instruct-awq: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "AWQ-4b" }
 MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ: { name: "Llama 3 Instruct", size: "8B", tags: ["llama3"], quant: "GPTQ-4b", alias: ["MaziyarPanahi-Meta-Llama-3-8B-Instruct-GPTQ-main"] }
