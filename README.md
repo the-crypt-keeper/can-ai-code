@@ -18,6 +18,8 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**4/20** Evaluate GPT 4.1 full, mini, nano (API).  Evaluate DeepCoder 1.5B (FP16) and 14B (EXL2).
+
 **4/19** Evaluate Gemma3 4B, 12B, 27B (FP16, Q4KM).
 
 **4/16** Evaluate phi-4-mini-instruct (FP16).
@@ -25,8 +27,6 @@ A self-evaluating interview for AI coding models.
 **4/16** Evaluate IBM Granite 3.2/3.3 2B/8B (FP16, Q4KM) and either there is some issue with inference or the coding performance of 3.3 8B appears to have regressed significantly vs 3.2/3.1, hold off for now.
 
 **4/15** Evaluate gpt4.1 (API). Apologies for the hiatus, I've spent last 3 months building a new rig - ramping evals back up this week to catch up on all the new goodies.
-
-**2/20** Evaluate Mistral Small 2501 (FP16, AWQ, EXL2-6.5bpw).
 
 ## Test Suites
 

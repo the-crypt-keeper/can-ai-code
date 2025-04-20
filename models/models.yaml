@@ -675,3 +675,6 @@ NousResearch-Hermes-3-Llama-3.1-8B: { name: "Hermes 3 Llama", size: "8B" }
 NousResearch-Hermes-3-Llama-3.2-3B: { name: "Hermes 3 Llama", size: "3B" }
 NousResearch-Hermes-3-Llama-3.1-70B-FP8: { name: "Hermes 3 Llama", size: "70B", quant: "FP8" }
 Hermes-3-Llama-3.1-8B.Q8-0: { name: "Hermes 3 Llama", size: "8B", quant: "GGUF-Q8", url: "https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-8B-GGUF" }
+
+agentica-org-DeepCoder-1.5B-Preview: { name: "DeepCoder Preview", size: "1.5B", url: "https://huggingface.co/agentica-org/DeepCoder-1.5B-Preview" }
+DeepCoder-14B-Preview-exl2-8bpw: { name: "DeepCoder Preview", size: "14B", url: "https://huggingface.co/cgus/DeepCoder-14B-Preview-exl2", quant: "EXL2-8bpw" }
