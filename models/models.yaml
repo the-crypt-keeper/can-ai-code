@@ -682,3 +682,6 @@ DeepCoder-14B-Preview-exl2-8bpw: { name: "DeepCoder Preview", size: "14B", url: 
 Llama-4-Maverick-17B-128E-Instruct.i1-IQ3-M:  { name: "Llama 4 Maverick", size: "400B", url: "https://huggingface.co/mradermacher/Llama-4-Maverick-17B-128E-Instruct-i1-GGUF" }
 meta-llama-Llama-4-Scout-17B-16E-Instruct-Q5-K-L: { name: "Llama 4 Scout", size: "109B", quant: "GGUF Q5KL", url: "https://huggingface.co/bartowski/meta-llama_Llama-4-Scout-17B-16E-Instruct-GGUF" }
 Llama4ForConditionalGeneration: { name: "Llama 4 Scout", size: "109B", quant: "GGUF UD-Q3_K_XL", url: "https://huggingface.co/unsloth/Llama-4-Scout-17B-16E-Instruct-GGUF" }
+
+arcee-ai-Arcee-Blitz-AWQ: { name: "Arcee Blitz", quant: "AWQ-4bpw", size: "24B" }
+arcee-ai-SuperNova-Medius: { name: "Arcee SuperNova Medius", size: "14B" }

@@ -18,7 +18,7 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
-**4/23** Evaluate Llama4 Scout and Maverick (GGUF).
+**4/23** Evaluate Llama4 Scout and Maverick (GGUF).  Evaluate Arcee SuperNova (FP16) and Arcee Blitz (AWQ).
 
 **4/20** Evaluate GPT 4.1 full, mini, nano (API).  Evaluate DeepCoder 1.5B (FP16) and 14B (EXL2).
 
