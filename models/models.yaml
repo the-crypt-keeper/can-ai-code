@@ -678,3 +678,7 @@ Hermes-3-Llama-3.1-8B.Q8-0: { name: "Hermes 3 Llama", size: "8B", quant: "GGUF-Q
 
 agentica-org-DeepCoder-1.5B-Preview: { name: "DeepCoder Preview", size: "1.5B", url: "https://huggingface.co/agentica-org/DeepCoder-1.5B-Preview" }
 DeepCoder-14B-Preview-exl2-8bpw: { name: "DeepCoder Preview", size: "14B", url: "https://huggingface.co/cgus/DeepCoder-14B-Preview-exl2", quant: "EXL2-8bpw" }
+
+Llama-4-Maverick-17B-128E-Instruct.i1-IQ3-M:  { name: "Llama 4 Maverick", size: "400B", url: "https://huggingface.co/mradermacher/Llama-4-Maverick-17B-128E-Instruct-i1-GGUF" }
+meta-llama-Llama-4-Scout-17B-16E-Instruct-Q5-K-L: { name: "Llama 4 Scout", size: "109B", quant: "GGUF Q5KL", url: "https://huggingface.co/bartowski/meta-llama_Llama-4-Scout-17B-16E-Instruct-GGUF" }
+Llama4ForConditionalGeneration: { name: "Llama 4 Scout", size: "109B", quant: "GGUF UD-Q3_K_XL", url: "https://huggingface.co/unsloth/Llama-4-Scout-17B-16E-Instruct-GGUF" }
