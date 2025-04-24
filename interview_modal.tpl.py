@@ -2,7 +2,11 @@ from huggingface_hub import snapshot_download
 import json
 from jinja2 import Template
 import modal
-from interview_cuda import *
+
+try:
+    from interview_cuda import *
+except:
+    print('CUDA is unavailable, only download_model.')
 
 def download_model(name, info = {}, **kwargs):
     for k,v in kwargs.items(): info[k] = v
@@ -71,10 +75,11 @@ vllm_image = (
     .run_function(model_{{MODELSLUG}},
                   secrets=[modal.Secret.from_name("my-huggingface-secret")])
     ######################################
+    .add_local_python_source("interview_cuda")
 )
 app = modal.App(image=vllm_image)
 
-@app.cls(gpu=gpu_request, concurrency_limit=1, timeout=600, secrets=[modal.Secret.from_name("my-huggingface-secret")])
+@app.cls(gpu=gpu_request, max_containers=1, timeout=600, secrets=[modal.Secret.from_name("my-huggingface-secret")])
 class ModalWrapper:
     @modal.enter()
     def startup(self):

@@ -5,19 +5,6 @@ import sys
 from jinja2 import Template
 import subprocess
 
-# Format: <gpu>-<memory>x<count>
-# Examples: T4, A10Gx2, A100-40x4
-def parse_gpu_string(gstr):
-    count = 1
-    memory = None
-    
-    size_split = gstr.split('x')
-    if len(size_split) > 1: count = size_split[1]
-    mem_split = size_split[0].split('-')
-    if len(mem_split) > 1: memory = mem_split[1]
-    
-    return f"modal.gpu.{mem_split[0]}(count={count}" + (f", size='{memory}')" if memory else ")")
-
 def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview: str = "senior", prompt:str="", params: str = "", templateout: str = "", revision: str = "", info: str = "{}", quant: str = "fp16", context : int = 2048):
     model_info = json.loads(info) if isinstance(info, str) else info
     
@@ -40,7 +27,7 @@ def main(model: str, runtime: str, gpu: str = "A10G", input: str = "", interview
         'MODELARGS': str(model_args),
         'MODELNAME': model,
         'RUNTIME': runtime,
-        'GPUREQUEST': parse_gpu_string(gpu)
+        'GPUREQUEST': f'''"{gpu}"'''
     }
     
     output = tpl.render(modal_params)

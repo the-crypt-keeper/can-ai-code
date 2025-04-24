@@ -11,5 +11,5 @@ hf-transfer~=0.1
 
 litellm==1.51.2
 
-modal==0.66.22
+modal==0.74.21
 wheel==0.45.1
