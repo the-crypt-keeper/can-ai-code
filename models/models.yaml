@@ -546,6 +546,8 @@ Qwen-Qwen2.5-32B-Instruct-AWQ: { name: "Qwen2.5-Instruct", size: "32B", quant: "
 Qwen-Qwen2.5-72B-Instruct-AWQ: { name: "Qwen2.5-Instruct", size: "72B", quant: "AWQ-4b", tags: ["qwen2.5"] }
 infly-OpenCoder-1.5B-Instruct-fp16: { name: "infly OpenCoder", size: "1.5B", tags: ["qwen2.5"] }
 infly-OpenCoder-8B-Instruct-fp16: { name: "infly OpenCoder", size: "8B", tags: ["qwen2.5"] }
+nvidia-AceInstruct-1.5B-fp16: { name: "NVidia AceInstruct", size: "1.5B", tags: ["qwen2.5"] }
+nvidia-AceInstruct-7B-fp16: { name: "NVidia AceInstruct", size: "7B", tags: ["qwen2.5"] }
 
 Qwen-Qwen2.5-Coder-32B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "32B", tags: ["qwen2.5"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct" }
 huggingface-Qwen-Qwen2.5-Coder-32B-Instruct: { name: "Qwen2.5-Coder-Instruct", size: "32B", tags: ["qwen2.5"], url: "https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct" }
