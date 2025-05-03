@@ -54,7 +54,7 @@ vllm_image = (
     modal.Image.from_registry("nvidia/cuda:12.4.1-devel-ubuntu22.04",
                         setup_dockerfile_commands=["RUN apt-get update", "RUN apt-get install -y python3 python3-pip python-is-python3 git build-essential"])
     .pip_install(
-        "transformers==4.51.0",
+        "transformers==4.51.3",
         "tiktoken==0.7.0",
         "bitsandbytes==0.45.4",
         "accelerate==1.6.0",
@@ -64,18 +64,18 @@ vllm_image = (
         "scipy==1.10.1",
         "pyarrow==11.0.0",
         "protobuf==3.20.3",
-        "vllm==0.8.3",
-        "auto-gptq==0.7.1",
-        "https://github.com/turboderp/exllamav2/releases/download/v0.2.8/exllamav2-0.2.8+cu124.torch2.6.0-cp310-cp310-linux_x86_64.whl"
+        "vllm==0.8.5.post1",
+        "flashinfer-python==0.2.5",
+        "https://github.com/turboderp/exllamav2/releases/download/v0.2.9/exllamav2-0.2.9+cu124.torch2.6.0-cp310-cp310-linux_x86_64.whl"
     )
     .pip_install("flash-attn==2.7.4.post1") # this errors out unless torch is already installed
     .env({"HF_HUB_ENABLE_HF_TRANSFER": "1"})
     ##### SELECT MODEL HERE ##############    
     # .pip_install("git+https://github.com/huggingface/transformers.git")
+    .add_local_python_source("interview_cuda", copy=True)
     .run_function(model_{{MODELSLUG}},
                   secrets=[modal.Secret.from_name("my-huggingface-secret")])
     ######################################
-    .add_local_python_source("interview_cuda")
 )
 app = modal.App(image=vllm_image)
 
@@ -86,7 +86,11 @@ class ModalWrapper:
         self.info = json.load(open('./_info.json'))
 
         try:
-            self.wrapper = load_runtime(self.info['model_name'], self.info, RUNTIME, self.info.get('quant','fp16'), gpu_request.count)
+            gpu_count = 1
+            if 'x' in gpu_request:
+                gpu_type, gpu_count = gpu_request.split('x')
+                gpu_count = int(gpu_count)
+            self.wrapper = load_runtime(self.info['model_name'], self.info, RUNTIME, self.info.get('quant','fp16'), gpu_count)
             self.wrapper.load()
         except Exception as e:
             print(f'{RUNTIME} crashed during init or load:', e)
