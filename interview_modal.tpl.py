@@ -65,7 +65,7 @@ vllm_image = (
         "pyarrow==11.0.0",
         "protobuf==3.20.3",
         "vllm==0.8.5.post1",
-        "flashinfer-python==0.2.5",
+        "flashinfer-python==0.2.2",
         "https://github.com/turboderp/exllamav2/releases/download/v0.2.9/exllamav2-0.2.9+cu124.torch2.6.0-cp310-cp310-linux_x86_64.whl"
     )
     .pip_install("flash-attn==2.7.4.post1") # this errors out unless torch is already installed

@@ -1,2 +1,2 @@
 vllm==0.8.5.post1
-flashinfer-python==0.2.5
+flashinfer-python==0.2.2
