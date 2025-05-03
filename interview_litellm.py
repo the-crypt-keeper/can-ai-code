@@ -31,6 +31,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=42, help='random seed to use (helps determinism)')
     parser.add_argument('--params', type=str, default='params/greedy-openai.json', help='parameter file to use')
     parser.add_argument('--delay', type=int, default=0, help='delay between questions (in seconds)')
+    parser.add_argument('--context', type=int, default=0, help='override context size (max_tokens)')
     parser.add_argument('--templateout', type=str, help='output template')
     parser.add_argument('--stop', type=str, help='stop sequences list json')
     parser.add_argument('--debug', help='enable litellm debug mode', action='store_true')
@@ -41,6 +42,7 @@ if __name__ == '__main__':
 
     # Load params and init model
     params = convert_params(json.load(open(args.params)))
+    if args.context > 0: params['max_tokens'] = args.context
     litellm.drop_params=True
     model_name = args.model
     runtime = model_name.split('/')[0]
@@ -102,7 +104,7 @@ if __name__ == '__main__':
             messages = [{'role': 'user', 'content': messages}]
 
         t0 = time()
-        response = litellm.completion(model=model_name, messages=messages, seed=seed, **params)
+        response = litellm.completion(model=model_name, messages=messages, seed=seed, timeout=3600, **params)
         t1 = time()
         speed = response.usage.completion_tokens/(t1-t0)
         
