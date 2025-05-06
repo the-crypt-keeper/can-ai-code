@@ -18,15 +18,17 @@ A self-evaluating interview for AI coding models.
 
 ## News
 
+**5/6** Evaluate Qwen3 4B, 14B, 32B, A3B across FP16, FP8, GGUF and AWQ. 
+- Each model was evaluated in both think and no-think modes.
+- Greedy sampling is discouraged in the model cards, so instead 3x samples of the recommended settings are used. Disable `Show Best Result Only` to see the variability in some of the results, FP8 is seems particularly unstable.
+- Generally had lots of trouble with larger FP8 models, they require Ada (4096 or H100) but run extremely poorly even with batching. I don't have the required hardware locally and was not able to get A3B-FP8 to take the thinking test without hitting 10 min/response timeouts in my cloud rental stack.
+- Gave A22B a quick spin with UD-Q3K but results were disapointing.
+
 **4/24** Evaluate nvidia/AceInstruct 1.5B and 7B (FP16).
 
 **4/23** Evaluate Llama4 Scout and Maverick (GGUF).  Evaluate Arcee SuperNova (FP16) and Arcee Blitz (AWQ).
 
 **4/20** Evaluate GPT 4.1 full, mini, nano (API).  Evaluate DeepCoder 1.5B (FP16) and 14B (EXL2).
-
-**4/19** Evaluate Gemma3 4B, 12B, 27B (FP16, Q4KM).
-
-**4/16** Evaluate phi-4-mini-instruct (FP16).
 
 ## Test Suites
 
