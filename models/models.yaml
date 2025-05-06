@@ -687,3 +687,29 @@ Llama4ForConditionalGeneration: { name: "Llama 4 Scout", size: "109B", quant: "G
 
 arcee-ai-Arcee-Blitz-AWQ: { name: "Arcee Blitz", quant: "AWQ-4bpw", size: "24B" }
 arcee-ai-SuperNova-Medius: { name: "Arcee SuperNova Medius", size: "14B" }
+
+Qwen-Qwen3-4B: { name: "Qwen3", size: "4B", url: "https://huggingface.co/Qwen/Qwen3-4B" }
+Qwen-Qwen3-4B-FP8: { name: "Qwen3", size: "4B", quant: "FP8", url: "https://huggingface.co/Qwen/Qwen3-4B" }
+Qwen-Qwen3-4B-Q8-0: { name: "Qwen3", size: "4B", quant: "GGUF-Q8", url: "https://huggingface.co/bartowski/Qwen_Qwen3-4B-GGUF" }
+
+Qwen-Qwen3-8B: { name: "Qwen3", size: "8B", url: "https://huggingface.co/Qwen/Qwen3-8B", alias: ["Qwen3-8B"] }
+Qwen-Qwen3-8B-FP8: { name: "Qwen3", size: "8B", quant: "FP8", url: "https://huggingface.co/Qwen/Qwen3-8B" }
+Qwen-Qwen3-8B-Q6-K: { name: "Qwen3", size: "8B", quant: "GGUF-Q6K", url: "https://huggingface.co/bartowski/Qwen_Qwen3-8B-GGUF" }
+Qwen-Qwen3-8B-Q8-0: { name: "Qwen3", size: "8B", quant: "GGUF-Q8", url: "https://huggingface.co/bartowski/Qwen_Qwen3-8B-GGUF" }
+
+Qwen-Qwen3-14B: { name: "Qwen3", size: "14B", url: "https://huggingface.co/Qwen/Qwen3-14B" }
+Qwen-Qwen3-14B-FP8: { name: "Qwen3", size: "14B", quant: "FP8", url: "https://huggingface.co/Qwen/Qwen3-14B-FP8" }
+Qwen3-14B-AWQ: { name: "Qwen3", size: "14B", quant: "AWQ", url: "https://huggingface.co/Qwen/Qwen3-14B" }
+Qwen3-14B-Q8-0: { name: "Qwen3", size: "14B", quant: "GGUF-Q8", url: "https://huggingface.co/Qwen/Qwen3-14B-GGUF" }
+
+Qwen-Qwen3-32B: { name: "Qwen3", size: "32B", url: "https://huggingface.co/Qwen/Qwen3-32B" }
+Qwen3-32B-AWQ: { name: "Qwen3", size: "32B", quant: "AWQ", url: "https://huggingface.co/Qwen/Qwen3-32B" }
+Qwen3-32B-Q5-K-M: { name: "Qwen3", size: "32B", quant: "GGUF-Q5KM", url: "https://huggingface.co/Qwen/Qwen3-32B-GGUF" }
+Qwen3-32B-Q8-0: { name: "Qwen3", size: "32B", quant: "GGUF-Q8", url: "https://huggingface.co/Qwen/Qwen3-32B-GGUF" }
+
+Qwen-Qwen3-30B-A3B: { name: "Qwen3 A3B", size: "30B", url: "https://huggingface.co/Qwen/Qwen3-30B-A3B" }
+Qwen-Qwen3-30B-A3B-FP8: { name: "Qwen3 A3B", size: "30B", quant: "FP8", url: "https://huggingface.co/Qwen/Qwen3-30B-A3B-FP8" }
+Qwen3-30B-A3B-mix-IQ4-K: { name: "Qwen3 A3B", size: "30B", quant: "GGUF-IQ4K", url: "https://huggingface.co/ubergarm/Qwen3-30B-A3B-GGUF" }
+Qwen-Qwen3-30B-A3B-Q6-K: { name: "Qwen3 A3B", size: "30B", quant: "GGUF-Q6K", url: "https://huggingface.co/bartowski/Qwen_Qwen3-30B-A3B-GGUF" }
+
+Qwen3-235B-A22B-UD-Q3-K-XL: { name: "Qwen3 A22B", size: "235B", quant: "GGUF-UD-Q3KXL", url: "https://huggingface.co/unsloth/Qwen3-235B-A22B-GGUF" }
