@@ -5,6 +5,8 @@ import argparse
 import json
 import os
 import glob
+import multiprocessing
+from concurrent.futures import ProcessPoolExecutor
 from extract import extract_code
 from termcolor import colored
 
@@ -116,7 +118,8 @@ if __name__ == '__main__':
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
     parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')
     parser.add_argument('--rerun', action='store_true', help='(optional) rerun evaluation on already processed files')
-    parser.add_argument('--parallel', type=int, default=1, help='number of parallel sandbox instances to use')
+    parser.add_argument('--parallel', type=int, default=multiprocessing.cpu_count(), 
+                        help=f'number of parallel processes to use (default: {multiprocessing.cpu_count()})')
     args = parser.parse_args()
     
     if not args.input and not args.glob:
@@ -141,8 +144,8 @@ if __name__ == '__main__':
             exit(1)
         print(f"Processing {len(input_files)} files matching pattern: {args.glob}")
 
-    # Process each input file
-    for file_idx, input_file in enumerate(input_files):
+    def process_file(file_data):
+        file_idx, input_file, interview_data, test_filter, stop_prefixes = file_data
         print(f"\nProcessing file: {input_file}")
         results = []
         file_total = { 'javascript': 0, 'python': 0 }
@@ -153,17 +156,17 @@ if __name__ == '__main__':
         # Check if file has already been processed
         if 'code' in answers[0] and not args.rerun:
             print(f"File {input_file} has already been processed. Use --rerun to process again.")
-            continue
+            return None, file_total, file_passed
             
         # Determine which sandbox instance to use for this file
         instance_id = file_idx % args.parallel
         
         for test in answers:
-            if args.test and test['name'] != args.test:
+            if test_filter and test['name'] != test_filter:
                 print(test['name'], 'Skipped due to command line filter')
                 continue
 
-            code = extract_code(test['answer'], stop_at_prefix)
+            code = extract_code(test['answer'], stop_prefixes)
             
             if code:
                 print(test['name'], test['language'], f'started (instance {instance_id})')
@@ -171,12 +174,10 @@ if __name__ == '__main__':
                 print(test['name'], test['language'], 'extract_code failed')
                 print(test['answer'])
 
-            total, passed, checks, status = evaluation(interview[test['name']], test['language'], code, instance_id)
+            total, passed, checks, status = evaluation(interview_data[test['name']], test['language'], code, instance_id)
 
             file_total[test['language']] += total
             file_passed[test['language']] += passed
-            all_total[test['language']] += total
-            all_passed[test['language']] += passed
 
             row = test.copy()
             row['code'] = code
@@ -189,7 +190,7 @@ if __name__ == '__main__':
             print(row['name'], test['language'], row['status'])
             print()
 
-        if not args.test:
+        if not test_filter:
             output_filename = input_file.replace('interview','eval')
             with open(output_filename,'w') as f:
                 f.write('\n'.join([json.dumps(r) for r in results]))
@@ -197,6 +198,24 @@ if __name__ == '__main__':
             print('Python Passed',file_passed['python'],'of',file_total['python'])
             print('JavaScript Passed',file_passed['javascript'],'of',file_total['javascript'])
             print('Evaluation results written to',output_filename)
+            
+        return results, file_total, file_passed
+
+    # Prepare data for parallel processing
+    file_data_list = []
+    for file_idx, input_file in enumerate(input_files):
+        file_data_list.append((file_idx, input_file, interview, args.test, stop_at_prefix))
+    
+    # Process files in parallel
+    with ProcessPoolExecutor(max_workers=args.parallel) as executor:
+        results = list(executor.map(process_file, file_data_list))
+    
+    # Aggregate results
+    for file_results, file_total, file_passed in results:
+        if file_results is not None:
+            for language in file_total:
+                all_total[language] += file_total[language]
+                all_passed[language] += file_passed[language]
 
     # Always stop the sandbox when done
     FunctionSandbox.stopall()
