@@ -63,6 +63,33 @@ def run_shell_command(command, stdout_only = False):
         # Handle any errors that occurred during command execution
         print("Error:", e)
         return None, e.returncode
+
+def build_sandbox(language, logger=None):
+    """Build a sandbox Docker image for the specified language"""
+    logger = logger or logging.getLogger(f"sandbox-{language}")
+    logger.info(f"Building {language} sandbox")
+    build_out, build_code = run_shell_command(f"cd {module_dir} && docker build . -f Dockerfile.{language} -t sandbox-{language} -q")
+    if build_code != 0:
+        raise Exception("Error "+str(build_code)+" building sandbox docker image:" + build_out)
+    return True
+
+def start_sandbox(language, instance_id=0, logger=None):
+    """Start a sandbox Docker container for the specified language and instance"""
+    logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")
+    sandbox_name = f"sandbox-{language}-{instance_id}"
+    
+    logger.info(f"Launching {language} sandbox (instance {instance_id})") 
+    # Use different port mappings for different instances if needed
+    start_out, start_code = run_shell_command(f"docker run -d --name {sandbox_name} sandbox-{language}")
+    if start_code != 0:
+        raise Exception("Error "+str(start_code)+" launching sandbox docker image:" + start_out)
+    return sandbox_name
+
+def stop_sandbox(sandbox_name, logger=None):
+    """Stop and remove a sandbox Docker container"""
+    logger = logger or logging.getLogger(f"sandbox-{sandbox_name}")
+    logger.info(f"Stopping sandbox {sandbox_name}")
+    run_shell_command(f"docker rm -f {sandbox_name}")
     
 class FunctionArg:
     def __init__(self, name, type = None) -> None:
@@ -83,22 +110,6 @@ class FunctionSandbox:
            self.functions = { 'name': '', 'args': [] }
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
-
-    def start_sandbox(self):
-        self.logger.info(f"Building {self.language} sandbox (instance {self.instance_id})")
-        build_out, build_code = run_shell_command(f"cd {module_dir} && docker build . -f Dockerfile.{self.language} -t sandbox-{self.language} -q")
-        if build_code != 0:
-            raise Exception("Error "+str(build_code)+" building sandbox docker image:" + build_out)
-
-        self.logger.info(f"Launching {self.language} sandbox (instance {self.instance_id})") 
-        # Use different port mappings for different instances if needed
-        start_out, start_code = run_shell_command(f"docker run -d --name {self.sandbox_name} sandbox-{self.language}")
-        if start_code != 0:
-            raise Exception("Error "+str(start_code)+" launching sandbox docker image:" + start_out)
-    
-    def stop_sandbox(self):
-        self.logger.info(f"Stopping {self.language} sandbox (instance {self.instance_id})")
-        run_shell_command(f"docker rm -f {self.sandbox_name}")
 
     def build_args(self, args):
         return_args = ''

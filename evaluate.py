@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from prepare import load_questions
-from sbox.sandbox import FunctionSandbox
+from sbox.sandbox import FunctionSandbox, build_sandbox, start_sandbox, stop_sandbox
 import argparse
 import json
 import os
@@ -165,9 +165,11 @@ if __name__ == '__main__':
             exit(1)
         logger.info(f"Processing {len(input_files)} files matching pattern: {args.glob}")
         
-    # No longer starting all sandbox instances at the beginning
-    # Each thread will start its own sandbox
-
+    # Build sandbox images once at the beginning
+    languages = ['python', 'javascript']
+    for language in languages:
+        build_sandbox(language, logger)
+    
     def process_file_batch(batch_data):
         thread_id, file_batch, interview_data, test_filter, stop_prefixes, rerun = batch_data
     
@@ -175,15 +177,14 @@ if __name__ == '__main__':
         thread_logger = logging.getLogger(f"thread-{thread_id}")
         thread_logger.info(f"Thread {thread_id} processing {len(file_batch)} files")
     
-        # Create sandbox instances for this thread
+        # Start sandbox containers for this thread
         instance_id = thread_id
         languages = ['python', 'javascript']
-        sandboxes = {}
+        sandbox_names = {}
         
         for language in languages:
-            sandbox = FunctionSandbox("", language, instance_id, thread_logger)
-            sandbox.start_sandbox()
-            sandboxes[language] = sandbox
+            sandbox_name = start_sandbox(language, instance_id, thread_logger)
+            sandbox_names[language] = sandbox_name
     
         batch_results = []
         batch_total = { 'javascript': 0, 'python': 0 }
@@ -249,8 +250,8 @@ if __name__ == '__main__':
         finally:
             # Stop sandbox instances for this thread
             thread_logger.info(f"Thread {thread_id} finished, stopping sandbox instances")
-            for language, sandbox in sandboxes.items():
-                sandbox.stop_sandbox()
+            for language, sandbox_name in sandbox_names.items():
+                stop_sandbox(sandbox_name, thread_logger)
     
         return batch_results, batch_total, batch_passed
 
