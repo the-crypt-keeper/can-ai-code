@@ -3,6 +3,7 @@ import argparse
 import json
 import glob
 import logging
+import multiprocessing
 import os
 
 from threading import Thread
@@ -133,7 +134,9 @@ if __name__ == '__main__':
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
     parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')
     parser.add_argument('--rerun', action='store_true', help='(optional) rerun evaluation on already processed files')
-    parser.add_argument('--parallel', type=int, default=4, help=f'number of parallel processes to use (default: 4)')
+    default_workers = max(1, multiprocessing.cpu_count() // 2)
+    parser.add_argument('--parallel', type=int, default=default_workers, 
+                        help=f'number of parallel processes to use (default: {default_workers}, half of CPU count)')
     parser.add_argument('--verbose', action='store_true', help='enable verbose logging')
     args = parser.parse_args()
     
