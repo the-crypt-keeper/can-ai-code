@@ -4,6 +4,7 @@ import tempfile
 import subprocess
 import json
 import os
+import logging
 from jinja2 import Template
 
 module_dir = os.path.dirname(os.path.abspath(__file__))
@@ -71,11 +72,12 @@ class FunctionArg:
 class FunctionSandbox:
     sandboxes = {}
 
-    def __init__(self, code, language, instance_id=0) -> None:
+    def __init__(self, code, language, instance_id=0, logger=None) -> None:
         self.code = code
         self.language = language
         self.instance_id = instance_id
         self.sandbox_name = f"sandbox-{language}-{instance_id}"
+        self.logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")
 
         try:
            self.functions = extract_function_info(self.language, self.code)[0]
@@ -88,16 +90,17 @@ class FunctionSandbox:
             FunctionSandbox.start_sandbox(language, instance_id)
 
     @classmethod
-    def start_sandbox(cls, language, instance_id=0):
+    def start_sandbox(cls, language, instance_id=0, logger=None):
+        logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")
         sandbox_name = f"sandbox-{language}-{instance_id}"
-        cls.stop_sandbox(language, instance_id)
+        cls.stop_sandbox(language, instance_id, logger)
 
-        print(f"Building {language} sandbox (instance {instance_id})")
+        logger.info(f"Building {language} sandbox (instance {instance_id})")
         build_out, build_code = run_shell_command(f"cd {module_dir} && docker build . -f Dockerfile.{language} -t sandbox-{language} -q")
         if build_code != 0:
             raise Exception("Error "+str(build_code)+" building sandbox docker image:" + build_out)
 
-        print(f"Launching {language} sandbox (instance {instance_id})") 
+        logger.info(f"Launching {language} sandbox (instance {instance_id})") 
         # Use different port mappings for different instances if needed
         start_out, start_code = run_shell_command(f"docker run -d --name {sandbox_name} sandbox-{language}")
         if start_code != 0:
@@ -106,21 +109,24 @@ class FunctionSandbox:
         cls.sandboxes[sandbox_name] = True
     
     @classmethod
-    def stop_sandbox(cls, language, instance_id=0):
+    def stop_sandbox(cls, language, instance_id=0, logger=None):
+        logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")
         sandbox_name = f"sandbox-{language}-{instance_id}"
-        print(f"Stopping {language} sandbox (instance {instance_id})")
+        logger.info(f"Stopping {language} sandbox (instance {instance_id})")
         run_shell_command(f"docker rm -f {sandbox_name}")
         if sandbox_name in cls.sandboxes:
             cls.sandboxes[sandbox_name] = False
 
     @classmethod
-    def stopall(cls):
+    def stopall(cls, logger=None):
+        logger = logger or logging.getLogger("sandbox")
+        logger.info("Stopping all sandbox instances")
         for sandbox_name in list(cls.sandboxes.keys()):
             if "-" in sandbox_name:
                 parts = sandbox_name.split("-")
                 language = parts[1]
                 instance_id = int(parts[2])
-                cls.stop_sandbox(language, instance_id)
+                cls.stop_sandbox(language, instance_id, logger)
 
     def build_args(self, args):
         return_args = ''

@@ -5,23 +5,27 @@ import argparse
 import json
 import os
 import glob
+import logging
 import multiprocessing
 from concurrent.futures import ProcessPoolExecutor
 from extract import extract_code
 from termcolor import colored
 
-def evaluation(test, language, code, instance_id=0):
+def evaluation(test, language, code, instance_id=0, logger=None):
+    if logger is None:
+        logger = logging.getLogger(f"eval-{instance_id}")
+        
     total = sum([check.get('weight',1) for _, check in test['Checks'].items()])
     passed = 0
     checks = []
 
     if not code:
-        print(test['name'], "No code found!")
+        logger.warning(f"{test['name']} - No code found!")
         return total,passed,checks,"NO_CODE"
     
-    f = FunctionSandbox(code, language, instance_id)
+    f = FunctionSandbox(code, language, instance_id, logger)
     if f.functions['name'] == '':
-        print(test['name'], "No function found!")
+        logger.warning(f"{test['name']} - No function found!")
         return total,passed,checks,"NO_FUNCTION"
 
     for check_name in test['Checks'].keys():
@@ -110,6 +114,15 @@ def evaluation(test, language, code, instance_id=0):
 
     return total,passed,checks,"PASS" if (total==passed) else "FAIL"
 
+def setup_logging(level=logging.INFO):
+    # Configure root logger
+    logging.basicConfig(
+        level=level,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    return logging.getLogger("evaluator")
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview evaluator')
     parser.add_argument('--interview', type=str, default='junior-v2', help='interview to evaluate')
@@ -120,10 +133,18 @@ if __name__ == '__main__':
     parser.add_argument('--rerun', action='store_true', help='(optional) rerun evaluation on already processed files')
     parser.add_argument('--parallel', type=int, default=multiprocessing.cpu_count(), 
                         help=f'number of parallel processes to use (default: {multiprocessing.cpu_count()})')
+    parser.add_argument('--verbose', action='store_true', help='enable verbose logging')
     args = parser.parse_args()
+    
+    # Setup logging
+    log_level = logging.DEBUG if args.verbose else logging.INFO
+    logger = setup_logging(log_level)
     
     if not args.input and not args.glob:
         parser.error("Either --input or --glob must be provided")
+        
+    # Configure multiprocessing logging
+    multiprocessing.log_to_stderr(log_level)
 
     all_total = { 'javascript': 0, 'python': 0 }
     all_passed = { 'javascript': 0, 'python': 0 }
@@ -140,13 +161,17 @@ if __name__ == '__main__':
     elif args.glob:
         input_files = glob.glob(args.glob)
         if not input_files:
-            print(f"No files found matching pattern: {args.glob}")
+            logger.error(f"No files found matching pattern: {args.glob}")
             exit(1)
-        print(f"Processing {len(input_files)} files matching pattern: {args.glob}")
+        logger.info(f"Processing {len(input_files)} files matching pattern: {args.glob}")
 
     def process_file(file_data):
         file_idx, input_file, interview_data, test_filter, stop_prefixes = file_data
-        print(f"\nProcessing file: {input_file}")
+        
+        # Setup process-specific logger
+        process_logger = logging.getLogger(f"process-{file_idx}")
+        process_logger.info(f"Processing file: {input_file}")
+        
         results = []
         file_total = { 'javascript': 0, 'python': 0 }
         file_passed = { 'javascript': 0, 'python': 0 }
@@ -155,7 +180,7 @@ if __name__ == '__main__':
         
         # Check if file has already been processed
         if 'code' in answers[0] and not args.rerun:
-            print(f"File {input_file} has already been processed. Use --rerun to process again.")
+            process_logger.info(f"File {input_file} has already been processed. Use --rerun to process again.")
             return None, file_total, file_passed
             
         # Determine which sandbox instance to use for this file
@@ -168,13 +193,13 @@ if __name__ == '__main__':
 
             code = extract_code(test['answer'], stop_prefixes)
             
-            # if code:
-            #     print(test['name'], test['language'], f'started (instance {instance_id})')
-            # else:
-            #     print(test['name'], test['language'], 'extract_code failed')
-            #     print(test['answer'])
+            if code:
+                process_logger.debug(f"{test['name']} - {test['language']} - started (instance {instance_id})")
+            else:
+                process_logger.warning(f"{test['name']} - {test['language']} - extract_code failed")
+                process_logger.debug(f"Answer: {test['answer']}")
 
-            total, passed, checks, status = evaluation(interview_data[test['name']], test['language'], code, instance_id)
+            total, passed, checks, status = evaluation(interview_data[test['name']], test['language'], code, instance_id, process_logger)
 
             file_total[test['language']] += total
             file_passed[test['language']] += passed
@@ -187,17 +212,16 @@ if __name__ == '__main__':
             row['total'] = total
             results.append(row)
 
-            print(row['name'], test['language'], row['status'])
-            print()
+            process_logger.info(f"{row['name']} - {test['language']} - {row['status']}")
 
         if not test_filter:
             output_filename = input_file.replace('interview','eval')
             with open(output_filename,'w') as f:
                 f.write('\n'.join([json.dumps(r) for r in results]))
-            print(f'File: {input_file}')
-            print('Python Passed',file_passed['python'],'of',file_total['python'])
-            print('JavaScript Passed',file_passed['javascript'],'of',file_total['javascript'])
-            print('Evaluation results written to',output_filename)
+            process_logger.info(f"File: {input_file}")
+            process_logger.info(f"Python Passed {file_passed['python']} of {file_total['python']}")
+            process_logger.info(f"JavaScript Passed {file_passed['javascript']} of {file_total['javascript']}")
+            process_logger.info(f"Evaluation results written to {output_filename}")
             
         return results, file_total, file_passed
 
@@ -221,6 +245,6 @@ if __name__ == '__main__':
     FunctionSandbox.stopall()
     
     if len(input_files) > 1:
-        print("\nOverall Summary:")
-        print('Python Passed',all_passed['python'],'of',all_total['python'])
-        print('JavaScript Passed',all_passed['javascript'],'of',all_total['javascript'])
+        logger.info("Overall Summary:")
+        logger.info(f"Python Passed {all_passed['python']} of {all_total['python']}")
+        logger.info(f"JavaScript Passed {all_passed['javascript']} of {all_total['javascript']}")
