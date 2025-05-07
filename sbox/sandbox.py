@@ -71,9 +71,11 @@ class FunctionArg:
 class FunctionSandbox:
     sandboxes = {}
 
-    def __init__(self, code, language) -> None:
+    def __init__(self, code, language, instance_id=0) -> None:
         self.code = code
         self.language = language
+        self.instance_id = instance_id
+        self.sandbox_name = f"sandbox-{language}-{instance_id}"
 
         try:
            self.functions = extract_function_info(self.language, self.code)[0]
@@ -82,35 +84,43 @@ class FunctionSandbox:
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
-        if not FunctionSandbox.sandboxes.get(language):
-            FunctionSandbox.start_sandbox(language)
+        if not FunctionSandbox.sandboxes.get(self.sandbox_name):
+            FunctionSandbox.start_sandbox(language, instance_id)
 
     @classmethod
-    def start_sandbox(cls, language):
-        cls.stop_sandbox(language)
+    def start_sandbox(cls, language, instance_id=0):
+        sandbox_name = f"sandbox-{language}-{instance_id}"
+        cls.stop_sandbox(language, instance_id)
 
-        print("Building",language,"sandbox")
+        print(f"Building {language} sandbox (instance {instance_id})")
         build_out, build_code = run_shell_command(f"cd {module_dir} && docker build . -f Dockerfile.{language} -t sandbox-{language} -q")
         if build_code != 0:
             raise Exception("Error "+str(build_code)+" building sandbox docker image:" + build_out)
 
-        print("Launching",language,"sandbox") 
-        start_out, start_code = run_shell_command(f"docker run -d --name sandbox-{language} sandbox-{language}")
+        print(f"Launching {language} sandbox (instance {instance_id})") 
+        # Use different port mappings for different instances if needed
+        start_out, start_code = run_shell_command(f"docker run -d --name {sandbox_name} sandbox-{language}")
         if start_code != 0:
             raise Exception("Error "+str(start_code)+" launching sandbox docker image:" + start_out)
         
-        cls.sandboxes[language] = True
+        cls.sandboxes[sandbox_name] = True
     
     @classmethod
-    def stop_sandbox(cls, language):
-        print("Stopping",language,"sandbox")
-        run_shell_command(f"docker rm -f sandbox-{language}")
-        cls.sandboxes[language] = False
+    def stop_sandbox(cls, language, instance_id=0):
+        sandbox_name = f"sandbox-{language}-{instance_id}"
+        print(f"Stopping {language} sandbox (instance {instance_id})")
+        run_shell_command(f"docker rm -f {sandbox_name}")
+        if sandbox_name in cls.sandboxes:
+            cls.sandboxes[sandbox_name] = False
 
     @classmethod
     def stopall(cls):
-        for language in cls.sandboxes:
-            cls.stop_sandbox(language)
+        for sandbox_name in list(cls.sandboxes.keys()):
+            if "-" in sandbox_name:
+                parts = sandbox_name.split("-")
+                language = parts[1]
+                instance_id = int(parts[2])
+                cls.stop_sandbox(language, instance_id)
 
     def build_args(self, args):
         return_args = ''
@@ -131,9 +141,9 @@ class FunctionSandbox:
         answer_b64 = base64.b64encode(self.code.encode('utf-8')).decode('utf-8')
 
         if self.language == "python":
-            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} sandbox-python /timeout.sh python /wrapper", stdout_only=True)
+            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} {self.sandbox_name} /timeout.sh python /wrapper", stdout_only=True)
         elif self.language == "javascript":
-            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} sandbox-javascript /timeout.sh node /wrapper", stdout_only=True)
+            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} {self.sandbox_name} /timeout.sh node /wrapper", stdout_only=True)
        
         start_index = output.find("###")
         if start_index == -1:

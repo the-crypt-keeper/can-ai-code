@@ -8,7 +8,7 @@ import glob
 from extract import extract_code
 from termcolor import colored
 
-def evaluation(test, language, code):
+def evaluation(test, language, code, instance_id=0):
     total = sum([check.get('weight',1) for _, check in test['Checks'].items()])
     passed = 0
     checks = []
@@ -17,7 +17,7 @@ def evaluation(test, language, code):
         print(test['name'], "No code found!")
         return total,passed,checks,"NO_CODE"
     
-    f = FunctionSandbox(code, language)
+    f = FunctionSandbox(code, language, instance_id)
     if f.functions['name'] == '':
         print(test['name'], "No function found!")
         return total,passed,checks,"NO_FUNCTION"
@@ -116,6 +116,7 @@ if __name__ == '__main__':
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
     parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')
     parser.add_argument('--rerun', action='store_true', help='(optional) rerun evaluation on already processed files')
+    parser.add_argument('--parallel', type=int, default=1, help='number of parallel sandbox instances to use')
     args = parser.parse_args()
     
     if not args.input and not args.glob:
@@ -141,7 +142,7 @@ if __name__ == '__main__':
         print(f"Processing {len(input_files)} files matching pattern: {args.glob}")
 
     # Process each input file
-    for input_file in input_files:
+    for file_idx, input_file in enumerate(input_files):
         print(f"\nProcessing file: {input_file}")
         results = []
         file_total = { 'javascript': 0, 'python': 0 }
@@ -154,6 +155,9 @@ if __name__ == '__main__':
             print(f"File {input_file} has already been processed. Use --rerun to process again.")
             continue
             
+        # Determine which sandbox instance to use for this file
+        instance_id = file_idx % args.parallel
+        
         for test in answers:
             if args.test and test['name'] != args.test:
                 print(test['name'], 'Skipped due to command line filter')
@@ -162,12 +166,12 @@ if __name__ == '__main__':
             code = extract_code(test['answer'], stop_at_prefix)
             
             if code:
-                print(test['name'], test['language'], 'started')
+                print(test['name'], test['language'], f'started (instance {instance_id})')
             else:
                 print(test['name'], test['language'], 'extract_code failed')
                 print(test['answer'])
 
-            total, passed, checks, status = evaluation(interview[test['name']], test['language'], code)
+            total, passed, checks, status = evaluation(interview[test['name']], test['language'], code, instance_id)
 
             file_total[test['language']] += total
             file_passed[test['language']] += passed
