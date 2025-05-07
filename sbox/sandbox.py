@@ -85,10 +85,11 @@ def start_sandbox(language, instance_id=0, logger=None):
         raise Exception("Error "+str(start_code)+" launching sandbox docker image:" + start_out)
     return sandbox_name
 
-def stop_sandbox(sandbox_name, logger=None):
-    """Stop and remove a sandbox Docker container"""
-    logger = logger or logging.getLogger(f"sandbox-{sandbox_name}")
-    logger.info(f"Stopping sandbox {sandbox_name}")
+def stop_sandbox(language, instance_id=0, logger=None):
+    """Stop and remove a sandbox Docker container for the specified language and instance"""
+    sandbox_name = f"sandbox-{language}-{instance_id}"
+    logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")
+    logger.info(f"Stopping {language} sandbox (instance {instance_id})")
     run_shell_command(f"docker rm -f {sandbox_name}")
     
 class FunctionArg:

@@ -180,11 +180,9 @@ if __name__ == '__main__':
         # Start sandbox containers for this thread
         instance_id = thread_id
         languages = ['python', 'javascript']
-        sandbox_names = {}
         
         for language in languages:
-            sandbox_name = start_sandbox(language, instance_id, thread_logger)
-            sandbox_names[language] = sandbox_name
+            start_sandbox(language, instance_id, thread_logger)
     
         batch_results = []
         batch_total = { 'javascript': 0, 'python': 0 }
@@ -250,8 +248,8 @@ if __name__ == '__main__':
         finally:
             # Stop sandbox instances for this thread
             thread_logger.info(f"Thread {thread_id} finished, stopping sandbox instances")
-            for language, sandbox_name in sandbox_names.items():
-                stop_sandbox(sandbox_name, thread_logger)
+            for language in languages:
+                stop_sandbox(language, instance_id, thread_logger)
     
         return batch_results, batch_total, batch_passed
 
