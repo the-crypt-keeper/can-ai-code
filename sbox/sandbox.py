@@ -78,9 +78,9 @@ def start_sandbox(language, instance_id=0, logger=None):
     logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")
     sandbox_name = f"sandbox-{language}-{instance_id}"
     
-    logger.info(f"Launching {language} sandbox (instance {instance_id})") 
+    logger.info(f"Launching {language} sandbox (instance {instance_id}): {sandbox_name}") 
     # Use different port mappings for different instances if needed
-    start_out, start_code = run_shell_command(f"docker run -d --name {sandbox_name} sandbox-{language}")
+    start_out, start_code = run_shell_command(f"docker rm -f {sandbox_name}; docker run -d --name {sandbox_name} sandbox-{language}")
     if start_code != 0:
         raise Exception("Error "+str(start_code)+" launching sandbox docker image:" + start_out)
     return sandbox_name
