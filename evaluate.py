@@ -192,7 +192,7 @@ if __name__ == '__main__':
         try:
             # Process each file in the batch
             for input_file in file_batch:
-                thread_logger.info(f"Processing file: {input_file}")
+                # thread_logger.info(f"Processing file: {input_file}")
             
                 results = []
                 file_total = { 'javascript': 0, 'python': 0 }
