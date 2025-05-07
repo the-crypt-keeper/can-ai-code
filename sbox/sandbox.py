@@ -86,9 +86,6 @@ class FunctionSandbox:
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
-        if not FunctionSandbox.sandboxes.get(self.sandbox_name):
-            FunctionSandbox.start_sandbox(language, instance_id)
-
     @classmethod
     def start_sandbox(cls, language, instance_id=0, logger=None):
         logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")

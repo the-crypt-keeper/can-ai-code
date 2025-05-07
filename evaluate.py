@@ -123,6 +123,13 @@ def setup_logging(level=logging.INFO):
     )
     return logging.getLogger("evaluator")
 
+def start_sandboxes(num_instances, languages=['python', 'javascript']):
+    """Start all required sandbox instances at once"""
+    logger = logging.getLogger("sandbox-starter")
+    for language in languages:
+        for instance_id in range(num_instances):
+            FunctionSandbox.start_sandbox(language, instance_id, logger)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview evaluator')
     parser.add_argument('--interview', type=str, default='junior-v2', help='interview to evaluate')
@@ -163,6 +170,10 @@ if __name__ == '__main__':
             logger.error(f"No files found matching pattern: {args.glob}")
             exit(1)
         logger.info(f"Processing {len(input_files)} files matching pattern: {args.glob}")
+        
+    # Start all sandbox instances at the beginning
+    logger.info(f"Starting {args.parallel} sandbox instances for each language")
+    start_sandboxes(args.parallel)
 
     def process_file(file_data):
         file_idx, input_file, interview_data, test_filter, stop_prefixes = file_data
@@ -240,7 +251,8 @@ if __name__ == '__main__':
                 all_total[language] += file_total[language]
                 all_passed[language] += file_passed[language]
 
-    # Always stop the sandbox when done
+    # Stop all sandbox instances at the end
+    logger.info("Evaluation complete, stopping all sandbox instances")
     FunctionSandbox.stopall()
     
     if len(input_files) > 1:
