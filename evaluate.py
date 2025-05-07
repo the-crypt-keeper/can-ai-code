@@ -7,7 +7,7 @@ import os
 import glob
 import logging
 import multiprocessing
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 from extract import extract_code
 from termcolor import colored
 
@@ -147,8 +147,8 @@ if __name__ == '__main__':
     if not args.input and not args.glob:
         parser.error("Either --input or --glob must be provided")
         
-    # Configure multiprocessing logging
-    multiprocessing.log_to_stderr(log_level)
+    # Configure logging for threading
+    # No need for multiprocessing-specific logging with ThreadPoolExecutor
 
     all_total = { 'javascript': 0, 'python': 0 }
     all_passed = { 'javascript': 0, 'python': 0 }
@@ -290,7 +290,7 @@ if __name__ == '__main__':
     logger.info(f"Splitting work into {len(batch_data_list)} batches")
     
     # Process batches in parallel
-    with ProcessPoolExecutor(max_workers=len(batch_data_list)) as executor:
+    with ThreadPoolExecutor(max_workers=len(batch_data_list)) as executor:
         batch_results = list(executor.map(process_file_batch, batch_data_list))
     
     # Aggregate results
