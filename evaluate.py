@@ -124,11 +124,9 @@ def setup_logging(level=logging.INFO):
     return logging.getLogger("evaluator")
 
 def start_sandboxes(num_instances, languages=['python', 'javascript']):
-    """Start all required sandbox instances at once"""
+    """Start all required sandbox instances at once - deprecated, now each thread manages its own"""
     logger = logging.getLogger("sandbox-starter")
-    for language in languages:
-        for instance_id in range(num_instances):
-            FunctionSandbox.start_sandbox(language, instance_id, logger)
+    logger.warning("This function is deprecated - each thread now manages its own sandbox instances")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview evaluator')
@@ -171,89 +169,135 @@ if __name__ == '__main__':
             exit(1)
         logger.info(f"Processing {len(input_files)} files matching pattern: {args.glob}")
         
-    # Start all sandbox instances at the beginning
-    logger.info(f"Starting {args.parallel} sandbox instances for each language")
-    start_sandboxes(args.parallel)
+    # No longer starting all sandbox instances at the beginning
+    # Each thread will start its own sandbox
 
-    def process_file(file_data):
-        file_idx, input_file, interview_data, test_filter, stop_prefixes = file_data
-        
-        # Setup process-specific logger
-        process_logger = logging.getLogger(f"process-{file_idx}")
-        process_logger.info(f"Processing file: {input_file}")
-        
-        results = []
-        file_total = { 'javascript': 0, 'python': 0 }
-        file_passed = { 'javascript': 0, 'python': 0 }
-        
-        answers = [json.loads(line) for line in open(input_file)]
-        
-        # Check if file has already been processed
-        if 'code' in answers[0] and not args.rerun:
-            process_logger.info(f"File {input_file} has already been processed. Use --rerun to process again.")
-            return None, file_total, file_passed
-            
-        # Determine which sandbox instance to use for this file
-        instance_id = file_idx % args.parallel
-        
-        for test in answers:
-            if test_filter and test['name'] != test_filter:
-                print(test['name'], 'Skipped due to command line filter')
-                continue
-
-            code = extract_code(test['answer'], stop_prefixes)
-            
-            if code:
-                process_logger.debug(f"{test['name']} - {test['language']} - started (instance {instance_id})")
-            else:
-                process_logger.warning(f"{test['name']} - {test['language']} - extract_code failed")
-                process_logger.debug(f"Answer: {test['answer']}")
-
-            total, passed, checks, status = evaluation(interview_data[test['name']], test['language'], code, instance_id, process_logger)
-
-            file_total[test['language']] += total
-            file_passed[test['language']] += passed
-
-            row = test.copy()
-            row['code'] = code
-            row['checks'] = checks
-            row['status'] = status
-            row['passed'] = passed
-            row['total'] = total
-            results.append(row)
-
-            process_logger.info(f"{row['name']} - {test['language']} - {row['status']}")
-
-        if not test_filter:
-            output_filename = input_file.replace('interview','eval')
-            with open(output_filename,'w') as f:
-                f.write('\n'.join([json.dumps(r) for r in results]))
-            process_logger.info(f"File: {input_file}")
-            process_logger.info(f"Python Passed {file_passed['python']} of {file_total['python']}")
-            process_logger.info(f"JavaScript Passed {file_passed['javascript']} of {file_total['javascript']}")
-            process_logger.info(f"Evaluation results written to {output_filename}")
-            
-        return results, file_total, file_passed
-
-    # Prepare data for parallel processing
-    file_data_list = []
-    for file_idx, input_file in enumerate(input_files):
-        file_data_list.append((file_idx, input_file, interview, args.test, stop_at_prefix))
+    def process_file_batch(batch_data):
+        thread_id, file_batch, interview_data, test_filter, stop_prefixes, rerun = batch_data
     
-    # Process files in parallel
-    with ProcessPoolExecutor(max_workers=args.parallel) as executor:
-        results = list(executor.map(process_file, file_data_list))
+        # Setup thread-specific logger
+        thread_logger = logging.getLogger(f"thread-{thread_id}")
+        thread_logger.info(f"Thread {thread_id} processing {len(file_batch)} files")
+    
+        # Start sandbox instances for this thread
+        instance_id = thread_id
+        languages = ['python', 'javascript']
+        for language in languages:
+            FunctionSandbox.start_sandbox(language, instance_id, thread_logger)
+    
+        batch_results = []
+        batch_total = { 'javascript': 0, 'python': 0 }
+        batch_passed = { 'javascript': 0, 'python': 0 }
+    
+        try:
+            # Process each file in the batch
+            for input_file in file_batch:
+                thread_logger.info(f"Processing file: {input_file}")
+            
+                results = []
+                file_total = { 'javascript': 0, 'python': 0 }
+                file_passed = { 'javascript': 0, 'python': 0 }
+            
+                answers = [json.loads(line) for line in open(input_file)]
+            
+                # Check if file has already been processed
+                if 'code' in answers[0] and not rerun:
+                    thread_logger.info(f"File {input_file} has already been processed. Use --rerun to process again.")
+                    continue
+            
+                for test in answers:
+                    if test_filter and test['name'] != test_filter:
+                        thread_logger.info(f"{test['name']} - Skipped due to command line filter")
+                        continue
+
+                    code = extract_code(test['answer'], stop_prefixes)
+                
+                    if code:
+                        thread_logger.debug(f"{test['name']} - {test['language']} - started (instance {instance_id})")
+                    else:
+                        thread_logger.warning(f"{test['name']} - {test['language']} - extract_code failed")
+                        thread_logger.debug(f"Answer: {test['answer']}")
+
+                    total, passed, checks, status = evaluation(interview_data[test['name']], test['language'], code, instance_id, thread_logger)
+
+                    file_total[test['language']] += total
+                    file_passed[test['language']] += passed
+                    batch_total[test['language']] += total
+                    batch_passed[test['language']] += passed
+
+                    row = test.copy()
+                    row['code'] = code
+                    row['checks'] = checks
+                    row['status'] = status
+                    row['passed'] = passed
+                    row['total'] = total
+                    results.append(row)
+
+                    thread_logger.info(f"{row['name']} - {test['language']} - {row['status']}")
+
+                if not test_filter and results:
+                    output_filename = input_file.replace('interview','eval')
+                    with open(output_filename,'w') as f:
+                        f.write('\n'.join([json.dumps(r) for r in results]))
+                    thread_logger.info(f"File: {input_file}")
+                    thread_logger.info(f"Python Passed {file_passed['python']} of {file_total['python']}")
+                    thread_logger.info(f"JavaScript Passed {file_passed['javascript']} of {file_total['javascript']}")
+                    thread_logger.info(f"Evaluation results written to {output_filename}")
+                
+                batch_results.append((results, file_total, file_passed))
+    
+        finally:
+            # Stop sandbox instances for this thread
+            thread_logger.info(f"Thread {thread_id} finished, stopping sandbox instances")
+            for language in languages:
+                FunctionSandbox.stop_sandbox(language, instance_id, thread_logger)
+    
+        return batch_results, batch_total, batch_passed
+
+    # Filter files that need processing
+    files_to_process = []
+    for input_file in input_files:
+        try:
+            with open(input_file) as f:
+                first_line = f.readline()
+                data = json.loads(first_line)
+                if 'code' not in data or args.rerun:
+                    files_to_process.append(input_file)
+        except Exception as e:
+            logger.error(f"Error checking file {input_file}: {e}")
+            files_to_process.append(input_file)
+    
+    if not files_to_process:
+        logger.info("No files need processing. Use --rerun to force reprocessing.")
+        return
+    
+    logger.info(f"Found {len(files_to_process)} files that need processing")
+    
+    # Split files into batches for parallel processing
+    num_batches = min(args.parallel, len(files_to_process))
+    file_batches = [[] for _ in range(num_batches)]
+    
+    for i, file_path in enumerate(files_to_process):
+        batch_idx = i % num_batches
+        file_batches[batch_idx].append(file_path)
+    
+    # Prepare batch data for parallel processing
+    batch_data_list = []
+    for batch_idx, file_batch in enumerate(file_batches):
+        if file_batch:  # Only process non-empty batches
+            batch_data_list.append((batch_idx, file_batch, interview, args.test, stop_at_prefix, args.rerun))
+    
+    logger.info(f"Splitting work into {len(batch_data_list)} batches")
+    
+    # Process batches in parallel
+    with ProcessPoolExecutor(max_workers=len(batch_data_list)) as executor:
+        batch_results = list(executor.map(process_file_batch, batch_data_list))
     
     # Aggregate results
-    for file_results, file_total, file_passed in results:
-        if file_results is not None:
-            for language in file_total:
-                all_total[language] += file_total[language]
-                all_passed[language] += file_passed[language]
-
-    # Stop all sandbox instances at the end
-    logger.info("Evaluation complete, stopping all sandbox instances")
-    FunctionSandbox.stopall()
+    for batch_file_results, batch_total, batch_passed in batch_results:
+        for language in batch_total:
+            all_total[language] += batch_total[language]
+            all_passed[language] += batch_passed[language]
     
     if len(input_files) > 1:
         logger.info("Overall Summary:")
