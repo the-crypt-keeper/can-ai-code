@@ -269,7 +269,7 @@ if __name__ == '__main__':
     
     if not files_to_process:
         logger.info("No files need processing. Use --rerun to force reprocessing.")
-        return
+        exit(0)
     
     logger.info(f"Found {len(files_to_process)} files that need processing")
     
