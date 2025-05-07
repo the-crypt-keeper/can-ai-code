@@ -144,9 +144,9 @@ class FunctionSandbox:
         answer_b64 = base64.b64encode(self.code.encode('utf-8')).decode('utf-8')
 
         if self.language == "python":
-            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} {self.sandbox_name} /timeout.sh python /wrapper", stdout_only=True)
+            output, value = run_shell_command(f"docker exec -i -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} {self.sandbox_name} /timeout.sh python /wrapper", stdout_only=True)
         elif self.language == "javascript":
-            output, value = run_shell_command(f"docker exec -it -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} {self.sandbox_name} /timeout.sh node /wrapper", stdout_only=True)
+            output, value = run_shell_command(f"docker exec -i -e WRAPPER_SOURCE={script_b64} -e ANSWER_SOURCE={answer_b64} {self.sandbox_name} /timeout.sh node /wrapper", stdout_only=True)
        
         start_index = output.find("###")
         if start_index == -1:
