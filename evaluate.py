@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-from prepare import load_questions
-from sbox.sandbox import FunctionSandbox, build_sandbox, start_sandbox, stop_sandbox
 import argparse
 import json
-import os
 import glob
 import logging
-import multiprocessing
-from concurrent.futures import ThreadPoolExecutor
+
+from threading import Thread
+from queue import Queue
+
+from prepare import load_questions
 from extract import extract_code
-from termcolor import colored
+from sbox.sandbox import FunctionSandbox, build_sandbox, start_sandbox, stop_sandbox
 
 def evaluation(test, language, code, instance_id=0, logger=None):
     if logger is None:
@@ -170,116 +170,23 @@ if __name__ == '__main__':
     for language in languages:
         build_sandbox(language, logger)
     
-    def process_file_batch(batch_data):
-        thread_id, file_batch, interview_data, test_filter, stop_prefixes, rerun = batch_data
-    
-        # Setup thread-specific logger
-        thread_logger = logging.getLogger(f"thread-{thread_id}")
-        thread_logger.info(f"Thread {thread_id} processing {len(file_batch)} files")
-    
-        # Start sandbox containers for this thread
-        instance_id = thread_id
-        languages = ['python', 'javascript']
-        
-        for language in languages:
-            start_sandbox(language, instance_id, thread_logger)
-    
-        batch_results = []
-        batch_total = { 'javascript': 0, 'python': 0 }
-        batch_passed = { 'javascript': 0, 'python': 0 }
-    
-        try:
-            # Process each file in the batch
-            for input_file in file_batch:
-                # thread_logger.info(f"Processing file: {input_file}")
-            
-                results = []
-                file_total = { 'javascript': 0, 'python': 0 }
-                file_passed = { 'javascript': 0, 'python': 0 }
-            
-                answers = [json.loads(line) for line in open(input_file)]
-            
-                # Check if file has already been processed
-                if 'code' in answers[0] and not rerun:
-                    thread_logger.info(f"File {input_file} has already been processed. Use --rerun to process again.")
-                    continue
-            
-                for test in answers:
-                    if test_filter and test['name'] != test_filter:
-                        thread_logger.info(f"{test['name']} - Skipped due to command line filter")
-                        continue
-
-                    code = extract_code(test['answer'], stop_prefixes)
-                
-                    if code:
-                        thread_logger.debug(f"{test['name']} - {test['language']} - started (instance {instance_id})")
-                    else:
-                        thread_logger.warning(f"{test['name']} - {test['language']} - extract_code failed")
-                        thread_logger.debug(f"Answer: {test['answer']}")
-
-                    total, passed, checks, status = evaluation(interview_data[test['name']], test['language'], code, instance_id, thread_logger)
-
-                    file_total[test['language']] += total
-                    file_passed[test['language']] += passed
-                    batch_total[test['language']] += total
-                    batch_passed[test['language']] += passed
-
-                    row = test.copy()
-                    row['code'] = code
-                    row['checks'] = checks
-                    row['status'] = status
-                    row['passed'] = passed
-                    row['total'] = total
-                    results.append(row)
-
-                    thread_logger.info(f"{row['name']} - {test['language']} - {row['status']}")
-
-                if not test_filter and results:
-                    output_filename = input_file.replace('interview','eval')
-                    with open(output_filename,'w') as f:
-                        f.write('\n'.join([json.dumps(r) for r in results]))
-                    thread_logger.info(f"File: {input_file}")
-                    thread_logger.info(f"Python Passed {file_passed['python']} of {file_total['python']}")
-                    thread_logger.info(f"JavaScript Passed {file_passed['javascript']} of {file_total['javascript']}")
-                    thread_logger.info(f"Evaluation results written to {output_filename}")
-                
-                batch_results.append((results, file_total, file_passed))
-    
-        finally:
-            # Stop sandbox instances for this thread
-            thread_logger.info(f"Thread {thread_id} finished, stopping sandbox instances")
-            for language in languages:
-                stop_sandbox(language, instance_id, thread_logger)
-    
-        return batch_results, batch_total, batch_passed
-
-    # Filter files that need processing
-    files_to_process = []
+    # Filter files that need processing, place into a queue.
+    file_queue = Queue()
     for input_file in input_files:
-        try:
-            with open(input_file) as f:
-                first_line = f.readline()
-                data = json.loads(first_line)
-                if 'code' not in data or args.rerun:
-                    files_to_process.append(input_file)
-        except Exception as e:
-            logger.error(f"Error checking file {input_file}: {e}")
-            files_to_process.append(input_file)
-    
-    if not files_to_process:
+        with open(input_file) as f:
+            first_line = f.readline()
+            data = json.loads(first_line)
+            if 'code' not in data or args.rerun:
+                file_queue.put(input_file)
+            else:
+                print(f'Skipped {input_file}, already processed.')
+   
+    if file_queue.qsize() == 0:
         logger.info("No files need processing. Use --rerun to force reprocessing.")
         exit(0)
     
-    logger.info(f"Found {len(files_to_process)} files that need processing")
-    
-    # Create a queue for files to process
-    from queue import Queue
-    file_queue = Queue()
-    for file_path in files_to_process:
-        file_queue.put(file_path)
-    
-    logger.info(f"Added {file_queue.qsize()} files to processing queue")
-    
+    logger.info(f"Found {file_queue.qsize()} files that need processing")
+       
     # Define a worker function that processes files from the queue
     def worker_process(worker_id):
         worker_logger = logging.getLogger(f"worker-{worker_id}")
@@ -344,7 +251,7 @@ if __name__ == '__main__':
                         worker_logger.info(f"Evaluation results written to {output_filename}")
                     
                     file_queue.task_done()
-                except queue.Empty:
+                except Queue.Empty:
                     break
                 except Exception as e:
                     worker_logger.error(f"Error processing file {input_file}: {e}")
@@ -357,13 +264,9 @@ if __name__ == '__main__':
         
         return worker_total, worker_passed
     
-    # Start worker threads
-    import queue
-    from threading import Thread
-    
+    # Start worker threads   
     workers = []
-    results = []
-    
+    results = []    
     for i in range(args.parallel):
         thread = Thread(target=lambda i=i: results.append(worker_process(i)))
         thread.start()
