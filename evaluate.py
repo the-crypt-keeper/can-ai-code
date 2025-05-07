@@ -131,8 +131,7 @@ if __name__ == '__main__':
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
     parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')
     parser.add_argument('--rerun', action='store_true', help='(optional) rerun evaluation on already processed files')
-    parser.add_argument('--parallel', type=int, default=multiprocessing.cpu_count(), 
-                        help=f'number of parallel processes to use (default: {multiprocessing.cpu_count()})')
+    parser.add_argument('--parallel', type=int, default=4, help=f'number of parallel processes to use (default: 4)')
     parser.add_argument('--verbose', action='store_true', help='enable verbose logging')
     args = parser.parse_args()
     
