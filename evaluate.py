@@ -3,6 +3,7 @@ import argparse
 import json
 import glob
 import logging
+import os
 
 from threading import Thread
 from queue import Queue
@@ -173,13 +174,24 @@ if __name__ == '__main__':
     # Filter files that need processing, place into a queue.
     file_queue = Queue()
     for input_file in input_files:
-        with open(input_file) as f:
-            first_line = f.readline()
-            data = json.loads(first_line)
-            if 'code' not in data or args.rerun:
-                file_queue.put(input_file)
-            else:
-                print(f'Skipped {input_file}, already processed.')
+        output_filename = input_file.replace('interview','eval')
+        
+        # Skip if output file already exists and --rerun wasn't specified
+        if os.path.exists(output_filename) and not args.rerun:
+            logger.info(f'Skipped {input_file}, output file {output_filename} already exists.')
+            continue
+            
+        # Also check if the input file itself has already been processed
+        try:
+            with open(input_file) as f:
+                first_line = f.readline()
+                data = json.loads(first_line)
+                if 'code' not in data or args.rerun:
+                    file_queue.put((input_file, output_filename))
+                else:
+                    logger.info(f'Skipped {input_file}, already processed.')
+        except Exception as e:
+            logger.error(f"Error reading {input_file}: {e}")
    
     if file_queue.qsize() == 0:
         logger.info("No files need processing. Use --rerun to force reprocessing.")
@@ -202,7 +214,7 @@ if __name__ == '__main__':
         try:
             while not file_queue.empty():
                 try:
-                    input_file = file_queue.get(block=False)
+                    input_file, output_filename = file_queue.get(block=False)
                     worker_logger.info(f"Processing file: {input_file}")
                     
                     results = []
@@ -242,7 +254,6 @@ if __name__ == '__main__':
                         worker_logger.info(f"{row['name']} - {test['language']} - {row['status']}")
 
                     if not args.test and results:
-                        output_filename = input_file.replace('interview','eval')
                         with open(output_filename,'w') as f:
                             f.write('\n'.join([json.dumps(r) for r in results]))
                         worker_logger.info(f"File: {input_file}")
@@ -251,7 +262,9 @@ if __name__ == '__main__':
                         worker_logger.info(f"Evaluation results written to {output_filename}")
                     
                     file_queue.task_done()
-                except Queue.Empty:
+                except Exception as e:
+                    if "Empty" in str(e):  # Handle Queue.Empty exception
+                        break
                     break
                 except Exception as e:
                     worker_logger.error(f"Error processing file {input_file}: {e}")
