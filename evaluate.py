@@ -4,6 +4,7 @@ from sbox.sandbox import FunctionSandbox
 import argparse
 import json
 import os
+import glob
 from extract import extract_code
 from termcolor import colored
 
@@ -110,59 +111,86 @@ def evaluation(test, language, code):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview evaluator')
     parser.add_argument('--interview', type=str, default='junior-v2', help='interview to evaluate')
-    parser.add_argument('--input', type=str, required=True, help='path to interview*.ndjson')
+    parser.add_argument('--input', type=str, help='path to interview*.ndjson')
+    parser.add_argument('--glob', type=str, help='glob pattern for multiple input files')
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
     parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')
-    parser.add_argument('--persist_sandbox', action='store_true', help='(optional) leave sandbox running')
     args = parser.parse_args()
+    
+    if not args.input and not args.glob:
+        parser.error("Either --input or --glob must be provided")
 
     all_total = { 'javascript': 0, 'python': 0 }
     all_passed = { 'javascript': 0, 'python': 0 }
-    results = []
     stop_at_prefix = ['//','#'] if args.stopcomment else []
 
     interview = {}
     for test in load_questions(args.interview):
         interview[test['name']] = test
 
-    answers = [json.loads(line) for line in open(args.input)]
-    for test in answers:
+    # Get list of input files
+    input_files = []
+    if args.input:
+        input_files = [args.input]
+    elif args.glob:
+        input_files = glob.glob(args.glob)
+        if not input_files:
+            print(f"No files found matching pattern: {args.glob}")
+            exit(1)
+        print(f"Processing {len(input_files)} files matching pattern: {args.glob}")
 
-        if args.test and test['name'] != args.test:
-            print(test['name'], 'Skipped due to command line filter')
-            continue
-
-        code = extract_code(test['answer'], stop_at_prefix)
+    # Process each input file
+    for input_file in input_files:
+        print(f"\nProcessing file: {input_file}")
+        results = []
+        file_total = { 'javascript': 0, 'python': 0 }
+        file_passed = { 'javascript': 0, 'python': 0 }
         
-        if code:
-            print(test['name'], test['language'], 'started')
-        else:
-            print(test['name'], test['language'], 'extract_code failed')
-            print(test['answer'])
+        answers = [json.loads(line) for line in open(input_file)]
+        for test in answers:
+            if args.test and test['name'] != args.test:
+                print(test['name'], 'Skipped due to command line filter')
+                continue
 
-        total, passed, checks, status = evaluation(interview[test['name']], test['language'], code)
+            code = extract_code(test['answer'], stop_at_prefix)
+            
+            if code:
+                print(test['name'], test['language'], 'started')
+            else:
+                print(test['name'], test['language'], 'extract_code failed')
+                print(test['answer'])
 
-        all_total[test['language']] += total
-        all_passed[test['language']] += passed
+            total, passed, checks, status = evaluation(interview[test['name']], test['language'], code)
 
-        row = test.copy()
-        row['code'] = code
-        row['checks'] = checks
-        row['status'] = status
-        row['passed'] = passed
-        row['total'] = total
-        results.append(row)
+            file_total[test['language']] += total
+            file_passed[test['language']] += passed
+            all_total[test['language']] += total
+            all_passed[test['language']] += passed
 
-        print(row['name'], test['language'], row['status'])
-        print()
+            row = test.copy()
+            row['code'] = code
+            row['checks'] = checks
+            row['status'] = status
+            row['passed'] = passed
+            row['total'] = total
+            results.append(row)
 
-    if not args.persist_sandbox:
-        FunctionSandbox.stopall()
+            print(row['name'], test['language'], row['status'])
+            print()
 
-    if not args.test:
-        output_filename = args.input.replace('interview','eval')
-        with open(output_filename,'w') as f:
-            f.write('\n'.join([json.dumps(r) for r in results]))
+        if not args.test:
+            output_filename = input_file.replace('interview','eval')
+            with open(output_filename,'w') as f:
+                f.write('\n'.join([json.dumps(r) for r in results]))
+            print(f'File: {input_file}')
+            print('Python Passed',file_passed['python'],'of',file_total['python'])
+            print('JavaScript Passed',file_passed['javascript'],'of',file_total['javascript'])
+            print('Evaluation results written to',output_filename)
+
+    # Always stop the sandbox when done
+    FunctionSandbox.stopall()
+    
+    if len(input_files) > 1:
+        print("\nOverall Summary:")
         print('Python Passed',all_passed['python'],'of',all_total['python'])
         print('JavaScript Passed',all_passed['javascript'],'of',all_total['javascript'])
-        print('Evaluation results written to',output_filename)
