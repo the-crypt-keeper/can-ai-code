@@ -115,17 +115,6 @@ def evaluation(test, language, code, instance_id=0, logger=None):
     return total,passed,checks,"PASS" if (total==passed) else "FAIL"
 
 def setup_logging(level=logging.INFO):
-    """
-    Configure a thread-safe logger that prints each record on its own line
-    even when several threads write concurrently.
-
-    – force=True guarantees we start with a clean root logger when the
-      script is re-executed.
-    – Every StreamHandler’s terminator is set to “\\r\\n” so both a
-      carriage-return and line-feed are emitted, ensuring the cursor
-      returns to column 0 before moving to the next line.  This prevents
-      the diagonal output that appeared once parallel logging began.
-    """
     logging.basicConfig(
         level=level,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -133,18 +122,7 @@ def setup_logging(level=logging.INFO):
         force=True
     )
 
-    # Ensure all stream handlers end records with CR+LF
-    root_logger = logging.getLogger()
-    for handler in root_logger.handlers:
-        if isinstance(handler, logging.StreamHandler):
-            handler.terminator = '\r\n'
-
     return logging.getLogger("evaluator")
-
-def start_sandboxes(num_instances, languages=['python', 'javascript']):
-    """Start all required sandbox instances at once - deprecated, now each thread manages its own"""
-    logger = logging.getLogger("sandbox-starter")
-    logger.warning("This function is deprecated - each thread now manages its own sandbox instances")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Interview evaluator')
