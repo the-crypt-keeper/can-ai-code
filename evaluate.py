@@ -272,31 +272,112 @@ if __name__ == '__main__':
     
     logger.info(f"Found {len(files_to_process)} files that need processing")
     
-    # Split files into batches for parallel processing
-    num_batches = min(args.parallel, len(files_to_process))
-    file_batches = [[] for _ in range(num_batches)]
+    # Create a queue for files to process
+    from queue import Queue
+    file_queue = Queue()
+    for file_path in files_to_process:
+        file_queue.put(file_path)
     
-    for i, file_path in enumerate(files_to_process):
-        batch_idx = i % num_batches
-        file_batches[batch_idx].append(file_path)
+    logger.info(f"Added {file_queue.qsize()} files to processing queue")
     
-    # Prepare batch data for parallel processing
-    batch_data_list = []
-    for batch_idx, file_batch in enumerate(file_batches):
-        if file_batch:  # Only process non-empty batches
-            batch_data_list.append((batch_idx, file_batch, interview, args.test, stop_at_prefix, args.rerun))
+    # Define a worker function that processes files from the queue
+    def worker_process(worker_id):
+        worker_logger = logging.getLogger(f"worker-{worker_id}")
+        worker_logger.info(f"Worker {worker_id} started")
+        
+        # Start sandbox containers for this worker
+        for language in languages:
+            start_sandbox(language, worker_id, worker_logger)
+        
+        worker_total = { 'javascript': 0, 'python': 0 }
+        worker_passed = { 'javascript': 0, 'python': 0 }
+        
+        try:
+            while not file_queue.empty():
+                try:
+                    input_file = file_queue.get(block=False)
+                    worker_logger.info(f"Processing file: {input_file}")
+                    
+                    results = []
+                    file_total = { 'javascript': 0, 'python': 0 }
+                    file_passed = { 'javascript': 0, 'python': 0 }
+                
+                    answers = [json.loads(line) for line in open(input_file)]
+                
+                    for test in answers:
+                        if args.test and test['name'] != args.test:
+                            worker_logger.info(f"{test['name']} - Skipped due to command line filter")
+                            continue
+
+                        code = extract_code(test['answer'], stop_at_prefix)
+                    
+                        if code:
+                            worker_logger.debug(f"{test['name']} - {test['language']} - started (instance {worker_id})")
+                        else:
+                            worker_logger.warning(f"{test['name']} - {test['language']} - extract_code failed")
+                            worker_logger.debug(f"Answer: {test['answer']}")
+
+                        total, passed, checks, status = evaluation(interview[test['name']], test['language'], code, worker_id, worker_logger)
+
+                        file_total[test['language']] += total
+                        file_passed[test['language']] += passed
+                        worker_total[test['language']] += total
+                        worker_passed[test['language']] += passed
+
+                        row = test.copy()
+                        row['code'] = code
+                        row['checks'] = checks
+                        row['status'] = status
+                        row['passed'] = passed
+                        row['total'] = total
+                        results.append(row)
+
+                        worker_logger.info(f"{row['name']} - {test['language']} - {row['status']}")
+
+                    if not args.test and results:
+                        output_filename = input_file.replace('interview','eval')
+                        with open(output_filename,'w') as f:
+                            f.write('\n'.join([json.dumps(r) for r in results]))
+                        worker_logger.info(f"File: {input_file}")
+                        worker_logger.info(f"Python Passed {file_passed['python']} of {file_total['python']}")
+                        worker_logger.info(f"JavaScript Passed {file_passed['javascript']} of {file_total['javascript']}")
+                        worker_logger.info(f"Evaluation results written to {output_filename}")
+                    
+                    file_queue.task_done()
+                except queue.Empty:
+                    break
+                except Exception as e:
+                    worker_logger.error(f"Error processing file {input_file}: {e}")
+                    file_queue.task_done()
+        finally:
+            # Stop sandbox instances for this worker
+            worker_logger.info(f"Worker {worker_id} finished, stopping sandbox instances")
+            for language in languages:
+                stop_sandbox(language, worker_id, worker_logger)
+        
+        return worker_total, worker_passed
     
-    logger.info(f"Splitting work into {len(batch_data_list)} batches")
+    # Start worker threads
+    import queue
+    from threading import Thread
     
-    # Process batches in parallel
-    with ThreadPoolExecutor(max_workers=len(batch_data_list)) as executor:
-        batch_results = list(executor.map(process_file_batch, batch_data_list))
+    workers = []
+    results = []
+    
+    for i in range(args.parallel):
+        thread = Thread(target=lambda i=i: results.append(worker_process(i)))
+        thread.start()
+        workers.append(thread)
+    
+    # Wait for all workers to finish
+    for thread in workers:
+        thread.join()
     
     # Aggregate results
-    for batch_file_results, batch_total, batch_passed in batch_results:
-        for language in batch_total:
-            all_total[language] += batch_total[language]
-            all_passed[language] += batch_passed[language]
+    for worker_total, worker_passed in results:
+        for language in worker_total:
+            all_total[language] += worker_total[language]
+            all_passed[language] += worker_passed[language]
     
     if len(input_files) > 1:
         logger.info("Overall Summary:")
