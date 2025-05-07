@@ -262,9 +262,7 @@ if __name__ == '__main__':
                         worker_logger.info(f"Evaluation results written to {output_filename}")
                     
                     file_queue.task_done()
-                except Exception as e:
-                    if "Empty" in str(e):  # Handle Queue.Empty exception
-                        break
+                except Queue.Empty:
                     break
                 except Exception as e:
                     worker_logger.error(f"Error processing file {input_file}: {e}")
