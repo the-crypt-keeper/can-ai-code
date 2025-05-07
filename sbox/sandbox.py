@@ -70,8 +70,6 @@ class FunctionArg:
         self.type = type
 
 class FunctionSandbox:
-    sandboxes = {}
-
     def __init__(self, code, language, instance_id=0, logger=None) -> None:
         self.code = code
         self.language = language
@@ -86,44 +84,21 @@ class FunctionSandbox:
         self.name = self.functions['name']
         self.args = [FunctionArg(arg) for arg in self.functions['args']]
 
-    @classmethod
-    def start_sandbox(cls, language, instance_id=0, logger=None):
-        logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")
-        sandbox_name = f"sandbox-{language}-{instance_id}"
-        cls.stop_sandbox(language, instance_id, logger)
-
-        logger.info(f"Building {language} sandbox (instance {instance_id})")
-        build_out, build_code = run_shell_command(f"cd {module_dir} && docker build . -f Dockerfile.{language} -t sandbox-{language} -q")
+    def start_sandbox(self):
+        self.logger.info(f"Building {self.language} sandbox (instance {self.instance_id})")
+        build_out, build_code = run_shell_command(f"cd {module_dir} && docker build . -f Dockerfile.{self.language} -t sandbox-{self.language} -q")
         if build_code != 0:
             raise Exception("Error "+str(build_code)+" building sandbox docker image:" + build_out)
 
-        logger.info(f"Launching {language} sandbox (instance {instance_id})") 
+        self.logger.info(f"Launching {self.language} sandbox (instance {self.instance_id})") 
         # Use different port mappings for different instances if needed
-        start_out, start_code = run_shell_command(f"docker run -d --name {sandbox_name} sandbox-{language}")
+        start_out, start_code = run_shell_command(f"docker run -d --name {self.sandbox_name} sandbox-{self.language}")
         if start_code != 0:
             raise Exception("Error "+str(start_code)+" launching sandbox docker image:" + start_out)
-        
-        cls.sandboxes[sandbox_name] = True
     
-    @classmethod
-    def stop_sandbox(cls, language, instance_id=0, logger=None):
-        logger = logger or logging.getLogger(f"sandbox-{language}-{instance_id}")
-        sandbox_name = f"sandbox-{language}-{instance_id}"
-        logger.info(f"Stopping {language} sandbox (instance {instance_id})")
-        run_shell_command(f"docker rm -f {sandbox_name}")
-        if sandbox_name in cls.sandboxes:
-            cls.sandboxes[sandbox_name] = False
-
-    @classmethod
-    def stopall(cls, logger=None):
-        logger = logger or logging.getLogger("sandbox")
-        logger.info("Stopping all sandbox instances")
-        for sandbox_name in list(cls.sandboxes.keys()):
-            if "-" in sandbox_name:
-                parts = sandbox_name.split("-")
-                language = parts[1]
-                instance_id = int(parts[2])
-                cls.stop_sandbox(language, instance_id, logger)
+    def stop_sandbox(self):
+        self.logger.info(f"Stopping {self.language} sandbox (instance {self.instance_id})")
+        run_shell_command(f"docker rm -f {self.sandbox_name}")
 
     def build_args(self, args):
         return_args = ''

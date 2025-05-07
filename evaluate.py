@@ -175,11 +175,15 @@ if __name__ == '__main__':
         thread_logger = logging.getLogger(f"thread-{thread_id}")
         thread_logger.info(f"Thread {thread_id} processing {len(file_batch)} files")
     
-        # Start sandbox instances for this thread
+        # Create sandbox instances for this thread
         instance_id = thread_id
         languages = ['python', 'javascript']
+        sandboxes = {}
+        
         for language in languages:
-            FunctionSandbox.start_sandbox(language, instance_id, thread_logger)
+            sandbox = FunctionSandbox("", language, instance_id, thread_logger)
+            sandbox.start_sandbox()
+            sandboxes[language] = sandbox
     
         batch_results = []
         batch_total = { 'javascript': 0, 'python': 0 }
@@ -245,8 +249,8 @@ if __name__ == '__main__':
         finally:
             # Stop sandbox instances for this thread
             thread_logger.info(f"Thread {thread_id} finished, stopping sandbox instances")
-            for language in languages:
-                FunctionSandbox.stop_sandbox(language, instance_id, thread_logger)
+            for language, sandbox in sandboxes.items():
+                sandbox.stop_sandbox()
     
         return batch_results, batch_total, batch_passed
 
