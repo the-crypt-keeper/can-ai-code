@@ -267,7 +267,7 @@ if __name__ == '__main__':
     # Start worker threads   
     workers = []
     results = []    
-    for i in range(args.parallel):
+    for i in range(min(args.parallel, file_queue.qsize())):
         thread = Thread(target=lambda i=i: results.append(worker_process(i)))
         thread.start()
         workers.append(thread)
