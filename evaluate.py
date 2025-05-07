@@ -105,7 +105,7 @@ def evaluation(test, language, code, instance_id=0):
             check_result = 'FAIL'
             check_op = 'not inside' if 'eq-any' in check else '!='
 
-        print(colored(f'  [{weight}/{max_weight}] {check_result:4} {check_name:20} {test_value} {check_op} {check_val}', 'red' if not test_result else 'green'))
+        # print(colored(f'  [{weight}/{max_weight}] {check_result:4} {check_name:20} {test_value} {check_op} {check_val}', 'red' if not test_result else 'green'))
         checks.append(check)
 
     return total,passed,checks,"PASS" if (total==passed) else "FAIL"
@@ -168,11 +168,11 @@ if __name__ == '__main__':
 
             code = extract_code(test['answer'], stop_prefixes)
             
-            if code:
-                print(test['name'], test['language'], f'started (instance {instance_id})')
-            else:
-                print(test['name'], test['language'], 'extract_code failed')
-                print(test['answer'])
+            # if code:
+            #     print(test['name'], test['language'], f'started (instance {instance_id})')
+            # else:
+            #     print(test['name'], test['language'], 'extract_code failed')
+            #     print(test['answer'])
 
             total, passed, checks, status = evaluation(interview_data[test['name']], test['language'], code, instance_id)
 
