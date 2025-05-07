@@ -115,6 +115,7 @@ if __name__ == '__main__':
     parser.add_argument('--glob', type=str, help='glob pattern for multiple input files')
     parser.add_argument('--test', type=str, help='(optional) specific test to evaluate')
     parser.add_argument('--stopcomment', action='store_true', help='(optional) stop code extraction at first comment')
+    parser.add_argument('--rerun', action='store_true', help='(optional) rerun evaluation on already processed files')
     args = parser.parse_args()
     
     if not args.input and not args.glob:
@@ -147,6 +148,12 @@ if __name__ == '__main__':
         file_passed = { 'javascript': 0, 'python': 0 }
         
         answers = [json.loads(line) for line in open(input_file)]
+        
+        # Check if file has already been processed
+        if 'code' in answers[0] and not args.rerun:
+            print(f"File {input_file} has already been processed. Use --rerun to process again.")
+            continue
+            
         for test in answers:
             if args.test and test['name'] != args.test:
                 print(test['name'], 'Skipped due to command line filter')
