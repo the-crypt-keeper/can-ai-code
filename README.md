@@ -1,204 +1,90 @@
-<div style="text-align: center;">
+# From Coding to Cognition: Measuring Reasoning in the Age of o1
 
-# Can AI Code?
+## The End of an Era
 
-![A cute robot working on a laptop](img/can-ai-code-small.png "A cute robot working on a laptop")
+Two years ago, I built Can-Ai-Code to answer a simple question: could these new language models actually generate syntactically valid code? Back then, we were manually figuring out end-of-sequence tokens, quantization was experimental and potentially destructive, and "which model can code?" was a genuine unknown.
 
-A self-evaluating interview for AI coding models.
+Can-Ai-Code served its purpose. The question has been definitively answered: **yes, AI can code.** But like any good benchmark, success became its downfall. As models improved, everything started clustering at the top. I made harder tests. Models got better. More clustering. The classic benchmark death spiral.
 
-</div>
+Today, I'm officially retiring Can-Ai-Code. Not because it failed, but because it succeeded so completely that the original question is no longer interesting.
 
-## Key Ideas
+## The New Question: Can AI Think?
 
-* Interview questions written by humans, test taken by AI
-* Inference scripts for all common API providers and CUDA-enabled quantization runtimes
-* Sandbox environment (Docker-based) for untrusted Python and NodeJS code validation
-* Evaluate effects of prompting techniques and sampling parameters on LLM coding performance
-* Evaluate LLM coding performance degradation due to quantization
+With the emergence of reasoning models like o1, we're not asking whether AI can follow patterns anymore—we're asking whether it can *think*. Can it work through novel problems? Can it reason about complex logical structures? Can it maintain working memory across multi-step processes?
 
-## News
+But here's the problem: **measuring thinking is fundamentally different from measuring coding ability.**
 
-**5/6** Evaluate Qwen3 4B, 14B, 32B, A3B across FP16, FP8, GGUF and AWQ. 
-- Each model was evaluated in both think and no-think modes.
-- Greedy sampling is discouraged in the model cards, so instead 3x samples of the recommended settings are used. Disable `Show Best Result Only` to see the variability in some of the results, FP8 is seems particularly unstable.
-- Generally had lots of trouble with larger FP8 models, they require Ada (4096 or H100) but run extremely poorly even with batching. I don't have the required hardware locally and was not able to get A3B-FP8 to take the thinking test without hitting 10 min/response timeouts in my cloud rental stack.
-- Gave A22B a quick spin with UD-Q3K but results were disapointing.
+The same tasks that are trivial for humans can be hillariously difficult for LLMs, how many models still cant count the 'r's in "strawberry", while tasks that seem hard to us might be pattern-matching exercises for them. We needed a completely new approach to evaluation.
 
-**4/24** Evaluate nvidia/AceInstruct 1.5B and 7B (FP16).
+## Enter: Parametric Difficulty Scaling
 
-**4/23** Evaluate Llama4 Scout and Maverick (GGUF).  Evaluate Arcee SuperNova (FP16) and Arcee Blitz (AWQ).
+After 10 days of continuous compute on two RTX 3090s (and two blown breakers), I've built something different: a benchmark that **can never be defeated.**
 
-**4/20** Evaluate GPT 4.1 full, mini, nano (API).  Evaluate DeepCoder 1.5B (FP16) and 14B (EXL2).
+Instead of fixed test cases, I use parametric generators that create unlimited unique problems. Instead of measuring pass/fail, I measure **how far up the difficulty ramp each model can climb.**
 
-## Test Suites
+The key insight: difficulty has two dimensions:
+- **Length**: More elements = more working memory stress  
+- **Depth**: More structural complexity = deeper reasoning chains
 
-`junior-v2` is a multi-language (Python, JavaScript) suite of 12 tests created for this project to test small LLM coding performance.  This project provides all necessary components to execute this evaluation.
+This creates a 2D difficulty space that we can scale infinitely upward.
 
-:construction: `humaneval` is a Python-only suite of 164 tests created by OpenAI.  This project provides template scripts to prepare and execute the humaneval interview, as well as result extraction scripts to help their evaluator. See https://github.com/openai/human-eval for more information.
+## The Architecture of Thought
 
-## [Click to see Leaderboard on HF Spaces](https://huggingface.co/spaces/mike-ravkine/can-ai-code-results)
+Testing across 200+ million tokens revealed something remarkable: **different model families have completely different cognitive fingerprints.**
 
-## [Click to see Comparisons on HF Spaces](https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare)
+**OpenAI models**: Reasoning virtuosos that crush boolean logic (80%+ accuracy) but struggle with tokenization tasks
 
-### Results data
+**Qwen reasoning models**: Show dramatic improvement from "thinking time" (up to 250% boost for smaller models) 
 
-All model answers and evaluation results are now included inside this repository!  Install a recent release of streamlit `pip install streamlit==1.23` then `streamlit run app.py` or `streamlit run compare-app.py` to run the above webapps locally.
+**Llama**: Balanced generalists with solid baseline performance across all domains
 
-### Results HumanEval
+**Phi**: Highly dependent on whether they were architecturally designed for reasoning
 
-:construction: [humaneval/](humaneval/) development work is currently paused, there's other projects that are much further along.
+These aren't just performance differences—they're different *types of intelligence*.
 
-See https://github.com/my-other-github-account/llm-humaneval-benchmarks and https://github.com/abacaj/code-eval for large lists of Humaneval LLM benchmark results.
+## Beyond Accuracy: The Three Dimensions of Reasoning
 
-## Repository Structure
+Traditional benchmarks ask: "Did you get it right?"  
+The new framework asks three questions:
 
-### Interviews
+1. **Height**: How far up the difficulty ramp can you climb?
+2. **Efficiency**: How many tokens did you burn getting there?  
+3. **Constrained Performance**: How well do you perform with limited resources?
 
-* `junior-v2/*.yaml` - junior coder interview questions (stable)
-* `senior/*.yaml` - senior coder interview questions (WIP)
+When OpenAI models "defeat" boolean algebra by achieving 80%+ accuracy, that's not the end—it's the beginning. Now we crank up the difficulty and measure efficiency. Can you solve these problems without burning 1000+ reasoning tokens?
 
-### Prepare
+## The Benchmark That Evolves
 
-* `prompts/*.txt` - LLM prompt templates for the various models
-* `prepare.py` - Applies templates to question turning them into language- and model-specific prompts suitable for interview
+Here's the key innovation: **when models get too good, we automatically make it harder.**
 
-#### Prompts
+When 2+ models achieve >90% adjusted accuracy, we drop the easiest difficulty bins and add tougher ones. The benchmark literally grows with the field, maintaining discrimination power while tracking the capability frontier.
 
-See [prompts/](prompts/) for all prompts references in the leaderboard.
+No more benchmark stagnation. No more clustering at artificial ceilings. Just continuous measurement of an ever-advancing field.
 
-### Interview
+## What We've Learned (So Far)
 
-* `params/*.json` - Sampling hyper-parameter sets (used by all interview scripts)
-* `interview-*.py` - Interview scripts
+- **Reasoning capability is architectural, not universal** - it depends on how models were designed and trained
+- **"Thinking time" helps, but with diminishing returns** - and the benefits vary dramatically by model family  
+- **Working memory is the universal bottleneck** - even SOTA models struggle with bracket stack operations
+- **Tokenization remains the Achilles heel** - word sorting defeats nearly everyone
+- **There are measurable trade-offs** between reasoning capability and efficiency
 
-#### Parameters
+## The Road Ahead
 
-See [params/](params/) for all params references in the leaderboard.
+This is just the beginning. The current suite focuses on computational reasoning, but the framework extends to any domain where difficulty can be parameterized. Spatial reasoning, causal inference, creative synthesis—all become measurable with the right generators.
 
-### Evaluate
+I'm also working on visualizing the complete 2D performance surfaces. Nobody has ever seen the actual topology of machine cognition before. What does the landscape of reasoning ability actually look like?  If this is a question you're interested in getting some answers to (and you have some spare compute sitting around), reach out!
 
-* `evaluate.py` - Run tests for the generated code in a sandbox and grades each answer
-* `app.py` - Streamlit webapp to explore results, see https://huggingface.co/spaces/mike-ravkine/can-ai-code-results
+## From My Basement to the Future
 
-### Compare
+This research happened on consumer hardware in my basement. Two 3090s, some blown fuses, and a lot of curiosity about whether these systems are actually thinking or just getting very good at statistical pattern matching.
 
-* `compare.py` - Performs comparisons between evaluations, optionally calling out to an LLM for analysis
-* `compare-app.py` - Streamlit webapp to explore comparisons, see https://huggingface.co/spaces/mike-ravkine/can-ai-code-compare
-* `compare/*.yaml` - Compare configurations
-* `compare/*.json` - Compare results
+The preliminary results suggest it's both. Different architectures exhibit genuinely different cognitive profiles, but they all hit hard walls when pushed beyond their comfort zones. The question isn't whether AI can think—it's *how* different AIs think, and what the limits of those different approaches are.
 
-## Interviewers: API
+Can-Ai-Code asked whether AI could code. That question is answered.
 
-| API Runtime              | Script         |
-|--------------------------|----------------|
-| LiteLLM (OpenAI, etc..)  | `interview-litellm.py` |
-| OobaBooga/KoboldCpp      | `interview-oobabooga.py` |
-| Huggingface Inference    | `interview-hfinference.py` |
-| Gradio (HF Spaces)       | `interview-gradio.py` |
+**Can-AI-Think** asks whether AI can reason. That question is just getting started.
 
-## Interviewers: CUDA (Local)
+---
 
-| Quantization Type        | Script                  | Dependency              |
-|--------------------------|-------------------------|-------------------------|
-| GGUF                     | `interview-llamacpp.py` | llamacpp or ggml binary |
-| GPTQ (AutoGptQ)          | `interview-cuda.py`     | auto-gptq==0.6.0        |
-| GPTQ (ExLlama)           | `interview-cuda.py`     | exllama @ 3b013cd53c7d413cf99ca04c7c28dd5c95117c0d |
-| EXL2, GPTQ (ExLlama2)    | `interview-cuda.py`     | exllamav2 @ 0.0.12 |
-| HQQ                      | `interview-cuda.py`     | hqq @ 0.1.1             |
-| AWQ, FP16 (vLLM)         | `interview-cuda.py`     | vllm==0.3.0             |
-| CTranslate2              | `interview-cuda.py`     | ctranslate2>=3.16.0     |
-| bitsandbytes             | `interview-cuda.py`     | bitsandbytes==0.41.3    |
-| FP16 (Transformers)      | `interview-cuda.py`     | transformers==4.37.2    |
-
-### Running on Modal
-
-The recommended modal wrapper is `interview_modal_cuda11.py` which builds a CUDA11.8 based container with all the above dependencies working. An `interview_modal_cuda12.py` is also provided, but AutoGPTQ and CTranslate2 are not compatible.
-
-Unfortunately the nature of Modal does not allow command-line selection of eitehr LLM model or runtime engine.
-
-To select models, open the script and uncomment the `.run_function(download...)` line of choice.  Note that only one model can be selected at a time.   To add a new model, implement a new `download...` function.
-
-To select runtime, open the script and uncomment one of the `RUNTIME` options. Note that for `transformers` you must also specify `QUANT`.
-
-## Question Format
-
-A set of interview questions is a folder of .yaml files.  Each Question is a top-level key:
-
-```yaml
-SanityList:
-    Signature: "things()"
-    Input: "with no inputs"
-    Output: "a list with three values: the number 5, the string 'foobar', the capital city of Spain"
-    Fact: "the capital city of Spain is Madrid"
-    Description: "List function, see if the model can combine input facts with internal knowledge."
-    Checks:
-        input_name:
-            assert: "f.name"
-            eq: "things"
-```
-
-In this example `SanityList` is the name of the interview question.
-
-The first four fields are used by `prepare.py` to create the interview:
-
-- `Signature` is the desired function signature
-- `Input` describes the function inputs
-- `Output` describes the function outputs
-- `Fact` is optional and provides any context that is required to correctly perform the task
-
-These 4 variables along with `language` (either `python` or `javascript`) are used to expand templates in `prompts/`.
-
-The last two fields are used by `evaluate.py` to judge the results:
-
-- `Description` is a human-readable explanation of why this test is useful
-- `Checks` defines the expected behavior of the output.
-
-### Checks and the 'f' object
-
-Each check has a name, some `assert` value (python code) and an expected `eq` value.
-
-The f object represents the sandbox view of the function.  Static analysis is performed on the function signature to extract the `f.name` and `f.args` fields, while `f.call` allows for function evaluation.
-
-## Output formats
-
-All scripts output automatically named .ndjson files to the `results/` directory.
-
-Each stage outputs a super-set of fields from the stage before it, so its possible to feed eval/interview back to interview (to re-run the questions) or back to eval (to re-run the eval).
-
-### prepare
-
-`results/prepare_{interview}_{languages}_{template}.ndjson`
-
-Fields:
-
-- all Question fields (Signature, Input, Output, Fact, Description)
-- name
-- language
-- prompt
-
-### interview
-
-`results/interview_{interview}_{languages}_{template}_{templateout}_{params}_{model}_{timestamp}.ndjson`
-
-Fields:
-- all `prepare` fields
-- model
-- params
-- answer
-- runtime
-
-### eval
-
-`results/eval_{interview}_{languages}_{template}_{templateout}_{params}_{model}_{timestamp}.ndjson`
-
-Fields:
-- all `eval` fields
-- status
-- passed
-- total
-- checks
-
-# Roadmap / Future Work
-
-* [Development of a Senior coder test suite](https://github.com/the-crypt-keeper/can-ai-code/issues/141)
-* Open [Model Request](https://github.com/the-crypt-keeper/can-ai-code/labels/model%20request) issues
+*The new benchmark suite will be available soon. If you're interested in early access or want to contribute additional reasoning domains, reach out. Fair warning: you might want to upgrade your electrical panel first.*
