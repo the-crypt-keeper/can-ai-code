@@ -44,7 +44,8 @@ These aren't just performance differences—they're different *types of intellig
 
 ## Beyond Accuracy: The Three Dimensions of Reasoning
 
-Traditional benchmarks ask: "Did you get it right?"  
+Traditional benchmarks ask: "Did you get it right?"
+
 The new framework asks three questions:
 
 1. **Height**: How far up the difficulty ramp can you climb?
@@ -55,11 +56,13 @@ When OpenAI models "defeat" boolean algebra by achieving 80%+ accuracy, that's n
 
 ## The Benchmark That Evolves
 
-Here's the key innovation: **when models get too good, we automatically make it harder.**
+When models get too good, we **make the test harder**.
 
 When 2+ models achieve >90% adjusted accuracy, we drop the easiest difficulty bins and add tougher ones. The benchmark literally grows with the field, maintaining discrimination power while tracking the capability frontier.
 
 No more benchmark stagnation. No more clustering at artificial ceilings. Just continuous measurement of an ever-advancing field.
+
+And what if we can no longer meaningfully make the test harder (the model has learned to do this task)? We will **compare efficiency instead of accuracy.** to regain our discrimination ability.
 
 ## What We've Learned (So Far)
 
@@ -77,7 +80,7 @@ I'm also working on visualizing the complete 2D performance surfaces. Nobody has
 
 ## From My Basement to the Future
 
-This research happened on consumer hardware in my basement. Two 3090s, some blown fuses, and a lot of curiosity about whether these systems are actually thinking or just getting very good at statistical pattern matching.
+This research is happening on consumer hardware in my basement. Two RTX3090s, some blown fuses, and a lot of curiosity about whether these systems are actually thinking or just getting very good at statistical pattern matching.
 
 The preliminary results suggest it's both. Different architectures exhibit genuinely different cognitive profiles, but they all hit hard walls when pushed beyond their comfort zones. The question isn't whether AI can think—it's *how* different AIs think, and what the limits of those different approaches are.
 
@@ -87,4 +90,4 @@ Can-Ai-Code asked whether AI could code. That question is answered.
 
 ---
 
-*The new benchmark suite will be available soon. If you're interested in early access or want to contribute additional reasoning domains, reach out. Fair warning: you might want to upgrade your electrical panel first.*
+*The new benchmark suite will be available soon. If you're interested in early access or want to contribute additional reasoning domains, see [here](https://github.com/the-crypt-keeper/ChatBench) and reach out in the Issues. Fair warning: you might want to upgrade your electrical panel first.*
