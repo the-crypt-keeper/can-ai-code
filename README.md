@@ -90,4 +90,4 @@ Can-Ai-Code asked whether AI could code. That question is answered.
 
 ---
 
-*The new benchmark suite will be available soon. If you're interested in early access or want to contribute additional reasoning domains, see [here](https://github.com/the-crypt-keeper/ChatBench) and reach out in the Issues. Fair warning: you might want to upgrade your electrical panel first.*
+*The new benchmark suite will be available soon. If you're interested in early access or want to contribute additional reasoning domains, see [here](https://github.com/the-crypt-keeper/ChatBench) for scripts and reach out if you'd like to peek the results. Fair warning: you might want to upgrade your electrical panel first.*
