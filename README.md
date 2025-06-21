@@ -26,7 +26,7 @@ The key insight: difficulty has two dimensions:
 - **Length**: More elements = more working memory stress  
 - **Depth**: More structural complexity = deeper reasoning chains
 
-This creates a 2D difficulty space that we can scale infinitely upward.
+This creates a 2D difficulty space that we can explore and scale infinitely.
 
 ## The Architecture of Thought
 
